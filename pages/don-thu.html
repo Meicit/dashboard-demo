@@ -2,115 +2,154 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; padding: 24px; }
-        .grid-container { display: grid; grid-template-cols: repeat(3, 1fr); gap: 24px; }
-        .section-card { background: white; border-radius: 24px; padding: 24px; border: 1px solid #e2e8f0; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); }
-        .table-custom { width: 100%; border-collapse: separate; border-spacing: 0 8px; }
-        .table-custom td { padding: 12px; }
-        .table-custom tr { background-color: #f8fafc; transition: all 0.2s; }
-        .table-custom tr:hover { background-color: #f1f5f9; }
-        .label-cell { font-size: 13px; font-weight: 600; color: #64748b; border-radius: 12px 0 0 12px; }
-        .value-cell { font-size: 18px; font-weight: 900; color: #1e293b; text-align: right; border-radius: 0 12px 12px 0; padding-right: 20px !important; }
-        .header-title { font-size: 11px; font-weight: 900; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 20px; display: flex; align-items: center; gap: 8px; }
+        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; padding: 24px; color: #1e293b; }
+        .glass-card { background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(10px); border: 1px solid rgba(226, 232, 240, 0.8); }
+        .progress-bar { transition: width 1s ease-in-out; }
+        .stat-value { font-size: 2.5rem; line-height: 1; font-weight: 900; }
     </style>
 </head>
 <body>
 
-    <div class="grid-container">
+    <div class="max-w-7xl mx-auto space-y-8">
         
-        <div class="section-card">
-            <div class="header-title text-blue-600">
-                <span class="w-2 h-4 bg-blue-600 rounded-full"></span> TIẾP NHẬN ĐƠN THƯ
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <div class="glass-card p-6 rounded-[32px] shadow-sm flex flex-col justify-between border-t-4 border-blue-500">
+                <div>
+                    <h3 class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-4">Tình hình đơn thư</h3>
+                    <div class="flex items-baseline gap-2">
+                        <span id="tong_don" class="stat-value text-blue-600">194</span>
+                        <span class="text-sm font-bold text-slate-400 italic">Đơn tiếp nhận</span>
+                    </div>
+                </div>
+                <div class="mt-6 space-y-3">
+                    <div class="flex justify-between text-xs font-bold">
+                        <span class="text-slate-500">Kỳ trước chuyển sang:</span>
+                        <span class="text-slate-700">106</span>
+                    </div>
+                    <div class="flex justify-between text-xs font-bold">
+                        <span class="text-slate-500">Mới phát sinh:</span>
+                        <span class="text-slate-700">88</span>
+                    </div>
+                    <div class="pt-2 border-t flex justify-between text-xs font-black text-emerald-600">
+                        <span>Đủ điều kiện xử lý:</span>
+                        <span>184</span>
+                    </div>
+                </div>
             </div>
-            <table class="table-custom">
-                <tr>
-                    <td class="label-cell italic">Phản ánh, kiến nghị</td>
-                    <td id="pa_kn" class="value-cell text-blue-600">0</td>
-                </tr>
-                <tr>
-                    <td class="label-cell italic">Khiếu nại</td>
-                    <td id="khieu_nai" class="value-cell text-blue-600">0</td>
-                </tr>
-                <tr>
-                    <td class="label-cell italic">Tố cáo</td>
-                    <td id="to_cao" class="value-cell text-blue-600">0</td>
-                </tr>
-            </table>
+
+            <div class="glass-card p-6 rounded-[32px] shadow-sm flex flex-col justify-between border-t-4 border-purple-500">
+                <div>
+                    <h3 class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-4">Tiếp công dân</h3>
+                    <div class="flex items-baseline gap-2">
+                        <span class="stat-value text-purple-600">95</span>
+                        <span class="text-sm font-bold text-slate-400 italic">Lượt tiếp</span>
+                    </div>
+                </div>
+                <div class="mt-6 space-y-3">
+                    <div class="flex justify-between text-xs font-bold">
+                        <span class="text-slate-500">Tổng số người:</span>
+                        <span class="text-slate-700">107 người</span>
+                    </div>
+                    <div class="bg-purple-50 p-3 rounded-xl">
+                        <div class="flex justify-between text-[10px] font-black text-purple-700 uppercase mb-1">
+                            <span>Lãnh đạo tiếp:</span>
+                            <span>19 lượt</span>
+                        </div>
+                        <div class="text-[10px] text-purple-600 italic">
+                            Chủ tịch: 12 lượt | Phó Chủ tịch: 07 lượt
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="glass-card p-6 rounded-[32px] shadow-sm flex flex-col justify-between border-t-4 border-emerald-500">
+                <div>
+                    <h3 class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-4">Kết quả thi hành</h3>
+                    <div class="flex items-baseline gap-2">
+                        <span class="stat-value text-emerald-600">3/9</span>
+                        <span class="text-sm font-bold text-slate-400 italic">Quyết định</span>
+                    </div>
+                </div>
+                <div class="mt-6">
+                    <div class="flex justify-between text-xs font-bold mb-2">
+                        <span class="text-emerald-700">Tỷ lệ thi hành xong:</span>
+                        <span class="text-emerald-700">33.3%</span>
+                    </div>
+                    <div class="w-full bg-slate-100 h-3 rounded-full overflow-hidden">
+                        <div class="progress-bar bg-emerald-500 h-full" style="width: 33.3%"></div>
+                    </div>
+                    <p class="text-[10px] text-slate-400 mt-4 italic">Quý I không phát sinh vụ việc tố cáo.</p>
+                </div>
+            </div>
         </div>
 
-        <div class="section-card">
-            <div class="header-title text-emerald-600">
-                <span class="w-2 h-4 bg-emerald-600 rounded-full"></span> KẾT QUẢ GIẢI QUYẾT
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div class="bg-white p-8 rounded-[32px] border border-slate-200 shadow-sm relative overflow-hidden">
+                <div class="absolute top-0 right-0 p-8 opacity-5">
+                    <svg width="120" height="120" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+                </div>
+                <h3 class="text-xs font-black text-blue-900 uppercase tracking-widest mb-6 flex items-center gap-2">
+                    <span class="w-2 h-4 bg-blue-600 rounded-full"></span> Lĩnh vực khiếu nại trọng tâm (Đất đai)
+                </h3>
+                <div class="space-y-6">
+                    <div class="flex items-start gap-4">
+                        <div class="bg-blue-100 text-blue-600 p-3 rounded-2xl font-black">01</div>
+                        <div>
+                            <h4 class="text-sm font-bold text-slate-800">Bồi thường, hỗ trợ tái định cư</h4>
+                            <p class="text-xs text-slate-500 italic mt-1">Khi Nhà nước thu hồi đất thực hiện dự án.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-4">
+                        <div class="bg-blue-100 text-blue-600 p-3 rounded-2xl font-black">02</div>
+                        <div>
+                            <h4 class="text-sm font-bold text-slate-800">Cấp giấy chứng nhận (GCN)</h4>
+                            <p class="text-xs text-slate-500 italic mt-1">Các thủ tục cấp mới, cấp đổi quyền sử dụng đất.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-4">
+                        <div class="bg-blue-100 text-blue-600 p-3 rounded-2xl font-black">03</div>
+                        <div>
+                            <h4 class="text-sm font-bold text-slate-800">Xác định nguồn gốc đất</h4>
+                            <p class="text-xs text-slate-500 italic mt-1">Lịch sử và quá trình sử dụng đất qua các thời kỳ.</p>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <table class="table-custom">
-                <tr>
-                    <td class="label-cell italic text-emerald-700">Giải quyết Trong hạn</td>
-                    <td id="dgq_th" class="value-cell text-emerald-600">0</td>
-                </tr>
-                <tr>
-                    <td class="label-cell italic text-red-500">Giải quyết Quá hạn</td>
-                    <td id="dgq_qh" class="value-cell text-red-600">0</td>
-                </tr>
-            </table>
-        </div>
 
-        <div class="section-card">
-            <div class="header-title text-orange-600">
-                <span class="w-2 h-4 bg-orange-600 rounded-full"></span> ĐANG TRONG HẠN GIẢI QUYẾT
+            <div class="bg-slate-900 text-white p-8 rounded-[32px] shadow-xl relative overflow-hidden">
+                <h3 class="text-xs font-black text-blue-400 uppercase tracking-widest mb-6">Đánh giá & Phương hướng</h3>
+                
+                <div class="space-y-6">
+                    <div class="bg-white/5 p-4 rounded-2xl border border-white/10">
+                        <span class="text-[10px] font-bold text-orange-400 uppercase tracking-tighter">Hạn chế tồn tại:</span>
+                        <p class="text-xs leading-relaxed mt-1 opacity-80">
+                            Khó xác định chủ thể bồi thường do mua bán bằng <strong>giấy tay, vi bằng</strong> không đúng quy định pháp luật.
+                        </p>
+                    </div>
+
+                    <div class="bg-white/5 p-4 rounded-2xl border border-white/10">
+                        <span class="text-[10px] font-bold text-blue-400 uppercase tracking-tighter">Dự báo tình hình:</span>
+                        <p class="text-xs leading-relaxed mt-1 opacity-80">
+                            Đơn thư đất đai dự kiến tiếp tục phát sinh do các dự án hạ tầng đang trong giai đoạn triển khai cao điểm.
+                        </p>
+                    </div>
+
+                    <div class="bg-emerald-500/10 p-4 rounded-2xl border border-emerald-500/20">
+                        <span class="text-[10px] font-bold text-emerald-400 uppercase tracking-tighter">Giải pháp trọng tâm:</span>
+                        <ul class="text-xs mt-2 space-y-2 opacity-90 list-disc ml-4">
+                            <li>Giải quyết dứt điểm các vụ việc tồn đọng, kéo dài.</li>
+                            <li>Tăng cường tuyên truyền pháp luật về đất đai cho người dân.</li>
+                            <li>Phối hợp tập huấn nghiệp vụ cho đội ngũ cán bộ thụ lý.</li>
+                        </ul>
+                    </div>
+                </div>
             </div>
-            <table class="table-custom">
-                <tr>
-                    <td class="label-cell italic text-orange-700">Đang trong thời hạn</td>
-                    <td id="cgq_th" class="value-cell text-orange-600">0</td>
-                </tr>
-                <tr>
-                    <td class="label-cell italic text-red-600">Chưa giải quyết quá hạn</td>
-                    <td id="cgq_qh" class="value-cell text-red-700 font-black">0</td>
-                </tr>
-            </table>
         </div>
-
     </div>
 
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
-        import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-database.js";
-        
-        const firebaseConfig = { 
-            apiKey: "AIzaSyCjS8jJtoV5HLcYIpVTX1zP5DbyYmXsbh4", 
-            authDomain: "dashboard-demo-ce0da.firebaseapp.com", 
-            databaseURL: "https://dashboard-demo-ce0da-default-rtdb.asia-southeast1.firebasedatabase.app", 
-            projectId: "dashboard-demo-ce0da", 
-            appId: "1:969593884637:web:47d4e6b03a51e7dcfbb034" 
-        };
-        const db = getDatabase(initializeApp(firebaseConfig));
-
-        onValue(ref(db, 'dashboard_binhhung'), (snap) => {
-            const d = snap.val(); if(!d) return;
-
-            // 1. Dữ liệu Tiếp nhận
-            document.getElementById('pa_kn').innerText = d.don_thu?.pa_kn || 0;
-            document.getElementById('khieu_nai').innerText = d.don_thu?.khieu_nai || 0;
-            document.getElementById('to_cao').innerText = d.don_thu?.to_cao || 0;
-
-            // 2. Dữ liệu Đã giải quyết (Cộng dồn từ các loại đơn)
-            const det = d.don_thu_detail || {};
-            const sum_dgq_th = (det.pa_dgq_th || 0) + (det.kn_dgq_th || 0) + (det.tc_dgq_th || 0);
-            const sum_dgq_qh = (det.pa_dgq_qh || 0) + (det.kn_dgq_qh || 0) + (det.tc_dgq_qh || 0);
-            
-            document.getElementById('dgq_th').innerText = sum_dgq_th;
-            document.getElementById('dgq_qh').innerText = sum_dgq_qh;
-
-            // 3. Dữ liệu Đang giải quyết
-            const sum_cgq_th = (det.pa_cgq_th || 0) + (det.kn_cgq_th || 0) + (det.tc_cgq_th || 0);
-            const sum_cgq_qh = (det.pa_cgq_qh || 0) + (det.kn_cgq_qh || 0) + (det.tc_cgq_qh || 0);
-
-            document.getElementById('cgq_th').innerText = sum_cgq_th;
-            document.getElementById('cgq_qh').innerText = sum_cgq_qh;
-        });
-    </script>
 </body>
 </html>
