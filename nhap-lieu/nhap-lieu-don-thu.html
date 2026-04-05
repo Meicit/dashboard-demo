@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f1f5f9; padding: 32px; }
+        .card { background: white; border-radius: 20px; padding: 32px; border: 1px solid #e2e8f0; }
+        label { display: block; font-size: 10px; font-weight: 800; color: #64748b; text-transform: uppercase; margin-bottom: 6px; }
+        input { width: 100%; padding: 10px 14px; border: 1px solid #cbd5e1; border-radius: 8px; font-weight: 600; outline: none; }
+        input:focus { border-color: #3b82f6; ring: 2px ring-blue-100; }
+    </style>
+</head>
+<body>
+    <div class="max-w-4xl mx-auto">
+        <div class="card border-t-4 border-red-600 shadow-sm">
+            <div class="flex justify-between items-center mb-8">
+                <h3 class="font-black text-slate-800 uppercase">Cập nhật số liệu Đơn thư</h3>
+                <button onclick="saveData()" class="bg-blue-600 text-white font-black px-8 py-3 rounded-xl hover:bg-blue-700 transition-all shadow-lg active:scale-95 text-xs">
+                    💾 CẬP NHẬT
+                </button>
+            </div>
+            
+            <div class="grid grid-cols-3 gap-6">
+                <div><label>Phản ánh, KN</label><input type="number" id="dt_pa_kn"></div>
+                <div><label>Khiếu nại</label><input type="number" id="dt_khieu_nai"></div>
+                <div><label>Tố cáo</label><input type="number" id="dt_to_cao"></div>
+            </div>
+
+            <div class="mt-8 pt-8 border-t grid grid-cols-2 gap-12">
+                <div class="space-y-4">
+                    <p class="text-[10px] font-black text-emerald-600 uppercase border-l-4 border-emerald-500 pl-2">Đã giải quyết</p>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div><label>Trong hạn</label><input type="number" id="pa_dgq_th"></div>
+                        <div><label class="text-red-400">Quá hạn</label><input type="number" id="pa_dgq_qh"></div>
+                    </div>
+                </div>
+                <div class="space-y-4">
+                    <p class="text-[10px] font-black text-orange-600 uppercase border-l-4 border-orange-500 pl-2">Chưa giải quyết</p>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div><label>Trong hạn</label><input type="number" id="pa_cgq_th"></div>
+                        <div><label class="text-red-600">Quá hạn</label><input type="number" id="pa_cgq_qh"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
+        import { getDatabase, ref, update, onValue } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-database.js";
+        const firebaseConfig = { apiKey: "AIzaSyCjS8jJtoV5HLcYIpVTX1zP5DbyYmXsbh4", authDomain: "dashboard-demo-ce0da.firebaseapp.com", databaseURL: "https://dashboard-demo-ce0da-default-rtdb.asia-southeast1.firebasedatabase.app", projectId: "dashboard-demo-ce0da", appId: "1:969593884637:web:47d4e6b03a51e7dcfbb034" };
+        const db = getDatabase(initializeApp(firebaseConfig));
+        const rootRef = ref(db, 'dashboard_binhhung');
+
+        onValue(rootRef, (snap) => {
+            const d = snap.val(); if(!d) return;
+            if(d.don_thu) {
+                document.getElementById('dt_pa_kn').value = d.don_thu.pa_kn || 0;
+                document.getElementById('dt_khieu_nai').value = d.don_thu.khieu_nai || 0;
+                document.getElementById('dt_to_cao').value = d.don_thu.to_cao || 0;
+            }
+            if(d.don_thu_detail) {
+                const dt = d.don_thu_detail;
+                document.getElementById('pa_dgq_th').value = dt.pa_dgq_th || 0;
+                document.getElementById('pa_dgq_qh').value = dt.pa_dgq_qh || 0;
+                document.getElementById('pa_cgq_th').value = dt.pa_cgq_th || 0;
+                document.getElementById('pa_cgq_qh').value = dt.pa_cgq_qh || 0;
+            }
+        }, { onlyOnce: true });
+
+        window.saveData = () => {
+            const sum_t = Number(document.getElementById('dt_pa_kn').value||0) + Number(document.getElementById('dt_khieu_nai').value||0) + Number(document.getElementById('dt_to_cao').value||0);
+            const updates = {};
+            updates['/don_thu'] = {
+                tong: sum_t,
+                pa_kn: Number(document.getElementById('dt_pa_kn').value),
+                khieu_nai: Number(document.getElementById('dt_khieu_nai').value),
+                to_cao: Number(document.getElementById('dt_to_cao').value)
+            };
+            updates['/don_thu_detail'] = {
+                pa_dgq_th: Number(document.getElementById('pa_dgq_th').value),
+                pa_dgq_qh: Number(document.getElementById('pa_dgq_qh').value),
+                pa_cgq_th: Number(document.getElementById('pa_cgq_th').value),
+                pa_cgq_qh: Number(document.getElementById('pa_cgq_qh').value)
+            };
+
+            update(rootRef, updates).then(() => alert("✅ Thành công!")).catch(e => alert("❌ Lỗi: " + e));
+        };
+    </script>
+</body>
+</html>
