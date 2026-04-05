@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f1f5f9; padding: 32px; }
+        .card { background: white; border-radius: 20px; padding: 32px; border: 1px solid #e2e8f0; }
+        label { display: block; font-size: 10px; font-weight: 800; color: #64748b; text-transform: uppercase; margin-bottom: 6px; }
+        input { width: 100%; padding: 10px 14px; border: 1px solid #cbd5e1; border-radius: 8px; font-weight: 600; outline: none; }
+    </style>
+</head>
+<body>
+    <div class="max-w-4xl mx-auto">
+        <div class="card border-t-4 border-orange-500 shadow-sm">
+            <div class="flex justify-between items-center mb-8">
+                <h3 class="font-black text-slate-800 uppercase">Cập nhật Phản ánh 1022</h3>
+                <button onclick="saveData()" class="bg-orange-600 text-white font-black px-8 py-3 rounded-xl hover:bg-orange-700 transition-all shadow-lg active:scale-95 text-xs">
+                    💾 CẬP NHẬT
+                </button>
+            </div>
+            
+            <div class="grid grid-cols-2 gap-6 mb-8 border-b pb-8">
+                <div><label>Tổng phản ánh</label><input type="number" id="pa_1022_tong"></div>
+                <div><label>Đã giải quyết xong</label><input type="number" id="pa_1022_xong"></div>
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-6">
+                <div><label>Tiếng ồn</label><input type="number" id="pa_tieng_on"></div>
+                <div><label>Kinh tế & Hạ tầng</label><input type="number" id="pa_kinh_te"></div>
+                <div><label>Trật tự đô thị</label><input type="number" id="pa_trat_tu"></div>
+                <div><label>Văn hóa xã hội</label><input type="number" id="pa_van_hoa"></div>
+                <div><label>Hành chính công</label><input type="number" id="pa_hcc"></div>
+                <div><label>Khác</label><input type="number" id="pa_khac"></div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
+        import { getDatabase, ref, update, onValue } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-database.js";
+        const firebaseConfig = { apiKey: "AIzaSyCjS8jJtoV5HLcYIpVTX1zP5DbyYmXsbh4", authDomain: "dashboard-demo-ce0da.firebaseapp.com", databaseURL: "https://dashboard-demo-ce0da-default-rtdb.asia-southeast1.firebasedatabase.app", projectId: "dashboard-demo-ce0da", appId: "1:969593884637:web:47d4e6b03a51e7dcfbb034" };
+        const db = getDatabase(initializeApp(firebaseConfig));
+        const rootRef = ref(db, 'dashboard_binhhung');
+
+        onValue(rootRef, (snap) => {
+            const d = snap.val(); if(!d) return;
+            if(d.pa_1022) {
+                document.getElementById('pa_1022_tong').value = d.pa_1022.tong || 0;
+                document.getElementById('pa_1022_xong').value = d.pa_1022.da_giai_quyet || 0;
+            }
+            if(d.pa_1022_detail) {
+                const p = d.pa_1022_detail;
+                document.getElementById('pa_tieng_on').value = p.tieng_on || 0;
+                document.getElementById('pa_kinh_te').value = p.kinh_te_ha_tang || 0;
+                document.getElementById('pa_trat_tu').value = p.trat_tu_do_thi || 0;
+                document.getElementById('pa_van_hoa').value = p.van_hoa_xa_hoi || 0;
+                document.getElementById('pa_hcc').value = p.hanh_chinh_cong || 0;
+                document.getElementById('pa_khac').value = p.khac || 0;
+            }
+        }, { onlyOnce: true });
+
+        window.saveData = () => {
+            const updates = {};
+            updates['/pa_1022'] = {
+                tong: Number(document.getElementById('pa_1022_tong').value),
+                da_giai_quyet: Number(document.getElementById('pa_1022_xong').value),
+                chua_giai_quyet: Number(document.getElementById('pa_1022_tong').value) - Number(document.getElementById('pa_1022_xong').value)
+            };
+            updates['/pa_1022_detail'] = {
+                tieng_on: Number(document.getElementById('pa_tieng_on').value),
+                kinh_te_ha_tang: Number(document.getElementById('pa_kinh_te').value),
+                trat_tu_do_thi: Number(document.getElementById('pa_trat_tu').value),
+                van_hoa_xa_hoi: Number(document.getElementById('pa_van_hoa').value),
+                hanh_chinh_cong: Number(document.getElementById('pa_hcc').value),
+                khac: Number(document.getElementById('pa_khac').value)
+            };
+            update(rootRef, updates).then(() => alert("✅ Thành công!")).catch(e => alert("❌ Lỗi: " + e));
+        };
+    </script>
+</body>
+</html>
