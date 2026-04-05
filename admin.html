@@ -90,8 +90,7 @@
 
                 <section class="card p-6 border-t-4 border-t-emerald-500">
                     <h2 class="section-title text-emerald-600 border-emerald-500">📊 Hệ thống 38 Chỉ tiêu</h2>
-                    <div id="indicators-container" class="space-y-6 max-h-[600px] overflow-y-auto pr-2">
-                        </div>
+                    <div id="indicators-container" class="space-y-6 max-h-[600px] overflow-y-auto pr-2"></div>
                 </section>
             </div>
         </div>
@@ -112,7 +111,6 @@
         const db = getDatabase(initializeApp(firebaseConfig));
         const rootRef = ref(db, 'dashboard_binhhung');
 
-        // DANH SÁCH 38 CHỈ TIÊU PHÂN NHÓM
         const groups = [
             { name: "Kinh tế", items: [{id:"ct_1", ten:"Tốc độ tăng tổng giá trị sản xuất", dv:"%"}, {id:"ct_2", ten:"Tổng thu ngân sách nhà nước", dv:"Tr.đ"}, {id:"ct_3", ten:"Tỷ lệ giải ngân vốn ĐTC", dv:"%"}] },
             { name: "Văn hóa - Xã hội", items: [{id:"ct_4", ten:"Tỷ lệ dân số tham gia BHYT", dv:"%"}, {id:"ct_5", ten:"Số lao động tham gia BHXH", dv:"%"}, {id:"ct_6", ten:"Trường Mầm non đạt chuẩn QG", dv:"%"}, {id:"ct_7", ten:"Trường Tiểu học đạt chuẩn QG", dv:"%"}, {id:"ct_8", ten:"Trường THCS đạt chuẩn QG", dv:"%"}, {id:"ct_9", ten:"Số phòng học trên 10.000 dân", dv:"Phòng"}, {id:"ct_10", ten:"Tỷ lệ hoàn thành chương trình THCS", dv:"%"}, {id:"ct_11", ten:"Giảm hộ nghèo đa chiều", dv:"Hộ"}, {id:"ct_12", ten:"Tiêu chí đạt chuẩn NTM", dv:"TC"}, {id:"ct_13", ten:"Tỷ lệ ấp đạt chuẩn văn hóa", dv:"%"}, {id:"ct_14", ten:"Tỷ lệ gia đình đạt chuẩn văn hóa", dv:"%"}, {id:"ct_15", ten:"Trẻ dưới 5 tuổi tiêm chủng đủ", dv:"%"}, {id:"ct_16", ten:"Lao động được GT việc làm", dv:"Người"}, {id:"ct_17", ten:"Mô hình du lịch địa phương", dv:"MH"}] },
@@ -151,26 +149,30 @@
             document.getElementById('dt_to_cao').value = d.don_thu?.to_cao || 0;
             sumDonThu();
             const det = d.don_thu_detail || {};
-            ['pa_dgq_th','pa_dgq_qh','kn_dgq_th','kn_dgq_qh','tc_dgq_th','tc_dgq_qh','pa_cgq_th','pa_cgq_qh','kn_cgq_th','kn_cgq_qh','tc_cgq_th','tc_cgq_qh'].forEach(f => document.getElementById(f).value = det[f]||0);
+            ['pa_dgq_th','pa_dgq_qh','kn_dgq_th','kn_dgq_qh','tc_dgq_th','tc_dgq_qh','pa_cgq_th','pa_cgq_qh','kn_cgq_th','kn_cgq_qh','tc_cgq_th','tc_cgq_qh'].forEach(f => {
+                const el = document.getElementById(f);
+                if(el) el.value = det[f]||0;
+            });
             document.getElementById('pa_1022_tong').value = d.pa_1022?.tong || 0;
             document.getElementById('pa_1022_xong').value = d.pa_1022?.da_giai_quyet || 0;
             calculateRate();
             const p_det = d.pa_1022_detail || {};
-            ['tieng_on','kinh_te','trat_tu','van_hoa','hcc','khac'].forEach(f => {
+            const p_fields = {tieng_on:'tieng_on', kinh_te:'kinh_te_ha_tang', trat_tu:'trat_tu_do_thi', van_hoa:'van_hoa_xa_hoi', hcc:'hanh_chinh_cong', khac:'khac'};
+            Object.keys(p_fields).forEach(f => {
                 const el = document.getElementById('pa_'+f);
-                if(el) el.value = p_det[f==='kinh_te'?'kinh_te_ha_tang':f==='trat_tu'?'trat_tu_do_thi':f==='van_hoa'?'van_hoa_xa_hoi':f==='hcc'?'hanh_chinh_cong':f] || 0;
+                if(el) el.value = p_det[p_fields[f]] || 0;
             });
             document.getElementById('hs_tong').value = d.ho_so?.tong || 0;
             document.getElementById('hs_da_giai_quyet').value = d.ho_so?.da_giai_quyet || 0;
             document.getElementById('hs_online').value = d.ho_so?.truc_tuyen || 0;
             document.getElementById('hs_dung_han_count').value = d.ho_so?.dung_han_count || 0;
             document.getElementById('vb_tong').value = d.van_ban?.tong || 0;
-            for(let i=1; i<=38; i++) { if(d.chi_tieu) document.getElementById(`ct_${i}`).value = d.chi_tieu[`ct_${i}`] || 0; }
+            for(let i=1; i<=38; i++) { if(d.chi_tieu) { const el = document.getElementById(`ct_${i}`); if(el) el.value = d.chi_tieu[`ct_${i}`] || 0; } }
         }, { onlyOnce: true });
 
         window.saveAll = () => {
-            const sum_da_gq = Number(document.getElementById('pa_dgq_th').value) + Number(document.getElementById('pa_dgq_qh').value) + Number(document.getElementById('kn_dgq_th').value) + Number(document.getElementById('kn_dgq_qh').value) + Number(document.getElementById('tc_dgq_th').value) + Number(document.getElementById('tc_dgq_qh').value);
-            const sum_tong = Number(document.getElementById('dt_pa_kn').value) + Number(document.getElementById('dt_khieu_nai').value) + Number(document.getElementById('dt_to_cao').value);
+            const sum_da_gq = Number(document.getElementById('pa_dgq_th').value||0) + Number(document.getElementById('pa_dgq_qh').value||0) + Number(document.getElementById('kn_dgq_th').value||0) + Number(document.getElementById('kn_dgq_qh').value||0) + Number(document.getElementById('tc_dgq_th').value||0) + Number(document.getElementById('tc_dgq_qh').value||0);
+            const sum_tong = Number(document.getElementById('dt_pa_kn').value||0) + Number(document.getElementById('dt_khieu_nai').value||0) + Number(document.getElementById('dt_to_cao').value||0);
             const data = {
                 don_thu: { tong: sum_tong, da_giai_quyet: sum_da_gq, dang_giai_quyet: sum_tong - sum_da_gq, pa_kn: Number(document.getElementById('dt_pa_kn').value), khieu_nai: Number(document.getElementById('dt_khieu_nai').value), to_cao: Number(document.getElementById('dt_to_cao').value) },
                 don_thu_detail: { pa_dgq_th: Number(document.getElementById('pa_dgq_th').value), pa_dgq_qh: Number(document.getElementById('pa_dgq_qh').value), kn_dgq_th: Number(document.getElementById('kn_dgq_th').value), kn_dgq_qh: Number(document.getElementById('kn_dgq_qh').value), tc_dgq_th: Number(document.getElementById('tc_dgq_th').value), tc_dgq_qh: Number(document.getElementById('tc_dgq_qh').value), pa_cgq_th: Number(document.getElementById('pa_cgq_th').value), pa_cgq_qh: Number(document.getElementById('pa_cgq_qh').value), kn_cgq_th: Number(document.getElementById('kn_cgq_th').value), kn_cgq_qh: Number(document.getElementById('kn_cgq_qh').value), tc_cgq_th: Number(document.getElementById('tc_cgq_th').value), tc_cgq_qh: Number(document.getElementById('tc_cgq_qh').value) },
