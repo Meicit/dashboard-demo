@@ -29,7 +29,7 @@
         </header>
 
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
-            <div class="lg:col-span-8 space-y-8">
+            <div class="lg:col-span-7 space-y-8">
                 <section class="card p-6 border-t-4 border-t-red-600">
                     <h2 class="section-title text-red-600 border-red-600">📂 Chi tiết tình hình xử lý đơn thư</h2>
                     <div class="bg-red-50 p-4 rounded-lg mb-6 border border-dashed border-red-200 text-center">
@@ -41,10 +41,12 @@
                         <div class="space-y-2"><div class="grid-header text-blue-700 uppercase">Phản ánh, KN</div><input type="number" id="dt_pa_kn" oninput="sumDonThu()"></div>
                         <div class="space-y-2"><div class="grid-header text-blue-700 uppercase">Khiếu nại</div><input type="number" id="dt_khieu_nai" oninput="sumDonThu()"></div>
                         <div class="space-y-2"><div class="grid-header text-blue-700 uppercase">Tố cáo</div><input type="number" id="dt_to_cao" oninput="sumDonThu()"></div>
+
                         <div class="font-bold text-[11px] text-emerald-600 uppercase pt-4 italic">Đã giải quyết</div>
                         <div class="grid grid-cols-2 gap-1"><div><label>Trong hạn</label><input type="number" id="pa_dgq_th"></div><div><label class="text-red-400">Quá hạn</label><input type="number" id="pa_dgq_qh"></div></div>
                         <div class="grid grid-cols-2 gap-1"><div><label>Trong hạn</label><input type="number" id="kn_dgq_th"></div><div><label class="text-red-400">Quá hạn</label><input type="number" id="kn_dgq_qh"></div></div>
                         <div class="grid grid-cols-2 gap-1"><div><label>Trong hạn</label><input type="number" id="tc_dgq_th"></div><div><label class="text-red-400">Quá hạn</label><input type="number" id="tc_dgq_qh"></div></div>
+
                         <div class="font-bold text-[11px] text-orange-600 uppercase pt-4 italic">Chưa giải quyết</div>
                         <div class="grid grid-cols-2 gap-1"><div><label>Trong hạn</label><input type="number" id="pa_cgq_th"></div><div><label class="text-red-600">Quá hạn</label><input type="number" id="pa_cgq_qh"></div></div>
                         <div class="grid grid-cols-2 gap-1"><div><label>Trong hạn</label><input type="number" id="kn_cgq_th"></div><div><label class="text-red-600">Quá hạn</label><input type="number" id="kn_cgq_qh"></div></div>
@@ -70,7 +72,7 @@
                 </section>
             </div>
 
-            <div class="lg:col-span-4 space-y-8">
+            <div class="lg:col-span-5 space-y-8">
                 <section class="card p-6 border-t-4 border-t-blue-700">
                     <h2 class="section-title text-blue-700 border-blue-700">⚖️ Quản lý Hồ sơ TTHC</h2>
                     <div class="grid grid-cols-1 gap-4">
@@ -87,8 +89,8 @@
                 </section>
 
                 <section class="card p-6 border-t-4 border-t-emerald-500">
-                    <h2 class="section-title text-emerald-600 border-emerald-500">📊 30 Chỉ tiêu (Excel)</h2>
-                    <div id="indicators-list" class="grid grid-cols-1 gap-3 max-h-[600px] overflow-y-auto pr-2">
+                    <h2 class="section-title text-emerald-600 border-emerald-500">📊 Hệ thống 38 Chỉ tiêu</h2>
+                    <div id="indicators-container" class="space-y-6 max-h-[600px] overflow-y-auto pr-2">
                         </div>
                 </section>
             </div>
@@ -110,138 +112,76 @@
         const db = getDatabase(initializeApp(firebaseConfig));
         const rootRef = ref(db, 'dashboard_binhhung');
 
-        // DANH SÁCH CHỈ TIÊU TỪ EXCEL
-        const indicators = [
-            { id: "ct_1", ten: "Tốc độ tăng tổng giá trị sản xuất", dv: "%" },
-            { id: "ct_2", ten: "Tổng thu ngân sách nhà nước", dv: "Tr.đ" },
-            { id: "ct_3", ten: "Tỷ lệ giải ngân vốn đầu tư công", dv: "%" },
-            { id: "ct_4", ten: "Tỷ lệ dân số tham gia BHYT", dv: "%" },
-            { id: "ct_5", ten: "Số lao động tham gia BHXH", dv: "%" },
-            { id: "ct_6", ten: "Trường Mầm non đạt chuẩn QG", dv: "%" },
-            { id: "ct_7", ten: "Trường Tiểu học đạt chuẩn QG", dv: "%" },
-            { id: "ct_8", ten: "Trường THCS đạt chuẩn QG", dv: "%" },
-            { id: "ct_9", ten: "Số phòng học trên 10.000 dân", dv: "Phòng" },
-            { id: "ct_10", ten: "Tỷ lệ hoàn thành chương trình THCS", dv: "%" },
-            { id: "ct_11", ten: "Giảm hộ nghèo đa chiều", dv: "Hộ" },
-            { id: "ct_12", ten: "Tiêu chí đạt chuẩn Nông thôn mới", dv: "TC" },
-            { id: "ct_13", ten: "Tỷ lệ ấp đạt chuẩn văn hóa", dv: "%" },
-            { id: "ct_14", ten: "Tỷ lệ gia đình đạt chuẩn văn hóa", dv: "%" },
-            { id: "ct_15", ten: "Trẻ dưới 5 tuổi tiêm chủng đủ", dv: "%" },
-            { id: "ct_16", ten: "Lao động được GT việc làm", dv: "Người" },
-            { id: "ct_17", ten: "Mô hình du lịch địa phương", dv: "MH" },
-            { id: "ct_18", ten: "Tỷ lệ hộ dân dùng nước sạch", dv: "%" },
-            { id: "ct_19", ten: "Thu gom xử lý chất thải rắn", dv: "%" },
-            { id: "ct_20", ten: "Chất thải y tế xử lý đạt chuẩn", dv: "%" },
-            { id: "ct_21", ten: "Xử lý nước thải CN đạt chuẩn", dv: "%" },
-            { id: "ct_22", ten: "Giải quyết hồ sơ TTHC đúng hạn", dv: "%" },
-            { id: "ct_23", ten: "Sử dụng chữ ký số công vụ", dv: "%" },
-            { id: "ct_24", ten: "Tuyển chọn gọi công dân nhập ngũ", dv: "Người" },
-            { id: "ct_25", ten: "Kéo giảm tội phạm về TTXH", dv: "%" },
-            { id: "ct_26", ten: "Tỷ lệ khám phá án hình sự", dv: "%" },
-            { id: "ct_27", ten: "Kéo giảm tai nạn giao thông", dv: "%" },
-            { id: "ct_28", ten: "Không xảy ra cháy nổ nghiêm trọng", dv: "Vụ" },
-            { id: "ct_29", ten: "Địa phương không phức tạp ma túy", dv: "Đạt" },
-            { id: "ct_30", ten: "Xử lý phản ánh 1022 đúng hạn", dv: "%" }
+        // DANH SÁCH 38 CHỈ TIÊU PHÂN NHÓM
+        const groups = [
+            { name: "Kinh tế", items: [{id:"ct_1", ten:"Tốc độ tăng tổng giá trị sản xuất", dv:"%"}, {id:"ct_2", ten:"Tổng thu ngân sách nhà nước", dv:"Tr.đ"}, {id:"ct_3", ten:"Tỷ lệ giải ngân vốn ĐTC", dv:"%"}] },
+            { name: "Văn hóa - Xã hội", items: [{id:"ct_4", ten:"Tỷ lệ dân số tham gia BHYT", dv:"%"}, {id:"ct_5", ten:"Số lao động tham gia BHXH", dv:"%"}, {id:"ct_6", ten:"Trường Mầm non đạt chuẩn QG", dv:"%"}, {id:"ct_7", ten:"Trường Tiểu học đạt chuẩn QG", dv:"%"}, {id:"ct_8", ten:"Trường THCS đạt chuẩn QG", dv:"%"}, {id:"ct_9", ten:"Số phòng học trên 10.000 dân", dv:"Phòng"}, {id:"ct_10", ten:"Tỷ lệ hoàn thành chương trình THCS", dv:"%"}, {id:"ct_11", ten:"Giảm hộ nghèo đa chiều", dv:"Hộ"}, {id:"ct_12", ten:"Tiêu chí đạt chuẩn NTM", dv:"TC"}, {id:"ct_13", ten:"Tỷ lệ ấp đạt chuẩn văn hóa", dv:"%"}, {id:"ct_14", ten:"Tỷ lệ gia đình đạt chuẩn văn hóa", dv:"%"}, {id:"ct_15", ten:"Trẻ dưới 5 tuổi tiêm chủng đủ", dv:"%"}, {id:"ct_16", ten:"Lao động được GT việc làm", dv:"Người"}, {id:"ct_17", ten:"Mô hình du lịch địa phương", dv:"MH"}] },
+            { name: "Đô thị - Môi trường", items: [{id:"ct_18", ten:"Tỷ lệ hộ dân dùng nước sạch", dv:"%"}, {id:"ct_19", ten:"Thu gom xử lý chất thải rắn", dv:"%"}, {id:"ct_20", ten:"Chất thải y tế xử lý đạt chuẩn", dv:"%"}, {id:"ct_21", ten:"Xử lý nước thải CN đạt chuẩn", dv:"%"}] },
+            { name: "Cải cách hành chính - An ninh", items: [{id:"ct_22", ten:"Giải quyết hồ sơ đúng hạn", dv:"%"}, {id:"ct_23", ten:"Sử dụng chữ ký số công vụ", dv:"%"}, {id:"ct_24", ten:"Tuyển chọn gọi công dân nhập ngũ", dv:"Ng"}, {id:"ct_25", ten:"Kéo giảm tội phạm TTXH", dv:"%"}, {id:"ct_26", ten:"Khám phá án hình sự", dv:"%"}, {id:"ct_27", ten:"Kéo giảm TNGT", dv:"%"}, {id:"ct_28", ten:"Không cháy nổ nghiêm trọng", dv:"Vụ"}, {id:"ct_29", ten:"Không phức tạp ma túy", dv:"Đạt"}, {id:"ct_30", ten:"Xử lý phản ánh 1022 đúng hạn", dv:"%"}, {id:"ct_31", ten:"Văn bản đi hoàn toàn điện tử", dv:"%"}, {id:"ct_32", ten:"Số hóa kết quả TTHC", dv:"%"}, {id:"ct_33", ten:"Thanh toán trực tuyến", dv:"%"}, {id:"ct_34", ten:"Hòa giải thành ở cơ sở", dv:"%"}, {id:"ct_35", ten:"Kiểm tra định kỳ PCCC", dv:"%"}, {id:"ct_36", ten:"Xử lý tin báo tố giác tội phạm", dv:"%"}, {id:"ct_37", ten:"Chỉ tiêu dân quân tự vệ", dv:"%"}, {id:"ct_38", ten:"Kết nạp đảng viên mới", dv:"Đ/v"}] }
         ];
 
-        // Tạo giao diện nhập liệu
-        const listContainer = document.getElementById('indicators-list');
-        listContainer.innerHTML = indicators.map(it => `
-            <div class="bg-slate-50 p-2 border rounded shadow-sm">
-                <label class="text-[9px] text-blue-700 leading-none mb-1">${it.ten}</label>
-                <div class="flex items-center gap-2">
-                    <input type="number" id="${it.id}" step="0.1" value="0" class="p-1 text-sm flex-1">
-                    <span class="text-[10px] font-bold text-slate-400 w-8">${it.dv}</span>
+        const container = document.getElementById('indicators-container');
+        container.innerHTML = groups.map(g => `
+            <div class="space-y-2">
+                <h3 class="text-[10px] font-black text-slate-400 uppercase border-b pb-1">${g.name}</h3>
+                <div class="grid grid-cols-1 gap-2">${g.items.map(it => `
+                    <div class="flex items-center gap-2 bg-slate-50 p-2 rounded border">
+                        <label class="text-[9px] font-bold text-slate-600 flex-1 leading-tight">${it.ten}</label>
+                        <div class="flex items-center gap-1 w-24">
+                            <input type="number" id="${it.id}" step="0.1" class="w-full p-1 text-xs font-bold text-blue-700"><span class="text-[9px] text-slate-400 font-bold">${it.dv}</span>
+                        </div>
+                    </div>`).join('')}
                 </div>
-            </div>
-        `).join('');
+            </div>`).join('');
 
         window.sumDonThu = () => {
-            const v1 = Number(document.getElementById('dt_pa_kn').value) || 0;
-            const v2 = Number(document.getElementById('dt_khieu_nai').value) || 0;
-            const v3 = Number(document.getElementById('dt_to_cao').value) || 0;
-            document.getElementById('display_dt_tong').innerText = (v1 + v2 + v3).toLocaleString('vi-VN');
+            const v = Number(document.getElementById('dt_pa_kn').value||0) + Number(document.getElementById('dt_khieu_nai').value||0) + Number(document.getElementById('dt_to_cao').value||0);
+            document.getElementById('display_dt_tong').innerText = v.toLocaleString('vi-VN');
         }
-
         window.calculateRate = () => {
-            const t = Number(document.getElementById('pa_1022_tong').value) || 0;
-            const x = Number(document.getElementById('pa_1022_xong').value) || 0;
+            const t = Number(document.getElementById('pa_1022_tong').value||0);
+            const x = Number(document.getElementById('pa_1022_xong').value||0);
             document.getElementById('display_ty_le').innerText = t > 0 ? ((x/t)*100).toFixed(1) + "%" : "0.0%";
         }
 
         onValue(rootRef, (snap) => {
             const d = snap.val(); if(!d) return;
-            // Load Đơn thư
             document.getElementById('dt_pa_kn').value = d.don_thu?.pa_kn || 0;
             document.getElementById('dt_khieu_nai').value = d.don_thu?.khieu_nai || 0;
             document.getElementById('dt_to_cao').value = d.don_thu?.to_cao || 0;
             sumDonThu();
             const det = d.don_thu_detail || {};
-            const fields = ['pa_dgq_th','pa_dgq_qh','kn_dgq_th','kn_dgq_qh','tc_dgq_th','tc_dgq_qh','pa_cgq_th','pa_cgq_qh','kn_cgq_th','kn_cgq_qh','tc_cgq_th','tc_cgq_qh'];
-            fields.forEach(f => document.getElementById(f).value = det[f] || 0);
-
-            // Load 1022
+            ['pa_dgq_th','pa_dgq_qh','kn_dgq_th','kn_dgq_qh','tc_dgq_th','tc_dgq_qh','pa_cgq_th','pa_cgq_qh','kn_cgq_th','kn_cgq_qh','tc_cgq_th','tc_cgq_qh'].forEach(f => document.getElementById(f).value = det[f]||0);
             document.getElementById('pa_1022_tong').value = d.pa_1022?.tong || 0;
             document.getElementById('pa_1022_xong').value = d.pa_1022?.da_giai_quyet || 0;
             calculateRate();
             const p_det = d.pa_1022_detail || {};
-            document.getElementById('pa_tieng_on').value = p_det.tieng_on || 0;
-            document.getElementById('pa_kinh_te').value = p_det.kinh_te_ha_tang || 0;
-            document.getElementById('pa_trat_tu').value = p_det.trat_tu_do_thi || 0;
-            document.getElementById('pa_van_hoa').value = p_det.van_hoa_xa_hoi || 0;
-            document.getElementById('pa_hcc').value = p_det.hanh_chinh_cong || 0;
-            document.getElementById('pa_khac').value = p_det.khac || 0;
-
-            // Load Hồ sơ
+            ['tieng_on','kinh_te','trat_tu','van_hoa','hcc','khac'].forEach(f => {
+                const el = document.getElementById('pa_'+f);
+                if(el) el.value = p_det[f==='kinh_te'?'kinh_te_ha_tang':f==='trat_tu'?'trat_tu_do_thi':f==='van_hoa'?'van_hoa_xa_hoi':f==='hcc'?'hanh_chinh_cong':f] || 0;
+            });
             document.getElementById('hs_tong').value = d.ho_so?.tong || 0;
-            document.getElementById('hs_da_guyet_quyet' || 'hs_da_giai_quyet').value = d.ho_so?.da_giai_quyet || 0;
+            document.getElementById('hs_da_giai_quyet').value = d.ho_so?.da_giai_quyet || 0;
             document.getElementById('hs_online').value = d.ho_so?.truc_tuyen || 0;
             document.getElementById('hs_dung_han_count').value = d.ho_so?.dung_han_count || 0;
             document.getElementById('vb_tong').value = d.van_ban?.tong || 0;
-
-            // Load 30 chỉ tiêu
-            for(let i=1; i<=30; i++) {
-                if(d.chi_tieu) document.getElementById(`ct_${i}`).value = d.chi_tieu[`ct_${i}`] || 0;
-            }
+            for(let i=1; i<=38; i++) { if(d.chi_tieu) document.getElementById(`ct_${i}`).value = d.chi_tieu[`ct_${i}`] || 0; }
         }, { onlyOnce: true });
 
         window.saveAll = () => {
-            const sum_da_gq = Number(document.getElementById('pa_dgq_th').value) + Number(document.getElementById('pa_dgq_qh').value) + 
-                             Number(document.getElementById('kn_dgq_th').value) + Number(document.getElementById('kn_dgq_qh').value) + 
-                             Number(document.getElementById('tc_dgq_th').value) + Number(document.getElementById('tc_dgq_qh').value);
+            const sum_da_gq = Number(document.getElementById('pa_dgq_th').value) + Number(document.getElementById('pa_dgq_qh').value) + Number(document.getElementById('kn_dgq_th').value) + Number(document.getElementById('kn_dgq_qh').value) + Number(document.getElementById('tc_dgq_th').value) + Number(document.getElementById('tc_dgq_qh').value);
             const sum_tong = Number(document.getElementById('dt_pa_kn').value) + Number(document.getElementById('dt_khieu_nai').value) + Number(document.getElementById('dt_to_cao').value);
-
             const data = {
-                don_thu: {
-                    tong: sum_tong, da_giai_quyet: sum_da_gq, dang_giai_quyet: sum_tong - sum_da_gq,
-                    pa_kn: Number(document.getElementById('dt_pa_kn').value), khieu_nai: Number(document.getElementById('dt_khieu_nai').value), to_cao: Number(document.getElementById('dt_to_cao').value)
-                },
-                don_thu_detail: {
-                    pa_dgq_th: Number(document.getElementById('pa_dgq_th').value), pa_dgq_qh: Number(document.getElementById('pa_dgq_qh').value),
-                    kn_dgq_th: Number(document.getElementById('kn_dgq_th').value), kn_dgq_qh: Number(document.getElementById('kn_dgq_qh').value),
-                    tc_dgq_th: Number(document.getElementById('tc_dgq_th').value), tc_dgq_qh: Number(document.getElementById('tc_dgq_qh').value),
-                    pa_cgq_th: Number(document.getElementById('pa_cgq_th').value), pa_cgq_qh: Number(document.getElementById('pa_cgq_qh').value),
-                    kn_cgq_th: Number(document.getElementById('kn_cgq_th').value), kn_cgq_qh: Number(document.getElementById('kn_cgq_qh').value),
-                    tc_cgq_th: Number(document.getElementById('tc_cgq_th').value), tc_cgq_qh: Number(document.getElementById('tc_cgq_qh').value)
-                },
-                pa_1022: {
-                    tong: Number(document.getElementById('pa_1022_tong').value), da_giai_quyet: Number(document.getElementById('pa_1022_xong').value),
-                    chua_giai_quyet: Number(document.getElementById('pa_1022_tong').value) - Number(document.getElementById('pa_1022_xong').value)
-                },
-                pa_1022_detail: {
-                    tieng_on: Number(document.getElementById('pa_tieng_on').value), kinh_te_ha_tang: Number(document.getElementById('pa_kinh_te').value),
-                    trat_tu_do_thi: Number(document.getElementById('pa_trat_tu').value), van_hoa_xa_hoi: Number(document.getElementById('pa_van_hoa').value),
-                    hanh_chinh_cong: Number(document.getElementById('pa_hcc').value), khac: Number(document.getElementById('pa_khac').value)
-                },
-                ho_so: {
-                    tong: Number(document.getElementById('hs_tong').value), da_giai_quyet: Number(document.getElementById('hs_da_giai_quyet').value),
-                    truc_tuyen: Number(document.getElementById('hs_online').value), dung_han_count: Number(document.getElementById('hs_dung_han_count').value)
-                },
+                don_thu: { tong: sum_tong, da_giai_quyet: sum_da_gq, dang_giai_quyet: sum_tong - sum_da_gq, pa_kn: Number(document.getElementById('dt_pa_kn').value), khieu_nai: Number(document.getElementById('dt_khieu_nai').value), to_cao: Number(document.getElementById('dt_to_cao').value) },
+                don_thu_detail: { pa_dgq_th: Number(document.getElementById('pa_dgq_th').value), pa_dgq_qh: Number(document.getElementById('pa_dgq_qh').value), kn_dgq_th: Number(document.getElementById('kn_dgq_th').value), kn_dgq_qh: Number(document.getElementById('kn_dgq_qh').value), tc_dgq_th: Number(document.getElementById('tc_dgq_th').value), tc_dgq_qh: Number(document.getElementById('tc_dgq_qh').value), pa_cgq_th: Number(document.getElementById('pa_cgq_th').value), pa_cgq_qh: Number(document.getElementById('pa_cgq_qh').value), kn_cgq_th: Number(document.getElementById('kn_cgq_th').value), kn_cgq_qh: Number(document.getElementById('kn_cgq_qh').value), tc_cgq_th: Number(document.getElementById('tc_cgq_th').value), tc_cgq_qh: Number(document.getElementById('tc_cgq_qh').value) },
+                pa_1022: { tong: Number(document.getElementById('pa_1022_tong').value), da_giai_quyet: Number(document.getElementById('pa_1022_xong').value), chua_giai_quyet: Number(document.getElementById('pa_1022_tong').value) - Number(document.getElementById('pa_1022_xong').value) },
+                pa_1022_detail: { tieng_on: Number(document.getElementById('pa_tieng_on').value), kinh_te_ha_tang: Number(document.getElementById('pa_kinh_te').value), trat_tu_do_thi: Number(document.getElementById('pa_trat_tu').value), van_hoa_xa_hoi: Number(document.getElementById('pa_van_hoa').value), hanh_chinh_cong: Number(document.getElementById('pa_hcc').value), khac: Number(document.getElementById('pa_khac').value) },
+                ho_so: { tong: Number(document.getElementById('hs_tong').value), da_giai_quyet: Number(document.getElementById('hs_da_giai_quyet').value), truc_tuyen: Number(document.getElementById('hs_online').value), dung_han_count: Number(document.getElementById('hs_dung_han_count').value) },
                 van_ban: { tong: Number(document.getElementById('vb_tong').value) },
                 chi_tieu: {}
             };
-            for(let i=1; i<=30; i++) data.chi_tieu[`ct_${i}`] = Number(document.getElementById(`ct_${i}`).value);
-            set(rootRef, data).then(() => alert("✅ Thành công: Số liệu đã cập nhật!")).catch(e => alert("❌ Lỗi: " + e));
+            for(let i=1; i<=38; i++) data.chi_tieu[`ct_${i}`] = Number(document.getElementById(`ct_${i}`).value);
+            set(rootRef, data).then(() => alert("✅ Thành công!")).catch(e => alert("❌ Lỗi: " + e));
         };
     </script>
 </body>
