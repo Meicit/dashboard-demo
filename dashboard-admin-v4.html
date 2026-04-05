@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hệ Thống Quản Trị - UBND Xã Bình Hưng</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f1f5f9; }
+        .card { background: white; border-radius: 12px; border: 1px solid #e2e8f0; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+        label { display: block; font-size: 10px; font-weight: 800; color: #64748b; text-transform: uppercase; margin-bottom: 4px; }
+        input { width: 100%; padding: 8px 12px; border: 1px solid #cbd5e1; border-radius: 6px; font-weight: 600; color: #1e293b; outline: none; }
+        input:focus { border-color: #3b82f6; ring: 2px ring-blue-100; }
+        .section-title { font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; border-left: 4px solid; padding-left: 12px; margin-bottom: 20px; }
+        .grid-header { background: #f1f5f9; padding: 8px; font-size: 11px; font-weight: 800; text-align: center; border-radius: 4px; }
+    </style>
+</head>
+<body class="p-4 md:p-8">
+    <div class="max-w-7xl mx-auto">
+        <header class="flex flex-col md:flex-row justify-between items-center mb-8 gap-4 border-b-2 border-slate-200 pb-6">
+            <div>
+                <h1 class="text-2xl font-black text-slate-800 uppercase italic">Cập nhật số liệu điều hành 2026</h1>
+                <p class="text-slate-500 text-sm font-bold uppercase tracking-widest">UBND Xã Bình Hưng</p>
+            </div>
+            <button onclick="saveAll()" class="w-full md:w-auto bg-blue-600 hover:bg-blue-700 text-white font-black py-4 px-12 rounded-xl shadow-lg transition-all active:scale-95">
+                💾 LƯU DỮ LIỆU HỆ THỐNG
+            </button>
+        </header>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+            
+            <div class="lg:col-span-8 space-y-8">
+                
+                <section class="card p-6 border-t-4 border-t-red-600">
+                    <h2 class="section-title text-red-600 border-red-600">📂 Chi tiết tình hình xử lý đơn thư</h2>
+                    <div class="bg-red-50 p-4 rounded-lg mb-6 border border-dashed border-red-200 text-center">
+                        <label class="text-red-700 text-xs">Tổng số đơn thư (Hệ thống tự cộng)</label>
+                        <div id="display_dt_tong" class="text-3xl font-black text-red-600">0</div>
+                    </div>
+
+                    <div class="grid grid-cols-4 gap-4">
+                        <div class="pt-8"><label class="text-right pr-2">Số lượng</label></div>
+                        <div class="space-y-2">
+                            <div class="grid-header text-blue-700 uppercase">Phản ánh, KN</div>
+                            <input type="number" id="dt_pa_kn" oninput="sumDonThu()">
+                        </div>
+                        <div class="space-y-2">
+                            <div class="grid-header text-blue-700 uppercase">Khiếu nại</div>
+                            <input type="number" id="dt_khieu_nai" oninput="sumDonThu()">
+                        </div>
+                        <div class="space-y-2">
+                            <div class="grid-header text-blue-700 uppercase">Tố cáo</div>
+                            <input type="number" id="dt_to_cao" oninput="sumDonThu()">
+                        </div>
+
+                        <div class="font-bold text-[11px] text-emerald-600 uppercase pt-4 italic">Đã giải quyết</div>
+                        <div class="grid grid-cols-2 gap-1">
+                            <div><label>Trong hạn</label><input type="number" id="pa_dgq_th"></div>
+                            <div><label class="text-red-400">Quá hạn</label><input type="number" id="pa_dgq_qh"></div>
+                        </div>
+                        <div class="grid grid-cols-2 gap-1">
+                            <div><label>Trong hạn</label><input type="number" id="kn_dgq_th"></div>
+                            <div><label class="text-red-400">Quá hạn</label><input type="number" id="kn_dgq_qh"></div>
+                        </div>
+                        <div class="grid grid-cols-2 gap-1">
+                            <div><label>Trong hạn</label><input type="number" id="tc_dgq_th"></div>
+                            <div><label class="text-red-400">Quá hạn</label><input type="number" id="tc_dgq_qh"></div>
+                        </div>
+
+                        <div class="font-bold text-[11px] text-orange-600 uppercase pt-4 italic">Chưa giải quyết</div>
+                        <div class="grid grid-cols-2 gap-1">
+                            <div><label>Trong hạn</label><input type="number" id="pa_cgq_th"></div>
+                            <div><label class="text-red-600">Quá hạn</label><input type="number" id="pa_cgq_qh"></div>
+                        </div>
+                        <div class="grid grid-cols-2 gap-1">
+                            <div><label>Trong hạn</label><input type="number" id="kn_cgq_th"></div>
+                            <div><label class="text-red-600">Quá hạn</label><input type="number" id="kn_cgq_qh"></div>
+                        </div>
+                        <div class="grid grid-cols-2 gap-1">
+                            <div><label>Trong hạn</label><input type="number" id="tc_cgq_th"></div>
+                            <div><label class="text-red-600">Quá hạn</label><input type="number" id="tc_cgq_qh"></div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="card p-6 border-t-4 border-t-orange-500">
+                    <h2 class="section-title text-orange-600 border-orange-500">📞 Phản ánh 1022</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                        <div class="p-4 bg-slate-50 rounded-lg border">
+                            <label>Tổng phản ánh</label>
+                            <input type="number" id="pa_1022_tong" oninput="calculateRate()">
+                        </div>
+                        <div class="p-4 bg-slate-50 rounded-lg border">
+                            <label>Đã xử lý</label>
+                            <input type="number" id="pa_1022_xong" oninput="calculateRate()">
+                        </div>
+                        <div class="p-4 bg-emerald-50 rounded-lg border border-emerald-200">
+                            <label class="text-emerald-700">Tỷ lệ hoàn thành</label>
+                            <div id="display_ty_le" class="text-2xl font-black text-emerald-600">0.0%</div>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-2 md:grid-cols-3 gap-4 border-t pt-6">
+                        <div><label>Tiếng ồn</label><input type="number" id="pa_tieng_on"></div>
+                        <div><label>Kinh tế & Đô thị</label><input type="number" id="pa_kinh_te"></div>
+                        <div><label>Trật tự đô thị</label><input type="number" id="pa_trat_tu"></div>
+                        <div><label>Văn hóa xã hội</label><input type="number" id="pa_van_hoa"></div>
+                        <div><label class="text-blue-600">Hành chính công</label><input type="number" id="pa_hcc" class="bg-blue-50"></div>
+                        <div><label>Khác</label><input type="number" id="pa_khac"></div>
+                    </div>
+                </section>
+            </div>
+
+            <div class="lg:col-span-4 space-y-8">
+                
+                <section class="card p-6 border-t-4 border-t-blue-700">
+                    <h2 class="section-title text-blue-700 border-blue-700">⚖️ Quản lý Hồ sơ TTHC</h2>
+                    <div class="grid grid-cols-1 gap-4">
+                        <div class="grid grid-cols-2 gap-4">
+                            <div><label>Tổng hồ sơ</label><input type="number" id="hs_tong" class="text-xl"></div>
+                            <div><label class="text-blue-600 font-bold">Đã giải quyết</label><input type="number" id="hs_da_giai_quyet" class="bg-blue-50"></div>
+                        </div>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div><label>Trực tuyến</label><input type="number" id="hs_online"></div>
+                            <div><label class="text-emerald-600 font-bold">Số Đúng hạn</label><input type="number" id="hs_dung_han_count" class="bg-emerald-50"></div>
+                        </div>
+                        <div class="pt-4 border-t">
+                            <label>Văn bản chỉ đạo</label>
+                            <input type="number" id="vb_tong" class="text-xl text-emerald-700">
+                        </div>
+                    </div>
+                </section>
+
+                <section class="card p-6 border-t-4 border-t-emerald-500">
+                    <h2 class="section-title text-emerald-600 border-emerald-500">📊 30 Chỉ tiêu (%)</h2>
+                    <div id="indicators-list" class="grid grid-cols-2 gap-2 max-h-[500px] overflow-y-auto pr-2">
+                        </div>
+                </section>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
+        import { getDatabase, ref, set, onValue } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyC7J3V97_gKwyAzpckTJm5j8hoMWU5aoFI",
+            authDomain: "dashboarb-xabinhhung.firebaseapp.com",
+            databaseURL: "https://dashboarb-xabinhhung-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "dashboarb-xabinhhung",
+            appId: "1:152638135861:web:128ac8d51c8357b6521b7c"
+        };
+
+        const db = getDatabase(initializeApp(firebaseConfig));
+        const rootRef = ref(db, 'dashboard_binhhung');
+
+        // Tạo 30 ô chỉ tiêu
+        const listContainer = document.getElementById('indicators-list');
+        for(let i=1; i<=30; i++) {
+            listContainer.innerHTML += `
+                <div class="flex items-center gap-2 bg-slate-50 p-1 border rounded shadow-sm">
+                    <span class="text-[9px] font-bold text-slate-400 w-6 text-center">#${i}</span>
+                    <input type="number" id="ct_${i}" step="0.1" value="0" class="p-1 text-xs">
+                </div>
+            `;
+        }
+
+        // Tự động tính tổng đơn thư
+        window.sumDonThu = () => {
+            const v1 = Number(document.getElementById('dt_pa_kn').value) || 0;
+            const v2 = Number(document.getElementById('dt_khieu_nai').value) || 0;
+            const v3 = Number(document.getElementById('dt_to_cao').value) || 0;
+            document.getElementById('display_dt_tong').innerText = (v1 + v2 + v3).toLocaleString('vi-VN');
+        }
+
+        // Tự động tính tỷ lệ 1022
+        window.calculateRate = () => {
+            const t = Number(document.getElementById('pa_1022_tong').value) || 0;
+            const x = Number(document.getElementById('pa_1022_xong').value) || 0;
+            document.getElementById('display_ty_le').innerText = t > 0 ? ((x/t)*100).toFixed(1) + "%" : "0.0%";
+        }
+
+        // Tải dữ liệu cũ
+        onValue(rootRef, (snap) => {
+            const d = snap.val(); if(!d) return;
+            
+            // Đơn thư
+            document.getElementById('dt_pa_kn').value = d.don_thu?.pa_kn || 0;
+            document.getElementById('dt_khieu_nai').value = d.don_thu?.khieu_nai || 0;
+            document.getElementById('dt_to_cao').value = d.don_thu?.to_cao || 0;
+            sumDonThu();
+
+            const det = d.don_thu_detail || {};
+            document.getElementById('pa_dgq_th').value = det.pa_dgq_th || 0;
+            document.getElementById('pa_dgq_qh').value = det.pa_dgq_qh || 0;
+            document.getElementById('kn_dgq_th').value = det.kn_dgq_th || 0;
+            document.getElementById('kn_dgq_qh').value = det.kn_dgq_qh || 0;
+            document.getElementById('tc_dgq_th').value = det.tc_dgq_th || 0;
+            document.getElementById('tc_dgq_qh').value = det.tc_dgq_qh || 0;
+            document.getElementById('pa_cgq_th').value = det.pa_cgq_th || 0;
+            document.getElementById('pa_cgq_qh').value = det.pa_cgq_qh || 0;
+            document.getElementById('kn_cgq_th').value = det.kn_cgq_th || 0;
+            document.getElementById('kn_cgq_qh').value = det.kn_cgq_qh || 0;
+            document.getElementById('tc_cgq_th').value = det.tc_cgq_th || 0;
+            document.getElementById('tc_cgq_qh').value = det.tc_cgq_qh || 0;
+
+            // 1022 & Khác
+            document.getElementById('pa_1022_tong').value = d.pa_1022?.tong || 0;
+            document.getElementById('pa_1022_xong').value = d.pa_1022?.da_giai_quyet || 0;
+            calculateRate();
+
+            const p_det = d.pa_1022_detail || {};
+            document.getElementById('pa_tieng_on').value = p_det.tieng_on || 0;
+            document.getElementById('pa_kinh_te').value = p_det.kinh_te_ha_tang || 0;
+            document.getElementById('pa_trat_tu').value = p_det.trat_tu_do_thi || 0;
+            document.getElementById('pa_van_hoa').value = p_det.van_hoa_xa_hoi || 0;
+            document.getElementById('pa_hcc').value = p_det.hanh_chinh_cong || 0;
+            document.getElementById('pa_khac').value = p_det.khac || 0;
+
+            // Hồ sơ TTHC (Load dữ liệu mới)
+            document.getElementById('hs_tong').value = d.ho_so?.tong || 0;
+            document.getElementById('hs_da_giai_quyet').value = d.ho_so?.da_giai_quyet || 0;
+            document.getElementById('hs_online').value = d.ho_so?.truc_tuyen || 0;
+            document.getElementById('hs_dung_han_count').value = d.ho_so?.dung_han_count || 0;
+            document.getElementById('vb_tong').value = d.van_ban?.tong || 0;
+
+            for(let i=1; i<=30; i++) {
+                if(d.chi_tieu) document.getElementById(`ct_${i}`).value = d.chi_tieu[`ct_${i}`] || 0;
+            }
+        }, { onlyOnce: true });
+
+        // Lưu dữ liệu
+        window.saveAll = () => {
+            const sum_da_gq = Number(document.getElementById('pa_dgq_th').value) + Number(document.getElementById('pa_dgq_qh').value) + 
+                             Number(document.getElementById('kn_dgq_th').value) + Number(document.getElementById('kn_dgq_qh').value) + 
+                             Number(document.getElementById('tc_dgq_th').value) + Number(document.getElementById('tc_dgq_qh').value);
+            
+            const sum_tong = Number(document.getElementById('dt_pa_kn').value) + 
+                            Number(document.getElementById('dt_khieu_nai').value) + 
+                            Number(document.getElementById('dt_to_cao').value);
+
+            const data = {
+                don_thu: {
+                    tong: sum_tong,
+                    da_giai_quyet: sum_da_gq,
+                    dang_giai_quyet: sum_tong - sum_da_gq,
+                    pa_kn: Number(document.getElementById('dt_pa_kn').value),
+                    khieu_nai: Number(document.getElementById('dt_khieu_nai').value),
+                    to_cao: Number(document.getElementById('dt_to_cao').value)
+                },
+                don_thu_detail: {
+                    pa_dgq_th: Number(document.getElementById('pa_dgq_th').value), pa_dgq_qh: Number(document.getElementById('pa_dgq_qh').value),
+                    kn_dgq_th: Number(document.getElementById('kn_dgq_th').value), kn_dgq_qh: Number(document.getElementById('kn_dgq_qh').value),
+                    tc_dgq_th: Number(document.getElementById('tc_dgq_th').value), tc_dgq_qh: Number(document.getElementById('tc_dgq_qh').value),
+                    pa_cgq_th: Number(document.getElementById('pa_cgq_th').value), pa_cgq_qh: Number(document.getElementById('pa_cgq_qh').value),
+                    kn_cgq_th: Number(document.getElementById('kn_cgq_th').value), kn_cgq_qh: Number(document.getElementById('kn_cgq_qh').value),
+                    tc_cgq_th: Number(document.getElementById('tc_cgq_th').value), tc_cgq_qh: Number(document.getElementById('tc_cgq_qh').value)
+                },
+                pa_1022: {
+                    tong: Number(document.getElementById('pa_1022_tong').value),
+                    da_giai_quyet: Number(document.getElementById('pa_1022_xong').value),
+                    chua_giai_quyet: Number(document.getElementById('pa_1022_tong').value) - Number(document.getElementById('pa_1022_xong').value)
+                },
+                pa_1022_detail: {
+                    tieng_on: Number(document.getElementById('pa_tieng_on').value),
+                    kinh_te_ha_tang: Number(document.getElementById('pa_kinh_te').value),
+                    trat_tu_do_thi: Number(document.getElementById('pa_trat_tu').value),
+                    van_hoa_xa_hoi: Number(document.getElementById('pa_van_hoa').value),
+                    hanh_chinh_cong: Number(document.getElementById('pa_hcc').value),
+                    khac: Number(document.getElementById('pa_khac').value)
+                },
+                ho_so: {
+                    tong: Number(document.getElementById('hs_tong').value),
+                    da_giai_quyet: Number(document.getElementById('hs_da_giai_quyet').value),
+                    truc_tuyen: Number(document.getElementById('hs_online').value),
+                    dung_han_count: Number(document.getElementById('hs_dung_han_count').value)
+                },
+                van_ban: { tong: Number(document.getElementById('vb_tong').value) },
+                chi_tieu: {}
+            };
+
+            for(let i=1; i<=30; i++) {
+                data.chi_tieu[`ct_${i}`] = Number(document.getElementById(`ct_${i}`).value);
+            }
+
+            set(rootRef, data).then(() => alert("✅ Thành công: Số liệu đã cập nhật!")).catch(e => alert("❌ Lỗi: " + e));
+        };
+    </script>
+</body>
+</html>

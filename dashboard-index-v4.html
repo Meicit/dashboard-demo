@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Điều Hành - UBND Xã Bình Hưng</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #ffffff; color: #1e293b; margin: 0; }
+        .carousel-track { display: flex; transition: transform 0.7s ease-in-out; width: 100%; }
+        .carousel-page { 
+            min-width: 100%; 
+            display: flex !important; 
+            flex-wrap: nowrap; 
+            flex-direction: row !important; 
+            padding: 1.5rem 1rem; 
+            gap: 10px;
+            justify-content: space-between;
+        }
+        .economic-section { 
+            background-color: #dcfce7; 
+            border: 1px solid #bbf7d0; 
+            border-radius: 1.5rem; 
+        }
+        .indicator-item { 
+            flex: 1; 
+            background-color: #1e293b; 
+            color: white;
+            padding: 15px 5px;
+            border-radius: 12px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 165px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
+            min-width: 0;
+        }
+        .modal-table td, .modal-table th { border: 1px solid #e2e8f0; padding: 10px; text-align: left; color: #1e293b; }
+        @media (max-width: 768px) {
+            .indicator-item { min-height: 140px; }
+            .carousel-page { gap: 5px; padding: 1rem 0.5rem; }
+        }
+    </style>
+</head>
+<body class="p-4 md:p-6">
+    <header class="mb-6 flex justify-between items-end border-b-2 border-blue-900 pb-4">
+        <div>
+            <h1 class="text-xl md:text-3xl font-black text-blue-900 uppercase italic">Hệ Thống Chỉ Số Điều Hành 2026</h1>
+            <p class="text-slate-500 font-bold uppercase tracking-widest text-[10px] md:text-xs">Ủy ban nhân dân xã Bình Hưng</p>
+        </div>
+        <div id="clock" class="text-xl md:text-3xl font-mono font-bold text-blue-700">00:00:00</div>
+    </header>
+
+    <section class="mb-8 economic-section overflow-hidden">
+        <div class="p-4 bg-white/40 flex justify-between items-center border-b border-green-200 px-4 md:px-6">
+            <h3 class="font-bold text-green-900 uppercase text-[10px] md:text-xs tracking-wider">📊 Chỉ tiêu KT-XH chủ yếu</h3>
+            <span id="page-num" class="font-mono text-[10px] font-bold text-green-700 bg-green-200/50 px-3 py-1 rounded-full border border-green-300">TRANG 1/6</span>
+        </div>
+        <div class="overflow-hidden">
+            <div id="carouselTrack" class="carousel-track"></div>
+        </div>
+    </section>
+
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 md:gap-6">
+        
+        <div onclick="openDonThuModal()" class="bg-white p-5 rounded-xl shadow-md border border-slate-200 border-t-4 border-red-500 cursor-pointer hover:bg-slate-50 transition-all">
+            <h4 class="text-xs font-bold text-slate-400 uppercase mb-4">📂 Đơn thư (Chi tiết)</h4>
+            <div class="space-y-3">
+                <div class="flex justify-between items-end">
+                    <span class="text-sm font-bold text-slate-600">Tổng số đơn:</span>
+                    <span id="dt_tong" class="text-3xl font-black text-blue-900">0</span>
+                </div>
+                <div class="grid grid-cols-2 gap-2 text-[11px] font-bold uppercase text-center">
+                    <div class="bg-emerald-50 p-2 rounded text-emerald-700">Đã xong: <span id="dt_da_giai_quyet" class="block text-lg">0</span></div>
+                    <div class="bg-orange-50 p-2 rounded text-orange-700">Đang xử lý: <span id="dt_dang_giai_quyet" class="block text-lg">0</span></div>
+                </div>
+            </div>
+        </div>
+
+        <div onclick="open1022Modal()" class="bg-white p-5 rounded-xl shadow-md border border-slate-200 border-t-4 border-orange-500 cursor-pointer hover:bg-slate-50 transition-all">
+            <h4 class="text-xs font-bold text-slate-400 uppercase mb-4">📞 Phản ánh 1022</h4>
+            <div class="space-y-2">
+                <div class="flex justify-between border-b pb-1">
+                    <span class="text-sm text-slate-600 font-bold">Tổng phản ánh:</span>
+                    <span id="pa_1022_tong" class="text-xl font-black text-orange-600">0</span>
+                </div>
+                <div class="text-[11px] font-bold">
+                    <div class="flex justify-between text-emerald-600 mb-1"><span>+ Đã giải quyết:</span><span id="pa_1022_xong">0</span></div>
+                    <div class="flex justify-between text-red-600"><span>+ Chưa giải quyết:</span><span id="pa_1022_cho">0</span></div>
+                </div>
+            </div>
+        </div>
+
+        <div onclick="openHoSoModal()" class="bg-white p-5 rounded-xl shadow-md border border-slate-200 border-t-4 border-blue-500 cursor-pointer hover:bg-slate-50 transition-all">
+            <div class="flex items-center gap-2 mb-2">
+                <span class="bg-blue-100 p-1 rounded text-lg">📋</span>
+                <h4 class="text-xs font-bold text-slate-400 uppercase">Hồ sơ TTHC</h4>
+            </div>
+            <div class="mb-2 space-y-1">
+                <div class="text-3xl font-black text-blue-900 leading-tight"><span id="hs_tong_hien_thi">0</span> hồ sơ</div>
+                <div class="text-sm font-bold text-slate-600">Đã GQ: <span id="hs_da_gq_hien_thi" class="text-blue-700">0</span></div>
+                <div class="text-sm font-bold text-slate-500">
+                    Đúng hạn: <span id="hs_dh_count_hien_thi">0</span> <span id="hs_dh_rate_hien_thi" class="text-emerald-600 text-xs font-black">(0%)</span>
+                </div>
+            </div>
+            <div class="pt-2 border-t text-[11px] font-bold text-slate-400">
+                Trực tuyến: <span id="hs_ol_count_hien_thi">0</span> <span id="hs_ol_rate_hien_thi" class="text-blue-600">(0%)</span>
+            </div>
+        </div>
+
+        <div class="bg-white p-5 rounded-xl shadow-md border border-slate-200 border-t-4 border-emerald-500 text-center flex flex-col justify-center">
+            <h4 class="text-xs font-bold text-slate-400 uppercase mb-4">⚖️ Văn bản chỉ đạo</h4>
+            <div id="vb_tong" class="text-5xl font-black text-emerald-700">0</div>
+        </div>
+    </div>
+
+    <div id="hoSoModal" class="fixed inset-0 bg-black/60 hidden z-50 flex items-center justify-center p-4 backdrop-blur-sm">
+        <div class="bg-slate-100 rounded-xl w-full max-w-5xl shadow-2xl overflow-hidden">
+            <div class="p-4 bg-white flex justify-between items-center border-b px-6">
+                <h2 class="font-bold text-slate-800 uppercase text-sm tracking-wide">Chi tiết Hồ sơ hành chính</h2>
+                <button onclick="closeHoSoModal()" class="text-3xl text-slate-400 leading-none">&times;</button>
+            </div>
+            <div class="p-6 grid grid-cols-1 md:grid-cols-5 gap-4">
+                <div class="bg-white p-5 rounded-lg border shadow-sm text-center">
+                    <div class="text-[10px] uppercase font-bold text-slate-400 mb-1">Tổng hồ sơ</div>
+                    <div id="m_hs_tong" class="text-2xl font-black text-slate-800">0</div>
+                    <div class="text-[10px] text-slate-400 font-bold mt-1">100%</div>
+                </div>
+                <div class="bg-blue-50 p-5 rounded-lg border border-blue-100 text-center">
+                    <div class="text-[10px] uppercase font-bold text-blue-600 mb-1">Đã giải quyết</div>
+                    <div id="m_hs_da_gq" class="text-2xl font-black text-blue-700 leading-tight">0</div>
+                    <div id="m_hs_da_gq_rate" class="text-[10px] text-blue-600 font-bold mt-1">0%</div>
+                </div>
+                <div class="bg-white p-5 rounded-lg border shadow-sm text-center">
+                    <div class="text-[10px] uppercase font-bold text-slate-400 mb-1">Trực tuyến</div>
+                    <div id="m_hs_online" class="text-2xl font-black text-blue-600 leading-tight">0</div>
+                    <div id="m_hs_online_rate" class="text-[10px] text-slate-400 font-bold mt-1">0%</div>
+                </div>
+                <div class="bg-emerald-100 p-5 rounded-lg border border-emerald-200 text-center">
+                    <div class="text-[10px] uppercase font-bold text-emerald-600 mb-1">Đúng hạn</div>
+                    <div id="m_hs_dung_han_count" class="text-2xl font-black text-emerald-700 leading-tight">0</div>
+                    <div id="m_hs_dung_han_rate" class="text-[10px] text-emerald-600 font-bold mt-1">0%</div>
+                </div>
+                <div class="bg-white p-5 rounded-lg border shadow-sm text-center">
+                    <div class="text-[10px] uppercase font-bold text-slate-400 mb-1">Quá hạn</div>
+                    <div id="m_hs_qua_han" class="text-2xl font-black text-red-600 leading-tight">0</div>
+                    <div id="m_hs_qua_han_rate" class="text-[10px] text-red-500 font-bold mt-1">0%</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="donThuModal" class="fixed inset-0 bg-black/60 hidden z-50 flex items-center justify-center p-2 md:p-4 backdrop-blur-sm">
+        <div class="bg-white rounded-xl w-full max-w-5xl overflow-hidden shadow-2xl">
+            <div class="p-4 bg-red-600 text-white flex justify-between items-center px-6">
+                <h2 class="font-bold uppercase text-sm tracking-wide">Bảng chi tiết tình hình xử lý đơn thư</h2>
+                <button onclick="closeDonThuModal()" class="text-3xl leading-none">&times;</button>
+            </div>
+            <div class="p-4 md:p-6 overflow-x-auto">
+                <table class="w-full modal-table text-[11px] md:text-sm border-collapse text-center text-slate-800">
+                    <tr class="bg-slate-50 font-bold text-left"><td colspan="4" class="text-lg py-4 text-blue-900 px-4">Tổng số đơn thư: <span id="modal_dt_tong">0</span></td></tr>
+                    <tr class="bg-slate-100 font-bold uppercase text-[10px]"><td>Loại đơn</td><td>Phản ánh, kiến nghị</td><td>Khiếu nại</td><td>Tố cáo</td></tr>
+                    <tr class="font-black text-blue-800 text-xl"><td class="bg-slate-50 text-[10px] font-bold text-slate-500 uppercase">Số lượng</td><td id="dt_sl_pa">0</td><td id="dt_sl_kn">0</td><td id="dt_sl_tc">0</td></tr>
+                    <tr><td class="font-bold bg-slate-50 text-emerald-700 uppercase text-[10px]">Đã giải quyết</td><td>Trong hạn: <span id="dt_dgq_th_pa">0</span><br>Quá hạn: <span id="dt_dgq_qh_pa" class="text-red-500">0</span></td><td>Trong hạn: <span id="dt_dgq_th_kn">0</span><br>Quá hạn: <span id="dt_dgq_qh_kn" class="text-red-500">0</span></td><td>Trong hạn: <span id="dt_dgq_th_tc">0</span><br>Quá hạn: <span id="dt_dgq_qh_tc" class="text-red-500">0</span></td></tr>
+                    <tr><td class="font-bold bg-slate-50 text-orange-700 uppercase text-[10px]">Chưa giải quyết</td><td>Trong hạn: <span id="dt_cgq_th_pa">0</span><br>Quá hạn: <span id="dt_cgq_qh_pa" class="text-red-600 font-black">0</span></td><td>Trong hạn: <span id="dt_cgq_th_kn">0</span><br>Quá hạn: <span id="dt_cgq_qh_kn" class="text-red-600 font-black">0</span></td><td>Trong hạn: <span id="dt_cgq_th_tc">0</span><br>Quá hạn: <span id="dt_cgq_qh_tc" class="text-red-600 font-black">0</span></td></tr>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal1022" class="fixed inset-0 bg-black/60 hidden z-50 flex items-center justify-center p-2 md:p-4 backdrop-blur-sm">
+        <div class="bg-white rounded-xl w-full max-w-4xl overflow-hidden shadow-2xl">
+            <div class="p-4 bg-orange-600 text-white flex justify-between items-center px-6">
+                <h2 class="font-bold uppercase text-sm tracking-wide">Chi tiết phản ánh 1022</h2>
+                <button onclick="close1022Modal()" class="text-3xl leading-none">&times;</button>
+            </div>
+            <div class="p-6 bg-slate-50">
+                <div class="grid grid-cols-3 gap-4 mb-6 text-center text-slate-800">
+                    <div class="bg-white p-4 rounded-lg shadow-sm border"><div class="text-[10px] text-slate-400 font-bold uppercase">Tổng phản ánh</div><div id="m1022_tong" class="text-3xl font-black">0</div></div>
+                    <div class="bg-white p-4 rounded-lg shadow-sm border"><div class="text-[10px] text-slate-400 font-bold uppercase">Đã xử lý</div><div id="m1022_xong" class="text-3xl font-black text-emerald-600">0</div></div>
+                    <div class="bg-emerald-50 p-4 rounded-lg shadow-sm border border-emerald-100"><div class="text-[10px] text-emerald-600 font-bold uppercase">Tỷ lệ</div><div id="m1022_ty_le" class="text-3xl font-black text-emerald-700">0%</div></div>
+                </div>
+                <div class="bg-white p-6 rounded-xl border text-slate-800">
+                    <h3 class="text-sm font-bold mb-6 uppercase border-b pb-2 italic">Phân loại phản ánh (6 nhóm)</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-5">
+                        <div><div class="flex justify-between text-xs font-bold mb-2"><span>Tiếng ồn</span><span id="pa_tieng_on">0</span></div><div class="bg-slate-100 h-2 rounded-full overflow-hidden"><div id="bar_tieng_on" class="bg-blue-500 h-full transition-all duration-500" style="width: 0%"></div></div></div>
+                        <div><div class="flex justify-between text-xs font-bold mb-2"><span>Kinh tế & Đô thị</span><span id="pa_kinh_te">0</span></div><div class="bg-slate-100 h-2 rounded-full overflow-hidden"><div id="bar_kinh_te" class="bg-emerald-500 h-full transition-all duration-500" style="width: 0%"></div></div></div>
+                        <div><div class="flex justify-between text-xs font-bold mb-2"><span>Trật tự đô thị</span><span id="pa_trat_tu">0</span></div><div class="bg-slate-100 h-2 rounded-full overflow-hidden"><div id="bar_trat_tu" class="bg-orange-500 h-full transition-all duration-500" style="width: 0%"></div></div></div>
+                        <div><div class="flex justify-between text-xs font-bold mb-2"><span>Văn hóa xã hội</span><span id="pa_van_hoa">0</span></div><div class="bg-slate-100 h-2 rounded-full overflow-hidden"><div id="bar_van_hoa" class="bg-purple-500 h-full transition-all duration-500" style="width: 0%"></div></div></div>
+                        <div><div class="flex justify-between text-xs font-bold mb-2 text-blue-600"><span>Hành chính công</span><span id="pa_hcc">0</span></div><div class="bg-slate-100 h-2 rounded-full overflow-hidden"><div id="bar_hcc" class="bg-cyan-500 h-full transition-all duration-500" style="width: 0%"></div></div></div>
+                        <div><div class="flex justify-between text-xs font-bold mb-2"><span>Khác</span><span id="pa_khac">0</span></div><div class="bg-slate-100 h-2 rounded-full overflow-hidden"><div id="bar_khac" class="bg-slate-400 h-full transition-all duration-500" style="width: 0%"></div></div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
+        import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyC7J3V97_gKwyAzpckTJm5j8hoMWU5aoFI",
+            authDomain: "dashboarb-xabinhhung.firebaseapp.com",
+            databaseURL: "https://dashboarb-xabinhhung-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "dashboarb-xabinhhung",
+            appId: "1:152638135861:web:128ac8d51c8357b6521b7c"
+        };
+
+        const db = getDatabase(initializeApp(firebaseConfig));
+        
+        const indicators = [
+            { id: "ct_1", ten: "Tốc độ tăng tổng giá trị SP", kh: "10.5%" }, { id: "ct_2", ten: "Tổng thu ngân sách nhà nước", kh: "100%" }, { id: "ct_3", ten: "Tỷ lệ giải ngân vốn ĐTC", kh: "≥95%" }, { id: "ct_4", ten: "Tỷ lệ dân số tham gia BHYT", kh: "≥95%" }, { id: "ct_5", ten: "Lao động tham gia BHXH", kh: "59.5%" },
+            { id: "ct_6", ten: "Trường Mầm non đạt chuẩn QG", kh: "27%" }, { id: "ct_7", ten: "Trường Tiểu học đạt chuẩn QG", kh: "32%" }, { id: "ct_8", ten: "Trường THCS đạt chuẩn QG", kh: "43%" }, { id: "ct_9", ten: "Số phòng học/10.000 dân", kh: "460" }, { id: "ct_10", ten: "Tỉ lệ hoàn thành cấp THCS", kh: "99%" },
+            { id: "ct_11", ten: "Giảm hộ nghèo đa chiều", kh: "-" }, { id: "ct_12", ten: "Tiêu chí đạt chuẩn NTM", kh: "≥3" }, { id: "ct_13", ten: "Tỷ lệ ấp văn hóa", kh: "95%" }, { id: "ct_14", ten: "Tỷ lệ gia đình văn hóa", kh: "93%" }, { id: "ct_15", ten: "Trẻ em tiêm chủng đầy đủ", kh: "≥95%" },
+            { id: "ct_16", ten: "Lao động được giới thiệu việc làm", kh: "1000" }, { id: "ct_17", ten: "Mô hình du lịch địa phương", kh: "01" }, { id: "ct_18", ten: "Tỷ lệ dân số dùng nước sạch", kh: "100%" }, { id: "ct_19", ten: "Thu gom chất thải rắn sinh hoạt", kh: "100%" }, { id: "ct_20", ten: "Chất thải y tế xử lý đạt chuẩn", kh: "100%" },
+            { id: "ct_21", ten: "Xử lý nước thải công nghiệp", kh: "100%" }, { id: "ct_22", ten: "Giải quyết hồ sơ đúng hạn", kh: "99.51%" }, { id: "ct_23", ten: "Sử dụng chữ ký số công vụ", kh: "100%" }, { id: "ct_24", ten: "Tuyển chọn gọi công dân nhập ngũ", kh: "31" }, { id: "ct_25", ten: "Giảm tội phạm trật tự xã hội", kh: "-10%" },
+            { id: "ct_26", ten: "Tỷ lệ khám phá án hình sự", kh: ">80%" }, { id: "ct_27", ten: "Kéo giảm tai nạn giao thông", kh: "-5%" }, { id: "ct_28", ten: "Không xảy ra cháy nổ nghiêm trọng", kh: "0" }, { id: "ct_29", ten: "Địa phương không phức tạp ma túy", kh: "Đạt" }, { id: "ct_30", ten: "Xử lý phản ánh đúng hạn", kh: "≥50%" }
+        ];
+
+        onValue(ref(db, 'dashboard_binhhung'), (snap) => {
+            const data = snap.val(); if(!data) return;
+
+            // 1. CAROUSEL CHỈ TIÊU
+            if(data.chi_tieu) {
+                indicators.forEach(it => { it.th = data.chi_tieu[it.id] || 0; });
+                renderUI();
+            }
+
+            // 2. HỒ SƠ TTHC (LOGIC TÍNH TOÁN & HIỂN THỊ CHI TIẾT)
+            const hs = data.ho_so || {};
+            const hs_tong = hs.tong || 0;
+            const hs_dh_count = hs.dung_han_count || 0;
+            const hs_ol_count = hs.truc_tuyen || 0;
+            const hs_da_gq = hs.da_giai_quyet || 0;
+
+            const rate_dh = hs_tong > 0 ? ((hs_dh_count / hs_tong) * 100).toFixed(1) : 0;
+            const rate_ol = hs_tong > 0 ? ((hs_ol_count / hs_tong) * 100).toFixed(1) : 0;
+            const rate_gq = hs_tong > 0 ? ((hs_da_gq / hs_tong) * 100).toFixed(1) : 0;
+            const rate_qh = hs_tong > 0 ? (((hs_tong - hs_dh_count) / hs_tong) * 100).toFixed(1) : 0;
+
+            // Thẻ chính
+            document.getElementById('hs_tong_hien_thi').innerText = hs_tong.toLocaleString('vi-VN');
+            document.getElementById('hs_da_gq_hien_thi').innerText = hs_da_gq.toLocaleString('vi-VN');
+            document.getElementById('hs_dh_count_hien_thi').innerText = hs_dh_count.toLocaleString('vi-VN');
+            document.getElementById('hs_dh_rate_hien_thi').innerText = `(${rate_dh}%)`;
+            document.getElementById('hs_ol_count_hien_thi').innerText = hs_ol_count.toLocaleString('vi-VN');
+            document.getElementById('hs_ol_rate_hien_thi').innerText = `(${rate_ol}%)`;
+
+            // Modal chi tiết (Dạng: Số lượng - Xuống dòng - Tỷ lệ %)
+            document.getElementById('m_hs_tong').innerText = hs_tong.toLocaleString('vi-VN');
+            
+            document.getElementById('m_hs_da_gq').innerText = hs_da_gq.toLocaleString('vi-VN');
+            document.getElementById('m_hs_da_gq_rate').innerText = rate_gq + "%";
+            
+            document.getElementById('m_hs_online').innerText = hs_ol_count.toLocaleString('vi-VN');
+            document.getElementById('m_hs_online_rate').innerText = rate_ol + "%";
+            
+            document.getElementById('m_hs_dung_han_count').innerText = hs_dh_count.toLocaleString('vi-VN');
+            document.getElementById('m_hs_dung_han_rate').innerText = rate_dh + "%";
+            
+            document.getElementById('m_hs_qua_han').innerText = (hs_tong - hs_dh_count).toLocaleString('vi-VN');
+            document.getElementById('m_hs_qua_han_rate').innerText = rate_qh + "%";
+
+            // 3. ĐƠN THƯ
+            const summary = data.don_thu || {};
+            document.getElementById('dt_tong').innerText = summary.tong || 0;
+            document.getElementById('dt_da_giai_quyet').innerText = summary.da_giai_quyet || 0;
+            document.getElementById('dt_dang_giai_quyet').innerText = summary.dang_giai_quyet || 0;
+            const det = data.don_thu_detail || {};
+            document.getElementById('modal_dt_tong').innerText = summary.tong || 0;
+            document.getElementById('dt_sl_pa').innerText = summary.pa_kn || 0;
+            document.getElementById('dt_sl_kn').innerText = summary.khieu_nai || 0;
+            document.getElementById('dt_sl_tc').innerText = summary.to_cao || 0;
+            document.getElementById('dt_dgq_th_pa').innerText = det.pa_dgq_th || 0;
+            document.getElementById('dt_dgq_qh_pa').innerText = det.pa_dgq_qh || 0;
+            document.getElementById('dt_dgq_th_kn').innerText = det.kn_dgq_th || 0;
+            document.getElementById('dt_dgq_qh_kn').innerText = det.kn_dgq_qh || 0;
+            document.getElementById('dt_dgq_th_tc').innerText = det.tc_dgq_th || 0;
+            document.getElementById('dt_dgq_qh_tc').innerText = det.tc_dgq_qh || 0;
+            document.getElementById('dt_cgq_th_pa').innerText = det.pa_cgq_th || 0;
+            document.getElementById('dt_cgq_qh_pa').innerText = det.pa_cgq_qh || 0;
+            document.getElementById('dt_cgq_th_kn').innerText = det.kn_cgq_th || 0;
+            document.getElementById('dt_cgq_qh_kn').innerText = det.kn_cgq_qh || 0;
+            document.getElementById('dt_cgq_th_tc').innerText = det.tc_cgq_th || 0;
+            document.getElementById('dt_cgq_qh_tc').innerText = det.tc_cgq_qh || 0;
+
+            // 4. 1022
+            const pa1022 = data.pa_1022 || {}; const tPA = pa1022.tong || 1;
+            document.getElementById('pa_1022_tong').innerText = pa1022.tong || 0;
+            document.getElementById('pa_1022_xong').innerText = pa1022.da_giai_quyet || 0;
+            document.getElementById('pa_1022_cho').innerText = pa1022.chua_giai_quyet || 0;
+            document.getElementById('m1022_tong').innerText = pa1022.tong || 0;
+            document.getElementById('m1022_xong').innerText = pa1022.da_giai_quyet || 0;
+            document.getElementById('m1022_ty_le').innerText = ((pa1022.da_giai_quyet || 0) / tPA * 100).toFixed(1) + "%";
+            
+            const d1022 = data.pa_1022_detail || {};
+            const mapPA = [{id:'tieng_on', v:d1022.tieng_on},{id:'kinh_te', v:d1022.kinh_te_ha_tang},{id:'trat_tu', v:d1022.trat_tu_do_thi},{id:'van_hoa', v:d1022.van_hoa_xa_hoi},{id:'hcc', v:d1022.hanh_chinh_cong},{id:'khac', v:d1022.khac}];
+            mapPA.forEach(m => {
+                const txt = document.getElementById(`pa_${m.id}`); const bar = document.getElementById(`bar_${m.id}`);
+                if(txt) txt.innerText = m.v || 0; if(bar) bar.style.width = ((m.v || 0) / tPA * 100) + "%";
+            });
+
+            // 5. VĂN BẢN
+            document.getElementById('vb_tong').innerText = data.van_ban?.tong || 0;
+        });
+
+        // RENDER CAROUSEL
+        let curPage = 0;
+        function renderUI() {
+            const track = document.getElementById('carouselTrack'); track.innerHTML = '';
+            for(let i=0; i < 6; i++) {
+                const page = document.createElement('div'); page.className = 'carousel-page';
+                page.innerHTML = indicators.slice(i*5, (i+1)*5).map(it => `
+                    <div class="indicator-item">
+                        <div class="text-[9px] uppercase font-bold text-slate-400 mb-1 leading-tight h-8 flex items-center justify-center text-center px-1">${it.ten}</div>
+                        <div class="text-3xl md:text-5xl font-black text-white">${it.th}%</div>
+                        <div class="text-[11px] md:text-[12px] mt-2 text-emerald-400 font-black uppercase italic tracking-tighter">Chỉ tiêu: ${it.kh}</div>
+                    </div>
+                `).join('');
+                track.appendChild(page);
+            }
+        }
+        setInterval(() => {
+            curPage = (curPage + 1) % 6;
+            const track = document.getElementById('carouselTrack');
+            if(track) track.style.transform = `translateX(-${curPage*100}%)`;
+            document.getElementById('page-num').innerText = `TRANG ${curPage+1}/6`;
+        }, 10000);
+
+        // MODALS
+        window.openDonThuModal = () => document.getElementById('donThuModal').classList.remove('hidden');
+        window.closeDonThuModal = () => document.getElementById('donThuModal').classList.add('hidden');
+        window.open1022Modal = () => document.getElementById('modal1022').classList.remove('hidden');
+        window.close1022Modal = () => document.getElementById('modal1022').classList.add('hidden');
+        window.openHoSoModal = () => document.getElementById('hoSoModal').classList.remove('hidden');
+        window.closeHoSoModal = () => document.getElementById('hoSoModal').classList.add('hidden');
+        setInterval(() => document.getElementById('clock').innerText = new Date().toLocaleTimeString('vi-VN'), 1000);
+    </script>
+</body>
+</html>
