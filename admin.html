@@ -3,59 +3,90 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quản trị Hệ thống - UBND Xã Bình Hưng</title>
+    <title>Hệ Thống Quản Trị - UBND Xã Bình Hưng</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Inter', sans-serif; background-color: #f1f5f9; margin: 0; display: flex; height: 100vh; overflow: hidden; }
+        
+        /* Sidebar Styles */
         .sidebar { width: 280px; background-color: #0f172a; color: white; display: flex; flex-direction: column; flex-shrink: 0; }
-        .nav-item { padding: 14px 24px; cursor: pointer; transition: all 0.2s; border-left: 4px solid transparent; color: #94a3b8; font-weight: 600; font-size: 13px; }
+        .nav-item { 
+            padding: 14px 24px; cursor: pointer; transition: all 0.2s; 
+            border-left: 4px solid transparent; color: #94a3b8; font-weight: 600; font-size: 14px;
+        }
         .nav-item:hover { background-color: #1e293b; color: white; }
         .nav-item.active { background-color: #1e293b; color: white; border-left-color: #3b82f6; }
+
+        /* Main Content Area */
         .main-wrapper { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
         .content-body { flex: 1; overflow-y: auto; padding: 32px; }
         .tab-panel { display: none; animation: fadeIn 0.3s ease; }
         .tab-panel.active { display: block; }
+
         @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
-        .card { background: white; border-radius: 12px; border: 1px solid #e2e8f0; padding: 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+
+        /* Input Styling */
+        .card { background: white; border-radius: 12px; border: 1px solid #e2e8f0; padding: 24px; shadow: 0 1px 3px rgba(0,0,0,0.1); }
         label { display: block; font-size: 10px; font-weight: 800; color: #64748b; text-transform: uppercase; margin-bottom: 4px; }
         input { width: 100%; padding: 8px 12px; border: 1px solid #cbd5e1; border-radius: 6px; font-weight: 600; color: #1e293b; outline: none; }
+        input:focus { border-color: #3b82f6; ring: 2px ring-blue-100; }
+        .grid-header { background: #f1f5f9; padding: 8px; font-size: 11px; font-weight: 800; text-align: center; border-radius: 4px; }
         .section-title { font-weight: 800; text-transform: uppercase; border-left: 4px solid #3b82f6; padding-left: 12px; margin-bottom: 20px; color: #1e293b; }
     </style>
 </head>
 <body>
+
     <aside class="sidebar shadow-2xl">
         <div class="p-8 border-b border-slate-800">
             <h2 class="text-xl font-black text-blue-500 italic uppercase">Quản trị 2026</h2>
+            <p class="text-[10px] text-slate-500 font-bold uppercase tracking-widest mt-1">Cập nhật số liệu hệ thống</p>
         </div>
+        
         <nav class="flex-1 mt-6">
             <div class="nav-item active" onclick="showTab('tab-don-thu', this)">📂 Quản lý Đơn thư</div>
             <div class="nav-item" onclick="showTab('tab-1022', this)">📞 Phản ánh 1022</div>
-            <div class="nav-item" onclick="showTab('tab-tthc', this)">📋 Hồ sơ hành chính</div>
-            <div class="nav-item" onclick="showTab('tab-van-ban', this)">⚖️ Văn bản chỉ đạo</div>
+            <div class="nav-item" onclick="showTab('tab-tthc', this)">⚖️ Hồ sơ & Văn bản</div>
             <div class="nav-item" onclick="showTab('tab-chi-tieu', this)">📊 38 Chỉ tiêu KT-XH</div>
         </nav>
+
         <div class="p-6 border-t border-slate-800">
-            <button onclick="saveAll()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-black py-3 rounded-xl shadow-lg uppercase text-sm">💾 Lưu dữ liệu</button>
+            <button onclick="saveAll()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-black py-3 rounded-xl shadow-lg transition-all active:scale-95 text-sm uppercase">
+                💾 Lưu dữ liệu
+            </button>
         </div>
     </aside>
 
     <div class="main-wrapper">
         <header class="bg-white border-b p-4 px-8 flex justify-between items-center shadow-sm">
             <h2 id="header-title" class="text-lg font-black text-slate-800 uppercase italic">Quản lý Đơn thư</h2>
+            <div class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">UBND Xã Bình Hưng</div>
         </header>
+
         <div class="content-body">
+            
             <div id="tab-don-thu" class="tab-panel active">
                 <section class="card border-t-4 border-red-600">
-                    <h2 class="section-title">📂 Tình hình xử lý đơn thư</h2>
+                    <h2 class="section-title">📂 Chi tiết tình hình xử lý đơn thư</h2>
                     <div class="bg-red-50 p-4 rounded-lg mb-6 border border-dashed border-red-200 text-center">
-                        <label>Tổng số đơn thư</label>
+                        <label class="text-red-700">Tổng số đơn thư (Tự cộng)</label>
                         <div id="display_dt_tong" class="text-3xl font-black text-red-600">0</div>
                     </div>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                        <div><label>Phản ánh, KN</label><input type="number" id="dt_pa_kn" oninput="sumDonThu()"></div>
-                        <div><label>Khiếu nại</label><input type="number" id="dt_khieu_nai" oninput="sumDonThu()"></div>
-                        <div><label>Tố cáo</label><input type="number" id="dt_to_cao" oninput="sumDonThu()"></div>
+                    <div class="grid grid-cols-4 gap-4">
+                        <div class="pt-8"><label class="text-right pr-2">Số lượng</label></div>
+                        <div class="space-y-2"><div class="grid-header text-blue-700 uppercase">Phản ánh, KN</div><input type="number" id="dt_pa_kn" oninput="sumDonThu()"></div>
+                        <div class="space-y-2"><div class="grid-header text-blue-700 uppercase">Khiếu nại</div><input type="number" id="dt_khieu_nai" oninput="sumDonThu()"></div>
+                        <div class="space-y-2"><div class="grid-header text-blue-700 uppercase">Tố cáo</div><input type="number" id="dt_to_cao" oninput="sumDonThu()"></div>
+
+                        <div class="font-bold text-[11px] text-emerald-600 uppercase pt-4 italic">Đã giải quyết</div>
+                        <div class="grid grid-cols-2 gap-1"><div><label>Trong hạn</label><input type="number" id="pa_dgq_th"></div><div><label class="text-red-400">Quá hạn</label><input type="number" id="pa_dgq_qh"></div></div>
+                        <div class="grid grid-cols-2 gap-1"><div><label>Trong hạn</label><input type="number" id="kn_dgq_th"></div><div><label class="text-red-400">Quá hạn</label><input type="number" id="kn_dgq_qh"></div></div>
+                        <div class="grid grid-cols-2 gap-1"><div><label>Trong hạn</label><input type="number" id="tc_dgq_th"></div><div><label class="text-red-400">Quá hạn</label><input type="number" id="tc_dgq_qh"></div></div>
+
+                        <div class="font-bold text-[11px] text-orange-600 uppercase pt-4 italic">Chưa giải quyết</div>
+                        <div class="grid grid-cols-2 gap-1"><div><label>Trong hạn</label><input type="number" id="pa_cgq_th"></div><div><label class="text-red-600">Quá hạn</label><input type="number" id="pa_cgq_qh"></div></div>
+                        <div class="grid grid-cols-2 gap-1"><div><label>Trong hạn</label><input type="number" id="kn_cgq_th"></div><div><label class="text-red-600">Quá hạn</label><input type="number" id="kn_cgq_qh"></div></div>
+                        <div class="grid grid-cols-2 gap-1"><div><label>Trong hạn</label><input type="number" id="tc_cgq_th"></div><div><label class="text-red-600">Quá hạn</label><input type="number" id="tc_cgq_qh"></div></div>
                     </div>
                 </section>
             </div>
@@ -63,48 +94,65 @@
             <div id="tab-1022" class="tab-panel">
                 <section class="card border-t-4 border-orange-500">
                     <h2 class="section-title">📞 Phản ánh 1022</h2>
-                    <div class="grid grid-cols-2 gap-6">
-                        <div><label>Tổng phản ánh</label><input type="number" id="pa_1022_tong" oninput="calculateRate()"></div>
-                        <div><label>Đã xử lý</label><input type="number" id="pa_1022_xong" oninput="calculateRate()"></div>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                        <div class="p-4 bg-slate-50 rounded-lg border"><label>Tổng phản ánh</label><input type="number" id="pa_1022_tong" oninput="calculateRate()"></div>
+                        <div class="p-4 bg-slate-50 rounded-lg border"><label>Đã xử lý</label><input type="number" id="pa_1022_xong" oninput="calculateRate()"></div>
+                        <div class="p-4 bg-emerald-50 rounded-lg border border-emerald-200 text-center"><label class="text-emerald-700">Tỷ lệ</label><div id="display_ty_le" class="text-2xl font-black text-emerald-600">0.0%</div></div>
+                    </div>
+                    <div class="grid grid-cols-2 md:grid-cols-3 gap-4 border-t pt-6">
+                        <div><label>Tiếng ồn</label><input type="number" id="pa_tieng_on"></div>
+                        <div><label>Kinh tế & Đô thị</label><input type="number" id="pa_kinh_te"></div>
+                        <div><label>Trật tự đô thị</label><input type="number" id="pa_trat_tu"></div>
+                        <div><label>Văn hóa xã hội</label><input type="number" id="pa_van_hoa"></div>
+                        <div><label class="text-blue-600 font-bold">Hành chính công</label><input type="number" id="pa_hcc" class="bg-blue-50"></div>
+                        <div><label>Khác</label><input type="number" id="pa_khac"></div>
                     </div>
                 </section>
             </div>
 
             <div id="tab-tthc" class="tab-panel">
-                <section class="card border-t-4 border-blue-500">
-                    <h2 class="section-title">📋 Kết quả thực hiện hồ sơ hành chính</h2>
-                    <div class="grid grid-cols-2 gap-6">
-                        <div><label>Tổng tiếp nhận</label><input type="number" id="hs_tong"></div>
-                        <div><label>Đã giải quyết</label><input type="number" id="hs_da_giai_quyet"></div>
-                        <div><label>Trực tuyến</label><input type="number" id="hs_online"></div>
-                        <div><label>Đúng hạn</label><input type="number" id="hs_dung_han_count"></div>
+                <section class="card border-t-4 border-blue-700">
+                    <h2 class="section-title">⚖️ Quản lý Hồ sơ & Văn bản</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div class="space-y-4">
+                            <h3 class="text-xs font-bold text-slate-400 uppercase">Thống kê hồ sơ</h3>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div><label>Tổng hồ sơ</label><input type="number" id="hs_tong"></div>
+                                <div><label>Đã giải quyết</label><input type="number" id="hs_da_giai_quyet" class="bg-blue-50"></div>
+                            </div>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div><label>Trực tuyến</label><input type="number" id="hs_online"></div>
+                                <div><label>Số Đúng hạn</label><input type="number" id="hs_dung_han_count" class="bg-emerald-50"></div>
+                            </div>
+                        </div>
+                        <div class="space-y-4 border-l pl-8">
+                            <h3 class="text-xs font-bold text-slate-400 uppercase">Văn bản</h3>
+                            <div><label>Tổng văn bản chỉ đạo</label><input type="number" id="vb_tong" class="text-2xl font-black text-emerald-700"></div>
+                        </div>
                     </div>
                 </section>
             </div>
 
-            <div id="tab-van-ban" class="tab-panel">
+            <div id="tab-chi-tieu" class="tab-panel">
                 <section class="card border-t-4 border-emerald-500">
-                    <h2 class="section-title">⚖️ Quản lý văn bản chỉ đạo</h2>
-                    <div><label>Tổng số văn bản</label><input type="number" id="vb_tong" class="text-3xl font-black text-emerald-700"></div>
+                    <h2 class="section-title">📊 38 Chỉ tiêu KT-XH</h2>
+                    <div id="indicators-list" class="grid grid-cols-1 md:grid-cols-2 gap-3 max-h-[600px] overflow-y-auto pr-2">
+                        </div>
                 </section>
             </div>
 
-            <div id="tab-chi-tieu" class="tab-panel">
-                <section class="card border-t-4 border-slate-500">
-                    <h2 class="section-title">📊 38 Chỉ tiêu KT-XH</h2>
-                    <div id="indicators-list" class="grid grid-cols-1 md:grid-cols-2 gap-3"></div>
-                </section>
-            </div>
         </div>
     </div>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
         import { getDatabase, ref, set, onValue } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-database.js";
+        
         const firebaseConfig = { apiKey: "AIzaSyCjS8jJtoV5HLcYIpVTX1zP5DbyYmXsbh4", authDomain: "dashboard-demo-ce0da.firebaseapp.com", databaseURL: "https://dashboard-demo-ce0da-default-rtdb.asia-southeast1.firebasedatabase.app", projectId: "dashboard-demo-ce0da", appId: "1:969593884637:web:47d4e6b03a51e7dcfbb034" };
         const db = getDatabase(initializeApp(firebaseConfig));
         const rootRef = ref(db, 'dashboard_binhhung');
 
+        // CHUYỂN TAB
         window.showTab = (id, el) => {
             document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
             document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
@@ -113,29 +161,37 @@
             document.getElementById('header-title').innerText = el.innerText;
         };
 
+        // RENDER 38 CHỈ TIÊU
         const indicators = [
             {id:"ct_1", ten:"Tăng trưởng GTSC", dv:"%"}, {id:"ct_2", ten:"Thu ngân sách", dv:"Tr.đ"}, {id:"ct_3", ten:"Giải ngân ĐTC", dv:"%"},
-            {id:"ct_4", ten:"BHYT", dv:"%"}, {id:"ct_5", ten:"BHXH", dv:"%"}, {id:"ct_6", ten:"Mầm non chuẩn", dv:"%"}, {id:"ct_7", ten:"Tiểu học chuẩn", dv:"%"}, {id:"ct_8", ten:"THCS chuẩn", dv:"%"},
-            {id:"ct_9", ten:"Phòng học/10k", dv:"P"}, {id:"ct_10", ten:"HT THCS", dv:"%"}, {id:"ct_11", ten:"Hộ nghèo", dv:"H"}, {id:"ct_12", ten:"Chuẩn NTM", dv:"TC"}, {id:"ct_13", ten:"Ấp VH", dv:"%"},
-            {id:"ct_14", ten:"GĐ VH", dv:"%"}, {id:"ct_15", ten:"Tiêm chủng", dv:"%"}, {id:"ct_16", ten:"Việc làm", dv:"Ng"}, {id:"ct_17", ten:"Du lịch", dv:"MH"}, {id:"ct_18", ten:"Nước sạch", dv:"%"},
-            {id:"ct_19", ten:"Rác thải", dv:"%"}, {id:"ct_20", ten:"Rác y tế", dv:"%"}, {id:"ct_21", ten:"Nước thải", dv:"%"}, {id:"ct_22", ten:"HS đúng hạn", dv:"%"}, {id:"ct_23", ten:"Chữ ký số", dv:"%"},
-            {id:"ct_24", ten:"Nhập ngũ", dv:"Ng"}, {id:"ct_25", ten:"Tội phạm", dv:"%"}, {id:"ct_26", ten:"Phá án", dv:"%"}, {id:"ct_27", ten:"TNGT", dv:"%"}, {id:"ct_28", ten:"Cháy nổ", dv:"V"},
-            {id:"ct_29", ten:"Ma túy", dv:"Đ"}, {id:"ct_30", ten:"Phản ánh 1022", dv:"%"}, {id:"ct_31", ten:"Văn bản ĐT", dv:"%"}, {id:"ct_32", ten:"Số hóa TTHC", dv:"%"}, {id:"ct_33", ten:"TT Online", dv:"%"},
-            {id:"ct_34", ten:"Hòa giải", dv:"%"}, {id:"ct_35", ten:"PCCC", dv:"%"}, {id:"ct_36", ten:"Tin báo TP", dv:"%"}, {id:"ct_37", ten:"DQTV", dv:"%"}, {id:"ct_38", ten:"Đảng viên", dv:"Đ/v"}
+            {id:"ct_4", ten:"Tham gia BHYT", dv:"%"}, {id:"ct_5", ten:"Tham gia BHXH", dv:"%"}, {id:"ct_6", ten:"Mầm non chuẩn QG", dv:"%"}, {id:"ct_7", ten:"Tiểu học chuẩn QG", dv:"%"}, {id:"ct_8", ten:"THCS chuẩn QG", dv:"%"}, {id:"ct_9", ten:"Phòng học/10k dân", dv:"P"}, {id:"ct_10", ten:"Hoàn thành THCS", dv:"%"}, {id:"ct_11", ten:"Giảm hộ nghèo", dv:"H"}, {id:"ct_12", ten:"Chuẩn NTM", dv:"TC"}, {id:"ct_13", ten:"Ấp văn hóa", dv:"%"}, {id:"ct_14", ten:"GĐ văn hóa", dv:"%"}, {id:"ct_15", ten:"Tiêm chủng đủ", dv:"%"}, {id:"ct_16", ten:"GT việc làm", dv:"Ng"}, {id:"ct_17", ten:"Mô hình du lịch", dv:"MH"}, {id:"ct_18", ten:"Nước sạch", dv:"%"}, {id:"ct_19", ten:"Rác sinh hoạt", dv:"%"}, {id:"ct_20", ten:"Rác y tế", dv:"%"}, {id:"ct_21", ten:"Nước thải CN", dv:"%"}, {id:"ct_22", ten:"Hồ sơ đúng hạn", dv:"%"}, {id:"ct_23", ten:"Chữ ký số", dv:"%"}, {id:"ct_24", ten:"Nhập ngũ", dv:"Ng"}, {id:"ct_25", ten:"Giảm tội phạm", dv:"%"}, {id:"ct_26", ten:"Khám phá án", dv:"%"}, {id:"ct_27", ten:"Giảm TNGT", dv:"%"}, {id:"ct_28", ten:"Cháy nổ", dv:"V"}, {id:"ct_29", ten:"Không ma túy", dv:"Đ"}, {id:"ct_30", ten:"Phản ánh 1022", dv:"%"}, {id:"ct_31", ten:"Văn bản điện tử", dv:"%"}, {id:"ct_32", ten:"Số hóa TTHC", dv:"%"}, {id:"ct_33", ten:"Thanh toán trực tuyến", dv:"%"}, {id:"ct_34", ten:"Hòa giải cơ sở", dv:"%"}, {id:"ct_35", ten:"Kiểm tra PCCC", dv:"%"}, {id:"ct_36", ten:"Tin báo tội phạm", dv:"%"}, {id:"ct_37", ten:"DQTV", dv:"%"}, {id:"ct_38", ten:"Đảng viên mới", dv:"Đ/v"}
         ];
+        document.getElementById('indicators-list').innerHTML = indicators.map(it => `<div class="flex items-center gap-2 bg-slate-50 p-2 border rounded"><label class="text-[9px] font-bold text-slate-500 w-1/2">${it.ten}</label><div class="flex items-center gap-1 w-1/2"><input type="number" id="${it.id}" step="0.1" class="p-1 text-xs font-bold text-blue-800 flex-1"><span class="text-[9px] font-bold text-slate-400 w-8">${it.dv}</span></div></div>`).join('');
 
-        document.getElementById('indicators-list').innerHTML = indicators.map(it => `<div class="flex items-center gap-2 bg-slate-50 p-2 border rounded"><label class="text-[9px] font-bold text-slate-500 w-1/2">${it.ten}</label><input type="number" id="${it.id}" step="0.1" class="w-1/2 p-1 text-xs font-bold text-blue-800"></div>`).join('');
+        // LOGIC TỰ ĐỘNG TÍNH TOÁN (Giữ nguyên)
+        window.sumDonThu = () => { const v = Number(document.getElementById('dt_pa_kn').value||0) + Number(document.getElementById('dt_khieu_nai').value||0) + Number(document.getElementById('dt_to_cao').value||0); document.getElementById('display_dt_tong').innerText = v; }
+        window.calculateRate = () => { const t = Number(document.getElementById('pa_1022_tong').value||0); const x = Number(document.getElementById('pa_1022_xong').value||0); document.getElementById('display_ty_le').innerText = t > 0 ? ((x/t)*100).toFixed(1) + "%" : "0.0%"; }
 
-        window.sumDonThu = () => { document.getElementById('display_dt_tong').innerText = Number(document.getElementById('dt_pa_kn').value||0) + Number(document.getElementById('dt_khieu_nai').value||0) + Number(document.getElementById('dt_to_cao').value||0); };
-        
+        // LOAD DATA
         onValue(rootRef, (snap) => {
             const d = snap.val(); if(!d) return;
             document.getElementById('dt_pa_kn').value = d.don_thu?.pa_kn || 0;
             document.getElementById('dt_khieu_nai').value = d.don_thu?.khieu_nai || 0;
             document.getElementById('dt_to_cao').value = d.don_thu?.to_cao || 0;
             sumDonThu();
+            if(d.don_thu_detail) Object.keys(d.don_thu_detail).forEach(id => { if(document.getElementById(id)) document.getElementById(id).value = d.don_thu_detail[id] });
             document.getElementById('pa_1022_tong').value = d.pa_1022?.tong || 0;
             document.getElementById('pa_1022_xong').value = d.pa_1022?.da_giai_quyet || 0;
+            calculateRate();
+            if(d.pa_1022_detail) {
+                const p = d.pa_1022_detail;
+                document.getElementById('pa_tieng_on').value = p.tieng_on || 0;
+                document.getElementById('pa_kinh_te').value = p.kinh_te_ha_tang || 0;
+                document.getElementById('pa_trat_tu').value = p.trat_tu_do_thi || 0;
+                document.getElementById('pa_van_hoa').value = p.van_hoa_xa_hoi || 0;
+                document.getElementById('pa_hcc').value = p.hanh_chinh_cong || 0;
+                document.getElementById('pa_khac').value = p.khac || 0;
+            }
             document.getElementById('hs_tong').value = d.ho_so?.tong || 0;
             document.getElementById('hs_da_giai_quyet').value = d.ho_so?.da_giai_quyet || 0;
             document.getElementById('hs_online').value = d.ho_so?.truc_tuyen || 0;
@@ -144,17 +200,22 @@
             if(d.chi_tieu) indicators.forEach(it => document.getElementById(it.id).value = d.chi_tieu[it.id] || 0);
         }, { onlyOnce: true });
 
+        // LƯU DỮ LIỆU
         window.saveAll = () => {
-            const t = Number(document.getElementById('dt_pa_kn').value||0) + Number(document.getElementById('dt_khieu_nai').value||0) + Number(document.getElementById('dt_to_cao').value||0);
+            const sum_dgq = ['pa_dgq_th','pa_dgq_qh','kn_dgq_th','kn_dgq_qh','tc_dgq_th','tc_dgq_qh'].reduce((acc,id)=> acc + Number(document.getElementById(id).value||0), 0);
+            const sum_t = Number(document.getElementById('dt_pa_kn').value||0) + Number(document.getElementById('dt_khieu_nai').value||0) + Number(document.getElementById('dt_to_cao').value||0);
             const data = {
-                don_thu: { tong: t, pa_kn: Number(document.getElementById('dt_pa_kn').value), khieu_nai: Number(document.getElementById('dt_khieu_nai').value), to_cao: Number(document.getElementById('dt_to_cao').value) },
-                pa_1022: { tong: Number(document.getElementById('pa_1022_tong').value), da_giai_quyet: Number(document.getElementById('pa_1022_xong').value) },
+                don_thu: { tong: sum_t, da_giai_quyet: sum_dgq, dang_giai_quyet: sum_t - sum_dgq, pa_kn: Number(document.getElementById('dt_pa_kn').value), khieu_nai: Number(document.getElementById('dt_khieu_nai').value), to_cao: Number(document.getElementById('dt_to_cao').value) },
+                don_thu_detail: {},
+                pa_1022: { tong: Number(document.getElementById('pa_1022_tong').value), da_giai_quyet: Number(document.getElementById('pa_1022_xong').value), chua_giai_quyet: Number(document.getElementById('pa_1022_tong').value) - Number(document.getElementById('pa_1022_xong').value) },
+                pa_1022_detail: { tieng_on: Number(document.getElementById('pa_tieng_on').value), kinh_te_ha_tang: Number(document.getElementById('pa_kinh_te').value), trat_tu_do_thi: Number(document.getElementById('pa_trat_tu').value), van_hoa_xa_hoi: Number(document.getElementById('pa_van_hoa').value), hanh_chinh_cong: Number(document.getElementById('pa_hcc').value), khac: Number(document.getElementById('pa_khac').value) },
                 ho_so: { tong: Number(document.getElementById('hs_tong').value), da_giai_quyet: Number(document.getElementById('hs_da_giai_quyet').value), truc_tuyen: Number(document.getElementById('hs_online').value), dung_han_count: Number(document.getElementById('hs_dung_han_count').value) },
                 van_ban: { tong: Number(document.getElementById('vb_tong').value) },
                 chi_tieu: {}
             };
+            ['pa_dgq_th','pa_dgq_qh','kn_dgq_th','kn_dgq_qh','tc_dgq_th','tc_dgq_qh','pa_cgq_th','pa_cgq_qh','kn_cgq_th','kn_cgq_qh','tc_cgq_th','tc_cgq_qh'].forEach(id => data.don_thu_detail[id] = Number(document.getElementById(id).value||0));
             indicators.forEach(it => data.chi_tieu[it.id] = Number(document.getElementById(it.id).value||0));
-            set(rootRef, data).then(() => alert("✅ Đã lưu!")).catch(e => alert("❌ Lỗi!"));
+            set(rootRef, data).then(() => alert("✅ Thành công!")).catch(e => alert("❌ Lỗi: " + e));
         };
     </script>
 </body>
