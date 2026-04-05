@@ -197,16 +197,17 @@
         </div>
     </div>
 
-    <script type="module">
+ <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
         import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-database.js";
 
+        // CẤU HÌNH FIREBASE MỚI
         const firebaseConfig = {
-            apiKey: "AIzaSyC7J3V97_gKwyAzpckTJm5j8hoMWU5aoFI",
-            authDomain: "dashboarb-xabinhhung.firebaseapp.com",
-            databaseURL: "https://dashboarb-xabinhhung-default-rtdb.asia-southeast1.firebasedatabase.app",
-            projectId: "dashboarb-xabinhhung",
-            appId: "1:152638135861:web:128ac8d51c8357b6521b7c"
+            apiKey: "AIzaSyCjS8jJtoV5HLcYIpVTX1zP5DbyYmXsbh4",
+            authDomain: "dashboard-demo-ce0da.firebaseapp.com",
+            databaseURL: "https://dashboard-demo-ce0da-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "dashboard-demo-ce0da",
+            appId: "1:969593884637:web:47d4e6b03a51e7dcfbb034"
         };
 
         const db = getDatabase(initializeApp(firebaseConfig));
