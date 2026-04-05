@@ -9,60 +9,53 @@
         .card { background: white; border-radius: 20px; padding: 32px; border: 1px solid #e2e8f0; }
         label { display: block; font-size: 10px; font-weight: 800; color: #64748b; text-transform: uppercase; margin-bottom: 6px; }
         input { width: 100%; padding: 10px 14px; border: 1px solid #cbd5e1; border-radius: 8px; font-weight: 600; outline: none; margin-bottom: 16px; }
-        .section-title { font-weight: 800; text-transform: uppercase; border-left: 4px solid #10b981; padding-left: 12px; margin-bottom: 20px; color: #1e293b; font-size: 14px; }
+        .section-title { font-weight: 800; text-transform: uppercase; border-left: 4px solid #3b82f6; padding-left: 12px; margin-bottom: 20px; color: #1e293b; font-size: 14px; }
     </style>
 </head>
 <body>
     <div class="max-w-6xl mx-auto">
-        <div class="card border-t-4 border-emerald-500 shadow-sm">
+        <div class="card border-t-4 border-blue-600 shadow-sm relative">
             <div class="flex justify-between items-center mb-8">
-                <h3 class="font-black text-slate-800 uppercase tracking-wider text-xl">Nhập liệu Hồ sơ Hành chính</h3>
-                <button onclick="saveData()" class="bg-emerald-600 text-white font-black px-10 py-3 rounded-xl hover:bg-emerald-700 transition-all shadow-lg active:scale-95 text-xs">
+                <h3 class="font-black text-slate-800 uppercase tracking-wider">Nhập liệu Hồ sơ Hành chính</h3>
+                <button onclick="saveData()" class="bg-blue-600 text-white font-black px-8 py-3 rounded-xl hover:bg-blue-700 transition-all shadow-lg active:scale-95 text-xs">
                     💾 CẬP NHẬT HỆ THỐNG
                 </button>
             </div>
             
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <div class="space-y-4">
-                    <h4 class="section-title text-emerald-600">I. Số liệu trong tháng (Tháng 02)</h4>
-                    <div class="bg-emerald-50 p-4 rounded-xl">
-                        <label>Tổng hồ sơ tiếp nhận</label>
-                        <input type="number" id="thang_tong">
-                        <div class="grid grid-cols-2 gap-4">
-                            <div><label>Trực tuyến</label><input type="number" id="thang_truc_tuyen"></div>
-                            <div><label>Trực tiếp</label><input type="number" id="thang_truc_tiep"></div>
-                        </div>
-                    </div>
+                    <h4 class="section-title">1. Tiếp nhận & Hệ thống</h4>
+                    <label>Trên hệ thống</label><input type="number" id="he_thong">
+                    <label>Ngoài hệ thống</label><input type="number" id="ngoai_he_thong">
+                    <label>Tổng tiếp nhận (Tháng)</label><input type="number" id="thang_tong">
+                    <label>Trực tuyến</label><input type="number" id="truc_tuyen">
+                    <label>Trực tiếp</label><input type="number" id="truc_tiep">
                 </div>
 
                 <div class="space-y-4">
-                    <h4 class="section-title text-blue-600">II. Số liệu lũy kế (Từ 01/01/2026)</h4>
-                    <div class="bg-blue-50 p-4 rounded-xl">
-                        <label>Tổng lũy kế</label>
-                        <input type="number" id="lk_tong">
-                        <div class="grid grid-cols-2 gap-4">
-                            <div><label>Đã giải quyết</label><input type="number" id="lk_da_gq"></div>
-                            <div><label class="text-red-600">Trễ hạn</label><input type="number" id="lk_tre_han"></div>
-                        </div>
-                        <label>Đang giải quyết (Trong hạn)</label>
-                        <input type="number" id="lk_dang_gq">
-                    </div>
+                    <h4 class="section-title">2. Kết quả & Hài lòng</h4>
+                    <label>Giải quyết trước hạn</label><input type="number" id="truoc_han">
+                    <label>Giải quyết trong hạn</label><input type="number" id="trong_han">
+                    <label>Trễ hạn</label><input type="number" id="tre_han">
+                    <label>Thư xin lỗi</label><input type="number" id="thu_xin_loi">
+                    <label>Mức độ hài lòng (%)</label><input type="number" id="hai_long_percent">
                 </div>
 
-                <div class="md:col-span-2 grid grid-cols-1 md:grid-cols-3 gap-6 pt-6 border-t">
-                    <div>
-                        <label>Tổng TTHC niêm yết</label>
-                        <input type="number" id="tthc_niem_yet">
-                    </div>
-                    <div>
-                        <label>TTHC có phát sinh hồ sơ</label>
-                        <input type="number" id="tthc_co_phat_sinh">
-                    </div>
-                    <div>
-                        <label>Tỉ lệ hài lòng (%)</label>
-                        <input type="number" id="ti_le_hai_long" step="0.1">
-                    </div>
+                <div class="space-y-4">
+                    <h4 class="section-title">3. Lũy kế & Kênh PA</h4>
+                    <label>Lũy kế từ 01/01</label><input type="number" id="luy_ke">
+                    <label>Số hóa lũy kế</label><input type="number" id="so_hoa_luy_ke">
+                    <label>Số hóa tháng</label><input type="number" id="so_hoa_thang">
+                    <label>Bưu chính công ích</label><input type="number" id="buu_chinh">
+                    <label>Lượt đánh giá hài lòng</label><input type="number" id="luot_danh_gia">
                 </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mt-6 border-t pt-6">
+                <div><label>TTHC Niêm yết</label><input type="number" id="tthc_niemyet"></div>
+                <div><label>PA DVC QG</label><input type="number" id="pa_dvcqg"></div>
+                <div><label>PA Cổng 1022</label><input type="number" id="pa_1022"></div>
+                <div><label>Đường dây nóng</label><input type="number" id="pa_nong"></div>
             </div>
         </div>
     </div>
@@ -79,17 +72,22 @@
             appId: "1:969593884637:web:47d4e6b03a51e7dcfbb034" 
         };
         const db = getDatabase(initializeApp(firebaseConfig));
-        const rootRef = ref(db, 'dashboard_binhhung/ho_so_chi_tiet');
+        const rootRef = ref(db, 'dashboard_binhhung/ho_so_thang');
 
+        // Load dữ liệu hiện tại
         onValue(rootRef, (snap) => {
             const d = snap.val();
-            if(d) Object.keys(d).forEach(k => { if(document.getElementById(k)) document.getElementById(k).value = d[k]; });
+            if(d) {
+                Object.keys(d).forEach(key => {
+                    if(document.getElementById(key)) document.getElementById(key).value = d[key];
+                });
+            }
         }, { onlyOnce: true });
 
         window.saveData = () => {
             const data = {};
             document.querySelectorAll('input').forEach(i => data[i.id] = Number(i.value || 0));
-            update(rootRef, data).then(() => alert("✅ Đã cập nhật!")).catch(e => alert("❌ Lỗi: " + e));
+            update(rootRef, data).then(() => alert("✅ Thành công!")).catch(e => alert("❌ Lỗi: " + e));
         };
     </script>
 </body>
