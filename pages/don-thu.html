@@ -3,28 +3,113 @@
 <head>
     <meta charset="UTF-8">
     <script src="https://cdn.tailwindcss.com"></script>
-    <style> body { font-family: 'Inter', sans-serif; background-color: #f8fafc; padding: 24px; } </style>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; padding: 24px; }
+        .grid-container { display: grid; grid-template-cols: repeat(3, 1fr); gap: 24px; }
+        .section-card { background: white; border-radius: 24px; padding: 24px; border: 1px solid #e2e8f0; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); }
+        .table-custom { width: 100%; border-collapse: separate; border-spacing: 0 8px; }
+        .table-custom td { padding: 12px; }
+        .table-custom tr { background-color: #f8fafc; transition: all 0.2s; }
+        .table-custom tr:hover { background-color: #f1f5f9; }
+        .label-cell { font-size: 13px; font-weight: 600; color: #64748b; border-radius: 12px 0 0 12px; }
+        .value-cell { font-size: 18px; font-weight: 900; color: #1e293b; text-align: right; border-radius: 0 12px 12px 0; padding-right: 20px !important; }
+        .header-title { font-size: 11px; font-weight: 900; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 20px; display: flex; align-items: center; gap: 8px; }
+    </style>
 </head>
 <body>
-    <div class="bg-white p-8 rounded-3xl border shadow-sm max-w-4xl mx-auto">
-        <h3 class="font-bold border-b pb-4 mb-6 text-blue-900 uppercase">Báo cáo xử lý đơn thư</h3>
-        <table class="w-full border-collapse text-center">
-            <thead><tr class="bg-slate-100 font-bold uppercase text-xs"><td class="p-4 border">Mục lục đơn thư</td><td class="p-4 border">Số lượng</td></tr></thead>
-            <tbody id="dt_body"></tbody>
-        </table>
+
+    <div class="grid-container">
+        
+        <div class="section-card">
+            <div class="header-title text-blue-600">
+                <span class="w-2 h-4 bg-blue-600 rounded-full"></span> TIẾP NHẬN ĐƠN THƯ
+            </div>
+            <table class="table-custom">
+                <tr>
+                    <td class="label-cell italic">Phản ánh, kiến nghị</td>
+                    <td id="pa_kn" class="value-cell text-blue-600">0</td>
+                </tr>
+                <tr>
+                    <td class="label-cell italic">Khiếu nại</td>
+                    <td id="khieu_nai" class="value-cell text-blue-600">0</td>
+                </tr>
+                <tr>
+                    <td class="label-cell italic">Tố cáo</td>
+                    <td id="to_cao" class="value-cell text-blue-600">0</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="section-card">
+            <div class="header-title text-emerald-600">
+                <span class="w-2 h-4 bg-emerald-600 rounded-full"></span> KẾT QUẢ GIẢI QUYẾT
+            </div>
+            <table class="table-custom">
+                <tr>
+                    <td class="label-cell italic text-emerald-700">Giải quyết Trong hạn</td>
+                    <td id="dgq_th" class="value-cell text-emerald-600">0</td>
+                </tr>
+                <tr>
+                    <td class="label-cell italic text-red-500">Giải quyết Quá hạn</td>
+                    <td id="dgq_qh" class="value-cell text-red-600">0</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="section-card">
+            <div class="header-title text-orange-600">
+                <span class="w-2 h-4 bg-orange-600 rounded-full"></span> ĐANG TRONG HẠN GIẢI QUYẾT
+            </div>
+            <table class="table-custom">
+                <tr>
+                    <td class="label-cell italic text-orange-700">Đang trong thời hạn</td>
+                    <td id="cgq_th" class="value-cell text-orange-600">0</td>
+                </tr>
+                <tr>
+                    <td class="label-cell italic text-red-600">Chưa giải quyết quá hạn</td>
+                    <td id="cgq_qh" class="value-cell text-red-700 font-black">0</td>
+                </tr>
+            </table>
+        </div>
+
     </div>
+
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
         import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-database.js";
-        const firebaseConfig = { apiKey: "AIzaSyCjS8jJtoV5HLcYIpVTX1zP5DbyYmXsbh4", authDomain: "dashboard-demo-ce0da.firebaseapp.com", databaseURL: "https://dashboard-demo-ce0da-default-rtdb.asia-southeast1.firebasedatabase.app", projectId: "dashboard-demo-ce0da", appId: "1:969593884637:web:47d4e6b03a51e7dcfbb034" };
+        
+        const firebaseConfig = { 
+            apiKey: "AIzaSyCjS8jJtoV5HLcYIpVTX1zP5DbyYmXsbh4", 
+            authDomain: "dashboard-demo-ce0da.firebaseapp.com", 
+            databaseURL: "https://dashboard-demo-ce0da-default-rtdb.asia-southeast1.firebasedatabase.app", 
+            projectId: "dashboard-demo-ce0da", 
+            appId: "1:969593884637:web:47d4e6b03a51e7dcfbb034" 
+        };
         const db = getDatabase(initializeApp(firebaseConfig));
+
         onValue(ref(db, 'dashboard_binhhung'), (snap) => {
             const d = snap.val(); if(!d) return;
-            document.getElementById('dt_body').innerHTML = `
-                <tr><td class="p-4 border text-left italic">Phản ánh, kiến nghị</td><td class="p-4 border font-black text-2xl text-blue-600">${d.don_thu?.pa_kn||0}</td></tr>
-                <tr><td class="p-4 border text-left italic">Khiếu nại</td><td class="p-4 border font-black text-2xl text-blue-600">${d.don_thu?.khieu_nai||0}</td></tr>
-                <tr><td class="p-4 border text-left italic">Tố cáo</td><td class="p-4 border font-black text-2xl text-blue-600">${d.don_thu?.to_cao||0}</td></tr>
-            `;
+
+            // 1. Dữ liệu Tiếp nhận
+            document.getElementById('pa_kn').innerText = d.don_thu?.pa_kn || 0;
+            document.getElementById('khieu_nai').innerText = d.don_thu?.khieu_nai || 0;
+            document.getElementById('to_cao').innerText = d.don_thu?.to_cao || 0;
+
+            // 2. Dữ liệu Đã giải quyết (Cộng dồn từ các loại đơn)
+            const det = d.don_thu_detail || {};
+            const sum_dgq_th = (det.pa_dgq_th || 0) + (det.kn_dgq_th || 0) + (det.tc_dgq_th || 0);
+            const sum_dgq_qh = (det.pa_dgq_qh || 0) + (det.kn_dgq_qh || 0) + (det.tc_dgq_qh || 0);
+            
+            document.getElementById('dgq_th').innerText = sum_dgq_th;
+            document.getElementById('dgq_qh').innerText = sum_dgq_qh;
+
+            // 3. Dữ liệu Đang giải quyết
+            const sum_cgq_th = (det.pa_cgq_th || 0) + (det.kn_cgq_th || 0) + (det.tc_cgq_th || 0);
+            const sum_cgq_qh = (det.pa_cgq_qh || 0) + (det.kn_cgq_qh || 0) + (det.tc_cgq_qh || 0);
+
+            document.getElementById('cgq_th').innerText = sum_cgq_th;
+            document.getElementById('cgq_qh').innerText = sum_cgq_qh;
         });
     </script>
 </body>
