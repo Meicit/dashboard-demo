@@ -53,16 +53,17 @@
                 <div class="flex justify-between border-b pb-1"><span class="text-sm text-slate-600 font-bold">Tổng phản ánh:</span><span id="pa_1022_tong" class="text-xl font-black text-orange-600">0</span></div>
                 <div class="text-[11px] font-bold">
                     <div class="flex justify-between text-emerald-600 mb-1"><span>+ Đã GQ:</span><span id="pa_1022_xong">0</span></div>
-                    <div class="flex justify-between text-red-600"><span>+ Chờ:</span><span id="pa_1022_cho">0</span></div>
+                    <div class="flex justify-between text-red-600"><span>+ Chưa GQ:</span><span id="pa_1022_cho">0</span></div>
                 </div>
             </div>
         </div>
         <div onclick="openHoSoModal()" class="bg-white p-5 rounded-xl shadow-md border border-slate-200 border-t-4 border-blue-500 cursor-pointer hover:bg-slate-50 transition-all">
-            <h4 class="text-xs font-bold text-slate-400 uppercase mb-2">📋 Hồ sơ TTHC</h4>
+            <div class="flex items-center gap-2 mb-2"><span class="bg-blue-100 p-1 rounded text-lg">📋</span><h4 class="text-xs font-bold text-slate-400 uppercase">Hồ sơ TTHC</h4></div>
             <div class="mb-2 space-y-1">
                 <div class="text-3xl font-black text-blue-900 leading-tight"><span id="hs_tong_hien_thi">0</span> hồ sơ</div>
-                <div class="text-sm font-bold text-slate-600">Đúng hạn: <span id="hs_dh_count_hien_thi">0</span> <span id="hs_dh_rate_hien_thi" class="text-emerald-600 text-xs">(0%)</span></div>
+                <div class="text-sm font-bold text-slate-500">Đúng hạn: <span id="hs_dh_count_hien_thi">0</span> <span id="hs_dh_rate_hien_thi" class="text-emerald-600 text-xs font-black">(0%)</span></div>
             </div>
+            <div class="pt-2 border-t text-[11px] font-bold text-slate-400">Trực tuyến: <span id="hs_ol_count_hien_thi">0</span> <span id="hs_ol_rate_hien_thi" class="text-blue-600">(0%)</span></div>
         </div>
         <div class="bg-white p-5 rounded-xl shadow-md border border-slate-200 border-t-4 border-emerald-500 text-center flex flex-col justify-center">
             <h4 class="text-xs font-bold text-slate-400 uppercase mb-4">⚖️ Văn bản chỉ đạo</h4>
@@ -70,7 +71,80 @@
         </div>
     </div>
 
-    <div id="hoSoModal" class="fixed inset-0 bg-black/60 hidden z-50 flex items-center justify-center p-4 backdrop-blur-sm">...</div>
+    <div id="hoSoModal" class="fixed inset-0 bg-black/60 hidden z-50 flex items-center justify-center p-4 backdrop-blur-sm">
+        <div class="bg-slate-100 rounded-xl w-full max-w-5xl shadow-2xl overflow-hidden">
+            <div class="p-4 bg-white flex justify-between items-center border-b px-6">
+                <h2 class="font-bold text-slate-800 uppercase text-sm tracking-wide">Chi tiết Hồ sơ hành chính</h2>
+                <button onclick="closeHoSoModal()" class="text-3xl text-slate-400 leading-none">&times;</button>
+            </div>
+            <div class="p-6 grid grid-cols-1 md:grid-cols-5 gap-4">
+                <div class="bg-white p-5 rounded-lg border text-center">
+                    <div class="text-[10px] uppercase font-bold text-slate-400 mb-1">Tổng hồ sơ</div><div id="m_hs_tong" class="text-2xl font-black">0</div>
+                </div>
+                <div class="bg-blue-50 p-5 rounded-lg border border-blue-100 text-center">
+                    <div class="text-[10px] uppercase font-bold text-blue-600 mb-1">Đã giải quyết</div><div id="m_hs_da_gq" class="text-2xl font-black text-blue-700">0</div><div id="m_hs_da_gq_rate" class="text-[10px] text-blue-600 font-bold mt-1">0%</div>
+                </div>
+                <div class="bg-white p-5 rounded-lg border text-center">
+                    <div class="text-[10px] uppercase font-bold text-slate-400 mb-1">Trực tuyến</div><div id="m_hs_online" class="text-2xl font-black text-blue-600">0</div><div id="m_hs_online_rate" class="text-[10px] text-slate-400 font-bold mt-1">0%</div>
+                </div>
+                <div class="bg-emerald-100 p-5 rounded-lg border border-emerald-200 text-center">
+                    <div class="text-[10px] uppercase font-bold text-emerald-600 mb-1">Đúng hạn</div><div id="m_hs_dung_han_count" class="text-2xl font-black text-emerald-700">0</div><div id="m_hs_dung_han_rate" class="text-[10px] text-emerald-600 font-bold mt-1">0%</div>
+                </div>
+                <div class="bg-white p-5 rounded-lg border text-center">
+                    <div class="text-[10px] uppercase font-bold text-slate-400 mb-1">Quá hạn</div><div id="m_hs_qua_han" class="text-2xl font-black text-red-600">0</div><div id="m_hs_qua_han_rate" class="text-[10px] text-red-500 font-bold mt-1">0%</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="donThuModal" class="fixed inset-0 bg-black/60 hidden z-50 flex items-center justify-center p-2 backdrop-blur-sm">
+        <div class="bg-white rounded-xl w-full max-w-5xl overflow-hidden shadow-2xl">
+            <div class="p-4 bg-red-600 text-white flex justify-between items-center px-6">
+                <h2 class="font-bold uppercase text-sm tracking-wide">Bảng chi tiết tình hình xử lý đơn thư</h2>
+                <button onclick="closeDonThuModal()" class="text-3xl leading-none">&times;</button>
+            </div>
+            <div class="p-4 md:p-6 overflow-x-auto">
+                <table class="w-full modal-table text-[11px] md:text-sm border-collapse text-center">
+                    <tr class="bg-slate-50 font-bold text-left"><td colspan="4" class="text-lg py-4 text-blue-900 px-4">Tổng đơn: <span id="modal_dt_tong">0</span></td></tr>
+                    <tr class="bg-slate-100 font-bold uppercase text-[10px]"><td>Loại đơn</td><td>Phản ánh, kiến nghị</td><td>Khiếu nại</td><td>Tố cáo</td></tr>
+                    <tr class="font-black text-blue-800 text-xl"><td class="text-[10px] font-bold text-slate-500 uppercase">Số lượng</td><td id="dt_sl_pa">0</td><td id="dt_sl_kn">0</td><td id="dt_sl_tc">0</td></tr>
+                    <tr><td class="font-bold text-emerald-700 uppercase text-[10px]">Đã giải quyết</td>
+                        <td>Trong hạn: <span id="dt_dgq_th_pa">0</span><br>Quá hạn: <span id="dt_dgq_qh_pa" class="text-red-500">0</span></td>
+                        <td>Trong hạn: <span id="dt_dgq_th_kn">0</span><br>Quá hạn: <span id="dt_dgq_qh_kn" class="text-red-500">0</span></td>
+                        <td>Trong hạn: <span id="dt_dgq_th_tc">0</span><br>Quá hạn: <span id="dt_dgq_qh_tc" class="text-red-500">0</span></td>
+                    </tr>
+                    <tr><td class="font-bold text-orange-700 uppercase text-[10px]">Chưa giải quyết</td>
+                        <td>Trong hạn: <span id="dt_cgq_th_pa">0</span><br>Quá hạn: <span id="dt_cgq_qh_pa" class="text-red-600 font-black">0</span></td>
+                        <td>Trong hạn: <span id="dt_cgq_th_kn">0</span><br>Quá hạn: <span id="dt_cgq_qh_kn" class="text-red-600 font-black">0</span></td>
+                        <td>Trong hạn: <span id="dt_cgq_th_tc">0</span><br>Quá hạn: <span id="dt_cgq_qh_tc" class="text-red-600 font-black">0</span></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal1022" class="fixed inset-0 bg-black/60 hidden z-50 flex items-center justify-center p-2 backdrop-blur-sm">
+        <div class="bg-white rounded-xl w-full max-w-4xl overflow-hidden shadow-2xl">
+            <div class="p-4 bg-orange-600 text-white flex justify-between items-center px-6">
+                <h2 class="font-bold uppercase text-sm tracking-wide">Chi tiết phản ánh 1022</h2>
+                <button onclick="close1022Modal()" class="text-3xl leading-none">&times;</button>
+            </div>
+            <div class="p-6 bg-slate-50 text-center">
+                <div class="grid grid-cols-3 gap-4 mb-6">
+                    <div class="bg-white p-4 rounded-lg shadow-sm"><div>Tổng</div><div id="m1022_tong" class="text-3xl font-black">0</div></div>
+                    <div class="bg-white p-4 rounded-lg shadow-sm"><div>Đã xử lý</div><div id="m1022_xong" class="text-3xl font-black text-emerald-600">0</div></div>
+                    <div class="bg-emerald-50 p-4 rounded-lg shadow-sm border border-emerald-100"><div>Tỷ lệ</div><div id="m1022_ty_le" class="text-3xl font-black text-emerald-700">0%</div></div>
+                </div>
+                <div class="bg-white p-6 rounded-xl border text-left">
+                    <h3 class="text-sm font-bold mb-4 uppercase italic">Phân loại phản ánh</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        ${['tieng_on','kinh_te','trat_tu','van_hoa','hcc','khac'].map(id => `
+                        <div><div class="flex justify-between text-xs font-bold mb-1"><span>${id.toUpperCase()}</span><span id="pa_${id}">0</span></div><div class="bg-slate-100 h-2 rounded-full overflow-hidden"><div id="bar_${id}" class="bg-blue-500 h-full transition-all duration-500" style="width: 0%"></div></div></div>`).join('')}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
@@ -85,33 +159,72 @@
         };
         const db = getDatabase(initializeApp(firebaseConfig));
 
-        // CẤU TRÚC 38 CHỈ TIÊU ĐỒNG BỘ VỚI ADMIN
         const groups = [
             { name: "Kinh tế", items: [{id:"ct_1", ten:"Tăng trưởng GTSC", dv:"%"}, {id:"ct_2", ten:"Thu ngân sách", dv:"Tr.đ"}, {id:"ct_3", ten:"Giải ngân ĐTC", dv:"%"}] },
             { name: "Văn hóa - Xã hội", items: [{id:"ct_4", ten:"Tham gia BHYT", dv:"%"}, {id:"ct_5", ten:"Tham gia BHXH", dv:"%"}, {id:"ct_6", ten:"Mầm non chuẩn QG", dv:"%"}, {id:"ct_7", ten:"Tiểu học chuẩn QG", dv:"%"}, {id:"ct_8", ten:"THCS chuẩn QG", dv:"%"}, {id:"ct_9", ten:"Phòng học/10k dân", dv:"P"}, {id:"ct_10", ten:"Hoàn thành THCS", dv:"%"}, {id:"ct_11", ten:"Giảm hộ nghèo", dv:"Hộ"}, {id:"ct_12", ten:"Tiêu chí NTM", dv:"TC"}, {id:"ct_13", ten:"Ấp văn hóa", dv:"%"}, {id:"ct_14", ten:"Gia đình văn hóa", dv:"%"}, {id:"ct_15", ten:"Tiêm chủng đủ", dv:"%"}, {id:"ct_16", ten:"GT việc làm", dv:"Ng"}, {id:"ct_17", ten:"Mô hình du lịch", dv:"MH"}] },
             { name: "Đô thị - Môi trường", items: [{id:"ct_18", ten:"Dùng nước sạch", dv:"%"}, {id:"ct_19", ten:"Xử lý rác thải", dv:"%"}, {id:"ct_20", ten:"Rác y tế chuẩn", dv:"%"}, {id:"ct_21", ten:"Nước thải CN", dv:"%"}] },
-            { name: "Cải cách & An ninh", items: [{id:"ct_22", ten:"Hồ sơ đúng hạn", dv:"%"}, {id:"ct_23", ten:"Chữ ký số", dv:"%"}, {id:"ct_24", ten:"Nhập ngũ", dv:"Ng"}, {id:"ct_25", ten:"Giảm tội phạm", dv:"%"}, {id:"ct_26", ten:"Khám phá án", dv:"%"}, {id:"ct_27", ten:"Giảm TNGT", dv:"%"}, {id:"ct_28", ten:"Cháy nổ", dv:"Vụ"}, {id:"ct_29", ten:"Ma túy", dv:"Đạt"}, {id:"ct_30", ten:"Phản ánh 1022", dv:"%"}, {id:"ct_31", ten:"Văn bản điện tử", dv:"%"}, {id:"ct_32", ten:"Số hóa TTHC", dv:"%"}, {id:"ct_33", ten:"Thanh toán online", dv:"%"}, {id:"ct_34", ten:"Hòa giải cơ sở", dv:"%"}, {id:"ct_35", ten:"Kiểm tra PCCC", dv:"%"}, {id:"ct_36", ten:"Tin báo tội phạm", dv:"%"}, {id:"ct_37", ten:"Dân quân tự vệ", dv:"%"}, {id:"ct_38", ten:"Đảng viên mới", dv:"Đ/v"}] }
+            { name: "Cải cách & An ninh", items: [{id:"ct_22", ten:"Hồ sơ đúng hạn", dv:"%"}, {id:"ct_23", ten:"Chữ ký số", dv:"%"}, {id:"ct_24", ten:"Nhập ngũ", dv:"Ng"}, {id:"ct_25", ten:"Giảm tội phạm", dv:"%"}, {id:"ct_26", ten:"Khám phá án", dv:"%"}, {id:"ct_27", ten:"Giảm TNGT", dv:"%"}, {id:"ct_28", ten:"Cháy nổ", dv:"Vụ"}, {id:"ct_29", ten:"Không ma túy", dv:"Đạt"}, {id:"ct_30", ten:"Phản ánh 1022", dv:"%"}, {id:"ct_31", ten:"Văn bản điện tử", dv:"%"}, {id:"ct_32", ten:"Số hóa TTHC", dv:"%"}, {id:"ct_33", ten:"Thanh toán online", dv:"%"}, {id:"ct_34", ten:"Hòa giải cơ sở", dv:"%"}, {id:"ct_35", ten:"Kiểm tra PCCC", dv:"%"}, {id:"ct_36", ten:"Tin báo tội phạm", dv:"%"}, {id:"ct_37", ten:"Dân quân tự vệ", dv:"%"}, {id:"ct_38", ten:"Đảng viên mới", dv:"Đ/v"}] }
         ];
 
         onValue(ref(db, 'dashboard_binhhung'), (snap) => {
             const data = snap.val(); if(!data) return;
-            // 1. CAROUSEL CHỈ TIÊU
-            if(data.chi_tieu) {
-                groups.forEach(g => g.items.forEach(it => it.th = data.chi_tieu[it.id] || 0));
-                renderUI();
-            }
-            // 2. LOGIC CÁC THẺ CHÍNH (GIỮ NGUYÊN)
-            const summary = data.don_thu || {};
-            document.getElementById('dt_tong').innerText = summary.tong || 0;
-            document.getElementById('dt_da_giai_quyet').innerText = summary.da_giai_quyet || 0;
-            document.getElementById('dt_dang_giai_quyet').innerText = summary.dang_giai_quyet || 0;
-            const hs = data.ho_so || {};
-            document.getElementById('hs_tong_hien_thi').innerText = (hs.tong||0).toLocaleString('vi-VN');
+            // 1. CAROUSEL
+            if(data.chi_tieu) { groups.forEach(g => g.items.forEach(it => it.th = data.chi_tieu[it.id] || 0)); renderUI(); }
+            
+            // 2. ĐƠN THƯ
+            const dt = data.don_thu || {}; const dtd = data.don_thu_detail || {};
+            document.getElementById('dt_tong').innerText = dt.tong || 0;
+            document.getElementById('dt_da_giai_quyet').innerText = dt.da_giai_quyet || 0;
+            document.getElementById('dt_dang_giai_quyet').innerText = dt.dang_giai_quyet || 0;
+            document.getElementById('modal_dt_tong').innerText = dt.tong || 0;
+            document.getElementById('dt_sl_pa').innerText = dt.pa_kn || 0;
+            document.getElementById('dt_sl_kn').innerText = dt.khieu_nai || 0;
+            document.getElementById('dt_sl_tc').innerText = dt.to_cao || 0;
+            document.getElementById('dt_dgq_th_pa').innerText = dtd.pa_dgq_th || 0;
+            document.getElementById('dt_dgq_qh_pa').innerText = dtd.pa_dgq_qh || 0;
+            document.getElementById('dt_dgq_th_kn').innerText = dtd.kn_dgq_th || 0;
+            document.getElementById('dt_dgq_qh_kn').innerText = dtd.kn_dgq_qh || 0;
+            document.getElementById('dt_dgq_th_tc').innerText = dtd.tc_dgq_th || 0;
+            document.getElementById('dt_dgq_qh_tc').innerText = dtd.tc_dgq_qh || 0;
+            document.getElementById('dt_cgq_th_pa').innerText = dtd.pa_cgq_th || 0;
+            document.getElementById('dt_cgq_qh_pa').innerText = dtd.pa_cgq_qh || 0;
+            document.getElementById('dt_cgq_th_kn').innerText = dtd.kn_cgq_th || 0;
+            document.getElementById('dt_cgq_qh_kn').innerText = dtd.kn_cgq_qh || 0;
+            document.getElementById('dt_cgq_th_tc').innerText = dtd.tc_cgq_th || 0;
+            document.getElementById('dt_cgq_qh_tc').innerText = dtd.tc_cgq_qh || 0;
+
+            // 3. 1022
+            const p1 = data.pa_1022 || {}; const p1d = data.pa_1022_detail || {};
+            document.getElementById('pa_1022_tong').innerText = p1.tong || 0;
+            document.getElementById('pa_1022_xong').innerText = p1.da_giai_quyet || 0;
+            document.getElementById('pa_1022_cho').innerText = p1.chua_giai_quyet || 0;
+            document.getElementById('m1022_tong').innerText = p1.tong || 0;
+            document.getElementById('m1022_xong').innerText = p1.da_giai_quyet || 0;
+            document.getElementById('m1022_ty_le').innerText = (p1.tong > 0 ? (p1.da_giai_quyet/p1.tong*100).toFixed(1) : 0) + "%";
+            ['tieng_on','kinh_te','trat_tu','van_hoa','hcc','khac'].forEach(f => {
+                const val = p1d[f==='kinh_te'?'kinh_te_ha_tang':f==='trat_tu'?'trat_tu_do_thi':f==='van_hoa'?'van_hoa_xa_hoi':f==='hcc'?'hanh_chinh_cong':f] || 0;
+                document.getElementById('pa_'+f).innerText = val;
+                document.getElementById('bar_'+f).style.width = (p1.tong > 0 ? (val/p1.tong*100) : 0) + "%";
+            });
+
+            // 4. HỒ SƠ
+            const h = data.ho_so || {};
+            const r_dh = h.tong > 0 ? (h.dung_han_count/h.tong*100).toFixed(1) : 0;
+            document.getElementById('hs_tong_hien_thi').innerText = h.tong || 0;
+            document.getElementById('hs_dh_count_hien_thi').innerText = h.dung_han_count || 0;
+            document.getElementById('hs_dh_rate_hien_thi').innerText = `(${r_dh}%)`;
+            document.getElementById('hs_ol_count_hien_thi').innerText = h.truc_tuyen || 0;
+            document.getElementById('hs_ol_rate_hien_thi').innerText = `(${(h.tong > 0 ? (h.truc_tuyen/h.tong*100).toFixed(1) : 0)}%)`;
+            document.getElementById('m_hs_tong').innerText = h.tong || 0;
+            document.getElementById('m_hs_da_gq').innerText = h.da_giai_quyet || 0;
+            document.getElementById('m_hs_da_gq_rate').innerText = (h.tong > 0 ? (h.da_giai_quyet/h.tong*100).toFixed(1) : 0) + "%";
+            document.getElementById('m_hs_online').innerText = h.truc_tuyen || 0;
+            document.getElementById('m_hs_online_rate').innerText = (h.tong > 0 ? (h.truc_tuyen/h.tong*100).toFixed(1) : 0) + "%";
+            document.getElementById('m_hs_dung_han_count').innerText = h.dung_han_count || 0;
+            document.getElementById('m_hs_dung_han_rate').innerText = r_dh + "%";
+            document.getElementById('m_hs_qua_han').innerText = h.tong - h.dung_han_count;
+            document.getElementById('m_hs_qua_han_rate').innerText = (h.tong > 0 ? ((h.tong - h.dung_han_count)/h.tong*100).toFixed(1) : 0) + "%";
             document.getElementById('vb_tong').innerText = data.van_ban?.tong || 0;
-            const pa1022 = data.pa_1022 || {};
-            document.getElementById('pa_1022_tong').innerText = pa1022.tong || 0;
-            document.getElementById('pa_1022_xong').innerText = pa1022.da_giai_quyet || 0;
-            document.getElementById('pa_1022_cho').innerText = pa1022.chua_giai_quyet || 0;
         });
 
         function renderUI() {
@@ -135,10 +248,14 @@
             document.getElementById('page-num').innerText = `LĨNH VỰC: ${groups[curPage].name.toUpperCase()}`;
         }, 10000);
 
-        setInterval(() => document.getElementById('clock').innerText = new Date().toLocaleTimeString('vi-VN'), 1000);
-        // [Các hàm Modal giữ nguyên]
+        setInterval(() => { const clock = document.getElementById('clock'); if(clock) clock.innerText = new Date().toLocaleTimeString('vi-VN')}, 1000);
+
         window.openDonThuModal = () => document.getElementById('donThuModal').classList.remove('hidden');
         window.closeDonThuModal = () => document.getElementById('donThuModal').classList.add('hidden');
+        window.open1022Modal = () => document.getElementById('modal1022').classList.remove('hidden');
+        window.close1022Modal = () => document.getElementById('modal1022').classList.add('hidden');
+        window.openHoSoModal = () => document.getElementById('hoSoModal').classList.remove('hidden');
+        window.closeHoSoModal = () => document.getElementById('hoSoModal').classList.add('hidden');
     </script>
 </body>
 </html>
