@@ -16,6 +16,7 @@
 
     <div class="max-w-7xl mx-auto space-y-8">
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            
             <div class="glass-card p-6 rounded-[32px] shadow-sm flex flex-col justify-between border-t-4 border-blue-500">
                 <div>
                     <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest block mb-4">Tình hình tiếp nhận đơn thư</span>
@@ -30,7 +31,7 @@
                         <span id="display_ky_truoc" class="text-slate-800">0</span>
                     </div>
                     <div class="flex justify-between items-center text-xs font-bold text-slate-500 border-b pb-2 border-slate-100">
-                        <span>Mới phát sinh:</span>
+                        <span>Mới phát sinh trong kỳ:</span>
                         <span id="display_moi_phat_sinh" class="text-slate-800">0</span>
                     </div>
                     <div class="flex justify-between items-center text-xs font-bold text-blue-600 bg-blue-50 p-2 rounded-xl">
@@ -53,16 +54,16 @@
                 <div class="space-y-4">
                     <div class="p-3 bg-slate-50 rounded-2xl flex justify-between items-center">
                         <span class="text-[10px] font-black text-slate-400 uppercase">Tổng số người</span>
-                        <span id="display_tong_nguoi" class="font-bold text-slate-700">0</span>
+                        <span id="display_tong_nguoi" class="font-bold text-slate-700">0 người</span>
                     </div>
                     <div class="p-4 bg-emerald-600 rounded-2xl text-white shadow-lg shadow-emerald-200">
                         <div class="flex justify-between items-center mb-2">
-                            <span class="text-[10px] font-black uppercase opacity-80 tracking-tighter">Lãnh đạo tiếp</span>
-                            <span id="display_lanh_dao_tong" class="text-xs font-black">0</span>
+                            <span class="text-[10px] font-black uppercase opacity-80 tracking-tighter">Lãnh đạo tiếp công dân</span>
+                            <span id="display_lanh_dao_tong" class="text-xs font-black">0 lượt</span>
                         </div>
                         <div class="grid grid-cols-2 gap-2 text-[10px] font-bold">
-                            <div class="bg-white/10 p-2 rounded-lg">CT: <span id="display_ct">0</span></div>
-                            <div class="bg-white/10 p-2 rounded-lg">PCT: <span id="display_pct">0</span></div>
+                            <div class="bg-white/10 p-2 rounded-lg">Chủ tịch: <span id="display_ct">0</span></div>
+                            <div class="bg-white/10 p-2 rounded-lg">Phó CT: <span id="display_pct">0</span></div>
                         </div>
                     </div>
                 </div>
@@ -73,24 +74,28 @@
                 <div class="mb-6">
                     <div class="flex justify-between items-end mb-2">
                         <span id="display_percent_text" class="text-4xl font-black text-orange-600">0%</span>
-                        <span id="display_thi_hanh_ti_le" class="text-[10px] font-black text-slate-400 uppercase">0/0 QĐ</span>
+                        <span id="display_thi_hanh_ti_le" class="text-[10px] font-black text-slate-400 uppercase tracking-widest">0/0</span>
                     </div>
                     <div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
                         <div id="display_percent_bar" class="progress-bar bg-orange-500 h-full" style="width: 0%"></div>
                     </div>
                 </div>
                 <div class="bg-orange-50 p-4 rounded-2xl">
-                    <span class="text-[9px] font-black text-orange-700 uppercase block mb-1">Khó khăn, hạn chế:</span>
-                    <p id="display_han_che" class="text-xs text-orange-800 font-medium leading-relaxed italic">Đang cập nhật...</p>
+                    <span class="text-[9px] font-black text-orange-700 uppercase block mb-1">Khó khăn, hạn chế ghi nhận:</span>
+                    <p id="display_han_che" class="text-xs text-orange-800 font-medium leading-relaxed italic">
+                        Đang cập nhật dữ liệu...
+                    </p>
                 </div>
             </div>
+
         </div>
     </div>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
         import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-database.js";
-        
+
+        // Cấu hình Firebase của bạn
         const firebaseConfig = { 
             apiKey: "AIzaSyCjS8jJtoV5HLcYIpVTX1zP5DbyYmXsbh4", 
             authDomain: "dashboard-demo-ce0da.firebaseapp.com", 
@@ -98,36 +103,41 @@
             projectId: "dashboard-demo-ce0da", 
             appId: "1:969593884637:web:47d4e6b03a51e7dcfbb034" 
         };
-        const db = getDatabase(initializeApp(firebaseConfig));
+
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
         const rootRef = ref(db, 'dashboard_binhhung/don_thu_moi');
 
+        // Lắng nghe dữ liệu
         onValue(rootRef, (snapshot) => {
             const d = snapshot.val();
             if(!d) return;
 
-            // Cập nhật Đơn thư
+            // 1. Cập nhật Đơn thư
             const tongDon = (d.ky_truoc || 0) + (d.moi_phat_sinh || 0);
             document.getElementById('display_tong_don').innerText = tongDon;
             document.getElementById('display_ky_truoc').innerText = d.ky_truoc || 0;
             document.getElementById('display_moi_phat_sinh').innerText = d.moi_phat_sinh || 0;
             document.getElementById('display_du_dieu_kien').innerText = d.du_dieu_kien || 0;
+            // Dòng mới cho Đã giải quyết
             document.getElementById('display_da_giai_quyet').innerText = d.da_giai_quyet || 0;
 
-            // Cập nhật Tiếp dân
+            // 2. Cập nhật Tiếp dân
             document.getElementById('display_luot_tiep').innerText = d.luot_tiep || 0;
-            document.getElementById('display_tong_nguoi').innerText = d.tong_nguoi || 0;
+            document.getElementById('display_tong_nguoi').innerText = (d.tong_nguoi || 0) + " người";
             document.getElementById('display_lanh_dao_tong').innerText = ((d.ct_tiep || 0) + (d.pct_tiep || 0)) + " lượt";
             document.getElementById('display_ct').innerText = d.ct_tiep || 0;
             document.getElementById('display_pct').innerText = d.pct_tiep || 0;
 
-            // Cập nhật Kết quả thi hành
+            // 3. Cập nhật Thi hành quyết định
             const daTH = d.da_thi_hanh || 0;
-            const tongQD = d.tong_qd || 1;
+            const tongQD = d.tong_qd || 1; // Tránh chia cho 0
             const percent = ((daTH / tongQD) * 100).toFixed(1);
-            document.getElementById('display_thi_hanh_ti_le').innerText = `${daTH}/${tongQD} QĐ`;
+            
+            document.getElementById('display_thi_hanh_ti_le').innerText = `${daTH}/${tongQD}`;
             document.getElementById('display_percent_text').innerText = percent + "%";
             document.getElementById('display_percent_bar').style.width = percent + "%";
-            document.getElementById('display_han_che').innerText = d.han_che || "Không có khó khăn ghi nhận.";
+            document.getElementById('display_han_che').innerText = d.han_che || "Không có thông tin khó khăn.";
         });
     </script>
 </body>
