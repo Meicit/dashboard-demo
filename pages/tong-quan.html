@@ -52,14 +52,15 @@
                 </div>
             </div>
 
-            <div class="md:col-span-4 space-y-6">
-                <div class="bg-gradient-to-br from-blue-600 to-indigo-700 p-6 rounded-[32px] shadow-xl text-white relative overflow-hidden h-[210px] flex flex-col justify-between">
-                    <div class="z-10">
+            <div class="md:col-span-4 space-y-6 flex flex-col">
+                <div class="bg-gradient-to-br from-blue-600 to-indigo-700 rounded-[32px] shadow-xl text-white relative overflow-hidden flex-1 flex flex-col">
+                    <div class="p-6 pb-2">
                         <div class="text-[10px] font-bold opacity-70 uppercase tracking-widest mb-1">Hồ sơ hành chính (Lũy kế)</div>
                         <div id="hs_luy_ke" class="text-5xl font-black italic">0</div>
                         <div class="text-[10px] font-bold opacity-70 mt-1">Tổng hồ sơ đã nhận</div>
                     </div>
-                    <div class="z-10 grid grid-cols-2 gap-3">
+
+                    <div class="px-6 grid grid-cols-2 gap-3 mt-4">
                         <div class="bg-white/10 p-2 rounded-xl backdrop-blur-md border border-white/10">
                             <div class="text-[9px] uppercase font-bold opacity-70">Đã thực hiện</div>
                             <div id="hs_da_thuc_hien" class="text-lg font-black text-emerald-300">0</div>
@@ -69,17 +70,22 @@
                             <div id="hs_rate" class="text-lg font-black text-yellow-300">0%</div>
                         </div>
                     </div>
+
+                    <div class="mt-auto bg-black/20 p-4 px-6 flex justify-between items-center border-t border-white/10">
+                        <span class="text-[10px] font-black uppercase tracking-tighter opacity-80">Mức độ hài lòng:</span>
+                        <span id="hs_hai_long" class="text-2xl font-black text-orange-400">0%</span>
+                    </div>
+                    
+                    <div class="absolute right-[-10px] top-[-10px] text-white opacity-5 text-8xl font-black select-none pointer-events-none">📋</div>
                 </div>
 
-                <div class="grid grid-cols-2 gap-4">
-                    <div class="bg-white p-4 rounded-3xl border border-slate-100 shadow-sm flex flex-col items-center justify-center">
-                        <div class="text-[9px] font-black text-slate-400 uppercase mb-1">Hài lòng</div>
-                        <div id="hs_hai_long" class="text-2xl font-black text-orange-500">0%</div>
+                <div class="bg-emerald-600 p-6 rounded-[32px] shadow-lg text-white flex justify-between items-center relative overflow-hidden h-[100px]">
+                    <div class="z-10">
+                        <div class="text-[10px] font-bold opacity-70 uppercase tracking-widest">Văn bản chỉ đạo</div>
+                        <div class="text-xs opacity-80 italic">Cập nhật hệ thống</div>
                     </div>
-                    <div class="bg-emerald-600 p-4 rounded-3xl shadow-lg text-white flex flex-col items-center justify-center relative overflow-hidden">
-                        <div class="text-[9px] font-bold opacity-70 uppercase mb-1">Văn bản</div>
-                        <div id="vb_tong" class="text-2xl font-black italic">0</div>
-                    </div>
+                    <div id="vb_tong" class="text-5xl font-black italic z-10">0</div>
+                    <div class="absolute -left-4 -bottom-6 text-white opacity-10 text-7xl select-none pointer-events-none">⚖️</div>
                 </div>
             </div>
         </div>
@@ -112,12 +118,12 @@
             document.getElementById('pa_cho').innerText = d.pa_1022?.chua_giai_quyet || 0;
             document.getElementById('pa_donut').style.setProperty('--pa-p', (paX/paT*100) + '%');
 
-            // --- HỒ SƠ HÀNH CHÍNH (Theo nhánh ho_so_thang mới) ---
+            // --- HỒ SƠ HÀNH CHÍNH ---
             const hs = d.ho_so_thang || {};
             const lk_tong = hs.luy_ke || 0;
-            const lk_xong = hs.truoc_han || 0; // Đã thực hiện
+            const lk_xong = hs.truoc_han || 0;
             const tre_han = hs.tre_han || 0;
-            const total_gq = lk_xong + tre_han; // Tổng đã giải quyết để tính tỷ lệ đúng hạn
+            const total_gq = lk_xong + tre_han;
 
             document.getElementById('hs_luy_ke').innerText = lk_tong;
             document.getElementById('hs_da_thuc_hien').innerText = lk_xong;
