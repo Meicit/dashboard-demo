@@ -14,50 +14,50 @@
     </style>
 </head>
 <body>
-    <div class="max-w-5xl mx-auto">
-        <div class="card border-t-4 border-blue-600 shadow-sm">
+    <div class="max-w-6xl mx-auto">
+        <div class="card border-t-4 border-blue-600 shadow-sm relative">
             <div class="flex justify-between items-center mb-8">
-                <h3 class="font-black text-slate-800 uppercase tracking-wider text-xl">Cập nhật Báo cáo Đơn thư & Tiếp dân</h3>
+                <h3 class="font-black text-slate-800 uppercase tracking-wider">Cập nhật Đơn thư & Tiếp dân</h3>
                 <button onclick="saveData()" class="bg-blue-600 text-white font-black px-8 py-3 rounded-xl hover:bg-blue-700 transition-all shadow-lg active:scale-95 text-xs">
-                    💾 CẬP NHẬT HỆ THỐNG
+                    💾 LƯU DỮ LIỆU
                 </button>
             </div>
             
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div>
-                    <h4 class="section-title">1. Tình hình đơn thư</h4>
-                    <label>Kỳ trước chuyển sang</label>
-                    <input type="number" id="ky_truoc">
-                    <label>Mới phát sinh</label>
-                    <input type="number" id="moi_phat_sinh">
-                    <label>Đủ điều kiện xử lý</label>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+                <div class="space-y-4">
+                    <h4 class="section-title">1. Đơn thư thụ lý</h4>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div><label>Kỳ trước chuyển sang</label><input type="number" id="ky_truoc"></div>
+                        <div><label>Mới phát sinh trong kỳ</label><input type="number" id="moi_phat_sinh"></div>
+                    </div>
+                    <label>Đơn đủ điều kiện xử lý</label>
                     <input type="number" id="du_dieu_kien">
+                    <label class="text-emerald-600">Đơn thư đã giải quyết</label>
+                    <input type="number" id="da_giai_quyet" class="border-emerald-200 focus:border-emerald-500">
                 </div>
 
-                <div>
-                    <h4 class="section-title">2. Tiếp công dân</h4>
-                    <label>Tổng số lượt tiếp</label>
-                    <input type="number" id="luot_tiep">
-                    <label>Tổng số người</label>
-                    <input type="number" id="tong_nguoi">
+                <div class="space-y-4">
+                    <h4 class="section-title text-emerald-600 border-emerald-600">2. Công tác tiếp dân</h4>
                     <div class="grid grid-cols-2 gap-4">
-                        <div><label>Chủ tịch tiếp</label><input type="number" id="ct_tiep"></div>
-                        <div><label>Phó Chủ tịch tiếp</label><input type="number" id="pct_tiep"></div>
+                        <div><label>Số lượt tiếp</label><input type="number" id="luot_tiep"></div>
+                        <div><label>Tổng số người</label><input type="number" id="tong_nguoi"></div>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div><label>Chủ tịch tiếp (lượt)</label><input type="number" id="ct_tiep"></div>
+                        <div><label>Phó Chủ tịch tiếp (lượt)</label><input type="number" id="pct_tiep"></div>
                     </div>
                 </div>
 
-                <div>
-                    <h4 class="section-title">3. Kết quả thi hành</h4>
-                    <div class="grid grid-cols-2 gap-4">
-                        <div><label>Số QĐ đã thi hành</label><input type="number" id="da_thi_hanh"></div>
-                        <div><label>Tổng số QĐ phải thi hành</label><input type="number" id="tong_qd"></div>
+                <div class="space-y-4 md:col-span-2 pt-6 border-t">
+                    <h4 class="section-title text-orange-600 border-orange-600">3. Kết quả thi hành quyết định</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div><label>Số quyết định đã thi hành</label><input type="number" id="da_thi_hanh"></div>
+                        <div><label>Tổng số quyết định phải TH</label><input type="number" id="tong_qd"></div>
+                        <div class="md:col-span-1">
+                            <label>Khó khăn, hạn chế (nếu có)</label>
+                            <textarea id="han_che" rows="1"></textarea>
+                        </div>
                     </div>
-                </div>
-
-                <div>
-                    <h4 class="section-title">4. Ghi chú nhanh (Tùy chọn)</h4>
-                    <label>Hạn chế tồn tại</label>
-                    <textarea id="han_che" rows="2" placeholder="Ví dụ: Giấy tay, vi bằng..."></textarea>
                 </div>
             </div>
         </div>
@@ -67,11 +67,16 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
         import { getDatabase, ref, update, onValue } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-database.js";
         
-        const firebaseConfig = { apiKey: "AIzaSyCjS8jJtoV5HLcYIpVTX1zP5DbyYmXsbh4", authDomain: "dashboard-demo-ce0da.firebaseapp.com", databaseURL: "https://dashboard-demo-ce0da-default-rtdb.asia-southeast1.firebasedatabase.app", projectId: "dashboard-demo-ce0da", appId: "1:969593884637:web:47d4e6b03a51e7dcfbb034" };
+        const firebaseConfig = { 
+            apiKey: "AIzaSyCjS8jJtoV5HLcYIpVTX1zP5DbyYmXsbh4", 
+            authDomain: "dashboard-demo-ce0da.firebaseapp.com", 
+            databaseURL: "https://dashboard-demo-ce0da-default-rtdb.asia-southeast1.firebasedatabase.app", 
+            projectId: "dashboard-demo-ce0da", 
+            appId: "1:969593884637:web:47d4e6b03a51e7dcfbb034" 
+        };
         const db = getDatabase(initializeApp(firebaseConfig));
         const rootRef = ref(db, 'dashboard_binhhung/don_thu_moi');
 
-        // Load dữ liệu hiện tại lên Form
         onValue(rootRef, (snap) => {
             const d = snap.val();
             if(d) {
@@ -86,6 +91,7 @@
                 ky_truoc: Number(document.getElementById('ky_truoc').value || 0),
                 moi_phat_sinh: Number(document.getElementById('moi_phat_sinh').value || 0),
                 du_dieu_kien: Number(document.getElementById('du_dieu_kien').value || 0),
+                da_giai_quyet: Number(document.getElementById('da_giai_quyet').value || 0),
                 luot_tiep: Number(document.getElementById('luot_tiep').value || 0),
                 tong_nguoi: Number(document.getElementById('tong_nguoi').value || 0),
                 ct_tiep: Number(document.getElementById('ct_tiep').value || 0),
@@ -95,9 +101,7 @@
                 han_che: document.getElementById('han_che').value || "Chưa có thông tin"
             };
 
-            update(rootRef, data)
-                .then(() => alert("✅ Đã cập nhật số liệu mới nhất!"))
-                .catch(e => alert("❌ Lỗi: " + e));
+            update(rootRef, data).then(() => alert("✅ Cập nhật thành công!")).catch(e => alert("❌ Lỗi: " + e));
         };
     </script>
 </body>
