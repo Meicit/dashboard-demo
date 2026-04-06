@@ -37,6 +37,7 @@
                     <div class="bg-red-50 p-4 rounded-2xl text-center"><div class="text-[10px] font-bold text-red-600 uppercase mb-1">Chờ GQ</div><div id="dt_cho" class="text-2xl font-black text-red-700">0</div></div>
                 </div>
             </div>
+
             <div class="md:col-span-4 bg-white p-8 rounded-[32px] shadow-sm border border-slate-100 flex flex-col items-center relative">
                 <h3 class="absolute top-6 left-8 text-[10px] font-black text-slate-400 uppercase tracking-widest">Phản ánh 1022</h3>
                 <div class="donut-chart mt-4" id="pa_donut" style="background: conic-gradient(#3b82f6 var(--pa-p, 0%), #f1f5f9 0deg);">
@@ -50,6 +51,7 @@
                     <div class="bg-orange-50 p-4 rounded-2xl text-center"><div class="text-[10px] font-bold text-orange-600 uppercase mb-1">Chờ GQ</div><div id="pa_cho" class="text-2xl font-black text-orange-700">0</div></div>
                 </div>
             </div>
+
             <div class="md:col-span-4 space-y-6">
                 <div class="bg-gradient-to-br from-blue-600 to-indigo-700 p-8 rounded-[32px] shadow-xl relative overflow-hidden text-white flex flex-col justify-between h-[185px]">
                     <div><div class="text-[10px] font-bold opacity-70 uppercase mb-2">Hồ sơ hành chính</div><div id="hs_tong" class="text-5xl font-black italic">0</div></div>
@@ -74,22 +76,32 @@
 
         onValue(ref(db, 'dashboard_binhhung'), (snap) => {
             const d = snap.val(); if(!d) return;
-            // Don thu
-            const dtX = d.don_thu?.da_giai_quyet || 0; const dtT = d.don_thu?.tong || 1;
-            document.getElementById('dt_tong').innerText = d.don_thu?.tong || 0;
-            document.getElementById('dt_xong').innerText = dtX;
-            document.getElementById('dt_cho').innerText = d.don_thu?.dang_giai_quyet || 0;
-            document.getElementById('dt_donut').style.setProperty('--dt-p', (dtX/dtT*100) + '%');
-            // 1022
+            
+            // --- ĐƠN THƯ (Sửa lỗi trỏ vào nhánh don_thu_moi) ---
+            const dtData = d.don_thu_moi || {};
+            const dtXong = dtData.du_dieu_kien || 0; // Hoặc sử dụng một logic tính toán khác nếu bạn muốn
+            const dtTong = (dtData.ky_truoc || 0) + (dtData.moi_phat_sinh || 0);
+            const dtHienTaiT = dtTong || 1;
+            
+            document.getElementById('dt_tong').innerText = dtTong;
+            document.getElementById('dt_xong').innerText = dtXong;
+            document.getElementById('dt_cho').innerText = dtTong - dtXong > 0 ? dtTong - dtXong : 0;
+            document.getElementById('dt_donut').style.setProperty('--dt-p', (dtXong/dtHienTaiT*100) + '%');
+
+            // --- 1022 (Giữ nguyên) ---
             const paX = d.pa_1022?.da_giai_quyet || 0; const paT = d.pa_1022?.tong || 1;
             document.getElementById('pa_tong').innerText = d.pa_1022?.tong || 0;
             document.getElementById('pa_xong').innerText = paX;
             document.getElementById('pa_cho').innerText = d.pa_1022?.chua_giai_quyet || 0;
             document.getElementById('pa_donut').style.setProperty('--pa-p', (paX/paT*100) + '%');
-            // Ho so
-            const hsT = d.ho_so?.tong || 0; const hsD = d.ho_so?.dung_han_count || 0;
+
+            // --- HO SO (Sửa lỗi trỏ vào nhánh ho_so_thang) ---
+            const hsData = d.ho_so_thang || {};
+            const hsT = hsData.thang_tong || 0; 
+            const hsD = hsData.truoc_han || 0; // Lấy hồ sơ trước hạn làm chỉ số đúng hạn
             document.getElementById('hs_tong').innerText = hsT;
             document.getElementById('hs_rate').innerText = (hsT > 0 ? (hsD/hsT*100).toFixed(1) : 0) + "%";
+            
             document.getElementById('vb_tong').innerText = d.van_ban?.tong || 0;
 
             if(d.chi_tieu) { indicators.forEach(it => it.th = d.chi_tieu[it.id] || 0); renderCarousel(); }
