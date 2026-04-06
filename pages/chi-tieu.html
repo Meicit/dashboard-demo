@@ -11,7 +11,7 @@
             border: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center;
             transition: all 0.2s;
         }
-        .indicator-row:hover { border-color: #3b82f6; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+        .indicator-row:hover { border-color: #3b82f6; box-shadow: 0 4px 12px rgba(0,0,0,0.05); transform: translateY(-2px); }
     </style>
 </head>
 <body>
@@ -19,9 +19,9 @@
         <div class="flex justify-between items-end mb-8 border-b pb-4">
             <div>
                 <h3 class="font-black text-slate-800 uppercase tracking-wider text-lg">📊 Chi tiết 38 chỉ tiêu nhiệm vụ</h3>
-                <p class="text-slate-500 text-xs mt-1 uppercase font-bold tracking-tighter text-blue-600">Năm điều hành 2026</p>
+                <p class="text-slate-500 text-xs mt-1 font-bold uppercase text-blue-600">Dữ liệu cập nhật thời gian thực</p>
             </div>
-            <div class="text-[10px] font-bold bg-slate-200 text-slate-600 px-3 py-1 rounded-full uppercase">Toàn văn chỉ tiêu</div>
+            <div class="text-[10px] font-bold bg-slate-200 text-slate-600 px-3 py-1 rounded-full uppercase italic">UBND Xã Bình Hưng</div>
         </div>
 
         <div id="full-indicator-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -32,38 +32,32 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
         import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-database.js";
         
-        const firebaseConfig = { 
-            apiKey: "AIzaSyCjS8jJtoV5HLcYIpVTX1zP5DbyYmXsbh4", 
-            authDomain: "dashboard-demo-ce0da.firebaseapp.com", 
-            databaseURL: "https://dashboard-demo-ce0da-default-rtdb.asia-southeast1.firebasedatabase.app", 
-            projectId: "dashboard-demo-ce0da", 
-            appId: "1:969593884637:web:47d4e6b03a51e7dcfbb034" 
-        };
+        const firebaseConfig = { apiKey: "AIzaSyCjS8jJtoV5HLcYIpVTX1zP5DbyYmXsbh4", authDomain: "dashboard-demo-ce0da.firebaseapp.com", databaseURL: "https://dashboard-demo-ce0da-default-rtdb.asia-southeast1.firebasedatabase.app", projectId: "dashboard-demo-ce0da", appId: "1:969593884637:web:47d4e6b03a51e7dcfbb034" };
         const db = getDatabase(initializeApp(firebaseConfig));
 
         const indicators = [ 
             {id:"ct_1", ten:"Tăng trưởng GTSC", dv:"%"}, {id:"ct_2", ten:"Thu ngân sách", dv:"Tr.đ"}, {id:"ct_3", ten:"Giải ngân ĐTC", dv:"%"}, 
-            {id:"ct_4", ten:"BHYT", dv:"%"}, {id:"ct_5", ten:"BHXH", dv:"%"}, {id:"ct_6", ten:"Mầm non", dv:"%"}, 
-            {id:"ct_7", ten:"Tiểu học", dv:"%"}, {id:"ct_8", ten:"THCS", dv:"%"}, {id:"ct_9", ten:"Phòng học", dv:"P"}, 
-            {id:"ct_10", ten:"HT THCS", dv:"%"}, {id:"ct_11", ten:"Hộ nghèo", dv:"H"}, {id:"ct_12", ten:"Chuẩn NTM", dv:"TC"}, 
-            {id:"ct_13", ten:"Ấp VH", dv:"%"}, {id:"ct_14", ten:"GĐ VH", dv:"%"}, {id:"ct_15", ten:"Tiêm chủng", dv:"%"}, 
-            {id:"ct_16", ten:"Việc làm", dv:"Ng"}, {id:"ct_17", ten:"Du lịch", dv:"MH"}, {id:"ct_18", ten:"Nước sạch", dv:"%"}, 
-            {id:"ct_19", ten:"Rác thải", dv:"%"}, {id:"ct_20", ten:"Rác y tế", dv:"%"}, {id:"ct_21", ten:"Nước thải CN", dv:"%"}, 
-            {id:"ct_22", ten:"HS đúng hạn", dv:"%"}, {id:"ct_23", ten:"Chữ ký số", dv:"%"}, {id:"ct_24", ten:"Nhập ngũ", dv:"Ng"}, 
-            {id:"ct_25", ten:"Tội phạm", dv:"%"}, {id:"ct_26", ten:"Phá án", dv:"%"}, {id:"ct_27", ten:"TNGT", dv:"%"}, 
-            {id:"ct_28", ten:"Cháy nổ", dv:"V"}, {id:"ct_29", ten:"Ma túy", dv:"Đ"}, {id:"ct_30", ten:"Phản ánh", dv:"%"}, 
-            {id:"ct_31", ten:"Văn bản ĐT", dv:"%"}, {id:"ct_32", ten:"Số hóa", dv:"%"}, {id:"ct_33", ten:"TT Online", dv:"%"}, 
-            {id:"ct_34", ten:"Hòa giải", dv:"%"}, {id:"ct_35", ten:"PCCC", dv:"%"}, {id:"ct_36", ten:"Tin báo", dv:"%"}, 
-            {id:"ct_37", ten:"DQTV", dv:"%"}, {id:"ct_38", ten:"Đảng viên", dv:"Đ/v"} 
+            {id:"ct_4", ten:"Tham gia BHYT", dv:"%"}, {id:"ct_5", ten:"Tham gia BHXH", dv:"%"}, {id:"ct_6", ten:"Mầm non chuẩn", dv:"%"}, 
+            {id:"ct_7", ten:"Tiểu học chuẩn", dv:"%"}, {id:"ct_8", ten:"THCS chuẩn", dv:"%"}, {id:"ct_9", ten:"Phòng học/10k dân", dv:"P"}, 
+            {id:"ct_10", ten:"Hoàn thành THCS", dv:"%"}, {id:"ct_11", ten:"Giảm hộ nghèo", dv:"H"}, {id:"ct_12", ten:"Chuẩn NTM", dv:"TC"}, 
+            {id:"ct_13", ten:"Ấp văn hóa", dv:"%"}, {id:"ct_14", ten:"Gia đình văn hóa", dv:"%"}, {id:"ct_15", ten:"Tiêm chủng đủ", dv:"%"}, 
+            {id:"ct_16", ten:"Giải quyết việc làm", dv:"Ng"}, {id:"ct_17", ten:"Mô hình du lịch", dv:"MH"}, {id:"ct_18", ten:"Nước sạch", dv:"%"}, 
+            {id:"ct_19", ten:"Rác sinh hoạt", dv:"%"}, {id:"ct_20", ten:"Rác y tế", dv:"%"}, {id:"ct_21", ten:"Nước thải CN", dv:"%"}, 
+            {id:"ct_22", ten:"Hồ sơ đúng hạn", dv:"%"}, {id:"ct_23", ten:"Chữ ký số", dv:"%"}, {id:"ct_24", ten:"Nhập ngũ", dv:"Ng"}, 
+            {id:"ct_25", ten:"Giảm tội phạm", dv:"%"}, {id:"ct_26", ten:"Khám phá án", dv:"%"}, {id:"ct_27", ten:"Giảm TNGT", dv:"%"}, 
+            {id:"ct_28", ten:"Cháy nổ", dv:"V"}, {id:"ct_29", ten:"Không ma túy", dv:"Đ"}, {id:"ct_30", ten:"Phản ánh 1022", dv:"%"}, 
+            {id:"ct_31", ten:"Văn bản điện tử", dv:"%"}, {id:"ct_32", ten:"Số hóa TTHC", dv:"%"}, {id:"ct_33", ten:"Thanh toán trực tuyến", dv:"%"}, 
+            {id:"ct_34", ten:"Hòa giải cơ sở", dv:"%"}, {id:"ct_35", ten:"Kiểm tra PCCC", dv:"%"}, {id:"ct_36", ten:"Tin báo tội phạm", dv:"%"}, 
+            {id:"ct_37", ten:"Dân quân tự vệ", dv:"%"}, {id:"ct_38", ten:"Đảng viên mới", dv:"Đ/v"} 
         ];
 
-        onValue(ref(db, 'dashboard_binhhung'), (snap) => {
-            const d = snap.val(); if(!d || !d.chi_tieu) return;
+        onValue(ref(db, 'dashboard_binhhung/chi_tieu'), (snap) => {
+            const data = snap.val() || {};
             document.getElementById('full-indicator-list').innerHTML = indicators.map(it => `
                 <div class="indicator-row shadow-sm">
-                    <span class="text-xs font-bold text-slate-500 uppercase tracking-tighter">${it.ten}</span>
+                    <span class="text-[11px] font-bold text-slate-500 uppercase tracking-tighter">${it.ten}</span>
                     <div class="text-right">
-                        <span class="font-black text-blue-700 text-lg">${d.chi_tieu[it.id] || 0}</span>
+                        <span class="font-black text-blue-700 text-lg">${data[it.id] || 0}</span>
                         <span class="text-[10px] font-bold text-slate-400 ml-0.5">${it.dv}</span>
                     </div>
                 </div>
