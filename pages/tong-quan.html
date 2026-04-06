@@ -53,14 +53,33 @@
             </div>
 
             <div class="md:col-span-4 space-y-6">
-                <div class="bg-gradient-to-br from-blue-600 to-indigo-700 p-8 rounded-[32px] shadow-xl relative overflow-hidden text-white flex flex-col justify-between h-[185px]">
-                    <div><div class="text-[10px] font-bold opacity-70 uppercase mb-2">Hồ sơ hành chính</div><div id="hs_tong" class="text-5xl font-black italic">0</div></div>
-                    <div class="z-10 flex justify-between items-center bg-white/10 p-3 rounded-2xl backdrop-blur-md">
-                        <span class="text-[10px] font-black uppercase tracking-tighter">Đúng hạn:</span><span id="hs_rate" class="text-2xl font-black text-emerald-300">0%</span>
+                <div class="bg-gradient-to-br from-blue-600 to-indigo-700 p-6 rounded-[32px] shadow-xl text-white relative overflow-hidden h-[210px] flex flex-col justify-between">
+                    <div class="z-10">
+                        <div class="text-[10px] font-bold opacity-70 uppercase tracking-widest mb-1">Hồ sơ hành chính (Lũy kế)</div>
+                        <div id="hs_luy_ke" class="text-5xl font-black italic">0</div>
+                        <div class="text-[10px] font-bold opacity-70 mt-1">Tổng hồ sơ đã nhận</div>
+                    </div>
+                    <div class="z-10 grid grid-cols-2 gap-3">
+                        <div class="bg-white/10 p-2 rounded-xl backdrop-blur-md border border-white/10">
+                            <div class="text-[9px] uppercase font-bold opacity-70">Đã thực hiện</div>
+                            <div id="hs_da_thuc_hien" class="text-lg font-black text-emerald-300">0</div>
+                        </div>
+                        <div class="bg-white/10 p-2 rounded-xl backdrop-blur-md border border-white/10">
+                            <div class="text-[9px] uppercase font-bold opacity-70">Đúng hạn (%)</div>
+                            <div id="hs_rate" class="text-lg font-black text-yellow-300">0%</div>
+                        </div>
                     </div>
                 </div>
-                <div class="bg-gradient-to-br from-emerald-500 to-teal-600 p-6 rounded-[32px] shadow-xl text-white text-center h-[130px] flex flex-col justify-center">
-                    <div class="text-[10px] font-bold opacity-70 uppercase mb-1">Văn bản chỉ đạo</div><div id="vb_tong" class="text-6xl font-black italic">0</div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="bg-white p-4 rounded-3xl border border-slate-100 shadow-sm flex flex-col items-center justify-center">
+                        <div class="text-[9px] font-black text-slate-400 uppercase mb-1">Hài lòng</div>
+                        <div id="hs_hai_long" class="text-2xl font-black text-orange-500">0%</div>
+                    </div>
+                    <div class="bg-emerald-600 p-4 rounded-3xl shadow-lg text-white flex flex-col items-center justify-center relative overflow-hidden">
+                        <div class="text-[9px] font-bold opacity-70 uppercase mb-1">Văn bản</div>
+                        <div id="vb_tong" class="text-2xl font-black italic">0</div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -77,30 +96,33 @@
         onValue(ref(db, 'dashboard_binhhung'), (snap) => {
             const d = snap.val(); if(!d) return;
             
-            // --- ĐƠN THƯ (Sửa lỗi trỏ vào nhánh don_thu_moi) ---
+            // --- ĐƠN THƯ ---
             const dtData = d.don_thu_moi || {};
-            const dtXong = dtData.du_dieu_kien || 0; // Hoặc sử dụng một logic tính toán khác nếu bạn muốn
+            const dtXong = dtData.du_dieu_kien || 0;
             const dtTong = (dtData.ky_truoc || 0) + (dtData.moi_phat_sinh || 0);
-            const dtHienTaiT = dtTong || 1;
-            
             document.getElementById('dt_tong').innerText = dtTong;
             document.getElementById('dt_xong').innerText = dtXong;
             document.getElementById('dt_cho').innerText = dtTong - dtXong > 0 ? dtTong - dtXong : 0;
-            document.getElementById('dt_donut').style.setProperty('--dt-p', (dtXong/dtHienTaiT*100) + '%');
+            document.getElementById('dt_donut').style.setProperty('--dt-p', (dtTong > 0 ? (dtXong/dtTong*100) : 0) + '%');
 
-            // --- 1022 (Giữ nguyên) ---
+            // --- 1022 ---
             const paX = d.pa_1022?.da_giai_quyet || 0; const paT = d.pa_1022?.tong || 1;
             document.getElementById('pa_tong').innerText = d.pa_1022?.tong || 0;
             document.getElementById('pa_xong').innerText = paX;
             document.getElementById('pa_cho').innerText = d.pa_1022?.chua_giai_quyet || 0;
             document.getElementById('pa_donut').style.setProperty('--pa-p', (paX/paT*100) + '%');
 
-            // --- HO SO (Sửa lỗi trỏ vào nhánh ho_so_thang) ---
-            const hsData = d.ho_so_thang || {};
-            const hsT = hsData.thang_tong || 0; 
-            const hsD = hsData.truoc_han || 0; // Lấy hồ sơ trước hạn làm chỉ số đúng hạn
-            document.getElementById('hs_tong').innerText = hsT;
-            document.getElementById('hs_rate').innerText = (hsT > 0 ? (hsD/hsT*100).toFixed(1) : 0) + "%";
+            // --- HỒ SƠ HÀNH CHÍNH (Theo nhánh ho_so_thang mới) ---
+            const hs = d.ho_so_thang || {};
+            const lk_tong = hs.luy_ke || 0;
+            const lk_xong = hs.truoc_han || 0; // Đã thực hiện
+            const tre_han = hs.tre_han || 0;
+            const total_gq = lk_xong + tre_han; // Tổng đã giải quyết để tính tỷ lệ đúng hạn
+
+            document.getElementById('hs_luy_ke').innerText = lk_tong;
+            document.getElementById('hs_da_thuc_hien').innerText = lk_xong;
+            document.getElementById('hs_rate').innerText = (total_gq > 0 ? (lk_xong/total_gq*100).toFixed(1) : 0) + "%";
+            document.getElementById('hs_hai_long').innerText = (hs.hai_long_percent || 0) + "%";
             
             document.getElementById('vb_tong').innerText = d.van_ban?.tong || 0;
 
