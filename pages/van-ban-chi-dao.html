@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; padding: 24px; color: #1e293b; }
+        .stat-card { background: white; border-radius: 24px; padding: 24px; border: 1px solid #e2e8f0; text-align: center; }
+        .status-badge { padding: 4px 12px; border-radius: 20px; font-size: 10px; font-weight: 800; text-transform: uppercase; }
+    </style>
+</head>
+<body>
+    <div class="max-w-7xl mx-auto space-y-8">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="stat-card border-t-4 border-emerald-500">
+                <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Văn bản chỉ đạo</p>
+                <div id="v_vb_tong" class="text-5xl font-black text-emerald-600 italic">0</div>
+                <p class="text-xs font-bold text-slate-400 mt-2">Tổng số văn bản đã ban hành</p>
+            </div>
+            <div class="stat-card border-t-4 border-blue-500">
+                <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Nhiệm vụ triển khai</p>
+                <div id="v_nv_tong" class="text-5xl font-black text-blue-600 italic">0</div>
+                <p class="text-xs font-bold text-slate-400 mt-2">Nhiệm vụ cần thực hiện</p>
+            </div>
+            <div class="stat-card border-t-4 border-orange-500">
+                <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Đã hoàn thành</p>
+                <div id="v_nv_xong" class="text-5xl font-black text-orange-500 italic">0</div>
+                <p id="v_percent" class="text-[10px] font-black text-emerald-500 mt-2 uppercase tracking-tighter">Tiến độ: 0%</p>
+            </div>
+        </div>
+
+        <div class="bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-sm">
+            <div class="p-6 bg-slate-50 border-b flex justify-between items-center">
+                <h3 class="font-black text-slate-700 uppercase text-xs tracking-widest">Chi tiết theo dõi kết quả thực hiện nhiệm vụ</h3>
+                <span class="bg-white px-3 py-1 rounded-full text-[10px] font-bold border text-slate-500 uppercase">Dữ liệu thời gian thực</span>
+            </div>
+            <table class="w-full text-left">
+                <thead>
+                    <tr class="text-[10px] font-black text-slate-400 uppercase tracking-tighter border-b bg-slate-50/50">
+                        <th class="p-4 pl-8">Tên nhiệm vụ</th>
+                        <th class="p-4">Kết quả thực hiện</th>
+                        <th class="p-4 text-center">Trạng thái</th>
+                    </tr>
+                </thead>
+                <tbody id="v_task_body">
+                    </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
+        import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-database.js";
+        const firebaseConfig = { apiKey: "AIzaSyCjS8jJtoV5HLcYIpVTX1zP5DbyYmXsbh4", authDomain: "dashboard-demo-ce0da.firebaseapp.com", databaseURL: "https://dashboard-demo-ce0da-default-rtdb.asia-southeast1.firebasedatabase.app", projectId: "dashboard-demo-ce0da", appId: "1:969593884637:web:47d4e6b03a51e7dcfbb034" };
+        const db = getDatabase(initializeApp(firebaseConfig));
+
+        onValue(ref(db, 'dashboard_binhhung/van_ban_chi_dao'), (snap) => {
+            const d = snap.val(); if(!d) return;
+
+            document.getElementById('v_vb_tong').innerText = d.vb_tong || 0;
+            document.getElementById('v_nv_tong').innerText = d.nv_tong || 0;
+            document.getElementById('v_nv_xong').innerText = d.nv_xong || 0;
+
+            const percent = d.nv_tong > 0 ? ((d.nv_xong / d.nv_tong) * 100).toFixed(1) : 0;
+            document.getElementById('v_percent').innerText = `Tiến độ hoàn thành: ${percent}%`;
+
+            if(d.tasks) {
+                document.getElementById('v_task_body').innerHTML = d.tasks.map(t => `
+                    <tr class="border-b hover:bg-slate-50 transition-colors">
+                        <td class="p-4 pl-8 text-sm font-bold text-slate-700">${t.ten}</td>
+                        <td class="p-4 text-sm text-slate-500 italic">${t.ket_qua || '---'}</td>
+                        <td class="p-4 text-center">
+                            ${t.xong 
+                                ? '<span class="status-badge bg-emerald-100 text-emerald-600">Hoàn thành</span>' 
+                                : '<span class="status-badge bg-orange-100 text-orange-600">Đang thực hiện</span>'}
+                        </td>
+                    </tr>
+                `).join('');
+            }
+        });
+    </script>
+</body>
+</html>
