@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f1f5f9; padding: 32px; }
+        .card { background: white; border-radius: 20px; padding: 32px; border: 1px solid #e2e8f0; }
+        label { display: block; font-size: 10px; font-weight: 800; color: #64748b; text-transform: uppercase; margin-bottom: 6px; }
+        input, textarea { width: 100%; padding: 10px 14px; border: 1px solid #cbd5e1; border-radius: 8px; font-weight: 600; outline: none; }
+        .task-row { background: #f8fafc; padding: 16px; border-radius: 12px; border: 1px solid #e2e8f0; margin-bottom: 12px; transition: 0.2s; }
+        .task-row:hover { border-color: #3b82f6; }
+    </style>
+</head>
+<body>
+    <div class="max-w-5xl mx-auto space-y-6">
+        <div class="card border-t-4 border-emerald-600 shadow-sm">
+            <div class="flex justify-between items-center mb-8">
+                <h3 class="font-black text-slate-800 uppercase tracking-wider text-xl">Quản lý Văn bản & Nhiệm vụ</h3>
+                <button onclick="saveData()" class="bg-emerald-600 text-white font-black px-8 py-3 rounded-xl hover:bg-emerald-700 shadow-lg active:scale-95 text-xs">
+                    💾 LƯU THAY ĐỔI
+                </button>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                <div class="bg-emerald-50 p-4 rounded-2xl border border-emerald-100">
+                    <label class="text-emerald-700">Tổng số văn bản chỉ đạo</label>
+                    <input type="number" id="vb_tong" class="text-2xl font-black text-emerald-800 bg-white">
+                </div>
+                <div class="bg-blue-50 p-4 rounded-2xl border border-blue-100">
+                    <label class="text-blue-700">Tổng số nhiệm vụ triển khai</label>
+                    <input type="number" id="nv_tong" class="text-2xl font-black text-blue-800 bg-white">
+                </div>
+            </div>
+
+            <div class="border-t pt-6">
+                <div class="flex justify-between items-center mb-4">
+                    <h4 class="font-bold text-slate-700 uppercase text-sm italic">Danh sách nhiệm vụ chi tiết</h4>
+                    <button onclick="addTaskRow()" class="text-[10px] font-black bg-slate-800 text-white px-3 py-1 rounded-lg uppercase">+ Thêm dòng</button>
+                </div>
+                <div id="task-list">
+                    </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
+        import { getDatabase, ref, update, onValue } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-database.js";
+        const firebaseConfig = { apiKey: "AIzaSyCjS8jJtoV5HLcYIpVTX1zP5DbyYmXsbh4", authDomain: "dashboard-demo-ce0da.firebaseapp.com", databaseURL: "https://dashboard-demo-ce0da-default-rtdb.asia-southeast1.firebasedatabase.app", projectId: "dashboard-demo-ce0da", appId: "1:969593884637:web:47d4e6b03a51e7dcfbb034" };
+        const db = getDatabase(initializeApp(firebaseConfig));
+        const rootRef = ref(db, 'dashboard_binhhung/van_ban_chi_dao');
+
+        window.addTaskRow = (data = {ten: '', ket_qua: '', xong: false}) => {
+            const div = document.createElement('div');
+            div.className = 'task-row flex gap-4 items-center';
+            div.innerHTML = `
+                <div class="flex-1"><label>Tên nhiệm vụ</label><input type="text" class="task-name" value="${data.ten}"></div>
+                <div class="flex-1"><label>Kết quả thực hiện</label><input type="text" class="task-result" value="${data.ket_qua}"></div>
+                <div class="w-20 text-center"><label>Đã xong</label><input type="checkbox" class="task-status h-6 w-6 accent-emerald-500" ${data.xong ? 'checked' : ''}></div>
+                <button onclick="this.parentElement.remove()" class="mt-4 text-red-400 hover:text-red-600">✕</button>
+            `;
+            document.getElementById('task-list').appendChild(div);
+        }
+
+        onValue(rootRef, (snap) => {
+            const d = snap.val(); if(!d) return;
+            document.getElementById('vb_tong').value = d.vb_tong || 0;
+            document.getElementById('nv_tong').value = d.nv_tong || 0;
+            document.getElementById('task-list').innerHTML = '';
+            if(d.tasks) d.tasks.forEach(t => addTaskRow(t));
+        }, { onlyOnce: true });
+
+        window.saveData = () => {
+            const tasks = [];
+            let xongCount = 0;
+            document.querySelectorAll('.task-row').forEach(row => {
+                const isDone = row.querySelector('.task-status').checked;
+                if(isDone) xongCount++;
+                tasks.push({
+                    ten: row.querySelector('.task-name').value,
+                    ket_qua: row.querySelector('.task-result').value,
+                    xong: isDone
+                });
+            });
+
+            update(rootRef, {
+                vb_tong: Number(document.getElementById('vb_tong').value || 0),
+                nv_tong: Number(document.getElementById('nv_tong').value || 0),
+                nv_xong: xongCount,
+                tasks: tasks
+            }).then(() => alert("✅ Đã cập nhật!")).catch(e => alert("❌ Lỗi: " + e));
+        };
+    </script>
+</body>
+</html>
