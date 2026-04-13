@@ -12,25 +12,25 @@
         .donut-chart { position: relative; width: 140px; height: 140px; border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: 0.5s; }
         .donut-inner { position: absolute; inset: 12px; background: white; border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; }
         
-        /* CSS cho Marquee */
+        /* CSS cho Marquee - Màu Emerald 900 */
         @keyframes marquee {
             0% { transform: translateX(0); }
             100% { transform: translateX(-50%); }
         }
         .animate-marquee {
             display: flex;
-            animation: marquee 40s linear infinite;
+            animation: marquee 45s linear infinite;
         }
         .animate-marquee:hover { animation-play-state: paused; }
     </style>
 </head>
 <body>
-    <div class="bg-slate-900 text-white py-2.5 overflow-hidden border-b border-slate-700 shadow-lg relative z-20">
+    <div class="bg-emerald-950 text-white py-3 overflow-hidden border-b border-emerald-800 shadow-2xl relative z-20">
         <div class="animate-marquee whitespace-nowrap flex items-center">
-            <div id="marquee-content" class="flex gap-12 items-center px-4">
-                <span class="text-[10px] font-bold uppercase tracking-widest text-blue-400">Đang tải dữ liệu chỉ tiêu 2026...</span>
+            <div id="marquee-content" class="flex gap-16 items-center px-4">
+                <span class="text-[10px] font-black uppercase tracking-widest text-emerald-400">Đang đồng bộ dữ liệu chỉ tiêu 2026...</span>
             </div>
-            <div id="marquee-content-clone" class="flex gap-12 items-center px-4"></div>
+            <div id="marquee-content-clone" class="flex gap-16 items-center px-4"></div>
         </div>
     </div>
 
@@ -134,15 +134,21 @@
         const firebaseConfig = { apiKey: "AIzaSyCjS8jJtoV5HLcYIpVTX1zP5DbyYmXsbh4", authDomain: "dashboard-demo-ce0da.firebaseapp.com", databaseURL: "https://dashboard-demo-ce0da-default-rtdb.asia-southeast1.firebasedatabase.app", projectId: "dashboard-demo-ce0da", appId: "1:969593884637:web:47d4e6b03a51e7dcfbb034" };
         const db = getDatabase(initializeApp(firebaseConfig));
 
-        const indicators = [ {id:"ct_1", ten:"Tăng trưởng GTSC", dv:"%", kh:"10.5"}, {id:"ct_2", ten:"Thu ngân sách", dv:"Tr.đ", kh:"100"}, {id:"ct_3", ten:"Giải ngân ĐTC", dv:"%", kh:"95"}, {id:"ct_4", ten:"BHYT", dv:"%", kh:"95"}, {id:"ct_5", ten:"BHXH", dv:"%", kh:"59.5"}, {id:"ct_6", ten:"Mầm non", dv:"%", kh:"27"}, {id:"ct_7", ten:"Tiểu học", dv:"%", kh:"32"}, {id:"ct_8", ten:"THCS", dv:"%", kh:"43"}, {id:"ct_9", ten:"Phòng học", dv:"P", kh:"460"}, {id:"ct_10", ten:"HT THCS", dv:"%", kh:"99"}, {id:"ct_11", ten:"Hộ nghèo", dv:"H", kh:"-"}, {id:"ct_12", ten:"Chuẩn NTM", dv:"TC", kh:"3"}, {id:"ct_13", ten:"Ấp VH", dv:"%", kh:"95"}, {id:"ct_14", ten:"GĐ VH", dv:"%", kh:"93"}, {id:"ct_15", ten:"Tiêm chủng", dv:"%", kh:"95"}, {id:"ct_16", ten:"Việc làm", dv:"Ng", kh:"1000"}, {id:"ct_17", ten:"Du lịch", dv:"MH", kh:"1"}, {id:"ct_18", ten:"Nước sạch", dv:"%", kh:"100"}, {id:"ct_19", ten:"Rác thải", dv:"%", kh:"100"}, {id:"ct_20", ten:"Rác y tế", dv:"%", kh:"100"}, {id:"ct_21", ten:"Nước thải CN", dv:"%", kh:"100"}, {id:"ct_22", ten:"HS đúng hạn", dv:"%", kh:"99.5"}, {id:"ct_23", ten:"Chữ ký số", dv:"%", kh:"100"}, {id:"ct_24", ten:"Nhập ngũ", dv:"Ng", kh:"31"}, {id:"ct_25", ten:"Tội phạm", dv:"%", kh:"-10"}, {id:"ct_26", ten:"Phá án", dv:"%", kh:">80"}, {id:"ct_27", ten:"TNGT", dv:"%", kh:"-5"}, {id:"ct_28", ten:"Cháy nổ", dv:"V", kh:"0"}, {id:"ct_29", ten:"Ma túy", dv:"Đ", kh:"Đạt"}, {id:"ct_30", ten:"Phản ánh", dv:"%", kh:"50"}, {id:"ct_31", ten:"Văn bản ĐT", dv:"%", kh:"100"}, {id:"ct_32", ten:"Số hóa", dv:"%", kh:"100"}, {id:"ct_33", ten:"TT Online", dv:"%", kh:"100"}, {id:"ct_34", ten:"Hòa giải", dv:"%", kh:"100"}, {id:"ct_35", ten:"PCCC", dv:"%", kh:"100"}, {id:"ct_36", ten:"Tin báo", dv:"%", kh:"100"}, {id:"ct_37", ten:"DQTV", dv:"%", kh:"100"}, {id:"ct_38", ten:"Đảng viên", dv:"Đ/v", kh:"-"} ];
+        const indicators = [ {id:"ct_1", ten:"Tăng trưởng GTSC", dv:"%", kh:"10.5"}, {id:"ct_2", ten:"Thu ngân sách", dv:"Tr.đ", kh:"100"}, {id:"ct_3", ten:"Giải ngân ĐTC", dv:"%", kh:"95"}, {id:"ct_4", ten:"BHYT", dv:"%", kh:"95"}, {id:"ct_5", ten:"BHXH", dv:"%", kh:"59.5"}, {id:"ct_6", ten:"Mầm non", dv:"%", kh:"27"}, {id:"ct_7", ten:"Tiểu học", dv:"%", kh:"32"}, {id:"ct_8", ten:"THCS", dv:"%", kh:"43"}, {id:"ct_9", ten:"Phòng học", dv:"P", kh:"460"}, {id:"ct_10", ten:"HT THCS", dv:"%", kh:"99"}, {id:"ct_11", ten:"Hộ nghèo", dv:"H", kh:"-"}, {id:"ct_12", ten:"Chuẩn NTM", dv:"TC", kh:"3"}, {id:"ct_13", khu vực:"Ấp VH", dv:"%", kh:"95"}, {id:"ct_14", ten:"GĐ VH", dv:"%", kh:"93"}, {id:"ct_15", ten:"Tiêm chủng", dv:"%", kh:"95"}, {id:"ct_16", ten:"Việc làm", dv:"Ng", kh:"1000"}, {id:"ct_17", ten:"Du lịch", dv:"MH", kh:"1"}, {id:"ct_18", ten:"Nước sạch", dv:"%", kh:"100"}, {id:"ct_19", ten:"Rác thải", dv:"%", kh:"100"}, {id:"ct_20", ten:"Rác y tế", dv:"%", kh:"100"}, {id:"ct_21", ten:"Nước thải CN", dv:"%", kh:"100"}, {id:"ct_22", ten:"HS đúng hạn", dv:"%", kh:"99.5"}, {id:"ct_23", ten:"Chữ ký số", dv:"%", kh:"100"}, {id:"ct_24", ten:"Nhập ngũ", dv:"Ng", kh:"31"}, {id:"ct_25", ten:"Tội phạm", dv:"%", kh:"-10"}, {id:"ct_26", ten:"Phá án", dv:"%", kh:">80"}, {id:"ct_27", ten:"TNGT", dv:"%", kh:"-5"}, {id:"ct_28", ten:"Cháy nổ", dv:"V", kh:"0"}, {id:"ct_29", ten:"Ma túy", dv:"Đ", kh:"Đạt"}, {id:"ct_30", ten:"Phản ánh", dv:"%", kh:"50"}, {id:"ct_31", ten:"Văn bản ĐT", dv:"%", kh:"100"}, {id:"ct_32", ten:"Số hóa", dv:"%", kh:"100"}, {id:"ct_33", ten:"TT Online", dv:"%", kh:"100"}, {id:"ct_34", ten:"Hòa giải", dv:"%", kh:"100"}, {id:"ct_35", ten:"PCCC", dv:"%", kh:"100"}, {id:"ct_36", ten:"Tin báo", dv:"%", kh:"100"}, {id:"ct_37", ten:"DQTV", dv:"%", kh:"100"}, {id:"ct_38", ten:"Đảng viên", dv:"Đ/v", kh:"-"} ];
 
         function updateMarquee(data) {
             const container = document.getElementById('marquee-content');
             const clone = document.getElementById('marquee-content-clone');
             const content = indicators.map(it => {
                 const val = data[it.id] || 0;
-                return `<div class="flex items-center gap-2"><span class="text-[9px] font-black text-slate-500 uppercase">${it.ten}:</span><span class="text-sm font-black text-emerald-400 italic">${val}</span><span class="text-[8px] font-bold text-slate-600">${it.dv}</span></div>`;
-            }).join('<span class="mx-2 text-slate-700 font-bold opacity-30">|</span>');
+                return `
+                    <div class="flex items-center gap-3">
+                        <span class="text-[10px] font-black text-cyan-400 uppercase tracking-wider italic">${it.ten}:</span>
+                        <span class="text-base font-black text-yellow-300 italic">${val}</span>
+                        <span class="text-[9px] font-bold text-emerald-300">${it.dv}</span>
+                    </div>
+                `;
+            }).join('<span class="mx-6 text-emerald-600 font-bold opacity-40">●</span>');
             container.innerHTML = content;
             clone.innerHTML = content;
         }
@@ -150,7 +156,6 @@
         onValue(ref(db, 'dashboard_binhhung'), (snap) => {
             const d = snap.val(); if(!d) return;
             
-            // Cập nhật Đơn thư (Dữ liệu từ Firebase don_thu_moi)
             const dtData = d.don_thu_moi || {};
             const dtXong = dtData.da_giai_quyet || 0;
             const dtTong = (dtData.ky_truoc || 0) + (dtData.moi_phat_sinh || 0);
@@ -159,14 +164,12 @@
             document.getElementById('dt_cho').innerText = Math.max(0, dtTong - dtXong);
             document.getElementById('dt_donut').style.setProperty('--dt-p', (dtTong > 0 ? (dtXong/dtTong*100) : 0) + '%');
 
-            // Cập nhật 1022
             const paX = d.pa_1022?.da_giai_quyet || 0; const paT = d.pa_1022?.tong || 1;
             document.getElementById('pa_tong').innerText = d.pa_1022?.tong || 0;
             document.getElementById('pa_xong').innerText = paX;
             document.getElementById('pa_cho').innerText = d.pa_1022?.chua_giai_quyet || 0;
             document.getElementById('pa_donut').style.setProperty('--pa-p', (paX/paT*100) + '%');
 
-            // Cập nhật Hồ sơ (Dữ liệu từ ho_so_thang)
             const hs = d.ho_so_thang || {};
             document.getElementById('hs_luy_ke').innerText = hs.luy_ke || 0;
             document.getElementById('hs_da_thuc_hien').innerText = hs.truoc_han || 0;
@@ -174,7 +177,6 @@
             document.getElementById('hs_rate').innerText = (total_gq > 0 ? (hs.truoc_han/total_gq*100).toFixed(1) : 0) + "%";
             document.getElementById('hs_hai_long').innerText = (hs.hai_long_percent || 0) + "%";
 
-            // Cập nhật Văn bản (Dữ liệu từ van_ban_chi_dao)
             const vb = d.van_ban_chi_dao || {};
             document.getElementById('vb_tong_h').innerText = vb.vb_tong || 0;
             document.getElementById('nv_tong_h').innerText = vb.nv_tong || 0;
