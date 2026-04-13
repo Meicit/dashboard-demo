@@ -12,14 +12,14 @@
         .donut-chart { position: relative; width: 140px; height: 140px; border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: 0.5s; }
         .donut-inner { position: absolute; inset: 12px; background: white; border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; }
         
-        /* CSS cho Marquee - Tốc độ 25 giây */
+        /* CSS cho Marquee - Tốc độ 5 giây */
         @keyframes marquee {
             0% { transform: translateX(0); }
             100% { transform: translateX(-50%); }
         }
         .animate-marquee {
             display: flex;
-            animation: marquee 25s linear infinite; /* Đã chỉnh thành 25 giây */
+            animation: marquee 5s linear infinite; /* Đã chỉnh thành 5 giây */
         }
         .animate-marquee:hover { animation-play-state: paused; }
     </style>
