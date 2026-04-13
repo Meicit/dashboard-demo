@@ -12,18 +12,19 @@
         .donut-chart { position: relative; width: 140px; height: 140px; border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: 0.5s; }
         .donut-inner { position: absolute; inset: 12px; background: white; border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; }
         
-        /* CSS Marquee - Tốc độ 25s - Nền Vàng */
+        /* CSS Marquee - Tối ưu cho 38 chỉ tiêu */
         @keyframes marquee {
             0% { transform: translateX(0); }
             100% { transform: translateX(-50%); }
         }
         .animate-marquee {
             display: flex;
-            animation: marquee 3s linear infinite;
+            /* Tăng lên 60s để kịp chạy hết 38 chỉ tiêu dài */
+            animation: marquee 60s linear infinite; 
+            width: max-content;
         }
         .animate-marquee:hover { animation-play-state: paused; }
         
-        /* Màu nền Marquee: Vàng tươi */
         .marquee-wrapper {
             background-color: #facc15; /* Yellow 400 */
             border-bottom: 2px solid #eab308;
@@ -34,7 +35,7 @@
     <div class="marquee-wrapper py-3 overflow-hidden shadow-lg relative z-20">
         <div class="animate-marquee whitespace-nowrap flex items-center">
             <div id="marquee-content" class="flex gap-16 items-center px-4">
-                <span class="text-[10px] font-black uppercase tracking-widest text-slate-800 italic">Đang đồng bộ dữ liệu chỉ tiêu điều hành 2026...</span>
+                <span class="text-[10px] font-black uppercase tracking-widest text-slate-800 italic">Khởi tạo dữ liệu chỉ tiêu điều hành 2026...</span>
             </div>
             <div id="marquee-content-clone" class="flex gap-16 items-center px-4"></div>
         </div>
