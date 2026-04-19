@@ -10,19 +10,16 @@
         .carousel-page { min-width: 100%; display: flex; gap: 15px; padding: 10px; }
         .indicator-card { flex: 1; background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); color: white; padding: 20px; border-radius: 20px; text-align: center; display: flex; flex-direction: column; justify-content: space-between; min-height: 160px; border: 1px solid rgba(255,255,255,0.1); }
         
-        /* CSS Marquee - Nền Vàng, Chữ Đen/Đỏ */
         @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
-        .animate-marquee { display: flex; animation: marquee 90s linear infinite; width: max-content; }
+        .animate-marquee { display: flex; animation: marquee 60s linear infinite; width: max-content; }
         .animate-marquee:hover { animation-play-state: paused; }
         .marquee-wrapper { background-color: #facc15; border-bottom: 2px solid #eab308; }
 
         .donut-chart { position: relative; width: 140px; height: 140px; border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: 0.5s; }
         .donut-inner { position: absolute; inset: 12px; background: white; border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; }
         
-        /* Button Style */
         .nav-btn { background: white; border: 1px solid #e2e8f0; padding: 4px 12px; border-radius: 8px; font-size: 10px; font-weight: 800; cursor: pointer; transition: 0.2s; color: #1e293b; }
         .nav-btn:hover { background: #f1f5f9; border-color: #3b82f6; color: #3b82f6; }
-        .nav-btn:active { transform: scale(0.95); }
     </style>
 </head>
 <body>
@@ -37,7 +34,6 @@
         <section class="bg-white rounded-[32px] overflow-hidden border border-slate-200 shadow-sm">
             <div class="p-4 bg-slate-50/50 border-b flex justify-between px-8 items-center">
                 <span class="font-black text-slate-700 text-xs uppercase tracking-wider italic">Chỉ tiêu nhiệm vụ chính trị 2026</span>
-                
                 <div class="flex items-center gap-3">
                     <button onclick="prevPage()" class="nav-btn">◀ TRƯỚC</button>
                     <span id="page-num" class="text-[10px] font-black bg-blue-600 text-white px-4 py-1.5 rounded-full tracking-tighter shadow-md">TRANG 1/8</span>
@@ -48,8 +44,8 @@
         </section>
 
         <div class="grid grid-cols-1 md:grid-cols-12 gap-8">
-            <div class="md:col-span-4 bg-white p-8 rounded-[32px] shadow-sm border border-slate-100 flex flex-col items-center relative text-center">
-                <h3 class="absolute top-6 left-8 text-[10px] font-black text-slate-400 uppercase tracking-widest">Tình hình Đơn thư</h3>
+            <div class="md:col-span-4 bg-white p-8 rounded-[32px] shadow-sm border border-slate-100 flex flex-col items-center relative">
+                <h3 class="absolute top-6 left-8 text-[10px] font-black text-slate-400 uppercase tracking-widest italic">Tình hình Đơn thư</h3>
                 <div class="donut-chart mt-4" id="dt_donut" style="background: conic-gradient(#10b981 var(--dt-p, 0%), #f1f5f9 0deg);">
                     <div class="donut-inner"><span id="dt_tong" class="text-4xl font-black text-slate-800">0</span><span class="text-[9px] font-bold text-slate-400 uppercase">Tổng đơn</span></div>
                 </div>
@@ -59,20 +55,29 @@
                 </div>
             </div>
 
-            <div class="md:col-span-4 bg-white p-8 rounded-[32px] shadow-sm border border-slate-100 flex flex-col items-center relative text-center">
-                <h3 class="absolute top-6 left-8 text-[10px] font-black text-slate-400 uppercase tracking-widest">Phản ánh 1022</h3>
+            <div class="md:col-span-4 bg-white p-8 rounded-[32px] shadow-sm border border-slate-100 flex flex-col items-center relative">
+                <h3 class="absolute top-6 left-8 text-[10px] font-black text-slate-400 uppercase tracking-widest italic">Phản ánh 1022</h3>
                 <div class="donut-chart mt-4" id="pa_donut" style="background: conic-gradient(#3b82f6 var(--pa-p, 0%), #f1f5f9 0deg);">
-                    <div class="donut-inner"><span id="pa_tong" class="text-4xl font-black text-slate-800">0</span><span class="text-[9px] font-bold text-slate-400 uppercase">Tổng tin</span></div>
+                    <div class="donut-inner">
+                        <span id="pa_tong" class="text-4xl font-black text-slate-800">0</span>
+                        <span class="text-[9px] font-bold text-slate-400 uppercase">Tổng tin</span>
+                    </div>
                 </div>
                 <div class="w-full grid grid-cols-2 gap-4 mt-8">
-                    <div class="bg-blue-50 p-4 rounded-2xl text-center"><div class="text-[10px] font-bold text-blue-600 uppercase mb-1">Đã xong</div><div id="pa_xong" class="text-2xl font-black text-blue-700">0</div></div>
-                    <div class="bg-orange-50 p-4 rounded-2xl text-center"><div class="text-[10px] font-bold text-orange-600 uppercase mb-1">Chờ GQ</div><div id="pa_cho" class="text-2xl font-black text-orange-700">0</div></div>
+                    <div class="bg-blue-50 p-4 rounded-2xl text-center">
+                        <div class="text-[10px] font-bold text-blue-600 uppercase mb-1">Đã xong</div>
+                        <div id="pa_xong" class="text-2xl font-black text-blue-700">0</div>
+                    </div>
+                    <div class="bg-orange-50 p-4 rounded-2xl text-center">
+                        <div class="text-[10px] font-bold text-orange-600 uppercase mb-1">Chờ GQ</div>
+                        <div id="pa_cho" class="text-2xl font-black text-orange-700">0</div>
+                    </div>
                 </div>
             </div>
 
             <div class="md:col-span-4 space-y-6 flex flex-col">
                 <div class="bg-gradient-to-br from-blue-600 to-indigo-700 rounded-[32px] shadow-xl text-white p-6 flex-1 flex flex-col">
-                    <div class="text-[10px] font-bold opacity-70 uppercase tracking-widest mb-1 italic">Hồ sơ hành chính (Lũy kế)</div>
+                    <div class="text-[10px] font-bold opacity-70 uppercase mb-1 italic">Hồ sơ hành chính (Lũy kế)</div>
                     <div id="hs_luy_ke" class="text-5xl font-black italic">0</div>
                     <div class="grid grid-cols-2 gap-3 mt-auto">
                         <div class="bg-white/10 p-2 rounded-xl border border-white/10"><div class="text-[9px] uppercase font-bold opacity-70">Đúng hạn (%)</div><div id="hs_rate" class="text-lg font-black text-yellow-300">0%</div></div>
@@ -82,7 +87,7 @@
                 <div class="bg-emerald-600 p-5 rounded-[32px] shadow-lg text-white flex items-center h-[115px]">
                     <div class="w-full">
                         <div class="text-[9px] font-bold opacity-70 uppercase mb-2">Văn bản chỉ đạo điều hành</div>
-                        <div class="flex items-center justify-between pr-4">
+                        <div class="flex items-center justify-between">
                             <div><span id="vb_tong_h" class="text-4xl font-black italic">0</span><p class="text-[8px] font-bold opacity-60 uppercase">Văn bản</p></div>
                             <div class="w-[1px] h-10 bg-white/20"></div>
                             <div><span id="nv_tong_h" class="text-4xl font-black italic text-yellow-300">0</span><p class="text-[8px] font-bold opacity-60 uppercase">Nhiệm vụ</p></div>
@@ -96,6 +101,7 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
         import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-database.js";
+        
         const firebaseConfig = { apiKey: "AIzaSyCjS8jJtoV5HLcYIpVTX1zP5DbyYmXsbh4", authDomain: "dashboard-demo-ce0da.firebaseapp.com", databaseURL: "https://dashboard-demo-ce0da-default-rtdb.asia-southeast1.firebasedatabase.app", projectId: "dashboard-demo-ce0da", appId: "1:969593884637:web:47d4e6b03a51e7dcfbb034" };
         const db = getDatabase(initializeApp(firebaseConfig));
 
@@ -140,9 +146,7 @@
             {id:"ct_38", ten:"Đảng viên hoàn thành tốt nhiệm vụ", dv:"%", kh:"100"}
         ];
 
-        let curP = 0;
-        const totalPages = 8;
-
+        let curP = 0; const totalPages = 8;
         window.nextPage = () => { curP = (curP + 1) % totalPages; updateCarousel(); };
         window.prevPage = () => { curP = (curP - 1 + totalPages) % totalPages; updateCarousel(); };
 
@@ -151,17 +155,9 @@
             document.getElementById('page-num').innerText = `TRANG ${curP + 1}/${totalPages}`;
         }
 
-        function updateMarquee(data) {
-            const html = indicators.map(it => {
-                const val = data[it.id] || "0";
-                return `<div class="flex items-center gap-3"><span class="text-[10px] font-black text-slate-900 uppercase italic">${it.ten}:</span><span class="text-base font-black text-red-600">${val}</span><span class="text-[9px] font-bold text-slate-600">${it.dv}</span></div>`;
-            }).join('<span class="mx-8 text-yellow-600 font-bold opacity-40">●</span>');
-            document.getElementById('marquee-content').innerHTML = html;
-            document.getElementById('marquee-content-clone').innerHTML = html;
-        }
-
         onValue(ref(db, 'dashboard_binhhung'), (snap) => {
             const d = snap.val(); if(!d) return;
+            
             // ĐƠN THƯ
             const dtT = (d.don_thu_moi?.ky_truoc || 0) + (d.don_thu_moi?.moi_phat_sinh || 0);
             const dtX = d.don_thu_moi?.da_giai_quyet || 0;
@@ -170,10 +166,18 @@
             document.getElementById('dt_cho').innerText = Math.max(0, dtT - dtX);
             document.getElementById('dt_donut').style.setProperty('--dt-p', (dtT > 0 ? (dtX/dtT*100) : 0) + '%');
 
-            // 1022 & HỒ SƠ & VĂN BẢN
-            document.getElementById('pa_tong').innerText = d.pa_1022?.tong || 0;
+            // SỬA LỖI PHẢN ÁNH 1022 - Lấy đúng nhánh pa_1022 từ Firebase
+            const pa = d.pa_1022 || {};
+            document.getElementById('pa_tong').innerText = pa.tong || 0;
+            document.getElementById('pa_xong').innerText = pa.da_giai_quyet || 0;
+            document.getElementById('pa_cho').innerText = pa.chua_giai_quyet || 0;
+            const paRate = pa.tong > 0 ? (pa.da_giai_quyet / pa.tong * 100) : 0;
+            document.getElementById('pa_donut').style.setProperty('--pa-p', paRate + '%');
+
+            // HỒ SƠ & VĂN BẢN
             document.getElementById('hs_luy_ke').innerText = d.ho_so_thang?.luy_ke || 0;
             document.getElementById('vb_tong_h').innerText = d.van_ban_chi_dao?.vb_tong || 0;
+            document.getElementById('nv_tong_h').innerText = d.van_ban_chi_dao?.nv_tong || 0;
 
             if(d.chi_tieu) { 
                 updateMarquee(d.chi_tieu); 
@@ -182,11 +186,25 @@
             }
         });
 
+        function updateMarquee(data) {
+            const html = indicators.map(it => {
+                const val = data[it.id] || "0";
+                return `<div class="flex items-center gap-3"><span class="text-[10px] font-black text-slate-900 uppercase italic">${it.ten}:</span><span class="text-base font-black text-red-600">${val}</span><span class="text-[9px] font-bold text-slate-500">${it.dv}</span></div>`;
+            }).join('<span class="mx-8 text-yellow-600 font-bold opacity-40">●</span>');
+            document.getElementById('marquee-content').innerHTML = html;
+            document.getElementById('marquee-content-clone').innerHTML = html;
+        }
+
         function renderCarousel() {
             const track = document.getElementById('carouselTrack'); track.innerHTML = '';
             for(let i=0; i < totalPages; i++) {
                 const page = document.createElement('div'); page.className = 'carousel-page';
-                page.innerHTML = indicators.slice(i*5, (i+1)*5).map(it => `<div class="indicator-card"><div class="text-[10px] font-black opacity-60 uppercase italic leading-tight">${it.ten}</div><div class="text-4xl font-black italic">${it.th}<span class="text-sm font-normal opacity-60 ml-1">${it.dv}</span></div><div class="text-[10px] text-emerald-400 font-bold italic">KH: ${it.kh}</div></div>`).join('');
+                page.innerHTML = indicators.slice(i*5, (i+1)*5).map(it => `
+                    <div class="indicator-card">
+                        <div class="text-[10px] font-black opacity-60 uppercase italic leading-tight">${it.ten}</div>
+                        <div class="text-4xl font-black italic">${it.th}<span class="text-sm font-normal opacity-60 ml-1">${it.dv}</span></div>
+                        <div class="text-[10px] text-emerald-400 font-bold italic uppercase tracking-tighter">KH: ${it.kh}</div>
+                    </div>`).join('');
                 track.appendChild(page);
             }
         }
