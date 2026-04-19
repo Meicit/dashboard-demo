@@ -3,94 +3,68 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lịch công tác tuần - UBND Xã Bình Hưng</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; padding: 20px; color: #1e293b; }
-        .day-card { background: white; border-radius: 24px; border: 1px solid #e2e8f0; overflow: hidden; transition: all 0.3s; }
-        .day-active { border-color: #3b82f6; ring: 4px; ring-color: #dbeafe; }
-        .event-row { border-bottom: 1px dashed #e2e8f0; padding: 12px 0; }
-        .event-row:last-child { border-bottom: none; }
-        .leader-tag { font-size: 10px; font-weight: 800; padding: 2px 8px; border-radius: 6px; text-transform: uppercase; }
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: #f8fafc; 
+            margin: 0; 
+            padding: 15px; 
+            height: 100vh; 
+            display: flex; 
+            flex-direction: column; 
+            overflow: hidden;
+        }
+        .calendar-wrapper {
+            flex: 1;
+            background: white;
+            border-radius: 24px;
+            overflow: hidden;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
     </style>
 </head>
 <body>
-
-    <div class="max-w-7xl mx-auto space-y-6">
-        <div class="flex justify-between items-center bg-white p-6 rounded-[32px] shadow-sm border border-slate-200">
-            <div>
-                <h2 class="text-xl font-black text-slate-800 uppercase tracking-tighter italic">Lịch công tác tuần</h2>
-                <p class="text-xs font-bold text-blue-600 uppercase tracking-widest mt-1" id="week-range">Tuần từ ... đến ...</p>
+    <div class="max-w-7xl mx-auto w-full h-full flex flex-col space-y-4">
+        <div class="flex justify-between items-center bg-white p-4 rounded-[24px] border border-slate-200 shadow-sm">
+            <div class="flex items-center gap-3">
+                <div class="p-3 bg-blue-600 rounded-xl text-white shadow-lg shadow-blue-200">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+                </div>
+                <div>
+                    <h2 class="text-base font-black text-slate-800 uppercase italic leading-none">Lịch công tác tuần</h2>
+                    <p class="text-[9px] font-bold text-blue-500 uppercase tracking-widest mt-1">Hệ thống đồng bộ thời gian thực</p>
+                </div>
             </div>
-            <div class="text-right hidden md:block">
-                <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest block">Ngày hôm nay</span>
-                <span id="today-string" class="text-sm font-bold text-slate-700">Thứ ..., ngày --/--/2026</span>
+            <div class="text-right">
+                <span id="live-date" class="text-xs font-bold text-slate-500 italic uppercase"></span>
             </div>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-7 gap-4" id="week-grid">
-            </div>
+        <div class="calendar-wrapper">
+            <iframe 
+                src="https://calendar.google.com/calendar/embed?src=it.trancongminh%40gmail.com&ctz=Asia%2FHo_Chi_Minh&mode=WEEK&showTitle=0&showNav=1&showPrint=0&showTabs=0&showCalendars=0&showTz=0&wkst=2&hl=vi" 
+                style="border: 0" 
+                frameborder="0" 
+                scrolling="no">
+            </iframe>
+        </div>
     </div>
 
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
-        import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-database.js";
-
-        const firebaseConfig = { 
-            apiKey: "AIzaSyCjS8jJtoV5HLcYIpVTX1zP5DbyYmXsbh4", 
-            authDomain: "dashboard-demo-ce0da.firebaseapp.com", 
-            databaseURL: "https://dashboard-demo-ce0da-default-rtdb.asia-southeast1.firebasedatabase.app", 
-            projectId: "dashboard-demo-ce0da", 
-            appId: "1:969593884637:web:47d4e6b03a51e7dcfbb034" 
-        };
-        const db = getDatabase(initializeApp(firebaseConfig));
-
-        const daysOfWeek = ["Thứ Hai", "Thứ Ba", "Thứ Tư", "Thứ Năm", "Thứ Sáu", "Thứ Bảy", "Chủ Nhật"];
-
-        // Hàm render giao diện lịch
-        function renderLich(data) {
-            const grid = document.getElementById('week-grid');
-            grid.innerHTML = '';
-
-            daysOfWeek.forEach((day, index) => {
-                const dayData = data[index] || { events: [] };
-                const isToday = new Date().getDay() === (index === 6 ? 0 : index + 1);
-
-                let eventsHtml = dayData.events.length > 0 
-                    ? dayData.events.map(ev => `
-                        <div class="event-row">
-                            <div class="flex justify-between items-start mb-1">
-                                <span class="text-[11px] font-black text-blue-700">${ev.time}</span>
-                                <span class="leader-tag bg-slate-100 text-slate-600">${ev.leader}</span>
-                            </div>
-                            <p class="text-[12px] font-bold leading-tight text-slate-800 mb-1">${ev.content}</p>
-                            <p class="text-[10px] text-slate-400 italic">📍 ${ev.location}</p>
-                        </div>
-                    `).join('')
-                    : `<p class="text-[11px] text-slate-300 italic py-4 text-center">Chưa có lịch</p>`;
-
-                grid.innerHTML += `
-                    <div class="day-card p-4 ${isToday ? 'day-active bg-blue-50/30' : 'bg-white'}">
-                        <div class="border-b pb-2 mb-3">
-                            <h3 class="text-xs font-black ${isToday ? 'text-blue-600' : 'text-slate-400'} uppercase">${day}</h3>
-                            <span class="text-[10px] font-bold text-slate-300">${dayData.date || '--/--'}</span>
-                        </div>
-                        <div class="space-y-1">
-                            ${eventsHtml}
-                        </div>
-                    </div>
-                `;
-            });
-        }
-
-        // Lấy dữ liệu từ Firebase (Nhánh lich_cong_tac)
-        onValue(ref(db, 'dashboard_binhhung/lich_cong_tac'), (snap) => {
-            const d = snap.val();
-            if(d) renderLich(d);
-        });
-
-        // Cập nhật ngày tháng hiển thị
-        document.getElementById('today-string').innerText = new Date().toLocaleDateString('vi-VN', { weekday: 'long', day: '2-digit', month: '2-digit', year: 'numeric' });
+    <script>
+        // Hiển thị ngày hiện tại tiếng Việt
+        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        document.getElementById('live-date').innerText = new Date().toLocaleDateString('vi-VN', options);
     </script>
 </body>
 </html>
