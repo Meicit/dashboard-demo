@@ -29,11 +29,12 @@
 
         <nav class="flex-1 mt-6">
             <a href="nhap-lieu/nhap-lieu-don-thu.html" target="admin-frame" class="nav-item active" onclick="setActive(this)">📂 Đơn thư & Tiếp dân</a>
+            <a href="nhap-lieu/nhap-lieu-1022.html" target="admin-frame" class="nav-item" onclick="setActive(this)">📞 Phản ánh 1022</a>
+            
             <a href="nhap-lieu/nhap-lieu-ho-so-hanh-chinh.html" target="admin-frame" class="nav-item" onclick="setActive(this)">📋 Hồ sơ hành chính</a>
             <a href="nhap-lieu/nhap-lieu-van-ban.html" target="admin-frame" class="nav-item" onclick="setActive(this)">⚖️ Văn bản chỉ đạo</a>
             <a href="nhap-lieu/nhap-lieu-chi-tieu.html" target="admin-frame" class="nav-item" onclick="setActive(this)">📊 38 Chỉ tiêu KT-XH</a>
         </nav>
-
     </aside>
 
     <div class="main-wrapper">
@@ -51,6 +52,7 @@
         function setActive(el) {
             document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
             el.classList.add('active');
+            // Cập nhật tiêu đề header (bỏ qua icon ở đầu chuỗi)
             document.getElementById('admin-title').innerText = el.innerText.substring(3);
         }
     </script>
