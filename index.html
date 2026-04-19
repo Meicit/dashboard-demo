@@ -14,7 +14,6 @@
             transition: transform 0.3s ease;
         }
 
-        /* Mobile Responsive */
         @media (max-width: 768px) {
             .sidebar { position: fixed; z-index: 50; height: 100%; left: 0; transform: translateX(-280px); }
             .sidebar.open { transform: translateX(0); }
@@ -30,7 +29,7 @@
         .nav-item:hover { background-color: #1e293b; color: white; }
         .nav-item.active { background-color: #1e293b; color: white; border-left-color: #3b82f6; font-weight: 800; }
         
-        /* Trạng thái khóa */
+        /* Trạng thái khóa mặc định */
         .nav-item.locked { opacity: 0.2; cursor: not-allowed; filter: grayscale(1); pointer-events: none; }
         
         .main-wrapper { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
@@ -58,6 +57,8 @@
             <div class="nav-group-label">Dữ liệu chỉ đạo (Khóa)</div>
             <a href="pages/lich-tuan.html" target="main-frame" class="nav-item locked" data-lock="true" onclick="handleNavClick(this)">📅 Lịch công tác tuần</a>
             <a href="pages/phong-hop.html" target="main-frame" class="nav-item locked" data-lock="true" onclick="handleNavClick(this)">💻 Phòng họp không giấy</a>
+            <a href="pages/chi-tieu.html" target="main-frame" class="nav-item locked" data-lock="true" onclick="handleNavClick(this)">📈 38 Chỉ tiêu KT-XH</a>
+            
             <a href="pages/don-thu.html" target="main-frame" class="nav-item locked" data-lock="true" onclick="handleNavClick(this)">📂 Đơn thư & Tiếp dân</a>
             <a href="pages/ho-so-hanh-chinh.html" target="main-frame" class="nav-item locked" data-lock="true" onclick="handleNavClick(this)">📋 Hồ sơ hành chính</a>
             <a href="pages/van-ban-chi-dao.html" target="main-frame" class="nav-item locked" data-lock="true" onclick="handleNavClick(this)">⚖️ Văn bản chỉ đạo</a>
@@ -86,7 +87,7 @@
     </div>
 
     <script>
-        const VIEW_PIN = "1234"; // Mật khẩu truy cập
+        const VIEW_PIN = "1234"; 
 
         function toggleMenu() {
             document.getElementById('sidebar').classList.toggle('open');
@@ -113,7 +114,7 @@
                 btn.innerText = "✅ DỮ LIỆU ĐÃ MỞ";
                 btn.classList.add('bg-emerald-600', 'text-white', 'border-none');
                 btn.onclick = null;
-                alert("Xác thực thành công. Lịch tuần và các chỉ số chuyên sâu đã sẵn sàng.");
+                alert("Xác thực thành công. Toàn bộ chỉ số điều hành đã sẵn sàng.");
             } else if (pin !== null) {
                 alert("Mã định danh không chính xác!");
             }
