@@ -7,75 +7,134 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Inter', sans-serif; background-color: #f1f5f9; padding: 20px; }
-        .card { background: white; border-radius: 24px; padding: 24px; border: 1px solid #e5e7eb; height: 100%; }
-        label { display: block; font-size: 11px; font-weight: 800; color: #475569; text-transform: uppercase; margin-bottom: 6px; }
-        input, select, textarea { width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: 12px; font-weight: 700; margin-bottom: 16px; outline: none; font-size: 14px; }
-        input:focus { border-color: #3b82f6; ring: 2px; ring-color: #3b82f6; }
+        body { font-family: 'Inter', sans-serif; background-color: #f1f5f9; padding: 20px; margin: 0; }
+        .card { background: white; border-radius: 24px; padding: 24px; border: 1px solid #e5e7eb; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1); }
+        label { display: block; font-size: 11px; font-weight: 800; color: #475569; text-transform: uppercase; margin-bottom: 6px; letter-spacing: 0.05em; }
+        input, select, textarea { width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: 12px; font-weight: 700; margin-bottom: 16px; outline: none; font-size: 14px; transition: all 0.2s; }
+        input:focus, textarea:focus { border-color: #3b82f6; box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1); }
+        .btn-submit { background-color: #0f172a; color: white; font-weight: 800; padding: 16px; border-radius: 12px; width: 100%; text-transform: uppercase; letter-spacing: 0.1em; font-size: 12px; transition: all 0.3s; }
+        .btn-submit:hover { background-color: #2563eb; transform: translateY(-2px); }
+        
+        /* Hiệu chỉnh Iframe AI */
+        .ai-container { border-radius: 24px; overflow: hidden; border: 1px solid #e5e7eb; background: white; }
     </style>
 </head>
 <body>
     <div class="max-w-[1600px] mx-auto">
-        <header class="mb-6 flex justify-between items-end">
-            <div>
-                <h2 class="text-2xl font-black text-slate-800 uppercase italic leading-none">⚖️ Cập nhật Văn bản chỉ đạo</h2>
-                <p class="text-[10px] font-bold text-blue-600 uppercase mt-2 tracking-widest italic">Hệ thống bóc tách dữ liệu thông minh</p>
-            </div>
+        <header class="mb-8">
+            <h2 class="text-2xl font-black text-slate-800 uppercase italic">⚖️ Quản lý Văn bản & Nhiệm vụ</h2>
+            <div class="h-1 w-20 bg-blue-600 mt-2 rounded-full"></div>
         </header>
 
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div class="flex flex-col lg:flex-row gap-8">
             
-            <div class="space-y-4">
-                <div class="flex items-center gap-2 mb-2">
-                    <span class="bg-indigo-100 text-indigo-700 text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-tighter">Trợ lý AI bóc tách hồ sơ</span>
+            <div class="w-full lg:w-1/2 space-y-4">
+                <div class="flex items-center justify-between">
+                    <span class="text-[10px] font-black text-indigo-600 uppercase tracking-widest bg-indigo-50 px-3 py-1 rounded-md">Trợ lý AI bóc tách văn bản</span>
+                    <a href="https://ais-pre-vedmnktpzb3j4yd7w6dnjc-180608878984.asia-east1.run.app/?embed=true" target="_blank" class="text-[9px] font-bold text-slate-400 hover:text-blue-600 uppercase underline">Mở cửa sổ mới nếu bị lỗi</a>
                 </div>
-                <iframe src="https://ais-pre-vedmnktpzb3j4yd7w6dnjc-180608878984.asia-east1.run.app/?embed=true" 
-                        style="width: 100%; height: 750px; border: 1px solid #e5e7eb; border-radius: 24px; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);"
-                        title="AI Document Analyzer"></iframe>
+                <div class="ai-container shadow-2xl">
+                    <iframe src="https://ais-pre-vedmnktpzb3j4yd7w6dnjc-180608878984.asia-east1.run.app/?embed=true" 
+                            style="width: 100%; height: 750px; border: none;"
+                            allow="clipboard-read; clipboard-write"
+                            title="AI Document Analyzer"></iframe>
+                </div>
             </div>
 
-            <div class="card shadow-lg">
-                <div class="flex items-center gap-2 mb-6">
-                    <span class="bg-emerald-100 text-emerald-700 text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-tighter">Thông tin nhiệm vụ chỉ đạo</span>
-                </div>
-                
-                <form id="vbForm">
-                    <label>Số hiệu/Trích yếu văn bản</label>
-                    <input type="text" id="vb_so_hieu" placeholder="Ví dụ: 123/UBND-VP - Về việc..." required>
-
-                    <label>Nội dung nhiệm vụ cụ thể</label>
-                    <textarea id="vb_nhiem_vu" rows="4" placeholder="Nhập nhiệm vụ đã bóc tách từ AI vào đây..." required></textarea>
-
-                    <div class="grid grid-cols-2 gap-4">
-                        <div>
-                            <label>Đơn vị chủ trì</label>
-                            <select id="vb_don_vi">
-                                <option value="Địa chính - Xây dựng">Địa chính - Xây dựng</option>
-                                <option value="Tư pháp - Hộ tịch">Tư pháp - Hộ tịch</option>
-                                <option value="Văn phòng">Văn phòng</option>
-                                <option value="Công an - Quân sự">Công an - Quân sự</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label>Thời hạn hoàn thành</label>
-                            <input type="date" id="vb_deadline">
-                        </div>
+            <div class="w-full lg:w-1/2">
+                <div class="card">
+                    <div class="mb-6">
+                        <span class="text-[10px] font-black text-emerald-600 uppercase tracking-widest bg-emerald-50 px-3 py-1 rounded-md">Thông tin nhiệm vụ chỉ đạo</span>
                     </div>
 
-                    <label>Trạng thái thực hiện</label>
-                    <select id="vb_status" class="text-blue-600">
-                        <option value="Đang thực hiện">🟡 Đang thực hiện</option>
-                        <option value="Hoàn thành">🟢 Hoàn thành</option>
-                        <option value="Trễ hạn">🔴 Trễ hạn</option>
-                    </select>
+                    <form id="missionForm">
+                        <label>Trích yếu / Số hiệu văn bản</label>
+                        <input type="text" id="vb_title" placeholder="Ví dụ: 45/UBND - Về việc ra quân dọn dẹp vệ sinh..." required>
 
-                    <button type="submit" class="w-full bg-slate-900 text-white font-black py-4 rounded-xl hover:bg-blue-600 transition-all mt-4 uppercase tracking-widest text-xs">
-                        🚀 Lưu nhiệm vụ vào hệ thống
-                    </button>
-                </form>
+                        <label>Nhiệm vụ cụ thể (AI bóc tách)</label>
+                        <textarea id="vb_content" rows="6" placeholder="Dán nội dung nhiệm vụ đã được AI phân tích vào đây..." required></textarea>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label>Bộ phận chủ trì</label>
+                                <select id="vb_dept">
+                                    <option value="Văn phòng">Văn phòng</option>
+                                    <option value="Địa chính - Xây dựng">Địa chính - Xây dựng</option>
+                                    <option value="Tư pháp - Hộ tịch">Tư pháp - Hộ tịch</option>
+                                    <option value="Văn hóa - Xã hội">Văn hóa - Xã hội</option>
+                                    <option value="Công an - Quân sự">Công an - Quân sự</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label>Thời hạn hoàn thành</label>
+                                <input type="date" id="vb_deadline" required>
+                            </div>
+                        </div>
+
+                        <label>Trạng thái thực thi</label>
+                        <select id="vb_status" class="text-blue-600">
+                            <option value="Đang thực hiện">🟡 Đang thực hiện</option>
+                            <option value="Hoàn thành">🟢 Hoàn thành</option>
+                            <option value="Trễ hạn">🔴 Trễ hạn</option>
+                        </select>
+
+                        <button type="submit" class="btn-submit shadow-lg shadow-blue-500/20 mt-4">
+                            🚀 Cập nhật vào Dashboard lãnh đạo
+                        </button>
+                    </form>
+                </div>
+
+                <div class="mt-6 p-4 bg-blue-50 rounded-2xl border border-blue-100">
+                    <p class="text-[11px] text-blue-800 font-medium leading-relaxed">
+                        <strong>Lưu ý:</strong> Mọi dữ liệu sau khi "Lưu" sẽ được phản ánh <strong>thời gian thực</strong> lên hệ thống Dashboard của Thường trực UBND xã. Vui lòng kiểm tra kỹ nội dung trước khi cập nhật.
+                    </p>
+                </div>
             </div>
         </div>
     </div>
 
-    </body>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
+        import { getDatabase, ref, push, set } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-database.js";
+
+        // Firebase Config của bạn
+        const firebaseConfig = { 
+            apiKey: "AIzaSyCjS8jJtoV5HLcYIpVTX1zP5DbyYmXsbh4", 
+            authDomain: "dashboard-demo-ce0da.firebaseapp.com", 
+            databaseURL: "https://dashboard-demo-ce0da-default-rtdb.asia-southeast1.firebasedatabase.app", 
+            projectId: "dashboard-demo-ce0da", 
+            appId: "1:969593884637:web:47d4e6b03a51e7dcfbb034" 
+        };
+        
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+
+        // Xử lý sự kiện gửi form
+        document.getElementById('missionForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const missionData = {
+                title: document.getElementById('vb_title').value,
+                content: document.getElementById('vb_content').value,
+                department: document.getElementById('vb_dept').value,
+                deadline: document.getElementById('vb_deadline').value,
+                status: document.getElementById('vb_status').value,
+                timestamp: new Date().toISOString()
+            };
+
+            // Lưu vào nhánh van_ban_chi_dao/nhiem_vu_chi_tiet
+            const missionsRef = ref(db, 'dashboard_binhhung/van_ban_chi_dao/nhiem_vu_chi_tiet');
+            const newMissionRef = push(missionsRef);
+            
+            set(newMissionRef, missionData)
+                .then(() => {
+                    alert("✅ Đã cập nhật nhiệm vụ thành công!");
+                    document.getElementById('missionForm').reset();
+                })
+                .catch((error) => {
+                    alert("❌ Lỗi cập nhật: " + error.message);
+                });
+        });
+    </script>
+</body>
 </html>
