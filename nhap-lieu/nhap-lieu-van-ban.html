@@ -2,96 +2,80 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nhập liệu Văn bản Chỉ đạo - UBND Xã Bình Hưng</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Inter', sans-serif; background-color: #f1f5f9; padding: 32px; }
-        .card { background: white; border-radius: 20px; padding: 32px; border: 1px solid #e2e8f0; }
-        label { display: block; font-size: 10px; font-weight: 800; color: #64748b; text-transform: uppercase; margin-bottom: 6px; }
-        input, textarea { width: 100%; padding: 10px 14px; border: 1px solid #cbd5e1; border-radius: 8px; font-weight: 600; outline: none; }
-        .task-row { background: #f8fafc; padding: 16px; border-radius: 12px; border: 1px solid #e2e8f0; margin-bottom: 12px; transition: 0.2s; }
-        .task-row:hover { border-color: #3b82f6; }
+        body { font-family: 'Inter', sans-serif; background-color: #f1f5f9; padding: 20px; }
+        .card { background: white; border-radius: 24px; padding: 24px; border: 1px solid #e5e7eb; height: 100%; }
+        label { display: block; font-size: 11px; font-weight: 800; color: #475569; text-transform: uppercase; margin-bottom: 6px; }
+        input, select, textarea { width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: 12px; font-weight: 700; margin-bottom: 16px; outline: none; font-size: 14px; }
+        input:focus { border-color: #3b82f6; ring: 2px; ring-color: #3b82f6; }
     </style>
 </head>
 <body>
-    <div class="max-w-5xl mx-auto space-y-6">
-        <div class="card border-t-4 border-emerald-600 shadow-sm">
-            <div class="flex justify-between items-center mb-8">
-                <h3 class="font-black text-slate-800 uppercase tracking-wider text-xl">Quản lý Văn bản & Nhiệm vụ</h3>
-                <button onclick="saveData()" class="bg-emerald-600 text-white font-black px-8 py-3 rounded-xl hover:bg-emerald-700 shadow-lg active:scale-95 text-xs">
-                    💾 LƯU THAY ĐỔI
-                </button>
+    <div class="max-w-[1600px] mx-auto">
+        <header class="mb-6 flex justify-between items-end">
+            <div>
+                <h2 class="text-2xl font-black text-slate-800 uppercase italic leading-none">⚖️ Cập nhật Văn bản chỉ đạo</h2>
+                <p class="text-[10px] font-bold text-blue-600 uppercase mt-2 tracking-widest italic">Hệ thống bóc tách dữ liệu thông minh</p>
             </div>
+        </header>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
             
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-                <div class="bg-emerald-50 p-4 rounded-2xl border border-emerald-100">
-                    <label class="text-emerald-700">Tổng số văn bản chỉ đạo</label>
-                    <input type="number" id="vb_tong" class="text-2xl font-black text-emerald-800 bg-white">
+            <div class="space-y-4">
+                <div class="flex items-center gap-2 mb-2">
+                    <span class="bg-indigo-100 text-indigo-700 text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-tighter">Trợ lý AI bóc tách hồ sơ</span>
                 </div>
-                <div class="bg-blue-50 p-4 rounded-2xl border border-blue-100">
-                    <label class="text-blue-700">Tổng số nhiệm vụ triển khai</label>
-                    <input type="number" id="nv_tong" class="text-2xl font-black text-blue-800 bg-white">
-                </div>
+                <iframe src="https://ais-pre-vedmnktpzb3j4yd7w6dnjc-180608878984.asia-east1.run.app/?embed=true" 
+                        style="width: 100%; height: 750px; border: 1px solid #e5e7eb; border-radius: 24px; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);"
+                        title="AI Document Analyzer"></iframe>
             </div>
 
-            <div class="border-t pt-6">
-                <div class="flex justify-between items-center mb-4">
-                    <h4 class="font-bold text-slate-700 uppercase text-sm italic">Danh sách nhiệm vụ chi tiết</h4>
-                    <button onclick="addTaskRow()" class="text-[10px] font-black bg-slate-800 text-white px-3 py-1 rounded-lg uppercase">+ Thêm dòng</button>
+            <div class="card shadow-lg">
+                <div class="flex items-center gap-2 mb-6">
+                    <span class="bg-emerald-100 text-emerald-700 text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-tighter">Thông tin nhiệm vụ chỉ đạo</span>
                 </div>
-                <div id="task-list">
+                
+                <form id="vbForm">
+                    <label>Số hiệu/Trích yếu văn bản</label>
+                    <input type="text" id="vb_so_hieu" placeholder="Ví dụ: 123/UBND-VP - Về việc..." required>
+
+                    <label>Nội dung nhiệm vụ cụ thể</label>
+                    <textarea id="vb_nhiem_vu" rows="4" placeholder="Nhập nhiệm vụ đã bóc tách từ AI vào đây..." required></textarea>
+
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label>Đơn vị chủ trì</label>
+                            <select id="vb_don_vi">
+                                <option value="Địa chính - Xây dựng">Địa chính - Xây dựng</option>
+                                <option value="Tư pháp - Hộ tịch">Tư pháp - Hộ tịch</option>
+                                <option value="Văn phòng">Văn phòng</option>
+                                <option value="Công an - Quân sự">Công an - Quân sự</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label>Thời hạn hoàn thành</label>
+                            <input type="date" id="vb_deadline">
+                        </div>
                     </div>
+
+                    <label>Trạng thái thực hiện</label>
+                    <select id="vb_status" class="text-blue-600">
+                        <option value="Đang thực hiện">🟡 Đang thực hiện</option>
+                        <option value="Hoàn thành">🟢 Hoàn thành</option>
+                        <option value="Trễ hạn">🔴 Trễ hạn</option>
+                    </select>
+
+                    <button type="submit" class="w-full bg-slate-900 text-white font-black py-4 rounded-xl hover:bg-blue-600 transition-all mt-4 uppercase tracking-widest text-xs">
+                        🚀 Lưu nhiệm vụ vào hệ thống
+                    </button>
+                </form>
             </div>
         </div>
     </div>
 
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
-        import { getDatabase, ref, update, onValue } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-database.js";
-        const firebaseConfig = { apiKey: "AIzaSyCjS8jJtoV5HLcYIpVTX1zP5DbyYmXsbh4", authDomain: "dashboard-demo-ce0da.firebaseapp.com", databaseURL: "https://dashboard-demo-ce0da-default-rtdb.asia-southeast1.firebasedatabase.app", projectId: "dashboard-demo-ce0da", appId: "1:969593884637:web:47d4e6b03a51e7dcfbb034" };
-        const db = getDatabase(initializeApp(firebaseConfig));
-        const rootRef = ref(db, 'dashboard_binhhung/van_ban_chi_dao');
-
-        window.addTaskRow = (data = {ten: '', ket_qua: '', xong: false}) => {
-            const div = document.createElement('div');
-            div.className = 'task-row flex gap-4 items-center';
-            div.innerHTML = `
-                <div class="flex-1"><label>Tên nhiệm vụ</label><input type="text" class="task-name" value="${data.ten}"></div>
-                <div class="flex-1"><label>Kết quả thực hiện</label><input type="text" class="task-result" value="${data.ket_qua}"></div>
-                <div class="w-20 text-center"><label>Đã xong</label><input type="checkbox" class="task-status h-6 w-6 accent-emerald-500" ${data.xong ? 'checked' : ''}></div>
-                <button onclick="this.parentElement.remove()" class="mt-4 text-red-400 hover:text-red-600">✕</button>
-            `;
-            document.getElementById('task-list').appendChild(div);
-        }
-
-        onValue(rootRef, (snap) => {
-            const d = snap.val(); if(!d) return;
-            document.getElementById('vb_tong').value = d.vb_tong || 0;
-            document.getElementById('nv_tong').value = d.nv_tong || 0;
-            document.getElementById('task-list').innerHTML = '';
-            if(d.tasks) d.tasks.forEach(t => addTaskRow(t));
-        }, { onlyOnce: true });
-
-        window.saveData = () => {
-            const tasks = [];
-            let xongCount = 0;
-            document.querySelectorAll('.task-row').forEach(row => {
-                const isDone = row.querySelector('.task-status').checked;
-                if(isDone) xongCount++;
-                tasks.push({
-                    ten: row.querySelector('.task-name').value,
-                    ket_qua: row.querySelector('.task-result').value,
-                    xong: isDone
-                });
-            });
-
-            update(rootRef, {
-                vb_tong: Number(document.getElementById('vb_tong').value || 0),
-                nv_tong: Number(document.getElementById('nv_tong').value || 0),
-                nv_xong: xongCount,
-                tasks: tasks
-            }).then(() => alert("✅ Đã cập nhật!")).catch(e => alert("❌ Lỗi: " + e));
-        };
-    </script>
-</body>
+    </body>
 </html>
