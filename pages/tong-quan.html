@@ -6,13 +6,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Inter', sans-serif; background-color: #f0f4f8; padding: 0; margin: 0; }
-        
-        /* Hiệu ứng Marquee */
         @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
         .animate-marquee { display: flex; animation: marquee 200s linear infinite; width: max-content; }
         .animate-marquee:hover { animation-play-state: paused; }
         .marquee-wrapper { background-color: #fbbf24; border-bottom: 3px solid #d97706; }
-
         .donut-chart { position: relative; width: 145px; height: 145px; border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: 0.5s; box-shadow: inset 0 2px 4px rgba(0,0,0,0.1); }
         .donut-inner { position: absolute; inset: 12px; background: white; border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; }
     </style>
@@ -84,24 +81,13 @@
                         </div>
                     </div>
                 </div>
-                <div class="bg-emerald-700 p-6 rounded-[32px] shadow-lg text-white h-[120px] flex items-center border-b-4 border-emerald-900">
-                    <div class="w-full">
-                        <div class="text-[10px] font-black text-emerald-200 uppercase mb-2 italic tracking-widest">Văn bản chỉ đạo điều hành</div>
-                        <div class="flex items-center justify-between">
-                            <div><span id="vb_tong_h" class="text-4xl font-black text-white italic">0</span><p class="text-[9px] font-bold text-emerald-300 uppercase">Văn bản</p></div>
-                            <div class="w-[2px] h-12 bg-white/20"></div>
-                            <div><span id="nv_tong_h" class="text-4xl font-black text-yellow-400 italic">0</span><p class="text-[9px] font-bold text-emerald-300 uppercase">Nhiệm vụ</p></div>
-                        </div>
-                    </div>
                 </div>
-            </div>
         </div>
     </div>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
         import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-database.js";
-        
         const firebaseConfig = { apiKey: "AIzaSyCjS8jJtoV5HLcYIpVTX1zP5DbyYmXsbh4", authDomain: "dashboard-demo-ce0da.firebaseapp.com", databaseURL: "https://dashboard-demo-ce0da-default-rtdb.asia-southeast1.firebasedatabase.app", projectId: "dashboard-demo-ce0da", appId: "1:969593884637:web:47d4e6b03a51e7dcfbb034" };
         const db = getDatabase(initializeApp(firebaseConfig));
 
@@ -157,31 +143,25 @@
 
         onValue(ref(db, 'dashboard_binhhung'), (snap) => {
             const d = snap.val(); if(!d) return;
-            
             const dtT = (d.don_thu_moi?.ky_truoc || 0) + (d.don_thu_moi?.moi_phat_sinh || 0);
             const dtX = d.don_thu_moi?.da_giai_quyet || 0;
             document.getElementById('dt_tong').innerText = dtT;
             document.getElementById('dt_xong').innerText = dtX;
             document.getElementById('dt_cho').innerText = Math.max(0, dtT - dtX);
             document.getElementById('dt_donut').style.setProperty('--dt-p', (dtT > 0 ? (dtX/dtT*100) : 0) + '%');
-
             const pa = d.pa_1022 || {};
             document.getElementById('pa_tong').innerText = pa.tong || 0;
             document.getElementById('pa_xong').innerText = pa.da_giai_quyet || 0;
             document.getElementById('pa_cho').innerText = pa.chua_giai_quyet || 0;
             document.getElementById('pa_donut').style.setProperty('--pa-p', (pa.tong > 0 ? (pa.da_giai_quyet/pa.tong*100) : 0) + '%');
-
             const hs = d.ho_so_thang || {};
             document.getElementById('hs_luy_ke').innerText = hs.luy_ke || 0;
             document.getElementById('hs_rate').innerText = (hs.luy_ke > 0 ? ((hs.truoc_han || 0)/(hs.luy_ke)*100).toFixed(1) : 0) + "%";
             document.getElementById('hs_hai_long').innerText = (hs.hai_long_percent || 0) + "%";
 
-            document.getElementById('vb_tong_h').innerText = d.van_ban_chi_dao?.vb_tong || 0;
-            document.getElementById('nv_tong_h').innerText = d.van_ban_chi_dao?.nv_tong || 0;
+            // ĐÃ XÓA LOGIC CẬP NHẬT VĂN BẢN/NHIỆM VỤ TẠI ĐÂY
 
-            if(d.chi_tieu) { 
-                updateMarquee(d.chi_tieu); 
-            }
+            if(d.chi_tieu) { updateMarquee(d.chi_tieu); }
         });
     </script>
 </body>
