@@ -1,149 +1,28 @@
-<!DOCTYPE html>
-<html lang="vi">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tổng quan điều hành - UBND Xã Bình Hưng</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
-    <style>
-        body { font-family: 'Inter', sans-serif; background-color: #f1f5f9; padding: 24px; margin: 0; overflow-x: hidden; }
-        .card { background: white; border-radius: 32px; padding: 32px; border: 1px solid #e2e8f0; height: 100%; transition: all 0.3s ease; }
-        
-        /* Hiệu ứng Marquee cho chỉ tiêu kinh tế */
-        .marquee-container {
-            background: #0f172a;
-            color: #f8fafc;
-            padding: 12px 0;
-            margin-bottom: 32px;
-            border-radius: 16px;
-            overflow: hidden;
-            display: flex;
-            white-space: nowrap;
-            border: 1px solid #334155;
-        }
-        .marquee-content {
-            display: inline-flex;
-            animation: marquee 40s linear infinite;
-        }
-        .marquee-item {
-            display: flex;
-            align-items: center;
-            padding: 0 40px;
-            border-right: 1px solid #334155;
-        }
-        .indicator-value { color: #3b82f6; font-weight: 900; margin-left: 8px; }
-        
-        @keyframes marquee {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
-        }
-    </style>
-</head>
-<body>
-    <div class="max-w-[1600px] mx-auto">
-        <header class="mb-6 flex justify-between items-end">
-            <div>
-                <h2 class="text-2xl font-black text-slate-800 uppercase italic leading-none">Trung tâm chỉ đạo số</h2>
-                <p class="text-[10px] font-bold text-blue-600 uppercase mt-2 tracking-widest italic">Dữ liệu thời gian thực (Real-time)</p>
-            </div>
-        </header>
-
-        <div class="marquee-container shadow-2xl">
-            <div class="marquee-content" id="marquee-data">
-                <div class="marquee-item"><span class="text-[10px] font-bold opacity-50 uppercase">Tổng thu ngân sách:</span> <span class="indicator-value">45.2 tỷ</span></div>
-                <div class="marquee-item"><span class="text-[10px] font-bold opacity-50 uppercase">Tỷ lệ giải ngân đầu tư công:</span> <span class="indicator-value">82%</span></div>
-                <div class="marquee-item"><span class="text-[10px] font-bold opacity-50 uppercase">Phát triển doanh nghiệp:</span> <span class="indicator-value">+12 đơn vị</span></div>
-                <div class="marquee-item"><span class="text-[10px] font-bold opacity-50 uppercase">Hộ kinh doanh mới:</span> <span class="indicator-value">158 hộ</span></div>
-                <div class="marquee-item"><span class="text-[10px] font-bold opacity-50 uppercase">Tỷ lệ giảm nghèo:</span> <span class="indicator-value">1.2%</span></div>
-                
-                <div class="marquee-item"><span class="text-[10px] font-bold opacity-50 uppercase">Tổng thu ngân sách:</span> <span class="indicator-value">45.2 tỷ</span></div>
-                <div class="marquee-item"><span class="text-[10px] font-bold opacity-50 uppercase">Tỷ lệ giải ngân đầu tư công:</span> <span class="indicator-value">82%</span></div>
-                <div class="marquee-item"><span class="text-[10px] font-bold opacity-50 uppercase">Phát triển doanh nghiệp:</span> <span class="indicator-value">+12 đơn vị</span></div>
-                <div class="marquee-item"><span class="text-[10px] font-bold opacity-50 uppercase">Hộ kinh doanh mới:</span> <span class="indicator-value">158 hộ</span></div>
-                <div class="marquee-item"><span class="text-[10px] font-bold opacity-50 uppercase">Tỷ lệ giảm nghèo:</span> <span class="indicator-value">1.2%</span></div>
-            </div>
+<div class="marquee-container shadow-2xl mb-8 overflow-hidden bg-slate-900 text-white py-3 rounded-2xl border border-slate-800">
+    <div class="marquee-content flex whitespace-nowrap">
+        <div class="marquee-item px-10 border-r border-slate-700 flex items-center">
+            <span class="text-[10px] font-bold opacity-50 uppercase">Tổng thu ngân sách:</span>
+            <span class="text-blue-400 font-black ml-2">45.2 tỷ</span>
         </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8">
-            
-            <div class="lg:col-span-4 flex flex-col gap-8">
-                <div class="card shadow-sm">
-                    <h3 class="text-sm font-black text-slate-800 uppercase italic mb-8">📂 Quản lý Đơn thư</h3>
-                    <div class="relative h-64">
-                        <canvas id="chartDonThu"></canvas>
-                    </div>
-                    <div class="mt-6 grid grid-cols-2 gap-4 text-center border-t pt-6">
-                        <div>
-                            <div class="text-2xl font-black text-blue-600">124</div>
-                            <div class="text-[9px] font-bold text-slate-400 uppercase">Tiếp nhận</div>
-                        </div>
-                        <div>
-                            <div class="text-2xl font-black text-emerald-600">105</div>
-                            <div class="text-[9px] font-bold text-slate-400 uppercase">Đã giải quyết</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="lg:col-span-4 flex flex-col gap-8">
-                <div class="card shadow-sm">
-                    <h3 class="text-sm font-black text-slate-800 uppercase italic mb-8">📋 Hồ sơ Hành chính</h3>
-                    <div class="flex items-center justify-center py-4">
-                        <div class="text-center">
-                            <div class="text-6xl font-black text-slate-800">96.4%</div>
-                            <div class="text-[10px] font-bold text-emerald-500 uppercase tracking-widest mt-2">Tỷ lệ đúng hạn</div>
-                        </div>
-                    </div>
-                    <div class="space-y-4 mt-8">
-                        <div class="flex justify-between items-center p-4 bg-slate-50 rounded-2xl">
-                            <span class="text-[11px] font-bold text-slate-500 uppercase">Hài lòng người dân</span>
-                            <span class="text-sm font-black text-blue-600">98.5%</span>
-                        </div>
-                        <div class="flex justify-between items-center p-4 bg-slate-50 rounded-2xl">
-                            <span class="text-[11px] font-bold text-slate-500 uppercase">Số hóa hồ sơ</span>
-                            <span class="text-sm font-black text-indigo-600">82.1%</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="lg:col-span-4">
-                <div class="bg-slate-900 p-8 rounded-[32px] text-white shadow-xl h-full flex flex-col">
-                    <h3 class="text-xs font-bold text-blue-400 uppercase tracking-widest italic mb-8">⚖️ Nhiệm vụ trọng tâm</h3>
-                    <div class="flex-1 space-y-6 overflow-y-auto pr-2" id="mission-list">
-                        <div class="border-l-4 border-blue-500 pl-4 py-1">
-                            <div class="text-[11px] font-black text-slate-300 uppercase leading-none mb-2">Đang thực hiện</div>
-                            <div class="text-sm font-bold leading-tight">Số hóa 100% hồ sơ địa chính trong tháng 4.</div>
-                            <div class="text-[9px] text-slate-500 font-bold mt-2 italic">Hạn: 30/04/2026</div>
-                        </div>
-                        <div class="border-l-4 border-emerald-500 pl-4 py-1">
-                            <div class="text-[11px] font-black text-emerald-400 uppercase leading-none mb-2">Hoàn thành</div>
-                            <div class="text-sm font-bold leading-tight">Báo cáo an ninh trật tự quý I/2026.</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
+        <div class="marquee-item px-10 border-r border-slate-700 flex items-center">
+            <span class="text-[10px] font-bold opacity-50 uppercase">Giải ngân đầu tư công:</span>
+            <span class="text-blue-400 font-black ml-2">82%</span>
         </div>
-    </div>
+        <div class="marquee-item px-10 border-r border-slate-700 flex items-center">
+            <span class="text-[10px] font-bold opacity-50 uppercase">Phát triển doanh nghiệp:</span>
+            <span class="text-blue-400 font-black ml-2">+12</span>
+        </div>
+        </div>
+</div>
 
-    <script>
-        const ctx = document.getElementById('chartDonThu').getContext('2d');
-        new Chart(ctx, {
-            type: 'doughnut',
-            data: {
-                labels: ['Đã xong', 'Đang xử lý'],
-                datasets: [{
-                    data: [85, 15],
-                    backgroundColor: ['#10b981', '#3b82f6'],
-                    borderWidth: 0,
-                    cutout: '80%'
-                }]
-            },
-            options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } }
-        });
-    </script>
-</body>
-</html>
+<style>
+    @keyframes marquee {
+        0% { transform: translateX(0); }
+        100% { transform: translateX(-50%); }
+    }
+    .marquee-content {
+        display: flex;
+        width: max-content;
+        animation: marquee 30s linear infinite;
+    }
+</style>
