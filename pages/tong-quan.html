@@ -1,28 +1,176 @@
-<div class="marquee-container shadow-2xl mb-8 overflow-hidden bg-slate-900 text-white py-3 rounded-2xl border border-slate-800">
-    <div class="marquee-content flex whitespace-nowrap">
-        <div class="marquee-item px-10 border-r border-slate-700 flex items-center">
-            <span class="text-[10px] font-bold opacity-50 uppercase">Tổng thu ngân sách:</span>
-            <span class="text-blue-400 font-black ml-2">45.2 tỷ</span>
-        </div>
-        <div class="marquee-item px-10 border-r border-slate-700 flex items-center">
-            <span class="text-[10px] font-bold opacity-50 uppercase">Giải ngân đầu tư công:</span>
-            <span class="text-blue-400 font-black ml-2">82%</span>
-        </div>
-        <div class="marquee-item px-10 border-r border-slate-700 flex items-center">
-            <span class="text-[10px] font-bold opacity-50 uppercase">Phát triển doanh nghiệp:</span>
-            <span class="text-blue-400 font-black ml-2">+12</span>
-        </div>
-        </div>
-</div>
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f0f4f8; padding: 0; margin: 0; overflow-x: hidden; }
+        
+        /* Hiệu ứng Marquee cho Chỉ tiêu kinh tế */
+        .marquee-container { background: #0f172a; color: white; padding: 12px 0; border-radius: 16px; border: 1px solid rgba(255,255,255,0.1); }
+        .marquee-content { display: flex; width: max-content; animation: marquee 40s linear infinite; }
+        .marquee-item { display: flex; align-items: center; padding: 0 40px; border-right: 1px solid rgba(255,255,255,0.1); }
+        .marquee-label { font-size: 10px; font-weight: 700; color: #94a3b8; text-transform: uppercase; margin-right: 10px; }
+        .marquee-value { font-size: 16px; font-weight: 900; color: #3b82f6; font-style: italic; }
+        
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
 
-<style>
-    @keyframes marquee {
-        0% { transform: translateX(0); }
-        100% { transform: translateX(-50%); }
-    }
-    .marquee-content {
-        display: flex;
-        width: max-content;
-        animation: marquee 30s linear infinite;
-    }
-</style>
+        /* Giữ nguyên các style gốc khác */
+        .card-main { background: white; border-radius: 32px; padding: 30px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); height: 100%; border: 1px solid #e2e8f0; }
+        .status-dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; margin-right: 8px; }
+    </style>
+</head>
+<body class="p-6">
+    <div class="max-w-[1600px] mx-auto">
+        
+        <div class="flex justify-between items-end mb-8">
+            <div>
+                <h1 class="text-3xl font-black text-slate-800 uppercase italic leading-none">Trung tâm điều hành số</h1>
+                <p class="text-[10px] font-bold text-blue-600 uppercase mt-2 tracking-widest italic">Hệ thống giám sát thời gian thực</p>
+            </div>
+            <div class="text-right">
+                <div class="text-[10px] font-black text-slate-400 uppercase tracking-widest" id="live-clock">Đang tải...</div>
+            </div>
+        </div>
+
+        <div class="marquee-container shadow-2xl mb-10">
+            <div class="marquee-content" id="marquee-list">
+                </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8">
+            
+            <div class="lg:col-span-4 flex flex-col gap-8">
+                <div class="card-main">
+                    <h3 class="text-sm font-black text-slate-800 uppercase italic mb-6">📂 Quản lý Đơn thư & 1022</h3>
+                    <div class="grid grid-cols-2 gap-4 mb-8">
+                        <div class="bg-blue-50 p-4 rounded-2xl text-center">
+                            <div class="text-2xl font-black text-blue-600" id="dt_tong">--</div>
+                            <div class="text-[9px] font-bold text-slate-400 uppercase">Tổng đơn</div>
+                        </div>
+                        <div class="bg-emerald-50 p-4 rounded-2xl text-center">
+                            <div class="text-2xl font-black text-emerald-600" id="dt_xong">--</div>
+                            <div class="text-[9px] font-bold text-slate-400 uppercase">Đã xử lý</div>
+                        </div>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="flex justify-between items-center text-xs font-bold text-slate-500 border-b pb-2">
+                            <span>PHẢN ÁNH 1022</span>
+                            <span class="text-blue-600" id="pa_1022">--</span>
+                        </div>
+                        <div class="flex justify-between items-center text-xs font-bold text-slate-500">
+                            <span>TỶ LỆ HÀI LÒNG</span>
+                            <span class="text-emerald-600" id="pa_hai_long">--%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="lg:col-span-4">
+                <div class="card-main">
+                    <h3 class="text-sm font-black text-slate-800 uppercase italic mb-6">📋 Hồ sơ Hành chính</h3>
+                    <div class="flex flex-col items-center justify-center py-6">
+                        <div class="text-7xl font-black text-slate-800 tracking-tighter" id="hs_ontime">--%</div>
+                        <div class="text-[10px] font-bold text-emerald-500 uppercase tracking-widest mt-2">Đúng hạn & Trước hạn</div>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4 mt-6">
+                        <div class="p-4 bg-slate-50 rounded-2xl">
+                            <div class="text-[9px] font-bold text-slate-400 uppercase mb-1">Mức độ hài lòng</div>
+                            <div class="text-lg font-black text-slate-700" id="hs_hai_long">--%</div>
+                        </div>
+                        <div class="p-4 bg-slate-50 rounded-2xl">
+                            <div class="text-[9px] font-bold text-slate-400 uppercase mb-1">Số hóa hồ sơ</div>
+                            <div class="text-lg font-black text-indigo-600">82%</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="lg:col-span-4">
+                <div class="bg-slate-900 rounded-[32px] p-8 text-white h-full flex flex-col shadow-2xl border border-slate-800">
+                    <div class="flex justify-between items-start mb-8">
+                        <h3 class="text-xs font-bold text-blue-400 uppercase tracking-widest italic">⚖️ Nhiệm vụ trọng tâm</h3>
+                        <span class="bg-blue-500/20 text-blue-400 text-[9px] px-2 py-1 rounded-md font-bold" id="nv_tong_h">0</span>
+                    </div>
+                    <div class="flex-1 space-y-6 overflow-y-auto pr-2" id="mission-container">
+                        </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
+        import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-database.js";
+
+        // Firebase Config (Giữ nguyên từ file cũ)
+        const firebaseConfig = { 
+            apiKey: "AIzaSyCjS8jJtoV5HLcYIpVTX1zP5DbyYmXsbh4", 
+            authDomain: "dashboard-demo-ce0da.firebaseapp.com", 
+            databaseURL: "https://dashboard-demo-ce0da-default-rtdb.asia-southeast1.firebasedatabase.app", 
+            projectId: "dashboard-demo-ce0da", 
+            appId: "1:969593884637:web:47d4e6b03a51e7dcfbb034" 
+        };
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+
+        // Danh sách chỉ tiêu cho Marquee (Thay thế cho Indicators cũ)
+        const indicators = [
+            { id: "thu_ngan_sach", ten: "Thu ngân sách", dv: "Tỷ" },
+            { id: "giai_ngan", ten: "Giải ngân đầu tư", dv: "%" },
+            { id: "doanh_nghiep", ten: "DN mới", dv: "đv" },
+            { id: "ho_kinh_doanh", ten: "Hộ KD mới", dv: "hộ" },
+            { id: "giam_ngheo", ten: "Giảm nghèo", dv: "%" }
+        ];
+
+        // Lấy dữ liệu Real-time
+        onValue(ref(db, 'dashboard_binhhung'), (snapshot) => {
+            const d = snapshot.val();
+            if(!d) return;
+
+            // Cập nhật Đơn thư
+            document.getElementById('dt_tong').innerText = d.don_thu?.tong || 0;
+            document.getElementById('dt_xong').innerText = d.don_thu?.da_giai_quyet || 0;
+            document.getElementById('pa_1022').innerText = d.phan_anh_1022?.tong || 0;
+            document.getElementById('pa_hai_long').innerText = (d.phan_anh_1022?.hai_long || 0) + "%";
+
+            // Cập nhật Hồ sơ
+            const hs = d.ho_so_hanh_chinh || {};
+            document.getElementById('hs_ontime').innerText = (hs.luy_ke > 0 ? ((hs.truoc_han || 0)/(hs.luy_ke)*100).toFixed(1) : 0) + "%";
+            document.getElementById('hs_hai_long').innerText = (hs.hai_long_percent || 0) + "%";
+
+            // Cập nhật Marquee
+            const marqueeList = document.getElementById('marquee-list');
+            const dataItems = indicators.map(it => `
+                <div class="marquee-item">
+                    <span class="marquee-label">${it.ten}</span>
+                    <span class="marquee-value">${d.chi_tieu?.[it.id] || 0}<span class="text-[10px] font-normal ml-1">${it.dv}</span></span>
+                </div>
+            `).join('');
+            marqueeList.innerHTML = dataItems + dataItems; // Nhân đôi để chạy vô tận
+
+            // Cập nhật Nhiệm vụ
+            const missionContainer = document.getElementById('mission-container');
+            const missions = d.van_ban_chi_dao?.nhiem_vu_chi_tiet || {};
+            document.getElementById('nv_tong_h').innerText = Object.keys(missions).length;
+            missionContainer.innerHTML = Object.values(missions).map(m => `
+                <div class="border-l-2 border-blue-500 pl-4 py-1">
+                    <div class="text-[10px] font-black ${m.status === 'Hoàn thành' ? 'text-emerald-400' : 'text-blue-400'} uppercase mb-1">${m.status}</div>
+                    <div class="text-xs font-bold leading-snug">${m.title}</div>
+                    <div class="text-[9px] text-slate-500 mt-1 italic">Hạn: ${m.deadline}</div>
+                </div>
+            `).join('');
+        });
+
+        // Đồng hồ
+        setInterval(() => {
+            document.getElementById('live-clock').innerText = new Date().toLocaleTimeString('vi-VN') + " | " + new Date().toLocaleDateString('vi-VN');
+        }, 1000);
+    </script>
+</body>
+</html>
