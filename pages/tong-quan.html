@@ -6,12 +6,19 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Inter', sans-serif; background-color: #f0f4f8; padding: 0; margin: 0; }
+        
+        /* Hiệu ứng Marquee */
         @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
         .animate-marquee { display: flex; animation: marquee 200s linear infinite; width: max-content; }
         .animate-marquee:hover { animation-play-state: paused; }
         .marquee-wrapper { background-color: #fbbf24; border-bottom: 3px solid #d97706; }
+
         .donut-chart { position: relative; width: 145px; height: 145px; border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: 0.5s; box-shadow: inset 0 2px 4px rgba(0,0,0,0.1); }
         .donut-inner { position: absolute; inset: 12px; background: white; border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+        
+        /* Scrollbar ẩn cho danh sách tin tức */
+        .scrollbar-hide::-webkit-scrollbar { display: none; }
+        .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
     </style>
 </head>
 <body>
@@ -67,7 +74,7 @@
             <div class="md:col-span-4 space-y-6 flex flex-col">
                 <div class="bg-gradient-to-br from-indigo-700 to-blue-900 rounded-[32px] shadow-xl text-white p-7 flex-1 flex flex-col relative overflow-hidden">
                     <div class="relative z-10">
-                        <div class="text-[11px] font-black text-blue-300 uppercase mb-1 italic tracking-widest">Hồ sơ hành chính</div>
+                        <div class="text-[11px] font-black text-blue-300 uppercase mb-1 italic tracking-widest">Hồ sơ hành chính (Lũy kế)</div>
                         <div id="hs_luy_ke" class="text-6xl font-black italic tracking-tighter text-white">0</div>
                     </div>
                     <div class="grid grid-cols-2 gap-3 mt-auto relative z-10">
@@ -81,13 +88,23 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="bg-white p-7 rounded-[32px] shadow-lg border border-blue-50 flex flex-col h-[280px] relative overflow-hidden">
+                    <h3 class="text-[11px] font-black text-blue-600 uppercase tracking-widest italic border-l-4 border-blue-600 pl-2 mb-4">Tin tức Zalo OA mới nhất</h3>
+                    <div id="zalo-news-list" class="space-y-4 overflow-y-auto pr-2 flex-1 scrollbar-hide">
+                        </div>
+                    <div class="mt-3 pt-3 border-t border-slate-100 text-center">
+                        <span class="text-[9px] font-bold text-slate-400 uppercase italic tracking-tighter">Dữ liệu từ hệ thống truyền thông xã</span>
+                    </div>
                 </div>
+            </div>
         </div>
     </div>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
         import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-database.js";
+        
         const firebaseConfig = { apiKey: "AIzaSyCjS8jJtoV5HLcYIpVTX1zP5DbyYmXsbh4", authDomain: "dashboard-demo-ce0da.firebaseapp.com", databaseURL: "https://dashboard-demo-ce0da-default-rtdb.asia-southeast1.firebasedatabase.app", projectId: "dashboard-demo-ce0da", appId: "1:969593884637:web:47d4e6b03a51e7dcfbb034" };
         const db = getDatabase(initializeApp(firebaseConfig));
 
@@ -143,25 +160,51 @@
 
         onValue(ref(db, 'dashboard_binhhung'), (snap) => {
             const d = snap.val(); if(!d) return;
+            
+            // Đơn thư
             const dtT = (d.don_thu_moi?.ky_truoc || 0) + (d.don_thu_moi?.moi_phat_sinh || 0);
             const dtX = d.don_thu_moi?.da_giai_quyet || 0;
             document.getElementById('dt_tong').innerText = dtT;
             document.getElementById('dt_xong').innerText = dtX;
             document.getElementById('dt_cho').innerText = Math.max(0, dtT - dtX);
             document.getElementById('dt_donut').style.setProperty('--dt-p', (dtT > 0 ? (dtX/dtT*100) : 0) + '%');
+
+            // 1022
             const pa = d.pa_1022 || {};
             document.getElementById('pa_tong').innerText = pa.tong || 0;
             document.getElementById('pa_xong').innerText = pa.da_giai_quyet || 0;
             document.getElementById('pa_cho').innerText = pa.chua_giai_quyet || 0;
             document.getElementById('pa_donut').style.setProperty('--pa-p', (pa.tong > 0 ? (pa.da_giai_quyet/pa.tong*100) : 0) + '%');
+
+            // Hồ sơ
             const hs = d.ho_so_thang || {};
             document.getElementById('hs_luy_ke').innerText = hs.luy_ke || 0;
             document.getElementById('hs_rate').innerText = (hs.luy_ke > 0 ? ((hs.truoc_han || 0)/(hs.luy_ke)*100).toFixed(1) : 0) + "%";
             document.getElementById('hs_hai_long').innerText = (hs.hai_long_percent || 0) + "%";
 
-            // ĐÃ XÓA LOGIC CẬP NHẬT VĂN BẢN/NHIỆM VỤ TẠI ĐÂY
-
+            // Marquee Chỉ tiêu
             if(d.chi_tieu) { updateMarquee(d.chi_tieu); }
+
+            // Tin tức Zalo OA (Mới thêm)
+            const zaloNews = d.zalo_news || {};
+            const newsContainer = document.getElementById('zalo-news-list');
+            if (Object.keys(zaloNews).length === 0) {
+                newsContainer.innerHTML = `<div class="text-[10px] text-slate-400 italic text-center mt-10">Đang cập nhật bài viết...</div>`;
+            } else {
+                newsContainer.innerHTML = Object.values(zaloNews).reverse().slice(0, 5).map(item => `
+                    <a href="${item.link}" target="_blank" class="flex gap-3 group items-center transition-all">
+                        <div class="w-12 h-12 bg-slate-100 rounded-xl overflow-hidden flex-shrink-0 border border-slate-100">
+                            <img src="${item.image || 'https://img.icons8.com/color/144/zalo.png'}" class="w-full h-full object-cover group-hover:scale-110 transition-transform">
+                        </div>
+                        <div class="flex-1">
+                            <div class="text-[8px] font-bold text-slate-400 uppercase">${item.date}</div>
+                            <div class="text-[11px] font-black text-slate-800 leading-tight group-hover:text-blue-600 line-clamp-2 transition-colors">
+                                ${item.title}
+                            </div>
+                        </div>
+                    </a>
+                `).join('');
+            }
         });
     </script>
 </body>
