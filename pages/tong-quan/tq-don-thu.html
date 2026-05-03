@@ -1,13 +1,42 @@
-<div class="bg-white p-8 rounded-[32px] shadow-lg border border-blue-50 flex flex-col items-center relative">
-    <h3 class="absolute top-6 left-8 text-[11px] font-black text-indigo-600 uppercase italic border-l-4 border-indigo-600 pl-2">Tình hình Đơn thư</h3>
-    <div class="donut-chart mt-6" id="dt_donut">
-        <div class="donut-inner text-center">
-            <span id="dt_tong" class="text-4xl font-black text-slate-900 tracking-tighter">0</span>
-            <p class="text-[9px] font-extrabold text-indigo-500 uppercase">Tổng đơn</p>
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .donut-chart { position: relative; width: 140px; height: 140px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+        .donut-inner { position: absolute; inset: 12px; background: white; border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+    </style>
+</head>
+<body class="bg-transparent p-4">
+    <div class="bg-white p-8 rounded-[32px] shadow-lg border border-blue-50 flex flex-col items-center relative h-full">
+        <h3 class="absolute top-6 left-8 text-[11px] font-black text-indigo-600 uppercase italic border-l-4 border-indigo-600 pl-2">Tình hình Đơn thư</h3>
+        <div class="donut-chart mt-6" id="dt_donut" style="background: #e2e8f0;">
+            <div class="donut-inner text-center">
+                <span id="dt_tong" class="text-4xl font-black text-slate-900 tracking-tighter">0</span>
+                <p class="text-[9px] font-extrabold text-indigo-500 uppercase">Tổng đơn</p>
+            </div>
+        </div>
+        <div class="w-full grid grid-cols-2 gap-3 mt-8">
+            <div class="bg-emerald-600 p-3 rounded-2xl text-center text-white"><div id="dt_xong" class="text-xl font-black">0</div></div>
+            <div class="bg-rose-600 p-3 rounded-2xl text-center text-white"><div id="dt_cho" class="text-xl font-black">0</div></div>
         </div>
     </div>
-    <div class="w-full grid grid-cols-2 gap-3 mt-8">
-        <div class="bg-emerald-600 p-3 rounded-2xl text-center text-white"><div id="dt_xong" class="text-xl font-black">0</div></div>
-        <div class="bg-rose-600 p-3 rounded-2xl text-center text-white"><div id="dt_cho" class="text-xl font-black">0</div></div>
-    </div>
-</div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
+        import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-database.js";
+        const firebaseConfig = { databaseURL: "https://dashboard-demo-ce0da-default-rtdb.asia-southeast1.firebasedatabase.app" };
+        const db = getDatabase(initializeApp(firebaseConfig));
+
+        onValue(ref(db, 'dashboard_binhhung/don_thu_moi'), (snap) => {
+            const d = snap.val() || {};
+            const tong = (d.ky_truoc || 0) + (d.moi_phat_sinh || 0);
+            const xong = d.da_giai_quyet || 0;
+            document.getElementById('dt_tong').innerText = tong;
+            document.getElementById('dt_xong').innerText = xong;
+            document.getElementById('dt_cho').innerText = Math.max(0, tong - xong);
+            document.getElementById('dt_donut').style.background = `conic-gradient(#10b981 ${(xong/tong*100)||0}%, #e2e8f0 0deg)`;
+        });
+    </script>
+</body>
+</html>
