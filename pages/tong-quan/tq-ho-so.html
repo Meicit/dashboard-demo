@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head><script src="https://cdn.tailwindcss.com"></script></head>
+<body class="bg-transparent p-4">
+    <div class="bg-white p-8 rounded-[32px] shadow-lg border border-blue-50 flex flex-col items-center h-full relative">
+        <h3 class="absolute top-6 left-8 text-[11px] font-black text-blue-800 uppercase italic border-l-4 border-blue-800 pl-2">Hồ sơ hành chính</h3>
+        <div class="flex flex-col items-center justify-center h-[140px] mt-6 text-center">
+            <span id="hs_luy_ke" class="text-6xl font-black text-slate-900 italic tracking-tighter">0</span>
+            <p class="text-[10px] font-extrabold text-blue-600 uppercase mt-4">Hồ sơ lũy kế trong tháng</p>
+        </div>
+        <div class="w-full grid grid-cols-2 gap-3 mt-8">
+            <div class="bg-blue-50 border border-blue-100 p-4 rounded-2xl text-center">
+                <div id="hs_rate" class="text-2xl font-black text-blue-700">0%</div>
+            </div>
+            <div class="bg-orange-50 border border-orange-100 p-4 rounded-2xl text-center">
+                <div id="hs_hai_long" class="text-2xl font-black text-orange-500">0%</div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
+        import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-database.js";
+        const firebaseConfig = { databaseURL: "https://dashboard-demo-ce0da-default-rtdb.asia-southeast1.firebasedatabase.app" };
+        const db = getDatabase(initializeApp(firebaseConfig));
+
+        onValue(ref(db, 'dashboard_binhhung/ho_so_thang'), (snap) => {
+            const d = snap.val() || {};
+            document.getElementById('hs_luy_ke').innerText = d.luy_ke || 0;
+            document.getElementById('hs_rate').innerText = (d.luy_ke > 0 ? (d.truoc_han/d.luy_ke*100).toFixed(1) : 0) + "%";
+            document.getElementById('hs_hai_long').innerText = (d.hai_long_percent || 0) + "%";
+        });
+    </script>
+</body>
+</html>
