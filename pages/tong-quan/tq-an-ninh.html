@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; background: transparent; margin: 0; padding: 0; }
+        .bar-container { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+        .bar-label { width: 140px; font-size: 11px; font-weight: 600; color: #64748b; line-height: 1.2; }
+        .bar-bg { flex: 1; height: 24px; background: #f1f5f9; border-radius: 4px; overflow: hidden; position: relative; }
+        .bar-fill { height: 100%; border-radius: 4px; }
+        .bar-value { position: absolute; right: 8px; top: 50%; transform: translateY(-50%); font-weight: 800; font-size: 12px; color: #1e293b; }
+    </style>
+</head>
+<body class="p-4">
+    <div class="bg-white p-8 rounded-[32px] shadow-lg border border-slate-100 h-[380px]">
+        <div class="flex items-center gap-3 mb-8">
+            <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center text-white text-[10px]">★</div>
+            <h3 class="text-base font-black text-slate-800 uppercase tracking-tight">Lĩnh vực công an</h3>
+        </div>
+        <div class="space-y-4">
+            <div class="bar-container"><span class="bar-label">Tội phạm trật tự</span><div class="bar-bg"><div class="bar-fill bg-blue-500" style="width: 15%"></div><span class="bar-value">1</span></div></div>
+            <div class="bar-container"><span class="bar-label">Phạm pháp hình sự</span><div class="bar-bg"><div class="bar-fill bg-amber-500" style="width: 45%"></div><span class="bar-value">6</span></div></div>
+            <div class="bar-container"><span class="bar-label">Khu phố an toàn</span><div class="bar-bg"><div class="bar-fill bg-orange-500" style="width: 90%"></div><span class="bar-value">18</span></div></div>
+            <div class="bar-container"><span class="bar-label">Tin báo xử lý</span><div class="bar-bg"><div class="bar-fill bg-slate-400" style="width: 60%"></div><span class="bar-value">7</span></div></div>
+        </div>
+    </div>
+</body>
+</html>
