@@ -8,25 +8,32 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Inter', sans-serif; background-color: #f0f4f8; padding: 0; margin: 0; }
+        
+        /* Hiệu ứng chữ chạy Marquee */
         @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
         .animate-marquee { display: flex; animation: marquee 200s linear infinite; width: max-content; }
+        .animate-marquee:hover { animation-play-state: paused; }
         .marquee-wrapper { background-color: #fbbf24; border-bottom: 3px solid #d97706; }
         
-        /* Custom Progress Bar Chart */
+        /* Biểu đồ thanh ngang (Lĩnh vực Công an/Quốc phòng) */
         .bar-container { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
-        .bar-label { width: 120px; font-size: 11px; font-weight: 600; color: #64748b; line-height: 1.2; }
+        .bar-label { width: 140px; font-size: 11px; font-weight: 600; color: #64748b; line-height: 1.2; }
         .bar-bg { flex: 1; height: 24px; background: #f1f5f9; border-radius: 4px; overflow: hidden; position: relative; }
         .bar-fill { height: 100%; border-radius: 4px; transition: width 1s ease-in-out; }
-        .bar-value { position: absolute; right: -30px; font-weight: 800; font-size: 12px; color: #1e293b; }
+        .bar-value { position: absolute; right: 8px; top: 50%; transform: translateY(-50%); font-weight: 800; font-size: 12px; color: #1e293b; z-index: 10; }
 
-        .donut-chart { position: relative; width: 140px; height: 140px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+        /* Biểu đồ Donut */
+        .donut-chart { position: relative; width: 140px; height: 140px; border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: 0.5s; }
         .donut-inner { position: absolute; inset: 12px; background: white; border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+        
+        /* Modal Pop-up */
+        #zalo-modal { transition: opacity 0.3s ease; }
     </style>
 </head>
 <body class="p-6">
     <div class="max-w-[1600px] mx-auto space-y-8">
         
-        <!-- TOP MARQUEE (GIỮ NGUYÊN) -->
+        <!-- 1. DẢI CHỮ CHẠY CHỈ TIÊU (MARQUEE) -->
         <div class="marquee-wrapper py-3 overflow-hidden shadow-xl rounded-2xl relative z-20">
             <div class="animate-marquee whitespace-nowrap flex items-center">
                 <div id="marquee-content" class="flex gap-16 items-center px-4"></div>
@@ -34,8 +41,10 @@
             </div>
         </div>
 
-        <!-- HÀNG 1: 3 CỘT CHỈ SỐ CHÍNH (GIỮ NGUYÊN KẾT NỐI) -->
+        <!-- 2. HÀNG 1: 3 CỘT CHỈ SỐ CHÍNH (Đồng bộ nền trắng) -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            
+            <!-- Ô 1: Đơn thư -->
             <div class="bg-white p-8 rounded-[32px] shadow-lg border border-blue-50 flex flex-col items-center relative">
                 <h3 class="absolute top-6 left-8 text-[11px] font-black text-indigo-600 uppercase tracking-widest italic border-l-4 border-indigo-600 pl-2">Tình hình Đơn thư</h3>
                 <div class="donut-chart mt-6" id="dt_donut" style="background: conic-gradient(#10b981 var(--dt-p, 0%), #e2e8f0 0deg);">
@@ -45,11 +54,16 @@
                     </div>
                 </div>
                 <div class="w-full grid grid-cols-2 gap-3 mt-8">
-                    <div class="bg-emerald-600 p-3 rounded-2xl text-center text-white shadow-md"><div id="dt_xong" class="text-xl font-black">0</div></div>
-                    <div class="bg-rose-600 p-3 rounded-2xl text-center text-white shadow-md"><div id="dt_cho" class="text-xl font-black">0</div></div>
+                    <div class="bg-emerald-600 p-3 rounded-2xl text-center text-white shadow-md shadow-emerald-100">
+                        <div id="dt_xong" class="text-xl font-black">0</div>
+                    </div>
+                    <div class="bg-rose-600 p-3 rounded-2xl text-center text-white shadow-md shadow-rose-100">
+                        <div id="dt_cho" class="text-xl font-black">0</div>
+                    </div>
                 </div>
             </div>
 
+            <!-- Ô 2: Phản ánh 1022 -->
             <div class="bg-white p-8 rounded-[32px] shadow-lg border border-blue-50 flex flex-col items-center relative">
                 <h3 class="absolute top-6 left-8 text-[11px] font-black text-blue-700 uppercase tracking-widest italic border-l-4 border-blue-700 pl-2">Phản ánh 1022</h3>
                 <div class="donut-chart mt-6" id="pa_donut" style="background: conic-gradient(#3b82f6 var(--pa-p, 0%), #e2e8f0 0deg);">
@@ -59,127 +73,113 @@
                     </div>
                 </div>
                 <div class="w-full grid grid-cols-2 gap-3 mt-8">
-                    <div class="bg-blue-600 p-3 rounded-2xl text-center text-white shadow-md"><div id="pa_xong" class="text-xl font-black">0</div></div>
-                    <div class="bg-amber-500 p-3 rounded-2xl text-center text-white shadow-md"><div id="pa_cho" class="text-xl font-black">0</div></div>
+                    <div class="bg-blue-600 p-3 rounded-2xl text-center text-white shadow-md shadow-blue-100">
+                        <div id="pa_xong" class="text-xl font-black">0</div>
+                    </div>
+                    <div class="bg-amber-500 p-3 rounded-2xl text-center text-white shadow-md shadow-amber-100">
+                        <div id="pa_cho" class="text-xl font-black">0</div>
+                    </div>
                 </div>
             </div>
 
-            <div class="bg-gradient-to-br from-indigo-800 to-blue-900 rounded-[32px] shadow-xl text-white p-8 flex flex-col relative overflow-hidden">
-                <h3 class="text-[11px] font-black text-blue-300 uppercase mb-2 italic border-l-4 border-blue-300 pl-2">Hồ sơ hành chính</h3>
-                <div class="flex-1 flex flex-col justify-center">
-                    <div id="hs_luy_ke" class="text-6xl font-black italic tracking-tighter">0</div>
-                    <p class="text-[10px] font-bold text-blue-200 uppercase tracking-widest">Hồ sơ lũy kế trong tháng</p>
+            <!-- Ô 3: Hồ sơ hành chính (Đã chuyển sang nền trắng) -->
+            <div class="bg-white p-8 rounded-[32px] shadow-lg border border-blue-50 flex flex-col items-center relative">
+                <h3 class="absolute top-6 left-8 text-[11px] font-black text-blue-800 uppercase tracking-widest italic border-l-4 border-blue-800 pl-2">Hồ sơ hành chính</h3>
+                <div class="flex flex-col items-center justify-center h-[140px] mt-6 text-center">
+                    <span id="hs_luy_ke" class="text-6xl font-black text-slate-900 tracking-tighter italic leading-none">0</span>
+                    <p class="text-[10px] font-extrabold text-blue-600 uppercase mt-4">Hồ sơ lũy kế trong tháng</p>
                 </div>
-                <div class="grid grid-cols-2 gap-4 mt-6">
-                    <div class="bg-white/10 p-4 rounded-2xl border border-white/20 backdrop-blur-md">
-                        <div id="hs_rate" class="text-2xl font-black text-yellow-400">0%</div>
+                <div class="w-full grid grid-cols-2 gap-3 mt-8">
+                    <div class="bg-slate-50 border border-slate-100 p-4 rounded-2xl text-center shadow-sm">
+                        <div id="hs_rate" class="text-2xl font-black text-blue-700">0%</div>
                     </div>
-                    <div class="bg-white/10 p-4 rounded-2xl border border-white/20 backdrop-blur-md">
-                        <div id="hs_hai_long" class="text-2xl font-black text-orange-400">0%</div>
+                    <div class="bg-slate-50 border border-slate-100 p-4 rounded-2xl text-center shadow-sm">
+                        <div id="hs_hai_long" class="text-2xl font-black text-orange-500">0%</div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- HÀNG 2: AN NINH TRẬT TỰ & QUỐC PHÒNG (GIAO DIỆN THEO HÌNH) -->
+        <!-- 3. HÀNG 2: AN NINH TRẬT TỰ & QUỐC PHÒNG (Giao diện chuẩn hình ảnh) -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
             
-            <!-- CỘT 1: LĨNH VỰC CÔNG AN -->
+            <!-- Lĩnh vực Công an -->
             <div class="bg-white p-8 rounded-[32px] shadow-lg border border-slate-100">
                 <div class="flex items-center gap-3 mb-8">
-                    <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center text-white text-xs">★</div>
-                    <h3 class="text-base font-black text-slate-800">Tình hình an ninh trật tự</h3>
+                    <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center text-white text-[10px]">★</div>
+                    <h3 class="text-base font-black text-slate-800 uppercase tracking-tight">Lĩnh vực công an</h3>
                 </div>
 
-                <!-- Biểu đồ ngang -->
-                <div class="pr-10 mb-8">
+                <div class="space-y-4 mb-8">
                     <div class="bar-container">
-                        <span class="bar-label">Tội phạm về trật tự xã hội</span>
-                        <div class="bar-bg"><div id="bar_tp" class="bar-fill bg-blue-500" style="width: 10%"></div><span id="val_tp" class="bar-value">1</span></div>
+                        <span class="bar-label">Tội phạm trật tự xã hội</span>
+                        <div class="bar-bg"><div class="bar-fill bg-blue-500" style="width: 15%"></div><span class="bar-value">1</span></div>
                     </div>
                     <div class="bar-container">
                         <span class="bar-label">Phạm pháp hình sự</span>
-                        <div class="bar-bg"><div id="bar_hs" class="bar-fill bg-amber-500" style="width: 45%"></div><span id="val_hs" class="bar-value">6</span></div>
+                        <div class="bar-bg"><div class="bar-fill bg-amber-500" style="width: 45%"></div><span class="bar-value">6</span></div>
                     </div>
                     <div class="bar-container">
-                        <span class="bar-label">Khu phố đạt chuẩn an toàn thông tin</span>
-                        <div class="bar-bg"><div id="bar_at" class="bar-fill bg-orange-500" style="width: 90%"></div><span id="val_at" class="bar-value">18</span></div>
+                        <span class="bar-label">Khu phố an toàn TT</span>
+                        <div class="bar-bg"><div class="bar-fill bg-orange-500" style="width: 90%"></div><span class="bar-value">18</span></div>
                     </div>
                     <div class="bar-container">
-                        <span class="bar-label">Tin báo/Tố giác được giải quyết</span>
-                        <div class="bar-bg"><div id="bar_tg" class="bar-fill bg-slate-400" style="width: 60%"></div><span id="val_tg" class="bar-value">7</span></div>
+                        <span class="bar-label">Tin báo đã giải quyết</span>
+                        <div class="bar-bg"><div class="bar-fill bg-slate-400" style="width: 60%"></div><span class="bar-value">7</span></div>
                     </div>
                 </div>
 
                 <div class="border-t border-dashed border-slate-200 pt-6">
-                    <h4 class="text-[11px] font-black text-slate-400 uppercase mb-4 italic">Đánh giá chung</h4>
+                    <h4 class="text-[11px] font-black text-slate-400 uppercase mb-4 italic tracking-widest">Đánh giá chung</h4>
                     <div class="grid grid-cols-2 gap-6">
                         <div class="flex items-start gap-3">
-                            <div class="w-10 h-10 bg-red-50 text-red-500 rounded-full flex items-center justify-center font-bold">!</div>
-                            <div>
-                                <div class="text-xs font-black text-slate-800">Vụ án hình sự nghiêm trọng</div>
-                                <div class="text-[10px] text-slate-500">0 (0%)</div>
-                            </div>
+                            <div class="w-10 h-10 bg-red-50 text-red-500 rounded-full flex items-center justify-center text-sm font-bold">!</div>
+                            <div><div class="text-[11px] font-black text-slate-800 leading-tight">Vụ án nghiêm trọng</div><div class="text-[10px] text-slate-500">0 (0%)</div></div>
                         </div>
                         <div class="flex items-start gap-3">
-                            <div class="w-10 h-10 bg-amber-50 text-amber-500 rounded-full flex items-center justify-center font-bold">⚑</div>
-                            <div>
-                                <div class="text-xs font-black text-slate-800">Tỷ lệ phá án</div>
-                                <div class="text-[10px] text-slate-500">43/52 vụ (82.69%)</div>
-                            </div>
+                            <div class="w-10 h-10 bg-amber-50 text-amber-500 rounded-full flex items-center justify-center text-sm font-bold">⚑</div>
+                            <div><div class="text-[11px] font-black text-slate-800 leading-tight">Tỷ lệ phá án</div><div class="text-[10px] text-slate-500">82.69%</div></div>
                         </div>
                         <div class="flex items-start gap-3">
-                            <div class="w-10 h-10 bg-indigo-50 text-indigo-500 rounded-full flex items-center justify-center font-bold">⚖</div>
-                            <div>
-                                <div class="text-xs font-black text-slate-800">Tỷ lệ phạm pháp thấp</div>
-                                <div class="text-[10px] text-slate-500">0,287/1000 dân</div>
-                            </div>
+                            <div class="w-10 h-10 bg-indigo-50 text-indigo-500 rounded-full flex items-center justify-center text-sm font-bold">⚖</div>
+                            <div><div class="text-[11px] font-black text-slate-800 leading-tight">Phạm pháp thấp</div><div class="text-[10px] text-slate-500">0.28/1000 dân</div></div>
                         </div>
                         <div class="flex items-start gap-3">
-                            <div class="w-10 h-10 bg-blue-50 text-blue-500 rounded-full flex items-center justify-center font-bold">✓</div>
-                            <div>
-                                <div class="text-xs font-black text-slate-800">Tin báo được tiếp nhận xử lý kịp thời</div>
-                                <div class="text-[10px] text-slate-500">100%</div>
-                            </div>
+                            <div class="w-10 h-10 bg-blue-50 text-blue-500 rounded-full flex items-center justify-center text-sm font-bold">✓</div>
+                            <div><div class="text-[11px] font-black text-slate-800 leading-tight">Xử lý tin báo</div><div class="text-[10px] text-slate-500">100% kịp thời</div></div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- CỘT 2: LĨNH VỰC QUỐC PHÒNG -->
+            <!-- Lĩnh vực Quốc phòng -->
             <div class="bg-white p-8 rounded-[32px] shadow-lg border border-slate-100">
                 <div class="flex items-center gap-3 mb-8">
-                    <div class="w-8 h-8 bg-emerald-600 rounded-lg flex items-center justify-center text-white text-xs">✓</div>
-                    <h3 class="text-base font-black text-slate-800">Quốc phòng</h3>
+                    <div class="w-8 h-8 bg-emerald-600 rounded-lg flex items-center justify-center text-white text-[10px]">✓</div>
+                    <h3 class="text-base font-black text-slate-800 uppercase tracking-tight">Lĩnh vực Quốc phòng</h3>
                 </div>
 
-                <div class="pr-10 mb-8">
+                <div class="space-y-4 mb-8">
                     <div class="bar-container">
-                        <span class="bar-label">Số lượng đăng ký khám sức khoẻ NVQS</span>
-                        <div class="bar-bg"><div id="bar_nv" class="bar-fill bg-blue-700" style="width: 100%"></div><span id="val_nv" class="bar-value">8/8</span></div>
+                        <span class="bar-label">Đăng ký khám NVQS</span>
+                        <div class="bar-bg"><div class="bar-fill bg-blue-700" style="width: 100%"></div><span class="bar-value">8/8</span></div>
                     </div>
                     <div class="bar-container">
-                        <span class="bar-label">Chỉ tiêu xây dựng dân quân</span>
-                        <div class="bar-bg"><div id="bar_dq" class="bar-fill bg-emerald-400" style="width: 100%"></div><span id="val_dq" class="bar-value">8/8</span></div>
+                        <span class="bar-label">Xây dựng dân quân</span>
+                        <div class="bar-bg"><div class="bar-fill bg-emerald-400" style="width: 100%"></div><span class="bar-value">8/8</span></div>
                     </div>
                 </div>
 
                 <div class="border-t border-dashed border-slate-200 pt-6">
-                    <h4 class="text-[11px] font-black text-slate-400 uppercase mb-4 italic">Đánh giá chung</h4>
+                    <h4 class="text-[11px] font-black text-slate-400 uppercase mb-4 italic tracking-widest">Đánh giá chung</h4>
                     <div class="space-y-6">
                         <div class="flex items-start gap-4">
-                            <div class="w-10 h-10 bg-emerald-50 text-emerald-500 rounded-full flex items-center justify-center">✚</div>
-                            <div>
-                                <div class="text-xs font-black text-slate-800">Khám sức khỏe NVQS</div>
-                                <div class="text-[10px] text-slate-500">99% trên tổng số 904 công dân</div>
-                            </div>
+                            <div class="w-10 h-10 bg-emerald-50 text-emerald-500 rounded-full flex items-center justify-center text-sm font-bold">✚</div>
+                            <div><div class="text-[11px] font-black text-slate-800">Khám sức khỏe NVQS</div><div class="text-[10px] text-slate-500">99% trên tổng số 904 công dân</div></div>
                         </div>
                         <div class="flex items-start gap-4">
-                            <div class="w-10 h-10 bg-blue-50 text-blue-500 rounded-full flex items-center justify-center">👥</div>
-                            <div>
-                                <div class="text-xs font-black text-slate-800">Tỷ lệ hoàn thành chi tiêu xây dựng lực lượng dân quân</div>
-                                <div class="text-[10px] text-slate-500">100%</div>
-                            </div>
+                            <div class="w-10 h-10 bg-blue-50 text-blue-500 rounded-full flex items-center justify-center text-sm font-bold">👥</div>
+                            <div><div class="text-[11px] font-black text-slate-800">Hoàn thành chỉ tiêu DQTV</div><div class="text-[10px] text-slate-500">Tỷ lệ hoàn thành 100%</div></div>
                         </div>
                     </div>
                 </div>
@@ -201,7 +201,7 @@
         };
         const db = getDatabase(initializeApp(firebaseConfig));
 
-        // Hàm cập nhật Marquee Chỉ tiêu
+        // Logic Marquee
         const indicators = [
             {id:"ct_1", ten:"Tăng trưởng sản xuất", dv:"%"},
             {id:"ct_2", ten:"Thu ngân sách", dv:"Tr.đ"},
@@ -218,10 +218,11 @@
             document.getElementById('marquee-content-clone').innerHTML = html;
         }
 
+        // Lấy dữ liệu Realtime
         onValue(ref(db, 'dashboard_binhhung'), (snap) => {
             const d = snap.val(); if(!d) return;
             
-            // Cập nhật các chỉ số hàng 1
+            // Hàng 1
             const dtT = (d.don_thu_moi?.ky_truoc || 0) + (d.don_thu_moi?.moi_phat_sinh || 0);
             const dtX = d.don_thu_moi?.da_giai_quyet || 0;
             document.getElementById('dt_tong').innerText = dtT;
@@ -241,11 +242,6 @@
             document.getElementById('hs_hai_long').innerText = (hs.hai_long_percent || 0) + "%";
 
             if(d.chi_tieu) updateMarquee(d.chi_tieu);
-
-            // LOGIC CẬP NHẬT BIỂU ĐỒ NGANG (Ví dụ lấy từ dữ liệu firebase nếu bạn có đặt id tương ứng)
-            // Ví dụ: const tp = d.an_ninh?.toi_pham || 1;
-            // document.getElementById('bar_tp').style.width = (tp * 10) + '%'; 
-            // document.getElementById('val_tp').innerText = tp;
         });
     </script>
 </body>
