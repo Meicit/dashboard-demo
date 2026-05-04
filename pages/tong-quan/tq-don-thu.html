@@ -1,113 +1,51 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
-    <!-- Sử dụng thư viện Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@900&display=swap" rel="stylesheet">
     <style>
-        body { 
-            font-family: 'Inter', sans-serif; 
-            background: transparent; 
-            margin: 0; 
-            padding: 0; 
-        }
-        /* Hiệu ứng vòng tròn tiến độ (Donut Chart) */
-        .donut-chart { 
-            position: relative; 
-            width: 180px; 
-            height: 180px; 
-            border-radius: 50%; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            background: #e2e8f0; /* Màu nền mặc định khi chưa có dữ liệu */
-            transition: background 0.5s ease-in-out;
-        }
-        .donut-inner { 
-            position: absolute; 
-            inset: 15px; /* Độ dày của vòng tròn */
-            background: white; 
-            border-radius: 50%; 
-            display: flex; 
-            flex-direction: column; 
-            align-items: center; 
-            justify-content: center; 
-            box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
-        }
+        body { font-family: 'Inter', sans-serif; background: transparent; margin: 0; overflow: hidden; }
+        .donut-chart { position: relative; width: 170px; height: 170px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: #e2e8f0; }
+        .donut-inner { position: absolute; inset: 15px; background: white; border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; }
     </style>
 </head>
-<body class="p-4">
-    <!-- Thẻ bao ngoài cùng với bo góc và bóng đổ giống mẫu -->
+<body class="p-2">
     <div class="bg-white p-8 rounded-[40px] shadow-lg border border-slate-100 flex flex-col items-center relative h-[420px]">
-        
-        <!-- Tiêu đề góc trái: Có thanh dọc màu xanh -->
         <div class="absolute top-8 left-8 flex items-center gap-3">
             <div class="w-[5px] h-6 bg-indigo-700 rounded-full"></div>
-            <h3 class="text-[13px] font-black text-indigo-800 uppercase italic tracking-wider">
-                Tình hình Đơn thư
-            </h3>
+            <h3 class="text-[13px] font-black text-indigo-800 uppercase italic">Tình hình Đơn thư</h3>
         </div>
-
-        <!-- Vòng tròn hiển thị Tổng đơn -->
         <div class="mt-12">
             <div class="donut-chart" id="dt_donut">
                 <div class="donut-inner">
-                    <span id="dt_tong" class="text-5xl font-black text-slate-900 tracking-tighter leading-none">
-                        0
-                    </span>
-                    <p class="text-[10px] font-black text-indigo-600 uppercase mt-2 tracking-widest">
-                        Tổng đơn
-                    </p>
+                    <span id="dt_tong" class="text-5xl font-black text-slate-900 leading-none">0</span>
+                    <p class="text-[10px] font-black text-indigo-600 uppercase mt-2">Tổng đơn</p>
                 </div>
             </div>
         </div>
-
-        <!-- 2 Ô trạng thái phía dưới -->
-        <div class="w-full grid grid-cols-2 gap-4 mt-12">
-            <!-- Ô Đã giải quyết: Màu xanh lá -->
-            <div class="bg-[#059669] p-5 rounded-[24px] text-center text-white shadow-md">
-                <div class="text-[10px] font-black uppercase mb-1 tracking-tight">Đã giải quyết</div>
+        <div class="w-full grid grid-cols-2 gap-4 mt-10">
+            <div class="bg-[#059669] p-5 rounded-[24px] text-center text-white">
+                <div class="text-[10px] font-black uppercase mb-1">Đã giải quyết</div>
                 <div id="dt_xong" class="text-3xl font-black">0</div>
             </div>
-
-            <!-- Ô Đang xử lý: Màu đỏ hồng -->
-            <div class="bg-[#e11d48] p-5 rounded-[24px] text-center text-white shadow-md">
-                <div class="text-[10px] font-black uppercase mb-1 tracking-tight">Đang xử lý</div>
+            <div class="bg-[#e11d48] p-5 rounded-[24px] text-center text-white">
+                <div class="text-[10px] font-black uppercase mb-1">Đang xử lý</div>
                 <div id="dt_cho" class="text-3xl font-black">0</div>
             </div>
         </div>
     </div>
-
-    <!-- Script kết nối Firebase dành riêng cho ô này -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
         import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-database.js";
-
-        // Cấu hình kết nối
-        const firebaseConfig = { 
-            databaseURL: "https://dashboard-demo-ce0da-default-rtdb.asia-southeast1.firebasedatabase.app" 
-        };
-        const app = initializeApp(firebaseConfig);
-        const db = getDatabase(app);
-
-        // Lắng nghe dữ liệu
+        const db = getDatabase(initializeApp({ databaseURL: "https://dashboard-demo-ce0da-default-rtdb.asia-southeast1.firebasedatabase.app" }));
         onValue(ref(db, 'dashboard_binhhung/don_thu_moi'), (snap) => {
             const data = snap.val() || {};
-            
-            // Tính toán số liệu
             const tong = (data.ky_truoc || 0) + (data.moi_phat_sinh || 0);
             const xong = data.da_giai_quyet || 0;
-            const cho = Math.max(0, tong - xong);
-            const phan_tram = tong > 0 ? (xong / tong * 100) : 0;
-
-            // Cập nhật giao diện
             document.getElementById('dt_tong').innerText = tong;
             document.getElementById('dt_xong').innerText = xong;
-            document.getElementById('dt_cho').innerText = cho;
-            
-            // Cập nhật màu sắc vòng tròn tiến độ (Xanh lá - Emerald 500)
-            document.getElementById('dt_donut').style.background = `conic-gradient(#10b981 ${phan_tram}%, #e2e8f0 0deg)`;
+            document.getElementById('dt_cho').innerText = Math.max(0, tong - xong);
+            document.getElementById('dt_donut').style.background = `conic-gradient(#10b981 ${(xong/tong*100)||0}%, #e2e8f0 0deg)`;
         });
     </script>
 </body>
