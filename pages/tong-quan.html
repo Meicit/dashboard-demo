@@ -4,20 +4,24 @@
     <meta charset="UTF-8">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        body { background-color: #f8fafc; padding: 15px; }
+        body { background-color: #f8fafc; padding: 15px; margin: 0; }
+        /* Xóa bỏ khoảng trắng dư thừa giữa các hàng */
+        .grid-container { display: flex; flex-direction: column; gap: 12px; }
         iframe { width: 100%; border: none; display: block; overflow: hidden; }
     </style>
 </head>
 <body>
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
-        <iframe src="../tong-quan/tq-ho-so.html" height="205" scrolling="no"></iframe>
-        <iframe src="../tong-quan/tq-1022.html" height="205" scrolling="no"></iframe>
-        <iframe src="../tong-quan/tq-don-thu.html" height="205" scrolling="no"></iframe>
-    </div>
+    <div class="grid-container">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+            <iframe src="tong-quan/tq-ho-so.html" height="200" scrolling="no"></iframe>
+            <iframe src="tong-quan/tq-1022.html" height="200" scrolling="no"></iframe>
+            <iframe src="tong-quan/tq-don-thu.html" height="200" scrolling="no"></iframe>
+        </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <iframe src="../tong-quan/tq-an-ninh.html" height="205" scrolling="no"></iframe>
-        <iframe src="../tong-quan/tq-quoc-phong.html" height="205" scrolling="no"></iframe>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+            <iframe src="tong-quan/tq-an-ninh.html" height="200" scrolling="no"></iframe>
+            <iframe src="tong-quan/tq-quoc-phong.html" height="200" scrolling="no"></iframe>
+        </div>
     </div>
 </body>
 </html>
