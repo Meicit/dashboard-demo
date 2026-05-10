@@ -3,96 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Inter', sans-serif; background: transparent; margin: 0; overflow: hidden; }
-        /* Cấu trúc vòng tròn Donut chuyên nghiệp */
-        .donut-chart { 
-            position: relative; 
-            width: 180px; 
-            height: 180px; 
-            border-radius: 50%; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            background: #f1f5f9; 
-            transition: background 0.5s ease;
-        }
-        .donut-inner { 
-            position: absolute; 
-            inset: 18px; 
-            background: white; 
-            border-radius: 50%; 
-            display: flex; 
-            flex-direction: column; 
-            align-items: center; 
-            justify-content: center; 
-            box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
-        }
+        body { font-family: sans-serif; background: transparent; margin: 0; overflow: hidden; }
+        .donut { position: relative; width: 170px; height: 170px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: #f1f5f9; }
+        .donut-inner { position: absolute; inset: 15px; background: white; border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; }
     </style>
 </head>
 <body class="p-2">
-    <div class="bg-white p-8 rounded-[40px] shadow-lg border border-slate-100 flex flex-col items-center relative h-[450px]">
-        
+    <div class="bg-white p-8 rounded-[40px] shadow-lg border border-slate-100 flex flex-col items-center h-[420px]">
         <div class="absolute top-8 left-8 flex items-center gap-3">
-            <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center shadow-md shadow-blue-100">
-                <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
-                </svg>
-            </div>
-            <h3 class="text-[14px] font-black text-slate-800 uppercase tracking-tight">Thủ tục hành chính</h3>
+            <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center text-white shadow-sm">💼</div>
+            <h3 class="text-[13px] font-black text-slate-800 uppercase tracking-tight">Thủ tục hành chính</h3>
         </div>
-
-        <div class="mt-14">
-            <div class="donut-chart" id="hs_donut">
+        <div class="mt-12">
+            <div class="donut" id="hs_donut">
                 <div class="donut-inner">
-                    <span id="hs_rate" class="text-5xl font-black text-slate-900 tracking-tighter leading-none">0%</span>
-                    <p class="text-[10px] font-black text-blue-600 uppercase mt-2 tracking-widest">Đúng hạn</p>
+                    <span id="hs_rate" class="text-4xl font-black text-slate-900 tracking-tighter">0%</span>
+                    <p class="text-[10px] font-black text-blue-600 uppercase mt-1">Đúng hạn</p>
                 </div>
             </div>
         </div>
-
-        <div class="w-full grid grid-cols-2 gap-4 mt-12">
-            <div class="bg-[#1d4ed8] p-5 rounded-[24px] text-center text-white shadow-md transition-transform hover:scale-105">
-                <div class="text-[10px] font-black uppercase mb-1 opacity-80 tracking-tighter">Tổng hồ sơ</div>
-                <div id="hs_luy_ke" class="text-3xl font-black">0</div>
+        <div class="w-full grid grid-cols-2 gap-4 mt-auto mb-2">
+            <div class="bg-blue-700 p-5 rounded-[24px] text-center text-white shadow-md">
+                <div class="text-[10px] font-bold uppercase opacity-80 mb-1">Tổng hồ sơ</div>
+                <div id="hs_luy_ke" class="text-2xl font-black text-white">0</div>
             </div>
-
-            <div class="bg-[#f59e0b] p-5 rounded-[24px] text-center text-white shadow-md transition-transform hover:scale-105">
-                <div class="text-[10px] font-black uppercase mb-1 opacity-80 tracking-tighter">Hài lòng</div>
-                <div id="hs_hai_long" class="text-3xl font-black">0%</div>
+            <div class="bg-orange-500 p-5 rounded-[24px] text-center text-white shadow-md">
+                <div class="text-[10px] font-bold uppercase opacity-80 mb-1">Hài lòng</div>
+                <div id="hs_hai_long" class="text-2xl font-black text-white">0%</div>
             </div>
         </div>
     </div>
-
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
         import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-database.js";
-
-        // Cấu hình Firebase
-        const firebaseConfig = { 
-            databaseURL: "https://dashboard-demo-ce0da-default-rtdb.asia-southeast1.firebasedatabase.app" 
-        };
-        const app = initializeApp(firebaseConfig);
-        const db = getDatabase(app);
-
-        // Lấy dữ liệu từ node ho_so_thang
+        const db = getDatabase(initializeApp({ databaseURL: "https://dashboard-demo-ce0da-default-rtdb.asia-southeast1.firebasedatabase.app" }));
         onValue(ref(db, 'dashboard_binhhung/ho_so_thang'), (snap) => {
             const d = snap.val() || {};
-            
-            const luyKe = d.luy_ke || 0;
-            const truocHan = d.truoc_han || 0;
-            const tiLeDungHan = luyKe > 0 ? (truocHan / luyKe * 100) : 0;
-            const haiLong = d.hai_long_percent || 0;
-
-            // Cập nhật text
-            document.getElementById('hs_luy_ke').innerText = luyKe.toLocaleString('vi-VN');
-            document.getElementById('hs_rate').innerText = tiLeDungHan.toFixed(1) + "%";
-            document.getElementById('hs_hai_long').innerText = haiLong + "%";
-
-            // Cập nhật vòng tròn tiến độ (Màu xanh Blue-700)
-            const donut = document.getElementById('hs_donut');
-            donut.style.background = `conic-gradient(#1d4ed8 ${tiLeDungHan}%, #f1f5f9 0deg)`;
+            const rate = d.luy_ke > 0 ? (d.truoc_han/d.luy_ke*100) : 0;
+            document.getElementById('hs_luy_ke').innerText = (d.luy_ke || 0).toLocaleString();
+            document.getElementById('hs_rate').innerText = rate.toFixed(1) + "%";
+            document.getElementById('hs_hai_long').innerText = (d.hai_long_percent || 0) + "%";
+            document.getElementById('hs_donut').style.background = `conic-gradient(#1d4ed8 ${rate}%, #f1f5f9 0deg)`;
         });
     </script>
 </body>
