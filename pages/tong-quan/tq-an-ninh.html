@@ -3,42 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        body { font-family: sans-serif; background: transparent; margin: 0; overflow: hidden; }
-        .bar-bg { flex: 1; height: 26px; background: #f1f5f9; border-radius: 4px; position: relative; }
-        .bar-fill { height: 100%; border-radius: 4px; transition: width 1s; }
-    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>body { font-family: 'Inter', sans-serif; background: transparent; margin: 0; overflow: hidden; }</style>
 </head>
 <body class="p-2">
-    <div class="bg-white p-8 rounded-[40px] shadow-lg border border-slate-100 flex flex-col h-[420px]">
+    <div class="bg-white p-8 rounded-[40px] shadow-sm border border-slate-100 flex flex-col h-[420px]">
         <div class="flex items-center gap-3 mb-10">
-            <div class="w-8 h-8 bg-blue-700 rounded-lg flex items-center justify-center text-white shadow-sm">⭐</div>
+            <div class="w-8 h-8 bg-slate-800 rounded-lg flex items-center justify-center text-white text-xs">⭐</div>
             <h3 class="text-[13px] font-black text-slate-800 uppercase tracking-tight">An ninh trật tự</h3>
         </div>
-        <div class="space-y-6">
-            <div class="flex items-center gap-4">
-                <span class="w-32 text-[11px] font-bold text-slate-500 uppercase">Tội phạm trật tự</span>
-                <div class="bar-bg"><div id="f1" class="bar-fill bg-[#5491be]" style="width: 0%"></div></div>
-                <span id="v1" class="font-black text-slate-700 w-6 text-right">0</span>
+
+        <div class="space-y-8 flex-1 flex flex-col justify-center">
+            <div class="flex justify-between items-end border-b border-slate-100 pb-2">
+                <div>
+                    <p class="text-[10px] font-black text-slate-400 uppercase">Tội phạm về trật tự xã hội</p>
+                    <p class="text-xs font-bold text-slate-600 mt-1">Giảm so với cùng kỳ</p>
+                </div>
+                <div id="v1" class="text-4xl font-black text-slate-900 italic">0</div>
             </div>
-            <div class="flex items-center gap-4">
-                <span class="w-32 text-[11px] font-bold text-slate-500 uppercase">Phạm pháp hình sự</span>
-                <div class="bar-bg"><div id="f2" class="bar-fill bg-[#f3a939]" style="width: 0%"></div></div>
-                <span id="v2" class="font-black text-slate-700 w-6 text-right">0</span>
+
+            <div class="flex justify-between items-end border-b border-slate-100 pb-2">
+                <div>
+                    <p class="text-[10px] font-black text-slate-400 uppercase">Phạm pháp hình sự</p>
+                    <p class="text-xs font-bold text-slate-600 mt-1">Số vụ ghi nhận</p>
+                </div>
+                <div id="v2" class="text-4xl font-black text-slate-900 italic">0</div>
             </div>
-            <div class="flex items-center gap-4">
-                <span class="w-32 text-[11px] font-bold text-slate-500 uppercase">KP an toàn thông tin</span>
-                <div class="bar-bg"><div id="f3" class="bar-fill bg-[#e6704e]" style="width: 0%"></div></div>
-                <span id="v3" class="font-black text-slate-700 w-6 text-right">0</span>
+
+            <div class="flex justify-between items-end">
+                <div>
+                    <p class="text-[10px] font-black text-slate-400 uppercase">Tai nạn giao thông</p>
+                    <p class="text-xs font-bold text-slate-600 mt-1">Kiềm chế trên cả 3 tiêu chí</p>
+                </div>
+                <div id="v3" class="text-4xl font-black text-emerald-600 italic">Đạt</div>
             </div>
-            <div class="flex items-center gap-4">
-                <span class="w-32 text-[11px] font-bold text-slate-500 uppercase">Tin báo xử lý</span>
-                <div class="bar-bg"><div id="f4" class="bar-fill bg-[#94a3b8]" style="width: 0%"></div></div>
-                <span id="v4" class="font-black text-slate-700 w-6 text-right">0</span>
-            </div>
-        </div>
-        <div class="mt-auto mb-2 text-center">
-            <p class="text-[10px] text-slate-400 italic italic">Dữ liệu cập nhật thời gian thực</p>
         </div>
     </div>
     <script type="module">
@@ -47,14 +45,8 @@
         const db = getDatabase(initializeApp({ databaseURL: "https://dashboard-demo-ce0da-default-rtdb.asia-southeast1.firebasedatabase.app" }));
         onValue(ref(db, 'dashboard_binhhung/an_ninh'), (snap) => {
             const d = snap.val() || {};
-            const update = (idF, idV, val) => {
-                document.getElementById(idV).innerText = val || 0;
-                document.getElementById(idF).style.width = Math.min((val/20)*100, 100) + "%";
-            };
-            update('f1', 'v1', d.toi_pham_xh);
-            update('f2', 'v2', d.pham_phap_hs);
-            update('f3', 'v3', d.khu_pho_at);
-            update('f4', 'v4', d.tin_bao_gq);
+            document.getElementById('v1').innerText = d.toi_pham_xh || 0;
+            document.getElementById('v2').innerText = d.pham_phap_hs || 0;
         });
     </script>
 </body>
