@@ -3,30 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>body { font-family: 'Inter', sans-serif; background: transparent; margin: 0; overflow: hidden; }</style>
 </head>
-<body class="p-2">
-    <div class="bg-white p-8 rounded-[40px] shadow-sm border border-slate-100 flex flex-col h-[420px]">
-        <div class="flex items-center gap-3 mb-10">
-            <div class="w-2 h-6 bg-emerald-600 rounded-full"></div>
-            <h3 class="text-[13px] font-black text-slate-800 uppercase tracking-tight italic">Tình hình Đơn thư</h3>
-        </div>
-
-        <div class="flex-1 flex flex-col justify-center items-center">
-            <div id="dt_tong" class="text-8xl font-black text-slate-900 tracking-tighter italic">0</div>
-            <p class="text-[11px] font-bold text-slate-400 uppercase mt-2 tracking-widest italic">Tổng số đơn tiếp nhận</p>
-        </div>
-
-        <div class="grid grid-cols-2 gap-6 mt-auto">
-            <div class="border-l-4 border-emerald-600 pl-4">
-                <div class="text-[10px] font-black text-slate-400 uppercase">Đã giải quyết</div>
-                <div id="dt_xong" class="text-2xl font-black text-emerald-600">0</div>
+<body class="p-1">
+    <div class="bg-white p-4 rounded-3xl shadow-sm border border-slate-100 flex flex-col h-[320px] justify-between">
+        <div>
+            <div class="flex items-center gap-2 mb-4">
+                <div class="w-8 h-8 bg-emerald-100 rounded-lg flex items-center justify-center">
+                    <span class="text-emerald-600 text-lg">📂</span>
+                </div>
+                <h3 class="text-sm font-semibold text-gray-600">Tình hình Đơn thư</h3>
             </div>
-            <div class="border-l-4 border-rose-600 pl-4">
-                <div class="text-[10px] font-black text-slate-400 uppercase">Đang xử lý</div>
-                <div id="dt_cho" class="text-2xl font-black text-rose-600">0</div>
+            <p id="dt_tong" class="text-3xl font-bold text-gray-900 tracking-tight">0 đơn thư</p>
+            <p id="dt_rate" class="text-sm text-gray-500 mt-1 font-medium italic">Giải quyết: 0%</p>
+        </div>
+        <div class="mt-2 pt-4 border-t border-slate-50">
+            <div class="flex justify-between items-center text-xs text-gray-500 font-medium">
+                <span id="dt_xong">Đã GQ: 0</span>
+                <span id="dt_cho" class="text-rose-500">Đang GQ: 0</span>
             </div>
+            <p class="text-[10px] text-slate-300 mt-2 uppercase tracking-widest font-bold">Báo cáo định kỳ</p>
         </div>
     </div>
     <script type="module">
@@ -36,9 +33,11 @@
         onValue(ref(db, 'dashboard_binhhung/don_thu_moi'), (snap) => {
             const d = snap.val() || {};
             const tong = (d.ky_truoc || 0) + (d.moi_phat_sinh || 0);
-            document.getElementById('dt_tong').innerText = tong;
-            document.getElementById('dt_xong').innerText = d.da_giai_quyet || 0;
-            document.getElementById('dt_cho').innerText = Math.max(0, tong - (d.da_giai_quyet || 0));
+            const rate = tong > 0 ? (d.da_giai_quyet / tong * 100).toFixed(1) : 0;
+            document.getElementById('dt_tong').innerText = tong + " đơn thư";
+            document.getElementById('dt_rate').innerText = `Giải quyết: ${rate}%`;
+            document.getElementById('dt_xong').innerText = `Đã GQ: ${d.da_giai_quyet || 0}`;
+            document.getElementById('dt_cho').innerText = `Đang GQ: ${Math.max(0, tong - d.da_giai_quyet)}`;
         });
     </script>
 </body>
