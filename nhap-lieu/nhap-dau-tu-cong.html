@@ -2,65 +2,161 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <title>Nhập liệu Đầu tư công</title>
+    <title>Cập nhật chi tiết Đầu tư công</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f1f5f9; }
+        input, select { border: 1px solid #e2e8f0; border-radius: 8px; padding: 8px 12px; outline: none; transition: all 0.2s; font-size: 13px; }
+        input:focus { border-color: #8b5cf6; ring: 2px; ring-color: #ddd6fe; }
+        .card { background: white; border-radius: 20px; padding: 24px; border: 1px solid #e2e8f0; }
+        th { font-size: 10px; text-transform: uppercase; color: #64748b; padding: 12px; background: #f8fafc; }
+    </style>
 </head>
-<body class="bg-slate-50 p-6">
-    <div class="max-w-xl mx-auto bg-white p-8 rounded-3xl shadow-lg">
-        <h2 class="text-2xl font-bold text-slate-800 mb-6 flex items-center gap-2">
-            🏗️ Cập nhật Đầu tư công 2026-2030
-        </h2>
-        
-        <form id="dtcForm" class="space-y-4">
-            <div>
-                <label class="block text-sm font-semibold text-slate-600 mb-1">Tổng mức đầu tư (triệu đồng)</label>
-                <input type="number" id="tong_von" class="w-full p-3 border rounded-xl focus:ring-2 focus:ring-purple-500 outline-none" placeholder="VD: 554323">
-            </div>
-            
-            <div class="grid grid-cols-2 gap-4">
-                <div>
-                    <label class="block text-sm font-semibold text-slate-600 mb-1">Vốn TP hỗ trợ</label>
-                    <input type="number" id="tp_ho_tro" class="w-full p-3 border rounded-xl outline-none" placeholder="Triệu đồng">
-                </div>
-                <div>
-                    <label class="block text-sm font-semibold text-slate-600 mb-1">Ngân sách xã</label>
-                    <input type="number" id="xa_doi_ung" class="w-full p-3 border rounded-xl outline-none" placeholder="Triệu đồng">
-                </div>
-            </div>
-
-            <div>
-                <label class="block text-sm font-semibold text-slate-600 mb-1">Số lượng dự án</label>
-                <input type="number" id="so_du_an" class="w-full p-3 border rounded-xl outline-none" value="15">
-            </div>
-
-            <button type="submit" class="w-full bg-purple-600 text-white font-bold py-3 rounded-xl hover:bg-purple-700 transition">
-                Lưu dữ liệu
+<body class="p-6">
+    <div class="max-w-6xl mx-auto">
+        <div class="flex justify-between items-center mb-6">
+            <h2 class="text-2xl font-black text-slate-800 uppercase tracking-tighter italic">🏗️ Quản lý 15 dự án Đầu tư công</h2>
+            <button onclick="saveAllData()" class="bg-violet-600 hover:bg-violet-700 text-white font-black px-8 py-3 rounded-xl shadow-lg transition-all active:scale-95 text-sm tracking-widest">
+                💾 LƯU TOÀN BỘ DỮ LIỆU
             </button>
-        </form>
+        </div>
+
+        <div class="card mb-6 grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div>
+                <label class="block text-[10px] font-black text-slate-400 uppercase mb-2">Tổng số dự án</label>
+                <input type="number" id="gen_tong_du_an" class="w-full font-bold" value="15">
+            </div>
+            <div>
+                <label class="block text-[10px] font-black text-slate-400 uppercase mb-2">Tổng vốn dự kiến (Tỷ đồng)</label>
+                <input type="text" id="gen_tong_von" class="w-full font-bold text-violet-600" placeholder="VD: 554.3">
+            </div>
+            <div>
+                <label class="block text-[10px] font-black text-slate-400 uppercase mb-2">Trạng thái chung</label>
+                <input type="text" id="gen_status" class="w-full font-bold" value="Giai đoạn 2026-2030">
+            </div>
+        </div>
+
+        <div class="card shadow-xl overflow-hidden">
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                        <tr>
+                            <th width="5%">STT</th>
+                            <th width="40%">Tên dự án / Công trình</th>
+                            <th width="15%">Lĩnh vực</th>
+                            <th width="20%">Vốn (Triệu đồng)</th>
+                            <th width="20%">Trạng thái</th>
+                        </tr>
+                    </thead>
+                    <tbody id="project-list-input">
+                        </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
-        import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-database.js";
-        
-        const firebaseConfig = { databaseURL: "https://dashboard-demo-ce0da-default-rtdb.asia-southeast1.firebasedatabase.app" };
+        import { getDatabase, ref, set, onValue } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-database.js";
+
+        const firebaseConfig = { 
+            databaseURL: "https://dashboard-demo-ce0da-default-rtdb.asia-southeast1.firebasedatabase.app" 
+        };
         const app = initializeApp(firebaseConfig);
         const db = getDatabase(app);
+        const dtcRef = ref(db, 'dashboard_binhhung/dau_tu_cong_chi_tiet');
 
-        document.getElementById('dtcForm').onsubmit = (e) => {
-            e.preventDefault();
-            const data = {
-                tong_von: Number(document.getElementById('tong_von').value),
-                tp_ho_tro: Number(document.getElementById('tp_ho_tro').value),
-                xa_doi_ung: Number(document.getElementById('xa_doi_ung').value),
-                so_du_an: Number(document.getElementById('so_du_an').value),
-                timestamp: Date.now()
+        // Danh sách mặc định để khởi tạo form
+        const defaultProjects = [
+            { name: "Xây dựng mới trường Mầm non Bình Hưng (Cơ sở 2)", type: "Giáo dục", capital: "125.450", status: "Chuẩn bị đầu tư" },
+            { name: "Nâng cấp, mở rộng đường liên ấp 2-3", type: "Giao thông", capital: "85.600", status: "Chuẩn bị đầu tư" },
+            { name: "Cải tạo hệ thống thoát nước khu dân cư ấp 4", type: "Hạ tầng", capital: "42.200", status: "Chuẩn bị đầu tư" },
+            { name: "Xây dựng Trụ sở làm việc UBND xã (Khu trung tâm mới)", type: "Quản lý NN", capital: "62.300", status: "Chuẩn bị đầu tư" },
+            { name: "Mở rộng trường Tiểu học Bình Hưng 3", type: "Giáo dục", capital: "95.800", status: "Chuẩn bị đầu tư" },
+            { name: "Bê tông hóa tuyến hẻm ấp 1 kết nối đường Nguyễn Văn Linh", type: "Giao thông", capital: "18.400", status: "Chuẩn bị đầu tư" },
+            { name: "Xây dựng Nhà văn hóa kết hợp Khu thể thao ấp 5", type: "Văn hóa", capital: "12.500", status: "Chuẩn bị đầu tư" },
+            { name: "Lắp đặt hệ thống Camera an ninh thông minh (GĐ 2)", type: "An ninh", capital: "8.500", status: "Chuẩn bị đầu tư" },
+            { name: "Xây dựng trạm trung chuyển rác khép kín ấp 3", type: "Môi trường", capital: "12.200", status: "Chuẩn bị đầu tư" },
+            { name: "Dự án chống sạt lở bờ rạch Ông Lớn (đoạn qua ấp 2)", type: "Thủy lợi", capital: "35.000", status: "Chuẩn bị đầu tư" },
+            { name: "Nâng cấp mặt đường và vỉa hè đường Phạm Hùng", type: "Giao thông", capital: "22.400", status: "Chuẩn bị đầu tư" },
+            { name: "Trang bị thiết bị chuyển đổi số cho khối trường học", type: "Giáo dục", capital: "7.500", status: "Chuẩn bị đầu tư" },
+            { name: "Cải tạo công viên cây xanh khu tái định cư Bình Hưng", type: "Văn hóa", capital: "15.600", status: "Chuẩn bị đầu tư" },
+            { name: "Xây dựng Trạm y tế xã đạt chuẩn Quốc gia mới", type: "Y tế", capital: "11.500", status: "Chuẩn bị đầu tư" },
+            { name: "Bia ghi danh Liệt sĩ và khu truyền thống cách mạng", type: "Văn hóa", capital: "5.800", status: "Chuẩn bị đầu tư" }
+        ];
+
+        // Hàm render các hàng nhập liệu
+        function renderInputs(data) {
+            const container = document.getElementById('project-list-input');
+            container.innerHTML = "";
+            data.forEach((p, index) => {
+                const stt = String(index + 1).padStart(2, '0');
+                container.innerHTML += `
+                    <tr class="border-b border-slate-50">
+                        <td class="p-3 text-slate-400 font-bold text-xs">${stt}</td>
+                        <td class="p-2"><input type="text" id="name_${index}" class="w-full" value="${p.name}"></td>
+                        <td class="p-2">
+                            <select id="type_${index}" class="w-full">
+                                <option ${p.type=='Giáo dục'?'selected':''}>Giáo dục</option>
+                                <option ${p.type=='Giao thông'?'selected':''}>Giao thông</option>
+                                <option ${p.type=='Hạ tầng'?'selected':''}>Hạ tầng</option>
+                                <option ${p.type=='Quản lý NN'?'selected':''}>Quản lý NN</option>
+                                <option ${p.type=='Văn hóa'?'selected':''}>Văn hóa</option>
+                                <option ${p.type=='An ninh'?'selected':''}>An ninh</option>
+                                <option ${p.type=='Môi trường'?'selected':''}>Môi trường</option>
+                                <option ${p.type=='Thủy lợi'?'selected':''}>Thủy lợi</option>
+                                <option ${p.type=='Y tế'?'selected':''}>Y tế</option>
+                            </select>
+                        </td>
+                        <td class="p-2"><input type="text" id="cap_${index}" class="w-full text-right font-bold text-slate-900" value="${p.capital}"></td>
+                        <td class="p-2">
+                            <select id="stat_${index}" class="w-full font-bold text-orange-600">
+                                <option ${p.status=='Chuẩn bị đầu tư'?'selected':''}>Chuẩn bị đầu tư</option>
+                                <option ${p.status=='Đang thi công'?'selected':''}>Đang thi công</option>
+                                <option ${p.status=='Hoàn thành'?'selected':''}>Hoàn thành</option>
+                            </select>
+                        </td>
+                    </tr>
+                `;
+            });
+        }
+
+        // Tải dữ liệu hiện có từ Firebase
+        onValue(dtcRef, (snapshot) => {
+            const data = snapshot.val();
+            if (data && data.projects) {
+                document.getElementById('gen_tong_du_an').value = data.tong_du_an;
+                document.getElementById('gen_tong_von').value = data.tong_von;
+                renderInputs(data.projects);
+            } else {
+                renderInputs(defaultProjects);
+            }
+        });
+
+        // Hàm lưu dữ liệu
+        window.saveAllData = function() {
+            const projects = [];
+            for(let i=0; i<15; i++) {
+                projects.push({
+                    name: document.getElementById(`name_${i}`).value,
+                    type: document.getElementById(`type_${i}`).value,
+                    capital: document.getElementById(`cap_${i}`).value,
+                    status: document.getElementById(`stat_${i}`).value
+                });
+            }
+
+            const finalData = {
+                tong_du_an: document.getElementById('gen_tong_du_an').value,
+                tong_von: document.getElementById('gen_tong_von').value,
+                projects: projects,
+                last_updated: new Date().toLocaleString('vi-VN')
             };
-            
-            set(ref(db, 'dashboard_binhhung/dau_tu_cong'), data)
-                .then(() => alert("Đã cập nhật dữ liệu thành công!"))
-                .catch((e) => alert("Lỗi: " + e.message));
-        };
+
+            set(dtcRef, finalData)
+                .then(() => alert("✅ Đã lưu toàn bộ 15 dự án lên hệ thống!"))
+                .catch(err => alert("❌ Lỗi: " + err));
+        }
     </script>
 </body>
 </html>
