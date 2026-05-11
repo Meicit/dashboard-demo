@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Nhập liệu Đầu tư công</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-50 p-6">
+    <div class="max-w-xl mx-auto bg-white p-8 rounded-3xl shadow-lg">
+        <h2 class="text-2xl font-bold text-slate-800 mb-6 flex items-center gap-2">
+            🏗️ Cập nhật Đầu tư công 2026-2030
+        </h2>
+        
+        <form id="dtcForm" class="space-y-4">
+            <div>
+                <label class="block text-sm font-semibold text-slate-600 mb-1">Tổng mức đầu tư (triệu đồng)</label>
+                <input type="number" id="tong_von" class="w-full p-3 border rounded-xl focus:ring-2 focus:ring-purple-500 outline-none" placeholder="VD: 554323">
+            </div>
+            
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-sm font-semibold text-slate-600 mb-1">Vốn TP hỗ trợ</label>
+                    <input type="number" id="tp_ho_tro" class="w-full p-3 border rounded-xl outline-none" placeholder="Triệu đồng">
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-slate-600 mb-1">Ngân sách xã</label>
+                    <input type="number" id="xa_doi_ung" class="w-full p-3 border rounded-xl outline-none" placeholder="Triệu đồng">
+                </div>
+            </div>
+
+            <div>
+                <label class="block text-sm font-semibold text-slate-600 mb-1">Số lượng dự án</label>
+                <input type="number" id="so_du_an" class="w-full p-3 border rounded-xl outline-none" value="15">
+            </div>
+
+            <button type="submit" class="w-full bg-purple-600 text-white font-bold py-3 rounded-xl hover:bg-purple-700 transition">
+                Lưu dữ liệu
+            </button>
+        </form>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
+        import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-database.js";
+        
+        const firebaseConfig = { databaseURL: "https://dashboard-demo-ce0da-default-rtdb.asia-southeast1.firebasedatabase.app" };
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+
+        document.getElementById('dtcForm').onsubmit = (e) => {
+            e.preventDefault();
+            const data = {
+                tong_von: Number(document.getElementById('tong_von').value),
+                tp_ho_tro: Number(document.getElementById('tp_ho_tro').value),
+                xa_doi_ung: Number(document.getElementById('xa_doi_ung').value),
+                so_du_an: Number(document.getElementById('so_du_an').value),
+                timestamp: Date.now()
+            };
+            
+            set(ref(db, 'dashboard_binhhung/dau_tu_cong'), data)
+                .then(() => alert("Đã cập nhật dữ liệu thành công!"))
+                .catch((e) => alert("Lỗi: " + e.message));
+        };
+    </script>
+</body>
+</html>
