@@ -22,14 +22,18 @@
             </button>
         </div>
 
-        <div class="card mb-6 grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="card mb-6 grid grid-cols-1 md:grid-cols-4 gap-4">
             <div>
                 <label class="block text-[10px] font-black text-slate-400 uppercase mb-2">Tổng số dự án</label>
                 <input type="number" id="gen_tong_du_an" class="w-full font-bold" value="15">
             </div>
             <div>
-                <label class="block text-[10px] font-black text-slate-400 uppercase mb-2">Tổng vốn dự kiến (Tỷ đồng)</label>
-                <input type="text" id="gen_tong_von" class="w-full font-bold text-violet-600" placeholder="VD: 554.3">
+                <label class="block text-[10px] font-black text-slate-400 uppercase mb-2">Vốn TP hỗ trợ (Tỷ đồng)</label>
+                <input type="text" id="gen_von_tp" class="w-full font-bold text-blue-600" placeholder="VD: 548.7">
+            </div>
+            <div>
+                <label class="block text-[10px] font-black text-slate-400 uppercase mb-2">Ngân sách Xã (Tỷ đồng)</label>
+                <input type="text" id="gen_von_xa" class="w-full font-bold text-emerald-600" placeholder="VD: 5.5">
             </div>
             <div>
                 <label class="block text-[10px] font-black text-slate-400 uppercase mb-2">Trạng thái chung</label>
@@ -45,7 +49,7 @@
                             <th width="5%">STT</th>
                             <th width="40%">Tên dự án / Công trình</th>
                             <th width="15%">Lĩnh vực</th>
-                            <th width="20%">Vốn (Triệu đồng)</th>
+                            <th width="20%">Tổng vốn (Triệu đồng)</th>
                             <th width="20%">Trạng thái</th>
                         </tr>
                     </thead>
@@ -67,7 +71,6 @@
         const db = getDatabase(app);
         const dtcRef = ref(db, 'dashboard_binhhung/dau_tu_cong_chi_tiet');
 
-        // Danh sách mặc định để khởi tạo form
         const defaultProjects = [
             { name: "Xây dựng mới trường Mầm non Bình Hưng (Cơ sở 2)", type: "Giáo dục", capital: "125.450", status: "Chuẩn bị đầu tư" },
             { name: "Nâng cấp, mở rộng đường liên ấp 2-3", type: "Giao thông", capital: "85.600", status: "Chuẩn bị đầu tư" },
@@ -86,7 +89,6 @@
             { name: "Bia ghi danh Liệt sĩ và khu truyền thống cách mạng", type: "Văn hóa", capital: "5.800", status: "Chuẩn bị đầu tư" }
         ];
 
-        // Hàm render các hàng nhập liệu
         function renderInputs(data) {
             const container = document.getElementById('project-list-input');
             container.innerHTML = "";
@@ -122,19 +124,19 @@
             });
         }
 
-        // Tải dữ liệu hiện có từ Firebase
         onValue(dtcRef, (snapshot) => {
             const data = snapshot.val();
             if (data && data.projects) {
                 document.getElementById('gen_tong_du_an').value = data.tong_du_an;
-                document.getElementById('gen_tong_von').value = data.tong_von;
+                document.getElementById('gen_von_tp').value = data.von_tp || "548.7";
+                document.getElementById('gen_von_xa').value = data.von_xa || "5.5";
+                document.getElementById('gen_status').value = data.status_chung || "Giai đoạn 2026-2030";
                 renderInputs(data.projects);
             } else {
                 renderInputs(defaultProjects);
             }
         });
 
-        // Hàm lưu dữ liệu
         window.saveAllData = function() {
             const projects = [];
             for(let i=0; i<15; i++) {
@@ -148,13 +150,15 @@
 
             const finalData = {
                 tong_du_an: document.getElementById('gen_tong_du_an').value,
-                tong_von: document.getElementById('gen_tong_von').value,
+                von_tp: document.getElementById('gen_von_tp').value,
+                von_xa: document.getElementById('gen_von_xa').value,
+                status_chung: document.getElementById('gen_status').value,
                 projects: projects,
                 last_updated: new Date().toLocaleString('vi-VN')
             };
 
             set(dtcRef, finalData)
-                .then(() => alert("✅ Đã lưu toàn bộ 15 dự án lên hệ thống!"))
+                .then(() => alert("✅ Đã lưu toàn bộ nguồn vốn và 15 dự án chi tiết!"))
                 .catch(err => alert("❌ Lỗi: " + err));
         }
     </script>
