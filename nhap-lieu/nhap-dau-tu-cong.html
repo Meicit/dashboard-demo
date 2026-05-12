@@ -47,12 +47,11 @@
                     <thead>
                         <tr>
                             <th width="3%">STT</th>
-                            <th width="32%">Tên dự án / Công trình</th>
-                            <th width="12%">Lĩnh vực</th>
-                            <th width="13%">Tổng mức vốn (Tr.đ)</th>
-                            <th width="13%">Vốn đã đầu tư (Tr.đ)</th>
-                            <th width="12%">Tỷ lệ thực hiện (%)</th>
-                            <th width="15%">Trạng thái</th>
+                            <th width="35%">Tên dự án / Công trình</th>
+                            <th width="15%">Lĩnh vực</th>
+                            <th width="15%">Tổng mức vốn (Tr.đ)</th>
+                            <th width="15%">Vốn đã đầu tư (Tr.đ)</th>
+                            <th width="17%">Trạng thái</th>
                         </tr>
                     </thead>
                     <tbody id="project-list-input">
@@ -88,7 +87,6 @@
                     </td>
                     <td class="p-2"><input type="text" id="cap_${index}" class="w-full text-right font-bold text-slate-900" value="${p.capital || '0'}"></td>
                     <td class="p-2"><input type="text" id="invested_${index}" class="w-full text-right font-bold text-blue-600" value="${p.invested || '0'}"></td>
-                    <td class="p-2"><input type="number" id="percent_${index}" class="w-full text-center font-bold text-purple-600" value="${p.percentage || '0'}"></td>
                     <td class="p-2">
                         <select id="stat_${index}" class="w-full font-bold text-orange-600">
                             <option ${p.status=='Chuẩn bị đầu tư'?'selected':''}>Chuẩn bị đầu tư</option>
@@ -120,9 +118,9 @@
                     name: document.getElementById(`name_${i}`).value,
                     type: document.getElementById(`type_${i}`).value,
                     capital: document.getElementById(`cap_${i}`).value,
-                    invested: document.getElementById(`invested_${i}`).value, // Cột mới 1
-                    percentage: document.getElementById(`percent_${i}`).value, // Cột mới 2
+                    invested: document.getElementById(`invested_${i}`).value,
                     status: document.getElementById(`stat_${i}`).value
+                    // Percentage removed as per request
                 });
             }
             
@@ -136,7 +134,7 @@
             };
             
             set(dtcRef, finalData).then(() => {
-                alert("✅ Đã lưu dữ liệu kế hoạch vốn và tiến độ thực hiện!");
+                alert("✅ Đã lưu dữ liệu kế hoạch vốn thành công!");
             }).catch(err => {
                 console.error(err);
                 alert("❌ Có lỗi xảy ra khi lưu dữ liệu.");
