@@ -2,93 +2,164 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Inter', sans-serif; background-color: #f1f5f9; padding: 32px; }
-        .card { background: white; border-radius: 20px; padding: 32px; border: 1px solid #e2e8f0; }
-        label { display: block; font-size: 10px; font-weight: 800; color: #64748b; text-transform: uppercase; margin-bottom: 6px; }
-        input { width: 100%; padding: 10px 14px; border: 1px solid #cbd5e1; border-radius: 8px; font-weight: 600; outline: none; margin-bottom: 16px; }
-        .section-title { font-weight: 800; text-transform: uppercase; border-left: 4px solid #3b82f6; padding-left: 12px; margin-bottom: 20px; color: #1e293b; font-size: 14px; }
+        body { font-family: 'Inter', sans-serif; background: #f0f4f8; padding: 20px; color: #0f172a; }
+        .section-card { background: white; border-radius: 24px; padding: 24px; margin-bottom: 24px; border: 1px solid #e2e8f0; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); }
+        label { display: block; font-size: 11px; font-weight: 900; color: #1e293b; text-transform: uppercase; margin-bottom: 8px; letter-spacing: 0.05em; }
+        input { width: 100%; border: 2px solid #e2e8f0; padding: 12px; border-radius: 12px; font-weight: 700; font-size: 16px; outline: none; transition: 0.2s; color: #0f172a; }
+        input:focus { border-color: #2563eb; background: #eff6ff; }
+        h3 { font-style: italic; }
     </style>
 </head>
 <body>
-    <div class="max-w-6xl mx-auto">
-        <div class="card border-t-4 border-blue-600 shadow-sm relative">
-            <div class="flex justify-between items-center mb-8">
-                <h3 class="font-black text-slate-800 uppercase tracking-wider">Nhập liệu Hồ sơ Hành chính</h3>
-                <button onclick="saveData()" class="bg-blue-600 text-white font-black px-8 py-3 rounded-xl hover:bg-blue-700 transition-all shadow-lg active:scale-95 text-xs">
-                    💾 CẬP NHẬT HỆ THỐNG
-                </button>
+    <div class="max-w-5xl mx-auto">
+        <div class="flex justify-between items-center mb-8">
+            <div>
+                <h2 class="text-2xl font-[900] text-slate-900 uppercase italic">Cập nhật Dữ liệu Hồ sơ</h2>
+                <p class="text-blue-700 font-bold text-sm uppercase">Xã Bình Hưng • Hệ thống quản trị</p>
             </div>
-            
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div class="space-y-4">
-                    <h4 class="section-title">1. Tiếp nhận & Hệ thống</h4>
-                    <label>Trên hệ thống</label><input type="number" id="he_thong">
-                    <label>Ngoài hệ thống</label><input type="number" id="ngoai_he_thong">
-                    <label>Tổng tiếp nhận (Tháng)</label><input type="number" id="thang_tong">
-                    <label>Trực tuyến</label><input type="number" id="truc_tuyen">
-                    <label>Trực tiếp</label><input type="number" id="truc_tiep">
-                </div>
+            <button onclick="updateData()" class="bg-blue-700 text-white px-10 py-4 rounded-2xl font-black hover:bg-blue-800 shadow-lg shadow-blue-200 transition-all active:scale-95">
+                LƯU DỮ LIỆU
+            </button>
+        </div>
 
-                <div class="space-y-4">
-                    <h4 class="section-title">2. Kết quả & Hài lòng</h4>
-                    <label>Giải quyết trước hạn</label><input type="number" id="truoc_han">
-                    <label>Giải quyết trong hạn</label><input type="number" id="trong_han">
-                    <label>Trễ hạn</label><input type="number" id="tre_han">
-                    <label>Thư xin lỗi</label><input type="number" id="thu_xin_loi">
-                    <label>Mức độ hài lòng (%)</label><input type="number" id="hai_long_percent">
-                </div>
+        <div class="section-card border-t-8 border-indigo-600">
+            <h3 class="font-black text-indigo-700 text-sm mb-6 uppercase italic">I. Bộ chỉ số phục vụ (Điểm số)</h3>
+            <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
+                <div><label>Tiến độ</label><input type="number" step="0.01" id="in_score_process"></div>
+                <div><label>Trực tuyến</label><input type="number" step="0.01" id="in_score_online"></div>
+                <div><label>Hài lòng</label><input type="number" step="0.01" id="in_score_satisfaction"></div>
+                <div><label>Số hóa</label><input type="number" step="0.01" id="in_score_digital"></div>
+                <div><label>Tổng điểm</label><input type="number" step="0.01" id="in_score_total" class="bg-emerald-50 border-emerald-200"></div>
+            </div>
+        </div>
 
-                <div class="space-y-4">
-                    <h4 class="section-title">3. Lũy kế & Kênh PA</h4>
-                    <label>Lũy kế từ 01/01</label><input type="number" id="luy_ke">
-                    <label>Số hóa lũy kế</label><input type="number" id="so_hoa_luy_ke">
-                    <label>Số hóa tháng</label><input type="number" id="so_hoa_thang">
-                    <label>Bưu chính công ích</label><input type="number" id="buu_chinh">
-                    <label>Lượt đánh giá hài lòng</label><input type="number" id="luot_danh_gia">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="section-card border-t-8 border-blue-700">
+                <h3 class="font-black text-blue-700 text-sm mb-6 uppercase italic">II. Tiếp nhận & Kết quả (Trong tháng)</h3>
+                <div class="grid grid-cols-1 gap-4 mb-6">
+                    <div><label>Tổng hồ sơ tháng</label><input type="number" id="in_month_total" class="text-xl text-blue-700"></div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div><label>Trực tuyến</label><input type="number" id="in_month_online"></div>
+                        <div><label>Trực tiếp</label><input type="number" id="in_month_offline"></div>
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div><label>Trước hạn</label><input type="number" id="in_res_before"></div>
+                    <div><label>Trong hạn</label><input type="number" id="in_res_in_time"></div>
+                    <div><label>Trễ hạn</label><input type="number" id="in_res_late"></div>
+                    <div><label>Thư xin lỗi</label><input type="number" id="in_res_sorry"></div>
                 </div>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mt-6 border-t pt-6">
-                <div><label>TTHC Niêm yết</label><input type="number" id="tthc_niemyet"></div>
-                <div><label>PA DVC QG</label><input type="number" id="pa_dvcqg"></div>
-                <div><label>PA Cổng 1022</label><input type="number" id="pa_1022"></div>
-                <div><label>Đường dây nóng</label><input type="number" id="pa_nong"></div>
+            <div class="section-card border-t-8 border-emerald-700">
+                <h3 class="font-black text-emerald-700 text-sm mb-6 uppercase italic">III. Tiếp nhận & Kết quả (Lũy kế)</h3>
+                <div class="grid grid-cols-1 gap-4 mb-6">
+                    <div class="grid grid-cols-2 gap-4">
+                        <div><label>Đến ngày (DD/MM)</label><input type="text" id="in_luy_ke_date" placeholder="12/05"></div>
+                        <div><label>Tổng lũy kế</label><input type="number" id="in_total_luy_ke" class="text-xl text-emerald-700"></div>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div><label>Trực tuyến</label><input type="number" id="in_total_online"></div>
+                        <div><label>Trực tiếp</label><input type="number" id="in_total_offline"></div>
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div><label>Trước hạn (LK)</label><input type="number" id="in_lk_res_before"></div>
+                    <div><label>Trong hạn (LK)</label><input type="number" id="in_lk_res_in_time"></div>
+                    <div><label>Trễ hạn (LK)</label><input type="number" id="in_lk_res_late"></div>
+                    <div><label>Thư xin lỗi (LK)</label><input type="number" id="in_lk_res_sorry"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-card border-l-8 border-orange-600">
+            <h3 class="font-black text-slate-900 text-sm mb-6 uppercase italic">IV. Chỉ số hài lòng & Số hóa</h3>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div><label>Tỷ lệ hài lòng (%)</label><input type="number" id="in_sat_rate"></div>
+                <div><label>Lượt đánh giá</label><input type="number" id="in_sat_count"></div>
+                <div><label>Số hóa (Tháng)</label><input type="number" id="in_month_digital"></div>
+                <div><label>Số hóa (Lũy kế)</label><input type="number" id="in_total_digital"></div>
             </div>
         </div>
     </div>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
-        import { getDatabase, ref, update, onValue } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-database.js";
+        import { getDatabase, ref, set, get } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-database.js";
         
-        const firebaseConfig = { 
-            apiKey: "AIzaSyCjS8jJtoV5HLcYIpVTX1zP5DbyYmXsbh4", 
-            authDomain: "dashboard-demo-ce0da.firebaseapp.com", 
-            databaseURL: "https://dashboard-demo-ce0da-default-rtdb.asia-southeast1.firebasedatabase.app", 
-            projectId: "dashboard-demo-ce0da", 
-            appId: "1:969593884637:web:47d4e6b03a51e7dcfbb034" 
-        };
-        const db = getDatabase(initializeApp(firebaseConfig));
-        const rootRef = ref(db, 'dashboard_binhhung/ho_so_thang');
+        // Cấu hình Firebase (Thay bằng config của bạn)
+        const firebaseConfig = { databaseURL: "https://dashboard-demo-ce0da-default-rtdb.asia-southeast1.firebasedatabase.app" };
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+        const dbRef = ref(db, 'dashboard_binhhung/ho_so_chi_tiet');
 
-        // Load dữ liệu hiện tại
-        onValue(rootRef, (snap) => {
-            const d = snap.val();
-            if(d) {
-                Object.keys(d).forEach(key => {
-                    if(document.getElementById(key)) document.getElementById(key).value = d[key];
-                });
+        // Tự động load dữ liệu cũ lên ô nhập
+        get(dbRef).then((snap) => {
+            if(snap.exists()) {
+                const d = snap.val();
+                document.getElementById('in_score_process').value = d.score_process;
+                document.getElementById('in_score_online').value = d.score_online;
+                document.getElementById('in_score_satisfaction').value = d.score_satisfaction;
+                document.getElementById('in_score_digital').value = d.score_digital;
+                document.getElementById('in_score_total').value = d.score_total;
+                document.getElementById('in_month_total').value = d.month_total;
+                document.getElementById('in_month_online').value = d.month_online;
+                document.getElementById('in_month_offline').value = d.month_offline;
+                document.getElementById('in_res_before').value = d.res_before;
+                document.getElementById('in_res_in_time').value = d.res_in_time;
+                document.getElementById('in_res_late').value = d.res_late;
+                document.getElementById('in_res_sorry').value = d.res_sorry;
+                document.getElementById('in_total_luy_ke').value = d.total_luy_ke;
+                document.getElementById('in_total_online').value = d.total_online;
+                document.getElementById('in_total_offline').value = d.total_offline;
+                document.getElementById('in_luy_ke_date').value = d.luy_ke_date;
+                document.getElementById('in_lk_res_before').value = d.lk_res_before;
+                document.getElementById('in_lk_res_in_time').value = d.lk_res_in_time;
+                document.getElementById('in_lk_res_late').value = d.lk_res_late;
+                document.getElementById('in_lk_res_sorry').value = d.lk_res_sorry;
+                document.getElementById('in_sat_rate').value = d.sat_rate;
+                document.getElementById('in_sat_count').value = d.sat_count;
+                document.getElementById('in_month_digital').value = d.month_digital;
+                document.getElementById('in_total_digital').value = d.total_digital;
             }
-        }, { onlyOnce: true });
+        });
 
-        window.saveData = () => {
-            const data = {};
-            document.querySelectorAll('input').forEach(i => data[i.id] = Number(i.value || 0));
-            update(rootRef, data).then(() => alert("✅ Thành công!")).catch(e => alert("❌ Lỗi: " + e));
-        };
+        window.updateData = function() {
+            const data = {
+                score_process: parseFloat(document.getElementById('in_score_process').value) || 0,
+                score_online: parseFloat(document.getElementById('in_score_online').value) || 0,
+                score_satisfaction: parseFloat(document.getElementById('in_score_satisfaction').value) || 0,
+                score_digital: parseFloat(document.getElementById('in_score_digital').value) || 0,
+                score_total: parseFloat(document.getElementById('in_score_total').value) || 0,
+                month_total: parseInt(document.getElementById('in_month_total').value) || 0,
+                month_online: parseInt(document.getElementById('in_month_online').value) || 0,
+                month_offline: parseInt(document.getElementById('in_month_offline').value) || 0,
+                res_before: parseInt(document.getElementById('in_res_before').value) || 0,
+                res_in_time: parseInt(document.getElementById('in_res_in_time').value) || 0,
+                res_late: parseInt(document.getElementById('in_res_late').value) || 0,
+                res_sorry: parseInt(document.getElementById('in_res_sorry').value) || 0,
+                total_luy_ke: parseInt(document.getElementById('in_total_luy_ke').value) || 0,
+                total_online: parseInt(document.getElementById('in_total_online').value) || 0,
+                total_offline: parseInt(document.getElementById('in_total_offline').value) || 0,
+                luy_ke_date: document.getElementById('in_luy_ke_date').value || "",
+                lk_res_before: parseInt(document.getElementById('in_lk_res_before').value) || 0,
+                lk_res_in_time: parseInt(document.getElementById('in_lk_res_in_time').value) || 0,
+                lk_res_late: parseInt(document.getElementById('in_lk_res_late').value) || 0,
+                lk_res_sorry: parseInt(document.getElementById('in_lk_res_sorry').value) || 0,
+                sat_rate: parseInt(document.getElementById('in_sat_rate').value) || 0,
+                sat_count: parseInt(document.getElementById('in_sat_count').value) || 0,
+                month_digital: parseInt(document.getElementById('in_month_digital').value) || 0,
+                total_digital: parseInt(document.getElementById('in_total_digital').value) || 0
+            };
+
+            set(dbRef, data).then(() => {
+                alert("Đã lưu dữ liệu thành công!");
+            }).catch((e) => alert("Lỗi: " + e));
+        }
     </script>
 </body>
 </html>
