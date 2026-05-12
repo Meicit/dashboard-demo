@@ -30,7 +30,6 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
         import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-database.js";
 
-        // Cấu hình Firebase
         const firebaseConfig = { 
             databaseURL: "https://dashboard-demo-ce0da-default-rtdb.asia-southeast1.firebasedatabase.app" 
         };
@@ -38,33 +37,27 @@
         const app = initializeApp(firebaseConfig);
         const db = getDatabase(app);
 
-        // Đảm bảo Node này tồn tại trên Firebase của bạn
-        const donThuRef = ref(db, 'dashboard_binhhung/don_thu');
+        // Sửa đường dẫn Node thành 'don_thu_moi' theo đúng file JSON của bạn
+        const donThuRef = ref(db, 'dashboard_binhhung/don_thu_moi');
 
         onValue(donThuRef, (snap) => {
             const d = snap.val();
-            console.log("Dữ liệu Đơn thư nhận được:", d); // Kiểm tra ở F12 Console
-
             if (d) {
-                // Tính tỷ lệ giải quyết
-                const tong = parseInt(d.tong) || 0;
+                // Lấy dữ liệu theo đúng Keys trong JSON: da_giai_quyet, du_dieu_kien
                 const daGQ = parseInt(d.da_giai_quyet) || 0;
-                const chuaGQ = parseInt(d.chua_giai_quyet) || 0;
+                const duDieuKien = parseInt(d.du_dieu_kien) || 0; // Đây là tổng đơn thụ lý 
+                const dangGQ = duDieuKien - daGQ;
                 
-                const rate = tong > 0 ? ((daGQ / tong) * 100).toFixed(1) : 0;
+                const rate = duDieuKien > 0 ? ((daGQ / duDieuKien) * 100).toFixed(1) : 0;
 
-                // Cập nhật giao diện
-                document.getElementById('dt_tong').innerText = tong + " đơn thư";
+                document.getElementById('dt_tong').innerText = duDieuKien + " đơn thư";
                 document.getElementById('dt_rate').innerText = "Giải quyết: " + rate + "%";
                 document.getElementById('dt_xong').innerText = "Đã GQ: " + daGQ;
-                document.getElementById('dt_cho').innerText = "Đang GQ: " + chuaGQ;
+                document.getElementById('dt_cho').innerText = "Đang GQ: " + (dangGQ > 0 ? dangGQ : 0);
             } else {
                 document.getElementById('dt_tong').innerText = "0 đơn thư";
-                document.getElementById('dt_rate').innerText = "Chưa có dữ liệu";
+                document.getElementById('dt_rate').innerText = "Không có dữ liệu";
             }
-        }, (error) => {
-            console.error("Lỗi Firebase:", error);
-            document.getElementById('dt_tong').innerText = "Lỗi kết nối";
         });
     </script>
 </body>
