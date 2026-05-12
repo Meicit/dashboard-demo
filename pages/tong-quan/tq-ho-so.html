@@ -7,31 +7,61 @@
     <style>body { font-family: 'Inter', sans-serif; background: transparent; margin: 0; overflow: hidden; }</style>
 </head>
 <body class="p-1">
-    <div class="bg-white p-5 rounded-[30px] shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-blue-50 flex flex-col h-[190px] justify-between">
+    <div class="bg-white p-5 rounded-[30px] shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-blue-50 flex flex-col h-[190px] justify-between italic">
         <div>
-            <div class="flex items-center gap-2 mb-3">
+            <div class="flex items-center gap-2 mb-2">
                 <div class="w-6 h-6 bg-blue-700 rounded-lg flex items-center justify-center text-white text-[10px] shadow-lg shadow-blue-100">📋</div>
-                <h3 class="text-[10px] font-black text-blue-900 uppercase tracking-[0.15em]">Hồ sơ TTHC</h3>
+                <h3 class="text-[10px] font-black text-blue-900 uppercase tracking-[0.15em]">Hồ sơ TTHC (Lũy kế)</h3>
             </div>
-            <p id="hs_tong" class="text-3xl font-[900] text-slate-900 tracking-tighter leading-tight italic">0 hồ sơ</p>
-            <p id="hs_rate" class="text-[11px] text-blue-700 font-extrabold italic mt-1 uppercase tracking-wider">Đúng hạn: 0%</p>
+            
+            <p id="hs_tong_lk" class="text-3xl font-[900] text-slate-900 tracking-tighter leading-tight italic">0 hồ sơ</p>
+            <p class="text-[10px] font-black text-slate-400 uppercase tracking-wider mt-1">Tổng hồ sơ đến hôm nay</p>
         </div>
 
-        <div class="pt-3 border-t border-blue-50 flex justify-between items-center">
-            <span id="hs_details" class="bg-blue-50 text-blue-800 px-3 py-1 rounded-full border border-blue-100 text-[10px] font-black italic tracking-tighter">Đã GQ: 0 hồ sơ</span>
-            <span class="text-[8px] text-blue-300 font-black uppercase tracking-widest italic tracking-tighter">Tháng hiện tại</span>
+        <div class="pt-3 border-t border-blue-50">
+            <div class="flex justify-between items-center mb-1">
+                <span class="text-[10px] font-black text-blue-800 uppercase tracking-tighter">Đã giải quyết:</span>
+                <span id="hs_da_gq_lk" class="text-sm font-[900] text-blue-700">0 hồ sơ</span>
+            </div>
+            
+            <div class="flex justify-between items-center">
+                <span class="text-[10px] font-black text-emerald-700 uppercase tracking-tighter">Tỷ lệ đúng hạn:</span>
+                <span id="hs_rate_lk" class="text-sm font-[900] text-emerald-600 border-b-2 border-emerald-100">0%</span>
+            </div>
         </div>
     </div>
+
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
         import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-database.js";
-        const db = getDatabase(initializeApp({ databaseURL: "https://dashboard-demo-ce0da-default-rtdb.asia-southeast1.firebasedatabase.app" }));
-        onValue(ref(db, 'dashboard_binhhung/ho_so_thang'), (snap) => {
+
+        // Cấu hình Firebase
+        const firebaseConfig = { 
+            databaseURL: "https://dashboard-demo-ce0da-default-rtdb.asia-southeast1.firebasedatabase.app" 
+        };
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+
+        // Trỏ vào node dữ liệu chi tiết
+        const hsRef = ref(db, 'dashboard_binhhung/ho_so_chi_tiet');
+
+        onValue(hsRef, (snap) => {
             const d = snap.val() || {};
-            const rate = d.luy_ke > 0 ? (d.truoc_han / d.luy_ke * 100).toFixed(1) : 0;
-            document.getElementById('hs_tong').innerText = (d.luy_ke || 0).toLocaleString() + " hồ sơ";
-            document.getElementById('hs_rate').innerText = "Đúng hạn: " + rate + "%";
-            document.getElementById('hs_details').innerText = "Đã GQ: " + (d.truoc_han || 0).toLocaleString() + " hồ sơ";
+            
+            // 1. Tổng hồ sơ lũy kế (lấy từ total_luy_ke)
+            const tongLK = d.total_luy_ke || 0;
+            
+            // 2. Tổng đã giải quyết lũy kế (Trước hạn LK + Trong hạn LK + Trễ hạn LK)
+            const daGQLK = (d.lk_res_before || 0) + (d.lk_res_in_time || 0) + (d.lk_res_late || 0);
+            
+            // 3. Tỷ lệ đúng hạn lũy kế (Trước hạn LK + Trong hạn LK) / Tổng đã GQ LK
+            const dungHanLK = (d.lk_res_before || 0) + (d.lk_res_in_time || 0);
+            const rateLK = daGQLK > 0 ? ((dungHanLK / daGQLK) * 100).toFixed(1) : 0;
+
+            // Hiển thị dữ liệu
+            document.getElementById('hs_tong_lk').innerText = tongLK.toLocaleString() + " hồ sơ";
+            document.getElementById('hs_da_gq_lk').innerText = daGQLK.toLocaleString() + " hồ sơ";
+            document.getElementById('hs_rate_lk').innerText = rateLK + "%";
         });
     </script>
 </body>
