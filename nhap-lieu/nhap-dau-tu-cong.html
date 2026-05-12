@@ -14,7 +14,7 @@
     </style>
 </head>
 <body class="p-6">
-    <div class="max-w-6xl mx-auto">
+    <div class="max-w-[1400px] mx-auto">
         <div class="flex justify-between items-center mb-6">
             <h2 class="text-2xl font-black text-slate-800 uppercase tracking-tighter italic">🏗️ Quản lý 15 dự án Đầu tư công</h2>
             <button onclick="saveAllData()" class="bg-violet-600 hover:bg-violet-700 text-white font-black px-8 py-3 rounded-xl shadow-lg transition-all active:scale-95 text-sm tracking-widest">
@@ -46,11 +46,13 @@
                 <table class="w-full text-left border-collapse">
                     <thead>
                         <tr>
-                            <th width="5%">STT</th>
-                            <th width="40%">Tên dự án / Công trình</th>
-                            <th width="15%">Lĩnh vực</th>
-                            <th width="20%">Vốn (Triệu đồng)</th>
-                            <th width="20%">Trạng thái</th>
+                            <th width="3%">STT</th>
+                            <th width="32%">Tên dự án / Công trình</th>
+                            <th width="12%">Lĩnh vực</th>
+                            <th width="13%">Tổng mức vốn (Tr.đ)</th>
+                            <th width="13%">Vốn đã đầu tư (Tr.đ)</th>
+                            <th width="12%">Tỷ lệ thực hiện (%)</th>
+                            <th width="15%">Trạng thái</th>
                         </tr>
                     </thead>
                     <tbody id="project-list-input">
@@ -73,8 +75,8 @@
             const container = document.getElementById('project-list-input');
             container.innerHTML = projects.map((p, index) => `
                 <tr class="border-b border-slate-50">
-                    <td class="p-3 text-slate-400 font-bold text-xs">${String(index + 1).padStart(2, '0')}</td>
-                    <td class="p-2"><input type="text" id="name_${index}" class="w-full" value="${p.name}"></td>
+                    <td class="p-3 text-slate-400 font-bold text-xs text-center">${String(index + 1).padStart(2, '0')}</td>
+                    <td class="p-2"><input type="text" id="name_${index}" class="w-full" value="${p.name || ''}"></td>
                     <td class="p-2">
                         <select id="type_${index}" class="w-full">
                             <option ${p.type=='Giáo dục'?'selected':''}>Giáo dục</option>
@@ -84,7 +86,9 @@
                             <option ${p.type=='Văn hóa'?'selected':''}>Văn hóa</option>
                         </select>
                     </td>
-                    <td class="p-2"><input type="text" id="cap_${index}" class="w-full text-right font-bold text-slate-900" value="${p.capital}"></td>
+                    <td class="p-2"><input type="text" id="cap_${index}" class="w-full text-right font-bold text-slate-900" value="${p.capital || '0'}"></td>
+                    <td class="p-2"><input type="text" id="invested_${index}" class="w-full text-right font-bold text-blue-600" value="${p.invested || '0'}"></td>
+                    <td class="p-2"><input type="number" id="percent_${index}" class="w-full text-center font-bold text-purple-600" value="${p.percentage || '0'}"></td>
                     <td class="p-2">
                         <select id="stat_${index}" class="w-full font-bold text-orange-600">
                             <option ${p.status=='Chuẩn bị đầu tư'?'selected':''}>Chuẩn bị đầu tư</option>
@@ -108,15 +112,20 @@
         });
 
         window.saveAllData = function() {
+            const totalProjects = parseInt(document.getElementById('gen_tong_du_an').value) || 15;
             const projects = [];
-            for(let i=0; i<15; i++) {
+            
+            for(let i=0; i < totalProjects; i++) {
                 projects.push({
                     name: document.getElementById(`name_${i}`).value,
                     type: document.getElementById(`type_${i}`).value,
                     capital: document.getElementById(`cap_${i}`).value,
+                    invested: document.getElementById(`invested_${i}`).value, // Cột mới 1
+                    percentage: document.getElementById(`percent_${i}`).value, // Cột mới 2
                     status: document.getElementById(`stat_${i}`).value
                 });
             }
+            
             const finalData = {
                 tong_du_an: document.getElementById('gen_tong_du_an').value,
                 von_giai_doan: document.getElementById('gen_von_giai_doan').value,
@@ -125,7 +134,13 @@
                 projects: projects,
                 last_updated: new Date().toLocaleString('vi-VN')
             };
-            set(dtcRef, finalData).then(() => alert("✅ Đã lưu dữ liệu kế hoạch vốn!"));
+            
+            set(dtcRef, finalData).then(() => {
+                alert("✅ Đã lưu dữ liệu kế hoạch vốn và tiến độ thực hiện!");
+            }).catch(err => {
+                console.error(err);
+                alert("❌ Có lỗi xảy ra khi lưu dữ liệu.");
+            });
         }
     </script>
 </body>
