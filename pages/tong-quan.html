@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800;900&display=swap" rel="stylesheet">
     <style>
         body { 
             font-family: 'Montserrat', sans-serif; 
@@ -50,10 +50,22 @@
         }
 
         .val-highlight {
-            color: #00FF00; /* Màu xanh lá rực rỡ cho con số */
+            color: #00FF00;
             font-weight: 900;
             margin-left: 5px;
         }
+
+        /* Card Lĩnh vực công an thiết kế đồng bộ */
+        .police-card {
+            background: white;
+            border-radius: 15px;
+            padding: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e2e8f0;
+            height: 205px; /* Khớp chiều cao với các iframe khác */
+        }
+        .bar-bg { background: #f1f5f9; height: 12px; border-radius: 99px; flex: 1; overflow: hidden; }
+        .bar-fill { height: 100%; border-radius: 99px; transition: width 1s ease-in-out; }
     </style>
 </head>
 <body>
@@ -69,32 +81,6 @@
             <span class="indicator-item">6. Hộ kinh doanh mới: <span class="val-highlight">500 Hộ</span></span>
             <span class="indicator-item">7. Tỷ lệ tham gia BHYT: <span class="val-highlight">96%</span></span>
             <span class="indicator-item">8. Tham gia BHXH: <span class="val-highlight">59.5%</span></span>
-            <span class="indicator-item">9. Trường Mầm non chuẩn QG: <span class="val-highlight">27%</span></span>
-            <span class="indicator-item">10. Trường Tiểu học chuẩn QG: <span class="val-highlight">32%</span></span>
-            <span class="indicator-item">11. Trường THCS chuẩn QG: <span class="val-highlight">43%</span></span>
-            <span class="indicator-item">12. Số phòng học/10.000 dân: <span class="val-highlight">460 Phòng</span></span>
-            <span class="indicator-item">13. Hoàn thành cấp THCS: <span class="val-highlight">100%</span></span>
-            <span class="indicator-item">14. Giảm hộ nghèo đa chiều: <span class="val-highlight">100%</span></span>
-            <span class="indicator-item">15. Tiêu chí nông thôn mới: <span class="val-highlight">23 TC</span></span>
-            <span class="indicator-item">16. Tỷ lệ ấp văn hóa: <span class="val-highlight">95%</span></span>
-            <span class="indicator-item">17. Gia đình văn hóa: <span class="val-highlight">98%</span></span>
-            <span class="indicator-item">18. Tiêm chủng dưới 1 tuổi: <span class="val-highlight">95%</span></span>
-            <span class="indicator-item">19. Giới thiệu việc làm: <span class="val-highlight">1.000 Người</span></span>
-            <span class="indicator-item">20. Mô hình du lịch mới: <span class="val-highlight">01 Mô hình</span></span>
-            <span class="indicator-item">21. Tỷ lệ sử dụng nước sạch: <span class="val-highlight">100%</span></span>
-            <span class="indicator-item">22. Thu gom rác thải sinh hoạt: <span class="val-highlight">100%</span></span>
-            <span class="indicator-item">23. Xử lý rác y tế: <span class="val-highlight">100%</span></span>
-            <span class="indicator-item">24. Xử lý nước thải công nghiệp: <span class="val-highlight">100%</span></span>
-            <span class="indicator-item">25. Cơ sở SX đạt chuẩn môi trường: <span class="val-highlight">100%</span></span>
-            <span class="indicator-item">26. Giải quyết hồ sơ đúng hạn: <span class="val-highlight">100%</span></span>
-            <span class="indicator-item">27. CBCC sử dụng chữ ký số: <span class="val-highlight">100%</span></span>
-            <span class="indicator-item">28. Xử lý phản ánh đúng hạn: <span class="val-highlight">100%</span></span>
-            <span class="indicator-item">29. Chỉ tiêu gọi nhập ngũ: <span class="val-highlight">100%</span></span>
-            <span class="indicator-item">30. Giảm tội phạm TTXH: <span class="val-highlight">10%</span></span>
-            <span class="indicator-item">31. Khám phá án TTXH: <span class="val-highlight">80%</span></span>
-            <span class="indicator-item">32. Giảm tai nạn giao thông: <span class="val-highlight">5%</span></span>
-            <span class="indicator-item">33. Không để xảy ra cháy nổ: <span class="val-highlight">Đạt</span></span>
-            <span class="indicator-item">34. Địa phương không ma túy: <span class="val-highlight">Duy trì</span></span>
         </marquee>
     </div>
 
@@ -102,6 +88,45 @@
         <iframe src="../pages/tong-quan/tq-ho-so.html" height="205" scrolling="no"></iframe>
         <iframe src="../pages/tong-quan/tq-1022.html" height="205" scrolling="no"></iframe>
         <iframe src="../pages/tong-quan/tq-don-thu.html" height="205" scrolling="no"></iframe>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <iframe src="../pages/tong-quan/tq-an-ninh.html" height="205" scrolling="no"></iframe>
+        
+        <div class="police-card flex flex-col justify-between">
+            <div class="flex items-center gap-2 mb-2">
+                <span class="text-blue-600 text-xl">🛡️</span>
+                <h3 class="text-sm font-black text-slate-800 uppercase italic">Lĩnh vực công an</h3>
+            </div>
+            
+            <div class="space-y-3">
+                <div class="flex flex-col">
+                    <div class="flex justify-between text-[10px] font-bold text-slate-500 mb-1">
+                        <span>Tội phạm trật tự xã hội</span>
+                        <span class="text-slate-900">01</span>
+                    </div>
+                    <div class="bar-bg"><div class="bar-fill bg-[#5089ba]" style="width: 10%"></div></div>
+                </div>
+
+                <div class="flex flex-col">
+                    <div class="flex justify-between text-[10px] font-bold text-slate-500 mb-1">
+                        <span>Phạm pháp hình sự</span>
+                        <span class="text-slate-900">06</span>
+                    </div>
+                    <div class="bar-bg"><div class="bar-fill bg-[#f2a73d]" style="width: 45%"></div></div>
+                </div>
+
+                <div class="flex flex-col">
+                    <div class="flex justify-between text-[10px] font-bold text-slate-500 mb-1">
+                        <span>An toàn thông tin khu phố</span>
+                        <span class="text-slate-900">18</span>
+                    </div>
+                    <div class="bar-bg"><div class="bar-fill bg-[#e26e55]" style="width: 85%"></div></div>
+                </div>
+            </div>
+        </div>
+
+        <iframe src="../pages/tong-quan/tq-quoc-phong.html" height="205" scrolling="no"></iframe>
     </div>
 </body>
 </html>
