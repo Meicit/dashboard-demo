@@ -2,13 +2,102 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet">
     <style>
-        body { background-color: #f8fafc; padding: 15px; }
-        iframe { width: 100%; border: none; display: block; overflow: hidden; }
+        body { 
+            font-family: 'Montserrat', sans-serif; 
+            background-color: #f8fafc; 
+            padding: 10px; 
+            overflow-x: hidden;
+        }
+        iframe { width: 100%; border: none; display: block; overflow: hidden; border-radius: 15px; }
+
+        /* Hiệu ứng thanh chỉ tiêu 3D */
+        .marquee-container {
+            background: linear-gradient(90deg, #0b4a8f 0%, #075985 100%);
+            color: white;
+            padding: 8px 0;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(11, 74, 143, 0.3);
+            margin-bottom: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+        }
+
+        .marquee-label {
+            background: #00FF00;
+            color: #052e16;
+            padding: 2px 12px;
+            font-weight: 900;
+            font-size: 11px;
+            text-transform: uppercase;
+            border-radius: 0 20px 20px 0;
+            margin-right: 15px;
+            white-space: nowrap;
+            box-shadow: 4px 0 10px rgba(0, 0, 0, 0.2);
+            z-index: 10;
+        }
+
+        .indicator-item {
+            display: inline-block;
+            margin-right: 40px;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        .val-highlight {
+            color: #00FF00; /* Màu xanh lá rực rỡ cho con số */
+            font-weight: 900;
+            margin-left: 5px;
+        }
     </style>
 </head>
 <body>
+
+    <div class="marquee-container">
+        <div class="marquee-label">📊 34 Chỉ tiêu KTXH 2026</div>
+        <marquee behavior="scroll" direction="left" scrollamount="6">
+            <span class="indicator-item">1. Tốc độ tăng trưởng sản phẩm: <span class="val-highlight">11.7%</span></span>
+            <span class="indicator-item">2. Thu ngân sách nhà nước: <span class="val-highlight">69%</span></span>
+            <span class="indicator-item">3. Giải ngân đầu tư công: <span class="val-highlight">50%</span></span>
+            <span class="indicator-item">4. Thu nhập bình quân đầu người: <span class="val-highlight">7.9%</span></span>
+            <span class="indicator-item">5. Doanh nghiệp thành lập mới: <span class="val-highlight">750 DN</span></span>
+            <span class="indicator-item">6. Hộ kinh doanh mới: <span class="val-highlight">500 Hộ</span></span>
+            <span class="indicator-item">7. Tỷ lệ tham gia BHYT: <span class="val-highlight">96%</span></span>
+            <span class="indicator-item">8. Tham gia BHXH: <span class="val-highlight">59.5%</span></span>
+            <span class="indicator-item">9. Trường Mầm non chuẩn QG: <span class="val-highlight">27%</span></span>
+            <span class="indicator-item">10. Trường Tiểu học chuẩn QG: <span class="val-highlight">32%</span></span>
+            <span class="indicator-item">11. Trường THCS chuẩn QG: <span class="val-highlight">43%</span></span>
+            <span class="indicator-item">12. Số phòng học/10.000 dân: <span class="val-highlight">460 Phòng</span></span>
+            <span class="indicator-item">13. Hoàn thành cấp THCS: <span class="val-highlight">100%</span></span>
+            <span class="indicator-item">14. Giảm hộ nghèo đa chiều: <span class="val-highlight">100%</span></span>
+            <span class="indicator-item">15. Tiêu chí nông thôn mới: <span class="val-highlight">23 TC</span></span>
+            <span class="indicator-item">16. Tỷ lệ ấp văn hóa: <span class="val-highlight">95%</span></span>
+            <span class="indicator-item">17. Gia đình văn hóa: <span class="val-highlight">98%</span></span>
+            <span class="indicator-item">18. Tiêm chủng dưới 1 tuổi: <span class="val-highlight">95%</span></span>
+            <span class="indicator-item">19. Giới thiệu việc làm: <span class="val-highlight">1.000 Người</span></span>
+            <span class="indicator-item">20. Mô hình du lịch mới: <span class="val-highlight">01 Mô hình</span></span>
+            <span class="indicator-item">21. Tỷ lệ sử dụng nước sạch: <span class="val-highlight">100%</span></span>
+            <span class="indicator-item">22. Thu gom rác thải sinh hoạt: <span class="val-highlight">100%</span></span>
+            <span class="indicator-item">23. Xử lý rác y tế: <span class="val-highlight">100%</span></span>
+            <span class="indicator-item">24. Xử lý nước thải công nghiệp: <span class="val-highlight">100%</span></span>
+            <span class="indicator-item">25. Cơ sở SX đạt chuẩn môi trường: <span class="val-highlight">100%</span></span>
+            <span class="indicator-item">26. Giải quyết hồ sơ đúng hạn: <span class="val-highlight">100%</span></span>
+            <span class="indicator-item">27. CBCC sử dụng chữ ký số: <span class="val-highlight">100%</span></span>
+            <span class="indicator-item">28. Xử lý phản ánh đúng hạn: <span class="val-highlight">100%</span></span>
+            <span class="indicator-item">29. Chỉ tiêu gọi nhập ngũ: <span class="val-highlight">100%</span></span>
+            <span class="indicator-item">30. Giảm tội phạm TTXH: <span class="val-highlight">10%</span></span>
+            <span class="indicator-item">31. Khám phá án TTXH: <span class="val-highlight">80%</span></span>
+            <span class="indicator-item">32. Giảm tai nạn giao thông: <span class="val-highlight">5%</span></span>
+            <span class="indicator-item">33. Không để xảy ra cháy nổ: <span class="val-highlight">Đạt</span></span>
+            <span class="indicator-item">34. Địa phương không ma túy: <span class="val-highlight">Duy trì</span></span>
+        </marquee>
+    </div>
+
     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
         <iframe src="../pages/tong-quan/tq-ho-so.html" height="205" scrolling="no"></iframe>
         <iframe src="../pages/tong-quan/tq-1022.html" height="205" scrolling="no"></iframe>
