@@ -4,68 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet">
     <style>
-        body { 
-            font-family: 'Montserrat', sans-serif; 
-            background-color: #f8fafc; 
-            padding: 10px; 
-            overflow-x: hidden;
-        }
-        iframe { width: 100%; border: none; display: block; overflow: hidden; border-radius: 15px; }
-
-        /* Hiệu ứng thanh chỉ tiêu 3D */
+        body { font-family: 'Montserrat', sans-serif; background-color: #f8fafc; padding: 10px; overflow-x: hidden; }
+        iframe { width: 100%; border: none; display: block; overflow: hidden; border-radius: 20px; background-color: white; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+        
         .marquee-container {
             background: linear-gradient(90deg, #0b4a8f 0%, #075985 100%);
-            color: white;
-            padding: 8px 0;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(11, 74, 143, 0.3);
-            margin-bottom: 15px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            display: flex;
-            align-items: center;
+            color: white; padding: 8px 0; border-radius: 10px; margin-bottom: 15px;
+            display: flex; align-items: center;
         }
-
         .marquee-label {
-            background: #00FF00;
-            color: #052e16;
-            padding: 2px 12px;
-            font-weight: 900;
-            font-size: 11px;
-            text-transform: uppercase;
-            border-radius: 0 20px 20px 0;
-            margin-right: 15px;
-            white-space: nowrap;
-            box-shadow: 4px 0 10px rgba(0, 0, 0, 0.2);
-            z-index: 10;
+            background: #00FF00; color: #052e16; padding: 2px 12px; font-weight: 900; font-size: 11px;
+            text-transform: uppercase; border-radius: 0 20px 20px 0; margin-right: 15px; white-space: nowrap;
         }
-
-        .indicator-item {
-            display: inline-block;
-            margin-right: 40px;
-            font-size: 12px;
-            font-weight: 700;
-            letter-spacing: 0.5px;
-        }
-
-        .val-highlight {
-            color: #00FF00;
-            font-weight: 900;
-            margin-left: 5px;
-        }
-
-        /* Card Lĩnh vực công an thiết kế đồng bộ */
-        .police-card {
-            background: white;
-            border-radius: 15px;
-            padding: 16px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-            border: 1px solid #e2e8f0;
-            height: 205px; /* Khớp chiều cao với các iframe khác */
-        }
-        .bar-bg { background: #f1f5f9; height: 12px; border-radius: 99px; flex: 1; overflow: hidden; }
-        .bar-fill { height: 100%; border-radius: 99px; transition: width 1s ease-in-out; }
     </style>
 </head>
 <body>
@@ -73,14 +25,9 @@
     <div class="marquee-container">
         <div class="marquee-label">📊 34 Chỉ tiêu KTXH 2026</div>
         <marquee behavior="scroll" direction="left" scrollamount="6">
-            <span class="indicator-item">1. Tốc độ tăng trưởng sản phẩm: <span class="val-highlight">11.7%</span></span>
-            <span class="indicator-item">2. Thu ngân sách nhà nước: <span class="val-highlight">69%</span></span>
-            <span class="indicator-item">3. Giải ngân đầu tư công: <span class="val-highlight">50%</span></span>
-            <span class="indicator-item">4. Thu nhập bình quân đầu người: <span class="val-highlight">7.9%</span></span>
-            <span class="indicator-item">5. Doanh nghiệp thành lập mới: <span class="val-highlight">750 DN</span></span>
-            <span class="indicator-item">6. Hộ kinh doanh mới: <span class="val-highlight">500 Hộ</span></span>
-            <span class="indicator-item">7. Tỷ lệ tham gia BHYT: <span class="val-highlight">96%</span></span>
-            <span class="indicator-item">8. Tham gia BHXH: <span class="val-highlight">59.5%</span></span>
+            <span class="inline-block mr-10 text-[12px] font-bold">1. Tốc độ tăng trưởng sản phẩm: <span class="text-[#00FF00]">11.7%</span></span>
+            <span class="inline-block mr-10 text-[12px] font-bold">2. Thu ngân sách nhà nước: <span class="text-[#00FF00]">69%</span></span>
+            <span class="inline-block mr-10 text-[12px] font-bold">3. Giải ngân đầu tư công: <span class="text-[#00FF00]">50%</span></span>
         </marquee>
     </div>
 
@@ -90,43 +37,9 @@
         <iframe src="../pages/tong-quan/tq-don-thu.html" height="205" scrolling="no"></iframe>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <iframe src="../pages/tong-quan/tq-an-ninh.html" height="205" scrolling="no"></iframe>
-        
-        <div class="police-card flex flex-col justify-between">
-            <div class="flex items-center gap-2 mb-2">
-                <span class="text-blue-600 text-xl">🛡️</span>
-                <h3 class="text-sm font-black text-slate-800 uppercase italic">Lĩnh vực công an</h3>
-            </div>
-            
-            <div class="space-y-3">
-                <div class="flex flex-col">
-                    <div class="flex justify-between text-[10px] font-bold text-slate-500 mb-1">
-                        <span>Tội phạm trật tự xã hội</span>
-                        <span class="text-slate-900">01</span>
-                    </div>
-                    <div class="bar-bg"><div class="bar-fill bg-[#5089ba]" style="width: 10%"></div></div>
-                </div>
-
-                <div class="flex flex-col">
-                    <div class="flex justify-between text-[10px] font-bold text-slate-500 mb-1">
-                        <span>Phạm pháp hình sự</span>
-                        <span class="text-slate-900">06</span>
-                    </div>
-                    <div class="bar-bg"><div class="bar-fill bg-[#f2a73d]" style="width: 45%"></div></div>
-                </div>
-
-                <div class="flex flex-col">
-                    <div class="flex justify-between text-[10px] font-bold text-slate-500 mb-1">
-                        <span>An toàn thông tin khu phố</span>
-                        <span class="text-slate-900">18</span>
-                    </div>
-                    <div class="bar-bg"><div class="bar-fill bg-[#e26e55]" style="width: 85%"></div></div>
-                </div>
-            </div>
-        </div>
-
-        <iframe src="../pages/tong-quan/tq-quoc-phong.html" height="205" scrolling="no"></iframe>
+    <div class="w-full">
+        <iframe src="../pages/tong-quan/tq-cong-an.html" height="320" scrolling="no"></iframe>
     </div>
+
 </body>
 </html>
