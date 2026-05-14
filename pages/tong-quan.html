@@ -18,6 +18,37 @@
             background: #00FF00; color: #052e16; padding: 2px 12px; font-weight: 900; font-size: 11px;
             text-transform: uppercase; border-radius: 0 20px 20px 0; margin-right: 15px; white-space: nowrap;
         }
+
+        /* Hiệu ứng 3D cho ô Tra cứu */
+        .search-card {
+            background: linear-gradient(135deg, #ffffff 0%, #f1f5f9 100%);
+            border: 2px solid #e2e8f0;
+            border-radius: 20px;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            text-decoration: none;
+        }
+
+        .search-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(11, 74, 143, 0.15);
+            border-color: #3b82f6;
+        }
+
+        .search-card:active { transform: scale(0.98); }
+
+        .icon-box {
+            background: #3b82f6;
+            color: white;
+            padding: 12px;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(59, 130, 246, 0.4);
+        }
     </style>
 </head>
 <body>
@@ -26,8 +57,8 @@
         <div class="marquee-label">📊 34 Chỉ tiêu KTXH 2026</div>
         <marquee behavior="scroll" direction="left" scrollamount="6">
             <span class="inline-block mr-10 text-[12px] font-bold">1. Tốc độ tăng trưởng sản phẩm: <span class="text-[#00FF00]">11.7%</span></span>
-            <span class="inline-block mr-10 text-[12px] font-bold">2. Thu ngân sách nhà nước: <span class="text-[#00FF00]">69%</span></span>
-            <span class="inline-block mr-10 text-[12px] font-bold">3. Giải ngân đầu tư công: <span class="text-[#00FF00]">50%</span></span>
+            <span class="inline-block mr-10 text-[12px] font-bold text-white/50">|</span>
+            <span class="inline-block mr-10 text-[12px] font-bold ml-10">2. Thu ngân sách nhà nước: <span class="text-[#00FF00]">69%</span></span>
         </marquee>
     </div>
 
@@ -37,9 +68,30 @@
         <iframe src="../pages/tong-quan/tq-don-thu.html" height="205" scrolling="no"></iframe>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
         <iframe src="../pages/tong-quan/tq-cong-an.html" height="260" scrolling="no"></iframe>
         <iframe src="../pages/tong-quan/tq-quoc-phong.html" height="260" scrolling="no"></iframe>
+    </div>
+
+    <div class="w-full">
+        <a href="https://baohiemxahoi.gov.vn/tracuu/Pages/tra-cuu-thoi-han-su-dung-the-bhyt.aspx" 
+           target="_blank" 
+           class="search-card">
+            <div class="flex items-center gap-5">
+                <div class="icon-box">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                    </svg>
+                </div>
+                <div>
+                    <h3 class="text-lg font-black text-slate-800 uppercase tracking-tight">Tra cứu thời hạn thẻ Bảo hiểm y tế</h3>
+                    <p class="text-sm font-semibold text-blue-600 italic">Cổng thông tin điện tử Bảo hiểm xã hội Việt Nam &rarr;</p>
+                </div>
+            </div>
+            <div class="hidden md:block">
+                <span class="bg-blue-100 text-blue-700 px-4 py-2 rounded-full text-xs font-black uppercase">Click để tra cứu</span>
+            </div>
+        </a>
     </div>
 
 </body>
