@@ -12,7 +12,6 @@
             margin: 0;
             padding: 0;
             min-height: 100vh;
-            /* Ảnh nền gốc rõ nét 100% */
             background: linear-gradient(rgba(241, 245, 249, 0.15), rgba(241, 245, 249, 0.15)), 
                         url('hinhnen.png');
             background-size: cover;
@@ -68,13 +67,12 @@
             width: 100%;
         }
 
-        /* KHỐI NÚT 3D ĐƯỢC ĐẦY MẠNH HIỆU ỨNG THỊ GIÁC */
+        /* KHỐI NÚT 3D */
         .nav-card {
             background: rgba(255, 255, 255, 0.4);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
             
-            /* Viền phát sáng 3D giả lập góc phản xạ ánh sáng */
             border-top: 2px solid rgba(255, 255, 255, 0.6);
             border-left: 2px solid rgba(255, 255, 255, 0.5);
             border-right: 1px solid rgba(14, 165, 233, 0.2);
@@ -87,9 +85,9 @@
             align-items: center;
             justify-content: center;
             gap: 12px;
+            padding: 15px;
             cursor: pointer;
             
-            /* Đổ bóng tầng phức hợp tạo cảm giác khối hộp nổi thực sự */
             box-shadow: 
                 0 4px 6px -1px rgba(12, 74, 110, 0.1),
                 0 10px 20px -5px rgba(12, 74, 110, 0.15),
@@ -99,11 +97,9 @@
         }
 
         .nav-card:hover {
-            /* Tịnh tiến đi lên kết hợp scale phóng to nhẹ tạo độ sâu 3D */
             transform: translateY(-10px) scale(1.03);
             background: rgba(255, 255, 255, 0.85);
             
-            /* Thay đổi cấu trúc bóng đổ sang trạng thái "nổi cao" */
             border-top-color: rgba(14, 165, 233, 0.6);
             border-left-color: rgba(14, 165, 233, 0.4);
             box-shadow: 
@@ -112,7 +108,6 @@
                 inset 0 1px 0 rgba(255, 255, 255, 0.8);
         }
 
-        /* Thêm hiệu ứng lún nhẹ khi click chuột xuống */
         .nav-card:active {
             transform: translateY(-3px) scale(0.98);
             box-shadow: 
@@ -127,17 +122,19 @@
         }
         
         .nav-card:hover span {
-            transform: scale(1.1); /* Icon phóng lớn nhẹ khi di chuột */
+            transform: scale(1.1);
         }
 
         .nav-card h3 {
             font-size: 11px;
             font-weight: 800;
             text-transform: uppercase;
-            letter-spacing: 1.2px;
+            letter-spacing: 0.8px;
             color: #0c4a6e;
             text-align: center;
             text-shadow: 0 1px 2px rgba(255, 255, 255, 0.6);
+            line-height: 1.4;
+            padding: 0 8px;
         }
 
         /* KHỐI LIÊN HỆ & GÓP Ý */
@@ -209,15 +206,17 @@
     </header>
 
     <main class="grid-container">
-        <div class="nav-card"><span>🏠</span><h3>Thông tin chung</h3></div>
-        <div class="nav-card"><span>📋</span><h3>Hồ sơ hành chính</h3></div>
-        <div class="nav-card"><span>📈</span><h3>Chỉ tiêu KT-XH</h3></div>
-        <div class="nav-card"><span>🏗️</span><h3>Đầu tư công</h3></div>
-        <div class="nav-card"><span>📂</span><h3>Đơn thư</h3></div>
-        <div class="nav-card"><span>📞</span><h3>Phản ánh 1022</h3></div>
-        <div class="nav-card"><span>⚖️</span><h3>Văn bản chỉ đạo</h3></div>
-        <div class="nav-card"><span>🛡️</span><h3>An ninh - QP</h3></div>
-        <div class="nav-card"><span>🚀</span><h3>Dịch vụ công</h3></div>
+        <div class="nav-card"><span>ℹ️</span><h3>Giới thiệu</h3></div>
+        <div class="nav-card"><span>💻</span><h3>Hệ thống i-Dashboard</h3></div>
+        <div class="nav-card"><span>📋</span><h3>Thông tin Thủ tục hành chính</h3></div>
+        
+        <div class="nav-card"><span>📖</span><h3>Sổ tay Thông tin điện tử 70 ấp</h3></div>
+        <div class="nav-card"><span>🗺️</span><h3>Bản đồ số xã Bình Hưng</h3></div>
+        <div class="nav-card"><span>📍</span><h3>Bản đồ số địa chỉ đỏ xã Bình Hưng</h3></div>
+        
+        <div class="nav-card"><span>🏫</span><h3>Cổng thông tin trường học</h3></div>
+        <div class="nav-card"><span>📚</span><h3>Kho học liệu số xã Bình Hưng</h3></div>
+        <div class="nav-card"><span>📢</span><h3>Thông tin tuyên truyền</h3></div>
     </main>
 
     <section class="content-section grid grid-cols-1 md:grid-cols-2 gap-8">
