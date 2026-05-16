@@ -12,14 +12,13 @@
             margin: 0;
             padding: 0;
             min-height: 100vh;
-            /* CÀI ĐẶT HÌNH NỀN CHO TOÀN BỘ TRANG WEB */
-            /* Phủ lớp gradient trắng mờ (rgba 255) giúp toàn bộ giao diện bừng sáng và dễ đọc */
-            background: linear-gradient(rgba(241, 245, 249, 0.88), rgba(241, 245, 249, 0.88)), 
+            /* Ảnh nền gốc rõ nét 100% */
+            background: linear-gradient(rgba(241, 245, 249, 0.15), rgba(241, 245, 249, 0.15)), 
                         url('hinhnen.png');
             background-size: cover;
             background-position: center;
-            background-attachment: fixed; /* Giữ nền cố định tạo chiều sâu khi cuộn */
-            color: #1e293b;
+            background-attachment: fixed;
+            color: #0c4a6e;
             display: flex;
             flex-direction: column;
         }
@@ -30,26 +29,22 @@
             text-align: center;
         }
 
-        /* CẤU HÌNH LOGO 3D DI CHUYỂN NHẸ (FLUID 3D AMBIENT) */
+        /* LOGO 3D DI CHUYỂN NHẸ */
         .logo-main {
             width: 100px;
             margin: 0 auto 20px;
-            /* Đổ bóng mịn màu xanh công nghệ tạo độ nổi khối 3D rõ nét */
-            filter: drop-shadow(0 10px 20px rgba(14, 165, 233, 0.5));
-            /* Kích hoạt chuyển động bay lơ lửng vô hạn */
+            filter: drop-shadow(0 10px 20px rgba(14, 165, 233, 0.6));
             animation: float 3.5s ease-in-out infinite;
         }
 
-        /* Định nghĩa hiệu ứng chuyển động bay nhẹ nhàng */
         @keyframes float {
             0%, 100% { 
                 transform: translateY(0); 
-                filter: drop-shadow(0 10px 20px rgba(14, 165, 233, 0.5));
+                filter: drop-shadow(0 10px 20px rgba(14, 165, 233, 0.6));
             }
             50% { 
                 transform: translateY(-12px); 
-                /* Khi bay lên cao thì bóng đổ nhạt hơn và khoảng cách xa hơn để tạo cảm giác thực */
-                filter: drop-shadow(0 20px 25px rgba(14, 165, 233, 0.3));
+                filter: drop-shadow(0 20px 25px rgba(14, 165, 233, 0.4));
             }
         }
 
@@ -59,9 +54,10 @@
             font-size: clamp(2rem, 5vw, 3.5rem);
             color: #0c4a6e;
             letter-spacing: -1px;
+            text-shadow: 0 2px 10px rgba(255, 255, 255, 0.8);
         }
 
-        /* GRID NAVIGATION 3x3 SÁNG NỔI KHỐI */
+        /* GRID NAVIGATION 3x3 */
         .grid-container {
             max-width: 1000px;
             margin: 0 auto 60px;
@@ -72,46 +68,79 @@
             width: 100%;
         }
 
+        /* KHỐI NÚT 3D ĐƯỢC ĐẦY MẠNH HIỆU ỨNG THỊ GIÁC */
         .nav-card {
-            /* Hiệu ứng kính mờ màu trắng siêu sáng */
-            background: rgba(255, 255, 255, 0.65);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.6);
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            
+            /* Viền phát sáng 3D giả lập góc phản xạ ánh sáng */
+            border-top: 2px solid rgba(255, 255, 255, 0.6);
+            border-left: 2px solid rgba(255, 255, 255, 0.5);
+            border-right: 1px solid rgba(14, 165, 233, 0.2);
+            border-bottom: 1px solid rgba(14, 165, 233, 0.2);
             border-radius: 24px;
+            
             aspect-ratio: 1 / 0.85;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             gap: 12px;
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             cursor: pointer;
-            box-shadow: 0 10px 30px -10px rgba(12, 74, 110, 0.1), 0 1px 3px rgba(0,0,0,0.05);
+            
+            /* Đổ bóng tầng phức hợp tạo cảm giác khối hộp nổi thực sự */
+            box-shadow: 
+                0 4px 6px -1px rgba(12, 74, 110, 0.1),
+                0 10px 20px -5px rgba(12, 74, 110, 0.15),
+                inset 0 1px 0 rgba(255, 255, 255, 0.5);
+                
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
         }
 
         .nav-card:hover {
-            transform: translateY(-8px) scale(1.02);
-            background: rgba(255, 255, 255, 0.9);
-            border-color: #0ea5e9;
-            box-shadow: 0 20px 40px -10px rgba(14, 165, 233, 0.25);
+            /* Tịnh tiến đi lên kết hợp scale phóng to nhẹ tạo độ sâu 3D */
+            transform: translateY(-10px) scale(1.03);
+            background: rgba(255, 255, 255, 0.85);
+            
+            /* Thay đổi cấu trúc bóng đổ sang trạng thái "nổi cao" */
+            border-top-color: rgba(14, 165, 233, 0.6);
+            border-left-color: rgba(14, 165, 233, 0.4);
+            box-shadow: 
+                0 20px 35px -10px rgba(14, 165, 233, 0.3),
+                0 10px 15px -5px rgba(14, 165, 233, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.8);
+        }
+
+        /* Thêm hiệu ứng lún nhẹ khi click chuột xuống */
+        .nav-card:active {
+            transform: translateY(-3px) scale(0.98);
+            box-shadow: 
+                0 6px 10px -4px rgba(14, 165, 233, 0.2),
+                inset 0 1px 3px rgba(0, 0, 0, 0.1);
         }
 
         .nav-card span { 
-            font-size: 32px; 
-            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));
+            font-size: 34px; 
+            filter: drop-shadow(0 4px 8px rgba(12, 74, 110, 0.2));
+            transition: transform 0.3s ease;
+        }
+        
+        .nav-card:hover span {
+            transform: scale(1.1); /* Icon phóng lớn nhẹ khi di chuột */
         }
 
         .nav-card h3 {
             font-size: 11px;
             font-weight: 800;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 1.2px;
             color: #0c4a6e;
             text-align: center;
+            text-shadow: 0 1px 2px rgba(255, 255, 255, 0.6);
         }
 
-        /* KHỐI LIÊN HỆ & GÓP Ý TRONG SUỐT ĐỒNG BỘ */
+        /* KHỐI LIÊN HỆ & GÓP Ý */
         .content-section {
             max-width: 1000px;
             margin: 0 auto 80px;
@@ -120,18 +149,18 @@
         }
 
         .info-box {
-            background: rgba(255, 255, 255, 0.55);
+            background: rgba(255, 255, 255, 0.45);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.4);
             border-radius: 24px;
             padding: 40px;
-            box-shadow: 0 10px 30px -10px rgba(12, 74, 110, 0.08);
+            box-shadow: 0 10px 25px -5px rgba(12, 74, 110, 0.12);
         }
 
         .input-light {
-            background: rgba(255, 255, 255, 0.8);
-            border: 2px solid #e2e8f0;
+            background: rgba(255, 255, 255, 0.7);
+            border: 2px solid rgba(14, 165, 233, 0.2);
             border-radius: 12px;
             padding: 12px 16px;
             width: 100%;
@@ -174,7 +203,7 @@
     <header class="hero-section">
         <img src="logo.png" alt="Logo" class="logo-main">
         <h1 class="title-hero italic">Xã Bình Hưng</h1>
-        <p class="text-sky-700 font-bold uppercase tracking-[0.4em] mt-2 text-[10px]">
+        <p class="text-sky-800 font-bold uppercase tracking-[0.4em] mt-2 text-[10px] drop-shadow-sm">
             Trung tâm điều hành số thông minh
         </p>
     </header>
@@ -193,16 +222,16 @@
 
     <section class="content-section grid grid-cols-1 md:grid-cols-2 gap-8">
         <div class="info-box">
-            <h2 class="text-xl font-900 mb-6 uppercase italic text-sky-800 border-b-2 border-sky-200/60 pb-2">Liên hệ điều hành</h2>
-            <div class="space-y-4 text-slate-700 text-sm font-medium">
-                <p class="flex items-center gap-3">📍 <span>Bình Hưng, Bình Chánh, TP.HCM</span></p>
-                <p class="flex items-center gap-3">📞 <span>(028) 38xx xxxx</span></p>
-                <p class="flex items-center gap-3">📧 <span>binhhung@tphcm.gov.vn</span></p>
+            <h2 class="text-xl font-900 mb-6 uppercase italic text-sky-800 border-b-2 border-sky-300/40 pb-2">Liên hệ điều hành</h2>
+            <div class="space-y-4 text-slate-800 text-sm font-semibold">
+                <p class="flex items-center gap-3">📍 <span class="drop-shadow-sm">Bình Hưng, Bình Chánh, TP.HCM</span></p>
+                <p class="flex items-center gap-3">📞 <span class="drop-shadow-sm">(028) 38xx xxxx</span></p>
+                <p class="flex items-center gap-3">📧 <span class="drop-shadow-sm">binhhung@tphcm.gov.vn</span></p>
             </div>
         </div>
 
         <div class="info-box">
-            <h2 class="text-xl font-900 mb-6 uppercase italic text-sky-800 border-b-2 border-sky-200/60 pb-2">Góp ý xây dựng</h2>
+            <h2 class="text-xl font-900 mb-6 uppercase italic text-sky-800 border-b-2 border-sky-300/40 pb-2">Góp ý xây dựng</h2>
             <form class="space-y-3">
                 <input type="text" placeholder="Tên đơn vị / Cá nhân" class="input-light text-sm font-bold">
                 <textarea placeholder="Nội dung góp ý..." rows="2" class="input-light text-sm font-bold"></textarea>
@@ -213,7 +242,7 @@
         </div>
     </section>
 
-    <footer class="text-center py-10 text-slate-500 text-[10px] font-bold uppercase tracking-widest border-t border-slate-200/40">
+    <footer class="text-center py-10 text-sky-900 font-bold text-[10px] uppercase tracking-widest drop-shadow-sm">
         &copy; 2026 IOC Bình Hưng - Smart Government Solution
     </footer>
 
