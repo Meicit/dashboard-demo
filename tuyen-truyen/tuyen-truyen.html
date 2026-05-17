@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thông tin Tuyên truyền - Xã Bình Hưng</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            /* Đã cập nhật ../hinhnen.png để nhảy ra thư mục gốc lấy ảnh nền */
+            background: linear-gradient(rgba(241, 245, 249, 0.15), rgba(241, 245, 249, 0.15)), 
+                        url('../hinhnen.png');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: #0c4a6e;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .container-wrapper {
+            max-width: 1050px;
+            margin: 40px auto 60px;
+            padding: 0 20px;
+            width: 100%;
+        }
+
+        .title-main {
+            font-weight: 900;
+            text-transform: uppercase;
+            font-size: clamp(1.6rem, 4vw, 2.5rem);
+            color: #0c4a6e;
+            letter-spacing: -1px;
+            text-shadow: 0 2px 10px rgba(255, 255, 255, 0.8);
+        }
+
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.55);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-top: 2px solid rgba(255, 255, 255, 0.7);
+            border-left: 2px solid rgba(255, 255, 255, 0.6);
+            border-right: 1px solid rgba(14, 165, 233, 0.2);
+            border-bottom: 1px solid rgba(14, 165, 233, 0.2);
+            border-radius: 28px;
+            padding: 35px;
+            box-shadow: 0 20px 40px -15px rgba(12, 74, 110, 0.15);
+        }
+
+        .slider-container {
+            position: relative;
+            width: 100%;
+            height: 400px;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(12, 74, 110, 0.15);
+            background: #e2e8f0;
+        }
+
+        .slide {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            opacity: 0;
+            transition: opacity 0.6s ease-in-out;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .slide.active {
+            opacity: 1;
+            position: relative;
+        }
+
+        .slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .slider-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.8);
+            border: 1px solid rgba(14, 165, 233, 0.2);
+            color: #0c4a6e;
+            width: 45px; height: 45px;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 18px; font-weight: bold;
+            cursor: pointer;
+            z-index: 20;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            transition: all 0.2s;
+        }
+        .slider-btn:hover {
+            background: #0ea5e9;
+            color: white;
+            transform: translateY(-50%) scale(1.1);
+        }
+        .btn-prev { left: 20px; }
+        .btn-next { right: 20px; }
+
+        .video-card {
+            background: #ffffff;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(12, 74, 110, 0.08);
+            border: 1px solid rgba(14, 165, 233, 0.15);
+            aspect-ratio: 16 / 9;
+        }
+
+        .btn-back {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            color: #0c4a6e;
+            padding: 12px 24px;
+            border-radius: 14px;
+            font-weight: 800;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            box-shadow: 0 4px 6px -1px rgba(12, 74, 110, 0.1);
+            transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+            margin-bottom: 25px;
+        }
+        .btn-back:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px -5px rgba(14, 165, 233, 0.3);
+            border-color: #0ea5e9;
+            color: #0ea5e9;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container-wrapper">
+        <a href="../home.html" class="btn-back">
+            ⬅️ Quay lại Trang chủ
+        </a>
+
+        <div class="text-center mb-8">
+            <h1 class="title-main italic">Trung tâm thông tin tuyên truyền</h1>
+            <p class="text-sky-800 font-bold uppercase tracking-[0.3em] mt-2 text-[10px] drop-shadow-sm">
+                Cập nhật hoạt động, cổ động trực quan chính trị xã hội - Xã Bình Hưng
+            </p>
+        </div>
+
+        <div class="glass-panel space-y-10">
+            
+            <div>
+                <h2 class="text-base font-900 uppercase italic text-sky-800 border-l-4 border-sky-400 pl-3 mb-4">Hình ảnh hoạt động & Cổ động</h2>
+                
+                <div class="slider-container">
+                    <button class="slider-btn btn-prev" onclick="moveSlide(-1)">❮</button>
+                    <button class="slider-btn btn-next" onclick="moveSlide(1)">❯</button>
+
+                    <div class="slide active">
+                        <img src="images/banner1.jpg" alt="Tuyên truyền 1">
+                    </div>
+                    <div class="slide">
+                        <img src="images/banner2.jpg" alt="Tuyên truyền 2">
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <h2 class="text-base font-900 uppercase italic text-sky-800 border-l-4 border-sky-400 pl-3 mb-4">Video tư liệu / Tin tức số</h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="video-card">
+                        <video width="100%" height="100%" controls class="w-full h-full object-cover">
+                            <source src="videos/video1.mp4" type="video/mp4">
+                            Trình duyệt của bạn không hỗ trợ thẻ video.
+                        </video>
+                    </div>
+
+                    <div class="video-card">
+                        <video width="100%" height="100%" controls class="w-full h-full object-cover">
+                            <source src="videos/video2.mp4" type="video/mp4">
+                            Trình duyệt của bạn không hỗ trợ thẻ video.
+                        </video>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <footer class="text-center py-10 text-sky-900 font-bold text-[10px] uppercase tracking-widest drop-shadow-sm mt-auto">
+        &copy; 2026 IOC Bình Hưng - Hệ thống thông tin thông điệp số
+    </footer>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+
+        function showSlide(index) {
+            if (index >= slides.length) currentSlide = 0;
+            else if (index < 0) currentSlide = slides.length - 1;
+            else currentSlide = index;
+
+            slides.forEach((slide, i) => {
+                if (i === currentSlide) slide.classList.add('active');
+                else slide.classList.remove('active');
+            });
+        }
+
+        function moveSlide(direction) {
+            showSlide(currentSlide + direction);
+        }
+
+        setInterval(() => { moveSlide(1); }, 5000);
+    </script>
+</body>
+</html>
