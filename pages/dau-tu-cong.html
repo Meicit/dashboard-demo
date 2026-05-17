@@ -26,7 +26,7 @@
             margin-bottom: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.2);
         }
         
-        /* Hiệu ứng Hàng 3D */
+        /* Hiệu ứng Hàng 3D tinh giản (Nền trắng thuần) */
         .row-container {
             margin-bottom: 8px;
             perspective: 1000px;
@@ -39,34 +39,12 @@
             overflow: hidden;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
             transition: transform 0.2s ease, box-shadow 0.2s ease;
-            border: 1px solid rgba(255,255,255,0.8);
+            border: 1px solid rgba(255, 255, 255, 0.8);
         }
 
         .row-3d:hover {
             transform: translateY(-2px) scale(1.005);
             box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-        }
-
-        /* Thanh tiến độ 3D nằm dưới nội dung */
-        .progress-fill {
-            position: absolute;
-            top: 0; left: 0; height: 100%;
-            width: var(--progress-width, 0%);
-            background: linear-gradient(90deg, var(--color-light), var(--color-dark));
-            z-index: 0;
-            transition: width 1.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-            /* Tạo hiệu ứng bóng bề mặt 3D cho thanh màu */
-            box-shadow: inset -5px 0 10px rgba(0,0,0,0.1), inset 0 2px 5px rgba(255,255,255,0.3);
-        }
-
-        /* Hiệu ứng sọc chéo động (vệt sáng 3D) */
-        .progress-fill::after {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: linear-gradient(45deg, rgba(255,255,255,0.1) 25%, transparent 25%, transparent 50%, rgba(255,255,255,0.1) 50%, rgba(255,255,255,0.1) 75%, transparent 75%, transparent);
-            background-size: 30px 30px;
-            opacity: 0.3;
         }
 
         .row-content { position: relative; z-index: 1; pointer-events: none; }
@@ -102,7 +80,7 @@
             </div>
 
             <div id="project-list-container" class="text-[11px] font-extrabold text-slate-900">
-                </div>
+            </div>
         </div>
     </div>
 
@@ -121,16 +99,6 @@
             return parseFloat(cleanStr) || 0;
         };
 
-        // Bảng màu 3D (Cặp màu sáng - tối)
-        const colorPairs = [
-            { light: '#60a5fa', dark: '#2563eb' }, // Blue
-            { light: '#34d399', dark: '#059669' }, // Emerald
-            { light: '#a78bfa', dark: '#7c3aed' }, // Violet
-            { light: '#fbbf24', dark: '#d97706' }, // Amber
-            { light: '#f472b6', dark: '#db2777' }, // Pink
-            { light: '#22d3ee', dark: '#0891b2' }  // Cyan
-        ];
-
         onValue(dtcRef, (snap) => {
             const d = snap.val();
             if (d && d.projects) {
@@ -143,17 +111,15 @@
                     const totalCap = parseVNNumber(p.capital);
                     const invested = parseVNNumber(p.invested || 0);
                     const percentage = totalCap > 0 ? ((invested / totalCap) * 100).toFixed(1) : 0;
-                    const colors = colorPairs[i % colorPairs.length];
 
                     return `
                         <div class="row-container">
-                            <div class="row-3d" style="--progress-width: ${percentage}%; --color-light: ${colors.light}; --color-dark: ${colors.dark}">
-                                <div class="progress-fill"></div>
+                            <div class="row-3d">
                                 <div class="grid-row row-content">
                                     <div class="col-stt text-slate-400 font-black">${i+1}</div>
                                     <div class="col-name font-[900] truncate text-slate-900">${p.name}</div>
                                     <div class="col-type">
-                                        <span class="bg-white/90 px-2 py-0.5 rounded-md text-[8px] border border-slate-200 shadow-sm">${p.type}</span>
+                                        <span class="bg-slate-100 px-2 py-0.5 rounded-md text-[8px] border border-slate-200 shadow-sm">${p.type}</span>
                                     </div>
                                     <div class="col-cap italic">${p.capital}</div>
                                     <div class="col-invest text-blue-800 italic">${p.invested || '0'}</div>
