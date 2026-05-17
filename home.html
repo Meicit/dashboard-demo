@@ -9,213 +9,37 @@
     <style>
         body {
             font-family: 'Montserrat', sans-serif;
-            margin: 0;
-            padding: 0;
-            min-height: 100vh;
-            background: linear-gradient(rgba(241, 245, 249, 0.15), rgba(241, 245, 249, 0.15)), 
-                        url('hinhnen.png');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-            color: #0c4a6e;
-            display: flex;
-            flex-direction: column;
+            margin: 0; padding: 0; min-height: 100vh;
+            background: linear-gradient(rgba(241, 245, 249, 0.15), rgba(241, 245, 249, 0.15)), url('hinhnen.png');
+            background-size: cover; background-position: center; background-attachment: fixed;
+            color: #0c4a6e; display: flex; flex-direction: column;
         }
-
-        /* HEADER */
-        .hero-section {
-            padding: 60px 20px 80px;
-            text-align: center;
-        }
-
-        /* LOGO 3D DI CHUYỂN NHẸ */
-        .logo-main {
-            width: 100px;
-            margin: 0 auto 20px;
-            filter: drop-shadow(0 10px 20px rgba(14, 165, 233, 0.6));
-            animation: float 3.5s ease-in-out infinite;
-        }
-
+        .hero-section { padding: 60px 20px 80px; text-align: center; }
+        .logo-main { width: 100px; margin: 0 auto 20px; filter: drop-shadow(0 10px 20px rgba(14, 165, 233, 0.6)); animation: float 3.5s ease-in-out infinite; }
         @keyframes float {
-            0%, 100% { 
-                transform: translateY(0); 
-                filter: drop-shadow(0 10px 20px rgba(14, 165, 233, 0.6));
-            }
-            50% { 
-                transform: translateY(-12px); 
-                filter: drop-shadow(0 20px 25px rgba(14, 165, 233, 0.4));
-            }
+            0%, 100% { transform: translateY(0); filter: drop-shadow(0 10px 20px rgba(14, 165, 233, 0.6)); }
+            50% { transform: translateY(-12px); filter: drop-shadow(0 20px 25px rgba(14, 165, 233, 0.4)); }
         }
-
-        .title-hero {
-            font-weight: 900;
-            text-transform: uppercase;
-            font-size: clamp(2.5rem, 6vw, 4.2rem);
-            color: #0c4a6e;
-            letter-spacing: -1px;
-            text-shadow: 0 2px 10px rgba(255, 255, 255, 0.8);
-        }
-
-        /* KHỐI NỀN NỔI BẬT CHO DÒNG TIÊU ĐỀ PHỤ */
-        .subtitle-badge {
-            display: inline-block;
-            /* Tạo lớp nền trắng mờ pha ánh xanh công nghệ nhẹ nhàng */
-            background: rgba(224, 242, 254, 0.65); 
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            /* Đường viền phát sáng mỏng */
-            border: 1.5px solid rgba(14, 165, 233, 0.3);
-            padding: 12px 36px;
-            border-radius: 99px; /* Định dạng bo tròn hoàn toàn kiểu kén nhộng */
-            margin-top: 20px;
-            /* Đổ bóng tầng thấp để khối nền nổi bật hẳn lên trên ảnh nền */
-            box-shadow: 
-                0 10px 25px -5px rgba(14, 165, 233, 0.2),
-                0 8px 10px -6px rgba(14, 165, 233, 0.1),
-                inset 0 1px 2px rgba(255, 255, 255, 0.6);
-            max-width: 90%;
-        }
-
-        /* GRID NAVIGATION 3x3 */
-        .grid-container {
-            max-width: 1050px;
-            margin: 0 auto 60px;
-            padding: 0 20px;
-            display: grid;
-            grid-template-columns: repeat(3, 1fr); 
-            gap: 28px; 
-            width: 100%;
-        }
-
-        /* KHỐI NÚT 3D */
-        .nav-card {
-            background: rgba(255, 255, 255, 0.45);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            
-            border-top: 2px solid rgba(255, 255, 255, 0.6);
-            border-left: 2px solid rgba(255, 255, 255, 0.5);
-            border-right: 1px solid rgba(14, 165, 233, 0.2);
-            border-bottom: 1px solid rgba(14, 165, 233, 0.2);
-            border-radius: 26px;
-            
-            aspect-ratio: 1 / 0.9; 
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 16px; 
-            padding: 24px; 
-            cursor: pointer;
-            
-            box-shadow: 
-                0 6px 10px -1px rgba(12, 74, 110, 0.1),
-                0 14px 24px -5px rgba(12, 74, 110, 0.15),
-                inset 0 1px 0 rgba(255, 255, 255, 0.5);
-                
-            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
-        }
-
-        .nav-card:hover {
-            transform: translateY(-10px) scale(1.03);
-            background: rgba(255, 255, 255, 0.85);
-            
-            border-top-color: rgba(14, 165, 233, 0.6);
-            border-left-color: rgba(14, 165, 233, 0.4);
-            box-shadow: 
-                0 25px 40px -10px rgba(14, 165, 233, 0.35),
-                0 12px 20px -5px rgba(14, 165, 233, 0.15),
-                inset 0 1px 0 rgba(255, 255, 255, 0.8);
-        }
-
-        .nav-card:active {
-            transform: translateY(-3px) scale(0.98);
-        }
-
-        /* ICON TRONG NÚT */
-        .nav-card span { 
-            font-size: 45px; 
-            filter: drop-shadow(0 4px 8px rgba(12, 74, 110, 0.25));
-            transition: transform 0.3s ease;
-        }
+        .title-hero { font-weight: 900; text-transform: uppercase; font-size: clamp(2.5rem, 6vw, 4.2rem); color: #0c4a6e; letter-spacing: -1px; text-shadow: 0 2px 10px rgba(255, 255, 255, 0.8); }
+        .subtitle-badge { display: inline-block; background: rgba(224, 242, 254, 0.65); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); border: 1.5px solid rgba(14, 165, 233, 0.3); padding: 12px 36px; border-radius: 99px; margin-top: 20px; box-shadow: 0 10px 25px -5px rgba(14, 165, 233, 0.2), inset 0 1px 2px rgba(255, 255, 255, 0.6); max-width: 90%; }
+        .grid-container { max-width: 1050px; margin: 0 auto 60px; padding: 0 20px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; width: 100%; }
+        .nav-card { background: rgba(255, 255, 255, 0.45); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-top: 2px solid rgba(255, 255, 255, 0.6); border-left: 2px solid rgba(255, 255, 255, 0.5); border-right: 1px solid rgba(14, 165, 233, 0.2); border-bottom: 1px solid rgba(14, 165, 233, 0.2); border-radius: 26px; aspect-ratio: 1 / 0.9; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px; padding: 24px; cursor: pointer; box-shadow: 0 6px 10px -1px rgba(12, 74, 110, 0.1), 0 14px 24px -5px rgba(12, 74, 110, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.5); transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1); }
+        .nav-card:hover { transform: translateY(-10px) scale(1.03); background: rgba(255, 255, 255, 0.85); border-top-color: rgba(14, 165, 233, 0.6); border-left-color: rgba(14, 165, 233, 0.4); box-shadow: 0 25px 40px -10px rgba(14, 165, 233, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.8); }
+        .nav-card span { font-size: 45px; filter: drop-shadow(0 4px 8px rgba(12, 74, 110, 0.25)); transition: transform 0.3s ease; }
+        .nav-card:hover span { transform: scale(1.12); }
+        .nav-card h3 { font-size: 13px; font-weight: 900; text-transform: uppercase; letter-spacing: 0.5px; color: #0b4a8f; text-align: center; text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8); line-height: 1.5; }
+        .content-section { max-width: 1050px; margin: 0 auto 80px; width: 100%; padding: 0 20px; }
+        .info-box { background: rgba(255, 255, 255, 0.45); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.4); border-radius: 24px; padding: 40px; box-shadow: 0 10px 25px -5px rgba(12, 74, 110, 0.12); }
+        .input-light { background: rgba(255, 255, 255, 0.7); border: 2px solid rgba(14, 165, 233, 0.2); border-radius: 12px; padding: 12px 16px; width: 100%; color: #0f172a; transition: all 0.2s ease; outline: none; }
+        .input-light:focus { border-color: #0ea5e9; background: #ffffff; box-shadow: 0 0 0 4px rgba(14, 165, 233, 0.15); }
+        .btn-blue { background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%); color: white; padding: 12px 32px; border-radius: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; transition: all 0.2s ease; box-shadow: 0 4px 12px rgba(14, 165, 233, 0.3); }
         
-        .nav-card:hover span {
-            transform: scale(1.12);
-        }
-
-        /* CHỮ TRONG NÚT */
-        .nav-card h3 {
-            font-size: 13px; 
-            font-weight: 900; 
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            color: #0b4a8f; 
-            text-align: center;
-            text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
-            line-height: 1.5;
-            padding: 0 4px;
-        }
-
-        /* KHỐI LIÊN HỆ & GÓP Ý */
-        .content-section {
-            max-width: 1050px;
-            margin: 0 auto 80px;
-            width: 100%;
-            padding: 0 20px;
-        }
-
-        .info-box {
-            background: rgba(255, 255, 255, 0.45);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.4);
-            border-radius: 24px;
-            padding: 40px;
-            box-shadow: 0 10px 25px -5px rgba(12, 74, 110, 0.12);
-        }
-
-        .input-light {
-            background: rgba(255, 255, 255, 0.7);
-            border: 2px solid rgba(14, 165, 233, 0.2);
-            border-radius: 12px;
-            padding: 12px 16px;
-            width: 100%;
-            color: #0f172a;
-            transition: all 0.2s ease;
-            outline: none;
-        }
-
-        .input-light:focus {
-            border-color: #0ea5e9;
-            background: #ffffff;
-            box-shadow: 0 0 0 4px rgba(14, 165, 233, 0.15);
-        }
-
-        .btn-blue {
-            background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
-            color: white;
-            padding: 12px 32px;
-            border-radius: 12px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            transition: all 0.2s ease;
-            box-shadow: 0 4px 12px rgba(14, 165, 233, 0.3);
-        }
-
-        .btn-blue:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 6px 20px rgba(14, 165, 233, 0.45);
-        }
-
-        @media (max-width: 768px) {
-            .grid-container { grid-template-columns: repeat(2, 1fr); gap: 16px; }
-            .hero-section { padding: 40px 20px 60px; }
-            .nav-card { padding: 16px; }
-            .nav-card span { font-size: 38px; }
-            .nav-card h3 { font-size: 11px; }
-            .subtitle-badge { padding: 10px 24px; }
-        }
+        /* LOGIN OVERLAY POPUP */
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.4); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); display: flex; align-items: center; justify-content: center; z-index: 1000; opacity: 0; pointer-events: none; transition: all 0.4s ease; }
+        .modal-overlay.open { opacity: 1; pointer-events: auto; }
+        .modal-card { background: rgba(255, 255, 255, 0.85); border-top: 2px solid rgba(255,255,255,0.9); border-left: 2px solid rgba(255,255,255,0.7); border-right: 1px solid rgba(14, 165, 233, 0.2); border-bottom: 1px solid rgba(14, 165, 233, 0.2); border-radius: 28px; width: 100%; max-width: 420px; padding: 40px; box-shadow: 0 30px 60px -15px rgba(15, 23, 42, 0.3); transform: scale(0.8) translateY(20px); transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .modal-overlay.open .modal-card { transform: scale(1) translateY(0); }
+        @media (max-width: 768px) { .grid-container { grid-template-columns: repeat(2, 1fr); gap: 16px; } .hero-section { padding: 40px 20px 60px; } }
     </style>
 </head>
 <body>
@@ -223,7 +47,6 @@
     <header class="hero-section">
         <img src="logo.png" alt="Logo" class="logo-main">
         <h1 class="title-hero italic">Xã Bình Hưng</h1>
-        
         <div class="subtitle-badge">
             <p class="text-sky-800 font-[900] uppercase tracking-[0.2em] text-xl md:text-3xl drop-shadow-sm m-0">
                 Trung tâm điều hành số thông minh
@@ -233,27 +56,51 @@
 
     <main class="grid-container">
         <a href="gioithieu.html" class="nav-card"><span>ℹ️</span><h3>Giới thiệu</h3></a>
-        <a href="index.html" class="nav-card"><span>💻</span><h3>Hệ thống i-Dashboard</h3></a>
+        
+        <div onclick="openLoginModal()" class="nav-card"><span>💻</span><h3>Hệ thống i-Dashboard</h3></div>
+        
         <a href="node-thong-tin-tthc/tthc.html" class="nav-card"><span>📋</span><h3>Thông tin Thủ tục hành chính</h3></a>        
         <div class="nav-card"><span>📖</span><h3>Sổ tay Thông tin điện tử 70 ấp</h3></div>
         <div class="nav-card"><span>🗺️</span><h3>Bản đồ số xã Bình Hưng</h3></div>
         <div class="nav-card"><span>📍</span><h3>Bản đồ số địa chỉ đỏ xã Bình Hưng</h3></div>
-        
         <div class="nav-card"><span>🏫</span><h3>Cổng thông tin trường học</h3></div>
         <div class="nav-card"><span>📚</span><h3>Kho học liệu số xã Bình Hưng</h3></div>
         <a href="tuyen-truyen/tuyen-truyen.html" class="nav-card"><span>📢</span><h3>Thông tin tuyên truyền</h3></a>
     </main>
 
+    <div id="loginModal" class="modal-overlay">
+        <div class="modal-card">
+            <div class="text-center mb-6">
+                <span class="text-4xl">🔒</span>
+                <h2 class="text-lg font-900 uppercase text-sky-900 mt-2 tracking-wide">Quyền điều hành hệ thống</h2>
+                <p class="text-[10px] text-slate-500 font-bold uppercase mt-1">Xác thực điện tử qua Google Firebase</p>
+            </div>
+            <form id="loginForm" class="space-y-4" onsubmit="submitAuth(event)">
+                <div>
+                    <label class="text-[11px] font-900 uppercase text-sky-800 block mb-1.5 ml-1">Email quản trị</label>
+                    <input type="email" id="email" required placeholder="name@tphcm.gov.vn" class="input-light text-sm font-bold">
+                </div>
+                <div>
+                    <label class="text-[11px] font-900 uppercase text-sky-800 block mb-1.5 ml-1">Mật mã bảo mật</label>
+                    <input type="password" id="password" required placeholder="••••••••" class="input-light text-sm font-bold">
+                </div>
+                <div class="grid grid-cols-2 gap-3 pt-2">
+                    <button type="button" onclick="closeLoginModal()" class="w-full bg-slate-200 text-slate-700 py-3 rounded-xl font-bold text-xs uppercase tracking-wider transition hover:bg-slate-300">Hủy</button>
+                    <button type="submit" class="w-full btn-blue text-xs tracking-wider">Xác nhận</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <section class="content-section grid grid-cols-1 md:grid-cols-2 gap-8">
         <div class="info-box">
             <h2 class="text-xl font-900 mb-6 uppercase italic text-sky-800 border-b-2 border-sky-300/40 pb-2">Liên hệ điều hành</h2>
             <div class="space-y-4 text-slate-800 text-sm font-semibold">
-                <p class="flex items-center gap-3">📍 <span class="drop-shadow-sm">Bình Hưng, Bình Chánh, TP.HCM</span></p>
-                <p class="flex items-center gap-3">📞 <span class="drop-shadow-sm">(028) 38xx xxxx</span></p>
-                <p class="flex items-center gap-3">📧 <span class="drop-shadow-sm">binhhung@tphcm.gov.vn</span></p>
+                <p class="flex items-center gap-3">📍 <span>Bình Hưng, Bình Chánh, TP.HCM</span></p>
+                <p class="flex items-center gap-3">📞 <span>(028) 38xx xxxx</span></p>
+                <p class="flex items-center gap-3">📧 <span>binhhung@tphcm.gov.vn</span></p>
             </div>
         </div>
-
         <div class="info-box">
             <h2 class="text-xl font-900 mb-6 uppercase italic text-sky-800 border-b-2 border-sky-300/40 pb-2">Góp ý xây dựng</h2>
             <form class="space-y-3">
@@ -270,5 +117,52 @@
         &copy; 2026 IOC Bình Hưng - Smart Government Solution
     </footer>
 
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyCjS8jJtoV5HLcYIpVTX1zP5DbyYmXsbh4",
+            authDomain: "dashboard-demo-ce0da.firebaseapp.com",
+            databaseURL: "https://dashboard-demo-ce0da-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "dashboard-demo-ce0da",
+            storageBucket: "dashboard-demo-ce0da.firebasestorage.app",
+            messagingSenderId: "969593884637",
+            appId: "1:969593884637:web:47d4e6b03a51e7dcfbb034",
+            measurementId: "G-EVMDSWWRFG"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        window.openLoginModal = function() {
+            if (auth.currentUser) {
+                window.location.href = "index.html";
+            } else {
+                document.getElementById('loginModal').classList.add('open');
+                document.getElementById('email').focus();
+            }
+        }
+        window.closeLoginModal = function() {
+            document.getElementById('loginModal').classList.remove('open');
+            document.getElementById('loginForm').reset();
+        }
+        window.submitAuth = function(e) {
+            e.preventDefault();
+            const emailInp = document.getElementById('email').value.trim();
+            const passInp = document.getElementById('password').value;
+
+            signInWithEmailAndPassword(auth, emailInp, passInp)
+                .then(() => {
+                    closeLoginModal();
+                    window.location.href = "index.html";
+                })
+                .catch(() => {
+                    alert("⚠️ Email quản trị hoặc mật mã mật khẩu điều hành không chính xác!");
+                    document.getElementById('password').value = "";
+                    document.getElementById('password').focus();
+                });
+        }
+    </script>
 </body>
 </html>
