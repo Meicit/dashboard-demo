@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&family=Montserrat:wght@800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Inter', sans-serif; background-color: #e2e8f0; padding: 15px; }
         
@@ -48,15 +48,6 @@
         }
 
         .row-content { position: relative; z-index: 1; pointer-events: none; }
-
-        /* Khung kính mờ Glassmorphism dành riêng cho AI phân tích số liệu */
-        .ai-panel {
-            background: rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1.5px solid rgba(14, 165, 233, 0.3);
-            box-shadow: 0 10px 25px -5px rgba(14, 165, 233, 0.1);
-        }
     </style>
 </head>
 <body>
@@ -77,7 +68,7 @@
             </div>
         </div>
 
-        <div class="w-full mb-6">
+        <div class="w-full">
             <div class="grid-row header-row">
                 <div class="col-stt">STT</div>
                 <div class="col-name text-left uppercase">Tên dự án / công trình trọng điểm</div>
@@ -91,75 +82,22 @@
             <div id="project-list-container" class="text-[11px] font-extrabold text-slate-900">
             </div>
         </div>
-
-        <div class="w-full ai-panel rounded-[25px] p-6 mb-8">
-            <div class="flex items-center gap-3 border-b border-sky-900/10 pb-3 mb-4">
-                <span class="text-2xl">🤖</span>
-                <div>
-                    <h2 class="text-xs font-[900] text-sky-900 uppercase tracking-wider font-['Montserrat']">Trợ lý Số điều hành i-Dashboard</h2>
-                    <p class="text-[10px] text-slate-500 font-bold uppercase mt-0.5">Tự động phân tích & đánh giá hiệu quả tiến độ giải ngân đầu tư công</p>
-                </div>
-            </div>
-            <div id="ai-analysis-content" class="text-[12px] font-semibold text-slate-700 leading-relaxed text-justify space-y-2">
-                <p class="italic text-slate-400">Hệ thống đang thu thập dữ liệu từ Firebase và tiến hành phân tích chỉ số hành chính...</p>
-            </div>
-        </div>
-
     </div>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
         import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-database.js";
-        
-        // Nhập trực tiếp thư viện Google GenAI thế hệ mới để tương tác dữ liệu tĩnh
-        import { GoogleGenAI } from "https://esm.run/@google/generative-ai";
 
         const firebaseConfig = { databaseURL: "https://dashboard-demo-ce0da-default-rtdb.asia-southeast1.firebasedatabase.app" };
         const app = initializeApp(firebaseConfig);
         const db = getDatabase(app);
         const dtcRef = ref(db, 'dashboard_binhhung/dau_tu_cong_chi_tiet');
 
-        // Khởi tạo thực thể cấu hình kết nối AI Google Gemini (Sử dụng model Gemini 1.5 Flash tối ưu tốc độ phản hồi)
-        // Lưu ý: Bạn cần thay chuỗi dưới đây thành API Key thật lấy từ Google AI Studio để kích hoạt phân tích tự động
-        const aiKey = "AIzaSyChuoiApiKeyCuaBanGiaTriThucTe"; 
-        const aiEngine = new GoogleGenAI({ apiKey: aiKey });
-        const aiModel = aiEngine.getGenerativeModel({ model: "gemini-1.5-flash" });
-
         const parseVNNumber = (str) => {
             if (!str) return 0;
             const cleanStr = String(str).replace(/\./g, '').replace(',', '.');
             return parseFloat(cleanStr) || 0;
         };
-
-        // Hàm tổng hợp số liệu đã xử lý để đẩy sang cho AI phân tích chuyên sâu
-        async function runAiAnalysis(processedData) {
-            const aiViewElement = document.getElementById('ai-analysis-content');
-            
-            try {
-                // Xây dựng ngữ cảnh và cấu trúc lệnh yêu cầu AI phân tích nghiệp vụ đầu tư công
-                const promptContext = `
-                    Bạn là Trợ lý số điều hành thông minh (IOC) của Ủy ban nhân dân xã Bình Hưng, TP.HCM năm 2026.
-                    Hãy đọc kỹ số liệu thống kê đầu tư công thời gian thực dưới đây và viết một đoạn văn bản phân tích, đánh giá tổng quan khoảng 3-4 câu:
-                    - Tổng số công trình đang thực hiện: ${processedData.tong_du_an}
-                    - Quy mô tổng nguồn vốn giai đoạn: ${processedData.von_giai_doan} tỷ VNĐ
-                    - Tổng kế hoạch vốn được giao năm 2026: ${processedData.von_nam} tỷ VNĐ
-                    - Chi tiết thông số các dự án thành phần bao gồm tên công trình, số vốn, và tỷ lệ giải ngân đã tính toán: ${JSON.stringify(processedData.projects)}
-
-                    Yêu cầu cấu trúc bài viết đánh giá:
-                    1. Đánh giá tổng quan về quy mô và năng lực giải ngân hiện tại của xã Bình Hưng.
-                    2. Chỉ rõ dự án, công trình nào đang có tốc độ giải ngân tối ưu nhất, và dự án nào đang có tỷ lệ tồn đọng vốn thấp nhất cần đôn đốc chỉ đạo giải phóng mặt bằng, thi công.
-                    3. Trình bày bằng văn phong công vụ chính xác, trang trọng, nghiêm túc. Đặc biệt không sử dụng các ký hiệu định dạng thô như dấu sao vuông (**).
-                `;
-
-                const aiResponse = await aiModel.generateContent(promptContext);
-                const resultText = aiResponse.response.text();
-                
-                // Trả nội dung đánh giá sạch và định hình chuẩn lên trang Dashboard
-                aiViewElement.innerHTML = `<p class="text-slate-800">${resultText.replace(/\*\*/g, '')}</p>`;
-            } catch (error) {
-                aiViewElement.innerHTML = `<p class="text-amber-700 font-bold">⚠️ Trợ lý số i-Dashboard tạm thời chưa thể xuất báo cáo phân tích dữ liệu tự động do chưa cấu hình chính xác API Key hoặc vượt quá hạn mức kết nối mạng.</p>`;
-            }
-        }
 
         onValue(dtcRef, (snap) => {
             const d = snap.val();
@@ -168,23 +106,11 @@
                 document.getElementById('card_von_giai_doan').innerText = d.von_giai_doan || 0;
                 document.getElementById('card_von_nam').innerText = d.von_nam || 0;
 
-                // Tạo mảng tạm để lưu trữ cấu trúc dữ liệu đã tính toán tỷ lệ giải ngân để đẩy sang AI
-                const computedProjects = [];
-
                 const container = document.getElementById('project-list-container');
                 container.innerHTML = d.projects.map((p, i) => {
                     const totalCap = parseVNNumber(p.capital);
                     const invested = parseVNNumber(p.invested || 0);
                     const percentage = totalCap > 0 ? ((invested / totalCap) * 100).toFixed(1) : 0;
-
-                    // Đưa thông tin vào mảng cấu trúc gửi sang AI
-                    computedProjects.push({
-                        name: p.name,
-                        type: p.type,
-                        capital: p.capital,
-                        invested: p.invested || '0',
-                        percentage: percentage + '%'
-                    });
 
                     return `
                         <div class="row-container">
@@ -206,14 +132,6 @@
                         </div>
                     `;
                 }).join('');
-
-                // CHẠY BỘ PHÂN TÍCH AI: Gom số liệu tổng hợp và mảng danh mục đã tính % giải ngân gửi sang cho mô hình sinh văn bản đánh giá tự động
-                runAiAnalysis({
-                    tong_du_an: d.tong_du_an || 0,
-                    von_giai_doan: d.von_giai_doan || 0,
-                    von_nam: d.von_nam || 0,
-                    projects: computedProjects
-                });
             }
         });
     </script>
