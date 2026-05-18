@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đầu tư công - Xã Bình Hưng</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&family=Montserrat:wght@800;900&display=swap" rel="stylesheet">
     <style>
@@ -58,6 +59,14 @@
             box-shadow: 0 10px 25px -5px rgba(14, 165, 233, 0.1);
         }
     </style>
+    
+    <script type="importmap">
+      {
+        "imports": {
+          "@google/generative-ai": "https://esm.run/@google/generative-ai"
+        }
+      }
+    </script>
 </head>
 <body>
     <div class="max-w-7xl mx-auto italic">
@@ -89,7 +98,7 @@
             </div>
 
             <div id="project-list-container" class="text-[11px] font-extrabold text-slate-900">
-                <p class="p-4 italic text-slate-400">Hệ thống đang kết nối dữ liệu Firebase...</p>
+                <p class="p-4 italic text-slate-400">Hệ thống đang kết nối dữ liệu hành chính từ Firebase...</p>
             </div>
         </div>
 
@@ -122,20 +131,13 @@
     </div>
 
     <script type="module">
-        // Đồng bộ hóa phiên bản Firebase chuẩn không gây xung đột (Dùng bản 10.8.0 giống file home.html)
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
-        
-        // Nhập thư viện Google GenAI
-        import { GoogleGenAI } from "https://esm.run/@google/generative-ai";
 
         const firebaseConfig = { databaseURL: "https://dashboard-demo-ce0da-default-rtdb.asia-southeast1.firebasedatabase.app" };
         const app = initializeApp(firebaseConfig);
         const db = getDatabase(app);
         const dtcRef = ref(db, 'dashboard_binhhung/dau_tu_cong_chi_tiet');
-
-        // Biến tạm toàn cục để lưu trữ dữ liệu Firebase sạch phục vụ nút bấm gọi lại
-        let globalCachedData = null;
 
         const parseVNNumber = (str) => {
             if (!str) return 0;
@@ -143,118 +145,113 @@
             return parseFloat(cleanStr) || 0;
         };
 
-        // Hàm ẩn / hiện ký tự API Key khi gõ để đảm bảo an toàn
+        // Lắng nghe dữ liệu đổ từ Firebase về máy tính
+        onValue(dtcRef, (snap) => {
+            const d = snap.val();
+            if (d && d.projects) {
+                document.getElementById('card_tong_du_an').innerText = d.tong_du_an || 0;
+                document.getElementById('card_von_giai_doan').innerText = d.von_giai_doan || 0;
+                document.getElementById('card_von_nam').innerText = d.von_nam || 0;
+
+                const computedProjects = [];
+
+                const container = document.getElementById('project-list-container');
+                container.innerHTML = d.projects.map((p, i) => {
+                    const totalCap = parseVNNumber(p.capital);
+                    const invested = parseVNNumber(p.invested || 0);
+                    const percentage = totalCap > 0 ? ((invested / totalCap) * 100).toFixed(1) : 0;
+
+                    computedProjects.push({
+                        name: p.name,
+                        type: p.type,
+                        capital: p.capital,
+                        invested: p.invested || '0',
+                        percentage: percentage + '%'
+                    });
+
+                    return `
+                        <div class="row-container">
+                            <div class="row-3d">
+                                <div class="grid-row row-content">
+                                    <div class="col-stt text-slate-400 font-black">${i+1}</div>
+                                    <div class="col-name font-[900] truncate text-slate-900">${p.name}</div>
+                                    <div class="col-type">
+                                        <span class="bg-slate-100 px-2 py-0.5 rounded-md text-[8px] border border-slate-200 shadow-sm">${p.type}</span>
+                                    </div>
+                                    <div class="col-cap italic">${p.capital}</div>
+                                    <div class="col-invest text-blue-800 italic">${p.invested || '0'}</div>
+                                    <div class="col-rate">
+                                        <span class="bg-slate-900 text-white px-2 py-0.5 rounded-md shadow-lg">${percentage}%</span>
+                                    </div>
+                                    <div class="col-status text-[8px] text-orange-700 font-[900] uppercase italic">${p.status}</div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+
+                // Lưu dữ liệu vào vùng nhớ đệm Window để nút bấm AI gọi ra dùng độc lập
+                window.globalCachedData = {
+                    tong_du_an: d.tong_du_an || 0,
+                    von_giai_doan: d.von_giai_doan || 0,
+                    von_nam: d.von_nam || 0,
+                    projects: computedProjects
+                };
+            }
+        });
+    </script>
+
+    <script type="module">
+        import { GoogleGenAI } from "@google/generative-ai";
+
         window.toggleKeyVisibility = function() {
             const input = document.getElementById('input_api_key');
             input.type = input.type === "password" ? "text" : "password";
         }
 
-        // Hàm xử lý sự kiện bấm nút Phân tích dữ liệu thủ công
         window.handleTriggerAnalysis = async function() {
             const keyInp = document.getElementById('input_api_key').value.trim();
             const aiViewElement = document.getElementById('ai-analysis-content');
 
             if (!keyInp) {
-                alert("⚠️ Vui lòng nhập mã Gemini API Key trước khi kích hoạt phân tích!");
+                alert("⚠️ Vui lòng cung cấp mã Gemini API Key hợp lệ trước!");
                 document.getElementById('input_api_key').focus();
                 return;
             }
 
-            if (!globalCachedData) {
-                alert("⚠️ Dữ liệu cơ sở từ hệ thống Firebase chưa tải xong, vui lòng đợi trong giây lát!");
+            if (!window.globalCachedData) {
+                alert("⚠️ Dữ liệu Firebase chưa nạp xong lên bảng, vui lòng đợi vài giây!");
                 return;
             }
 
-            aiViewElement.innerHTML = `<p class="italic text-sky-600 animate-pulse font-bold">🤖 Trợ lý thông minh đang quét bảng số liệu đầu tư công và lập luận báo cáo...</p>`;
+            aiViewElement.innerHTML = `<p class="italic text-sky-600 animate-pulse font-bold">🤖 Trợ lý thông minh đang kết nối máy chủ Google AI để lập luận báo cáo...</p>`;
 
             try {
-                // Khởi tạo engine AI bằng Key người dùng vừa điền thủ công
                 const aiEngine = new GoogleGenAI({ apiKey: keyInp });
                 const aiModel = aiEngine.getGenerativeModel({ model: "gemini-1.5-flash" });
 
-                // Tạo prompt chỉ đạo nghiệp vụ hành chính công
                 const promptContext = `
                     Bạn là Trợ lý số điều hành thông minh (IOC) của Ủy ban nhân dân xã Bình Hưng, TP.HCM năm 2026.
-                    Hãy đọc kỹ số liệu thống kê đầu tư công thời gian thực dưới đây và viết một đoạn văn bản phân tích, đánh giá tổng quan khoảng 3-4 câu:
-                    - Tổng số công trình đang thực hiện: ${globalCachedData.tong_du_an}
-                    - Quy mô tổng nguồn vốn giai đoạn: ${globalCachedData.von_giai_doan} tỷ VNĐ
-                    - Tổng kế hoạch vốn được giao năm 2026: ${globalCachedData.von_nam} tỷ VNĐ
-                    - Chi tiết thông số các dự án thành phần bao gồm tên công trình, số vốn, và tỷ lệ giải ngân đã tính toán: ${JSON.stringify(globalCachedData.projects)}
+                    Hãy phân tích nhanh số liệu thống kê đầu tư công này và viết một đoạn đánh giá ngắn gọn từ 3-4 câu:
+                    - Tổng dự án: ${window.globalCachedData.tong_du_an}
+                    - Quy mô vốn giai đoạn: ${window.globalCachedData.von_giai_doan} tỷ VNĐ
+                    - Vốn giao năm 2026: ${window.globalCachedData.von_nam} tỷ VNĐ
+                    - Danh sách công trình: ${JSON.stringify(window.globalCachedData.projects)}
 
-                    Yêu cầu cấu trúc bài viết đánh giá:
-                    1. Đánh giá tổng quan về quy mô và năng lực giải ngân hiện tại của xã Bình Hưng.
-                    2. Chỉ rõ dự án, công trình nào đang có tốc độ giải ngân tối ưu nhất, và dự án nào đang có tỷ lệ tồn đọng vốn thấp nhất cần đôn đốc chỉ đạo giải phóng mặt bằng, thi công.
-                    3. Trình bày bằng văn phong công vụ chính xác, trang trọng, nghiêm túc. Đặc biệt không sử dụng các ký hiệu định dạng thô như dấu sao vuông (**).
+                    Yêu cầu bài viết:
+                    1. Viết văn phong hành chính trang trọng.
+                    2. Chỉ ra dự án giải ngân tốt nhất và dự án có tiến độ thấp cần đốc thúc chỉ đạo.
+                    3. Tuyệt đối không dùng ký hiệu định dạng thô như các dấu sao (**) trong câu.
                 `;
 
                 const aiResponse = await aiModel.generateContent(promptContext);
                 const resultText = aiResponse.response.text();
                 
-                // Trả văn bản đánh giá chuẩn công vụ lên màn hình Dashboard
                 aiViewElement.innerHTML = `<p class="text-slate-800">${resultText.replace(/\*\*/g, '')}</p>`;
             } catch (error) {
-                aiViewElement.innerHTML = `<p class="text-red-700 font-bold">⚠️ Lỗi xác thực: Mã API Key bạn nhập vào không hợp lệ hoặc đã hết hạn mức sử dụng miễn phí từ Google AI Studio. Vui lòng kiểm tra lại key.</p>`;
+                aiViewElement.innerHTML = `<p class="text-red-700 font-bold">⚠️ Không thể phân tích: Hãy kiểm tra lại mã API Key bạn nhập đã đúng ký tự chưa, hoặc kiểm tra kết nối mạng của thiết bị.</p>`;
             }
         }
-
-        // Cơ chế lắng nghe đồng bộ từ Firebase Realtime Database
-        onValue(dtcRef, (snap) => {
-            try {
-                const d = snap.val();
-                if (d && d.projects) {
-                    document.getElementById('card_tong_du_an').innerText = d.tong_du_an || 0;
-                    document.getElementById('card_von_giai_doan').innerText = d.von_giai_doan || 0;
-                    document.getElementById('card_von_nam').innerText = d.von_nam || 0;
-
-                    const computedProjects = [];
-
-                    const container = document.getElementById('project-list-container');
-                    container.innerHTML = d.projects.map((p, i) => {
-                        const totalCap = parseVNNumber(p.capital);
-                        const invested = parseVNNumber(p.invested || 0);
-                        const percentage = totalCap > 0 ? ((invested / totalCap) * 100).toFixed(1) : 0;
-
-                        computedProjects.push({
-                            name: p.name,
-                            type: p.type,
-                            capital: p.capital,
-                            invested: p.invested || '0',
-                            percentage: percentage + '%'
-                        });
-
-                        return `
-                            <div class="row-container">
-                                <div class="row-3d">
-                                    <div class="grid-row row-content">
-                                        <div class="col-stt text-slate-400 font-black">${i+1}</div>
-                                        <div class="col-name font-[900] truncate text-slate-900">${p.name}</div>
-                                        <div class="col-type">
-                                            <span class="bg-slate-100 px-2 py-0.5 rounded-md text-[8px] border border-slate-200 shadow-sm">${p.type}</span>
-                                        </div>
-                                        <div class="col-cap italic">${p.capital}</div>
-                                        <div class="col-invest text-blue-800 italic">${p.invested || '0'}</div>
-                                        <div class="col-rate">
-                                            <span class="bg-slate-900 text-white px-2 py-0.5 rounded-md shadow-lg">${percentage}%</span>
-                                        </div>
-                                        <div class="col-status text-[8px] text-orange-700 font-[900] uppercase italic">${p.status}</div>
-                                    </div>
-                                </div>
-                            </div>
-                        `;
-                    }).join('');
-
-                    // Lưu bộ nhớ đệm dữ liệu Firebase vào biến toàn cục để sẵn sàng phục vụ cho nút bấm kích hoạt AI
-                    globalCachedData = {
-                        tong_du_an: d.tong_du_an || 0,
-                        von_giai_doan: d.von_giai_doan || 0,
-                        von_nam: d.von_nam || 0,
-                        projects: computedProjects
-                    };
-                }
-            } catch (firebaseErr) {
-                console.error("Lỗi dựng bảng Firebase:", firebaseErr);
-            }
-        });
     </script>
 </body>
 </html>
