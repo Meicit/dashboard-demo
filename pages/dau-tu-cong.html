@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Đầu tư công - Xã Bình Hưng</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&family=Montserrat:wght@800;900&display=swap" rel="stylesheet">
     <style>
@@ -115,9 +114,9 @@
                 <div class="flex items-center gap-2 max-w-md w-full md:w-auto">
                     <div class="relative w-full md:w-64">
                         <input type="password" id="input_api_key" placeholder="Nhập Gemini API Key của bạn..." class="w-full bg-white border border-sky-200 rounded-xl px-3 py-2 text-xs font-mono font-bold text-slate-800 focus:outline-none focus:border-sky-500 shadow-sm">
-                        <button onclick="toggleKeyVisibility()" type="button" class="absolute right-3 top-2.5 text-xs text-slate-400 font-bold select-none hover:text-sky-600">👁️</button>
+                        <button id="btn_toggle_key" type="button" class="absolute right-3 top-2.5 text-xs text-slate-400 font-bold select-none hover:text-sky-600">👁️</button>
                     </div>
-                    <button onclick="handleTriggerAnalysis()" type="button" class="bg-gradient-to-r from-sky-600 to-blue-700 hover:from-sky-700 hover:to-blue-800 text-white font-bold text-xs uppercase tracking-wider px-4 py-2.5 rounded-xl shadow-md transition-all whitespace-nowrap">
+                    <button id="btn_submit_analysis" type="button" class="bg-gradient-to-r from-sky-600 to-blue-700 hover:from-sky-700 hover:to-blue-800 text-white font-bold text-xs uppercase tracking-wider px-4 py-2.5 rounded-xl shadow-md transition-all whitespace-nowrap">
                         🔍 Phân tích số liệu
                     </button>
                 </div>
@@ -145,7 +144,6 @@
             return parseFloat(cleanStr) || 0;
         };
 
-        // Lắng nghe dữ liệu đổ từ Firebase về máy tính
         onValue(dtcRef, (snap) => {
             const d = snap.val();
             if (d && d.projects) {
@@ -190,7 +188,7 @@
                     `;
                 }).join('');
 
-                // Lưu dữ liệu vào vùng nhớ đệm Window để nút bấm AI gọi ra dùng độc lập
+                // Đẩy bộ nhớ đệm an toàn vào window object toàn cục
                 window.globalCachedData = {
                     tong_du_an: d.tong_du_an || 0,
                     von_giai_doan: d.von_giai_doan || 0,
@@ -204,53 +202,63 @@
     <script type="module">
         import { GoogleGenAI } from "@google/generative-ai";
 
-        window.toggleKeyVisibility = function() {
-            const input = document.getElementById('input_api_key');
-            input.type = input.type === "password" ? "text" : "password";
+        // Lắng nghe sự kiện click nút ẩn/hiện Key bảo mật bằng mã cứng JS
+        const toggleBtn = document.getElementById('btn_toggle_key');
+        if(toggleBtn) {
+            toggleBtn.addEventListener('click', () => {
+                const input = document.getElementById('input_api_key');
+                input.type = input.type === "password" ? "text" : "password";
+            });
         }
 
-        window.handleTriggerAnalysis = async function() {
-            const keyInp = document.getElementById('input_api_key').value.trim();
-            const aiViewElement = document.getElementById('ai-analysis-content');
+        // Lắng nghe sự kiện nút phân tích số liệu đầu tư công bằng EventListener độc lập
+        const analysisBtn = document.getElementById('btn_submit_analysis');
+        if(analysisBtn) {
+            analysisBtn.addEventListener('click', async () => {
+                const keyInp = document.getElementById('input_api_key').value.trim();
+                const aiViewElement = document.getElementById('ai-analysis-content');
 
-            if (!keyInp) {
-                alert("⚠️ Vui lòng cung cấp mã Gemini API Key hợp lệ trước!");
-                document.getElementById('input_api_key').focus();
-                return;
-            }
+                if (!keyInp) {
+                    alert("⚠️ Vui lòng cung cấp mã Gemini API Key hợp lệ trước!");
+                    document.getElementById('input_api_key').focus();
+                    return;
+                }
 
-            if (!window.globalCachedData) {
-                alert("⚠️ Dữ liệu Firebase chưa nạp xong lên bảng, vui lòng đợi vài giây!");
-                return;
-            }
+                if (!window.globalCachedData) {
+                    alert("⚠️ Dữ liệu hành chính từ Firebase chưa nạp xong, vui lòng đợi vài giây!");
+                    return;
+                }
 
-            aiViewElement.innerHTML = `<p class="italic text-sky-600 animate-pulse font-bold">🤖 Trợ lý thông minh đang kết nối máy chủ Google AI để lập luận báo cáo...</p>`;
+                aiViewElement.innerHTML = `<p class="italic text-sky-600 animate-pulse font-bold">🤖 Trợ lý thông minh đang kết nối máy chủ Google AI để lập luận báo cáo...</p>`;
 
-            try {
-                const aiEngine = new GoogleGenAI({ apiKey: keyInp });
-                const aiModel = aiEngine.getGenerativeModel({ model: "gemini-1.5-flash" });
+                try {
+                    const aiEngine = new GoogleGenAI({ apiKey: keyInp });
+                    const aiModel = aiEngine.getGenerativeModel({ model: "gemini-1.5-flash" });
 
-                const promptContext = `
-                    Bạn là Trợ lý số điều hành thông minh (IOC) của Ủy ban nhân dân xã Bình Hưng, TP.HCM năm 2026.
-                    Hãy phân tích nhanh số liệu thống kê đầu tư công này và viết một đoạn đánh giá ngắn gọn từ 3-4 câu:
-                    - Tổng dự án: ${window.globalCachedData.tong_du_an}
-                    - Quy mô vốn giai đoạn: ${window.globalCachedData.von_giai_doan} tỷ VNĐ
-                    - Vốn giao năm 2026: ${window.globalCachedData.von_nam} tỷ VNĐ
-                    - Danh sách công trình: ${JSON.stringify(window.globalCachedData.projects)}
+                    const promptContext = `
+                        Bạn là Trợ lý số điều hành thông minh (IOC) của Ủy ban nhân dân xã Bình Hưng, TP.HCM năm 2026.
+                        Hãy phân tích nhanh số liệu thống kê đầu tư công này và viết một đoạn đánh giá ngắn gọn từ 3-4 câu:
+                        - Tổng dự án: ${window.globalCachedData.tong_du_an}
+                        - Quy mô vốn giai đoạn: ${window.globalCachedData.von_giai_doan} tỷ VNĐ
+                        - Vốn giao năm 2026: ${window.globalCachedData.von_nam} tỷ VNĐ
+                        - Danh sách công trình: ${JSON.stringify(window.globalCachedData.projects)}
 
-                    Yêu cầu bài viết:
-                    1. Viết văn phong hành chính trang trọng.
-                    2. Chỉ ra dự án giải ngân tốt nhất và dự án có tiến độ thấp cần đốc thúc chỉ đạo.
-                    3. Tuyệt đối không dùng ký hiệu định dạng thô như các dấu sao (**) trong câu.
-                `;
+                        Yêu cầu bài viết:
+                        1. Viết văn phong hành chính trang trọng.
+                        2. Chỉ ra dự án giải ngân tốt nhất và dự án có tiến độ thấp cần đốc thúc chỉ đạo để kịp mốc chỉ tiêu năm 2026.
+                        3. Tuyệt đối không dùng ký hiệu định dạng thô như các dấu sao (**) trong câu phản hồi.
+                    `;
 
-                const aiResponse = await aiModel.generateContent(promptContext);
-                const resultText = aiResponse.response.text();
-                
-                aiViewElement.innerHTML = `<p class="text-slate-800">${resultText.replace(/\*\*/g, '')}</p>`;
-            } catch (error) {
-                aiViewElement.innerHTML = `<p class="text-red-700 font-bold">⚠️ Không thể phân tích: Hãy kiểm tra lại mã API Key bạn nhập đã đúng ký tự chưa, hoặc kiểm tra kết nối mạng của thiết bị.</p>`;
-            }
+                    const aiResponse = await aiModel.generateContent(promptContext);
+                    const resultText = aiResponse.response.text();
+                    
+                    // Khử sạch dấu sao của Markdown trước khi in văn bản ra giao diện Dashboard
+                    aiViewElement.innerHTML = `<p class="text-slate-800">${resultText.replace(/\*\*/g, '')}</p>`;
+                } catch (error) {
+                    console.error("Lỗi kết nối API:", error);
+                    aiViewElement.innerHTML = `<p class="text-red-700 font-bold">⚠️ Không thể phân tích: Hãy kiểm tra lại mã API Key bạn nhập đã chính xác chưa, hoặc kiểm tra kết nối mạng của thiết bị.</p>`;
+                }
+            });
         }
     </script>
 </body>
