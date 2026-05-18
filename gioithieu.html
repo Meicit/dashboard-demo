@@ -22,103 +22,102 @@
             flex-direction: column;
         }
 
-        /* TĂNG KÍCH THƯỚC: Mở rộng khung viền tối đa lên 1300px cho thoáng đãng */
+        /* NÂNG CẤP SIÊU ĐẠI: Mở rộng khung chứa tối đa lên 1440px để hiển thị đại thể */
         .container-wrapper {
-            max-width: 1300px;
-            margin: 50px auto 80px;
-            padding: 0 30px;
+            max-width: 1440px;
+            margin: 60px auto 100px;
+            padding: 0 40px;
             width: 100%;
         }
 
-        /* Khối tiêu đề chính bự hơn */
         .title-box {
             text-align: center;
-            margin-bottom: 50px;
+            margin-bottom: 60px;
         }
 
-        /* TĂNG KÍCH THƯỚC: Font tiêu đề vươn kích cỡ cực đại */
+        /* TIÊU ĐỀ KHỔ LỚN */
         .title-main {
             font-weight: 900;
             text-transform: uppercase;
-            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-size: clamp(2.8rem, 6vw, 4.5rem);
             color: #0c4a6e;
             letter-spacing: -1px;
-            text-shadow: 0 2px 12px rgba(255, 255, 255, 0.9);
+            text-shadow: 0 2px 15px rgba(255, 255, 255, 0.9);
         }
 
-        /* Khối nội dung Glassmorphism lớn rộng - TĂNG PADDING LÊN 80px */
+        /*article-card HIỂN THỊ ĐẠI THỂ - PADDING RỘNG 90px */
         .article-card {
-            background: rgba(255, 255, 255, 0.65);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border-top: 2px solid rgba(255, 255, 255, 0.8);
-            border-left: 2px solid rgba(255, 255, 255, 0.7);
+            background: rgba(255, 255, 255, 0.68);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-top: 2px solid rgba(255, 255, 255, 0.85);
+            border-left: 2px solid rgba(255, 255, 255, 0.75);
             border-right: 1px solid rgba(14, 165, 233, 0.25);
             border-bottom: 1px solid rgba(14, 165, 233, 0.25);
-            border-radius: 32px;
-            padding: 80px; /* Tăng từ 60px lên 80px */
-            box-shadow: 0 25px 50px -12px rgba(12, 74, 110, 0.2);
+            border-radius: 40px;
+            padding: 90px; 
+            box-shadow: 0 30px 60px -15px rgba(12, 74, 110, 0.25);
         }
 
-        /* Section phân đoạn thông tin - TĂNG KHOẢNG CÁCH LÊN 60px */
+        /* TĂNG KHOẢNG CÁCH KHỐI LÊN 70px */
         .info-section {
-            margin-bottom: 60px; /* Tăng từ 45px lên 60px */
+            margin-bottom: 70px;
         }
         .info-section:last-child {
             margin-bottom: 0;
         }
 
-        /* TĂNG KÍCH THƯỚC: Tiêu đề danh mục con tăng lên 24px, dày và đậm */
+        /* TIÊU ĐỀ MỤC LỚN ĐẬM NÉT - 26px */
         .section-heading {
-            font-size: 24px; /* Tăng từ 20px lên 24px */
+            font-size: 26px; 
             font-weight: 900;
             text-transform: uppercase;
             color: #0b4a8f;
-            border-left: 5px solid #0ea5e9;
-            padding-left: 16px;
-            margin-bottom: 28px; /* Tăng từ 20px lên 28px */
+            border-left: 6px solid #0ea5e9;
+            padding-left: 20px;
+            margin-bottom: 32px; 
             letter-spacing: 0.5px;
         }
 
-        /* TĂNG KÍCH THƯỚC: Chữ nội dung phóng to từ 17px lên 19px bự, sắc nét */
+        /* NỘI DUNG PHÓNG TO TOÀN DIỆN - TỪ 17px LÊN LỚN HƠN LÀ 22px SẮC NÉT */
         .text-paragraph {
-            font-size: 19px; /* Tăng từ 17px lên 19px */
-            line-height: 2; /* Tăng từ 1.8 lên 2 */
+            font-size: 22px; 
+            line-height: 2.2; 
             font-weight: 600;
             color: #334155;
             text-align: justify;
         }
 
-        /* Tăng kích thước intro paragraph - từ default lên 21px */
+        /* ĐOẠN ĐẦU KHỔ LỚN 25px */
         .intro-paragraph {
-            font-size: 21px;
-            line-height: 2.2;
-            font-weight: 700;
+            font-size: 25px;
+            line-height: 2.3;
+            font-weight: 800;
             letter-spacing: 0.3px;
         }
 
-        /* Nút quay lại bự hơn */
+        /* NÚT QUAY LẠI CỠ LỚN */
         .btn-back {
             display: inline-flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
             background: #ffffff;
-            border: 1px solid #e2e8f0;
+            border: 1px solid #cbd5e1;
             color: #0c4a6e;
-            padding: 14px 32px;
-            border-radius: 16px;
+            padding: 16px 40px;
+            border-radius: 20px;
             font-weight: 800;
-            font-size: 14px;
+            font-size: 15px;
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            box-shadow: 0 4px 6px -1px rgba(12, 74, 110, 0.1);
-            transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
-            margin-bottom: 35px;
+            box-shadow: 0 6px 10px -1px rgba(12, 74, 110, 0.1);
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            margin-bottom: 45px;
         }
 
         .btn-back:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 15px 25px -5px rgba(14, 165, 233, 0.35);
+            transform: translateY(-5px);
+            box-shadow: 0 20px 35px -5px rgba(14, 165, 233, 0.4);
             border-color: #0ea5e9;
             color: #0ea5e9;
         }
@@ -133,56 +132,51 @@
 
         <div class="title-box">
             <h1 class="title-main italic">Tổng quan địa giới hành chính</h1>
+            <p class="text-sky-800 font-bold uppercase tracking-[0.3em] mt-4 text-xs md:text-base drop-shadow-sm">
+                Thông tin chiến lược siêu đơn vị xã Bình Hưng
+            </p>
         </div>
 
         <article class="article-card">
             
-            <p class="intro-paragraph italic text-[#0c4a6e] font-bold mb-10 border-b border-sky-200/50 pb-8">
-                Sau khi thực hiện đề án sắp xếp, sáp nhập các đơn vị hành chính và tổ chức lại mô hình quản lý, xã Bình Hưng đã trở thành một trong những [...]
+            <p class="intro-paragraph italic text-[#0c4a6e] font-bold mb-12 border-b border-sky-200/50 pb-10">
+                Sau khi thực hiện đề án sắp xếp, sáp nhập các đơn vị hành chính và tổ chức lại mô hình quản lý công vụ [cite: 66], xã Bình Hưng đã chính thức bứt phá trở thành một siêu đơn vị hành chính cấp xã có quy mô dân số, không gian kinh tế và mật độ phát triển xã hội thuộc diện top đầu toàn diện của Thành phố Hồ Chí Minh[cite: 66, 69, 70].
             </p>
 
             <div class="info-section">
                 <h2 class="section-heading">1. Cơ cấu sáp nhập và Tầm vóc mới</h2>
                 <p class="text-paragraph">
-                    Xã Bình Hưng mới được hình thành trên cơ sở hợp nhất toàn bộ không gian, nguồn lực và dân cư từ các khu vực lân cận:<br><br>
-                    • <strong>Hợp nhất:</strong> Toàn bộ diện tích tự nhiên và quy mô dân số của xã Bình Hưng cũ và xã Phong Phú cũ.<br>
-                    • <strong>Tiếp nhận thêm:</strong> Một phần diện tích tự nhiên và dân số từ Phường 7, Quận 8 chuyển giao sang.<br>
-                    • <strong>Tên gọi và quản lý:</strong> Đơn vị hành chính mới vẫn giữ tên gọi là xã Bình Hưng, thuộc quản lý trực tiếp của Thành phố Hồ C[...]
+                    Xã Bình Hưng mới tại Thành phố Hồ Chí Minh được thành lập thông qua việc tổ chức triển khai nghiêm túc Nghị quyết số 1685/NQ-UBTVQH15 ngày 16 tháng 6 năm 2025 của Ủy ban Thường vụ Quốc hội về việc sắp xếp các đơn vị hành chính cấp xã của Thành phố Hồ Chí Minh[cite: 66]. Địa bàn mới được hợp nhất toàn diện trên cơ sở sáp nhập toàn bộ không gian tự nhiên và quy mô dân số của xã Bình Hưng cũ và xã Phong Phú cũ (thuộc huyện Bình Chánh cũ), đồng thời tiếp nhận thêm phần diện tích tự nhiên và dân cư điều chuyển từ Phường 7 của Quận 8 cũ[cite: 66, 67]. Đơn vị mới giữ nguyên tên gọi hành chính thống nhất là xã Bình Hưng[cite: 66].
                 </p>
             </div>
 
             <div class="info-section">
                 <h2 class="section-heading">2. Quy mô Diện tích và Dân số vượt trội</h2>
                 <p class="text-paragraph">
-                    Sự kết hợp này tạo nên một xã Bình Hưng có tầm vóc và nguồn lực tương đương với một đô thị lớn:<br><br>
-                    • <strong>Diện tích:</strong> Rộng khoảng 32,6 km², bao trọn dải đô thị liên hoàn và các trục giao thông huyết mạch như đại lộ Nguyễn Văn Linh[...]
-                    • <strong>Dân số:</strong> Đạt gần 184.000 người, trở thành một trong những xã đông dân nhất cả nước, quy mô dân số vượt trội hơn hẳn nhi[...]
+                    Sự tích hợp hạ tầng giúp xã Bình Hưng thiết lập một tầm vóc không gian tương đương một đô thị vệ tinh lớn:<br>
+                    • <strong>Diện tích tự nhiên:</strong> Đạt tổng cộng 3.263 ha (tương đương khoảng 32,4 km²)[cite: 69]. Trong cơ cấu quy hoạch, phần diện tích đất dành cho canh tác phát triển nông nghiệp chiếm vị trí cân bằng với 1.134,7 ha[cite: 69].<br>
+                    • <strong>Quy mô dân cư tập trung:</strong> Chạm mốc 183.729 người dân sinh sống chính thức[cite: 70]. Đây là chỉ số nhân khẩu vượt trội hoàn toàn so với trung bình cấp bách thông thường, thiết lập vị thế là một trong các siêu đơn vị hành chính đông dân cư hàng đầu cả nước[cite: 70].
                 </p>
             </div>
 
             <div class="info-section">
-                <h2 class="section-heading">3. Hệ thống Trụ sở Hành chính Công</h2>
+                <h2 class="section-heading">3. Sự đồng thuận và Mô hình Quản lý hành chính 70 ấp</h2>
                 <p class="text-paragraph">
-                    Để đảm bảo phục vụ tốt nhất cho lượng cư dân và doanh nghiệp lớn, hệ thống hành chính công được vận hành tại các địa điểm:<br><br>
-                    • <strong>Trụ sở chính / Trung tâm phục vụ hành chính công:</strong> Số A10/26A, đường số 10, Khu Dân cư Bình Hưng, xã Bình Hưng, TP.HCM.<br>
-                    • <strong>Cơ sở phối hợp tiếp dân:</strong> Số D11/314 Trịnh Quang Nghị, xã Bình Hưng, TP.HCM (khu vực Phong Phú cũ).
+                    Công tác sắp xếp hành chính cục bộ nhận được sự đồng thuận và nhất trí rất cao từ nhân dân địa phương, ghi nhận tỷ lệ đạt tới 81,38% (tương đương với 11.120 cử tri trên tổng số 13.663 cử tri đại diện hộ gia đình ký phiếu tán thành)[cite: 72]. Về mặt quản lý cơ sở hành chính, toàn bộ địa bàn xã Bình Hưng sau khi điều chỉnh sáp nhập được tổ chức cơ cấu tập trung bao gồm tổng cộng <strong>70 ấp</strong>[cite: 71]. Bộ khung quản lý phân tách này được kế thừa và cấu trúc tối ưu lại từ nền tảng 50 ấp của xã Bình Hưng trước đây phối hợp cùng bộ khung 20 ấp của địa bàn xã Phong Phú cũ và không gian dân cư tiếp nhận từ Phường 7, Quận 8[cite: 72].
                 </p>
             </div>
 
             <div class="info-section">
-                <h2 class="section-heading">4. Định hướng phát triển Đô thị hiện đại</h2>
+                <h2 class="section-heading">4. Trục động lực liên kết và Định hướng phát triển</h2>
                 <p class="text-paragraph">
-                    Việc xóa bỏ ranh giới hành chính cũ tạo điều kiện cho xã Bình Hưng bứt phá mạnh mẽ:<br><br>
-                    • <strong>Chuỗi đô thị liên hoàn:</strong> Các khu dân cư cao cấp như KDC Trung Sơn, KDC Đại Phúc, KDC Phong Phú 4, Lovera Park... giờ đây quy về một [...]
-                    • <strong>Kinh tế dịch vụ dẫn dắt:</strong> Với lợi thế tiếp giáp trực tiếp Quận 7 và Quận 8, xã Bình Hưng tập trung phát triển mạnh mẽ ng[...]
-                    • <strong>Chuyển đổi số trong quản lý:</strong> Với mật độ dân cư năng động và cơ cấu lao động phi nông nghiệp chiếm tuyệt đối, xã Bình [...]
+                    Xã Bình Hưng sở hữu vị thế đầu mối liên kết mang tính chiến lược vững chắc khi nằm ở cửa ngõ phía Tây Nam Thành phố, có vùng biên giới trực tiếp giáp ranh chặt chẽ với 2 phường nội thành và 4 xã vùng ven lân cận[cite: 68]. Địa bàn xã quy tụ mạng lưới hành lang hạ tầng giao thông động lực xương sống của toàn vùng khu Nam bao gồm: Trục đường chiến lược Phạm Hùng, đường Văn Tiến Dũng, trục tuyến Quốc lộ 50 song hành và đại lộ Nguyễn Văn Linh[cite: 73]. Song song với hạ tầng bộ, địa giới tự nhiên của xã còn bao bọc tuyến sông Cần Giuộc[cite: 74]. Đây là hành lang kinh tế thủy nội địa có tiềm năng khai thác vận tải giao thương cực lớn, tạo tiền đề bứt phá mạnh mẽ để phát triển toàn diện kinh tế - xã hội hướng đến mô hình đô thị thông minh hiện đại[cite: 74].
                 </p>
             </div>
 
         </article>
     </div>
 
-    <footer class="text-center py-12 text-sky-900 font-bold text-xs uppercase tracking-widest drop-shadow-sm mt-auto">
+    <footer class="text-center py-12 text-sky-900 font-bold text-sm uppercase tracking-widest drop-shadow-sm mt-auto">
         &copy; 2026 IOC Bình Hưng - Smart Government Solution
     </footer>
 
