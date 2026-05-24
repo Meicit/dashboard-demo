@@ -14,18 +14,20 @@
             background-size: cover; background-position: center; background-attachment: fixed;
             color: #0c4a6e; display: flex; flex-direction: column;
         }
-        .container-wrapper { max-width: 1440px; margin: 50px auto 80px; padding: 0 40px; width: 100%; }
-        .title-main { font-weight: 900; text-transform: uppercase; font-size: clamp(2rem, 5vw, 3.5rem); color: #0c4a6e; text-shadow: 0 2px 12px rgba(255, 255, 255, 0.9); }
+        .container-wrapper { max-width: 1440px; margin: 40px auto 60px; padding: 0 40px; width: 100%; }
         
-        .glass-panel { background: rgba(255, 255, 255, 0.65); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); border-top: 2px solid rgba(255, 255, 255, 0.8); border-left: 2px solid rgba(255, 255, 255, 0.7); border-radius: 32px; padding: 50px; box-shadow: 0 25px 50px -12px rgba(12, 74, 110, 0.2); }
+        /* GIẢM ĐỘ LỚN TIÊU ĐỀ: Chỉnh lại hàm clamp cho chữ gọn hơn */
+        .title-main { font-weight: 800; text-transform: uppercase; font-size: clamp(1.4rem, 3.5vw, 2.2rem); color: #0c4a6e; text-shadow: 0 1px 8px rgba(255, 255, 255, 0.8); }
+        
+        .glass-panel { background: rgba(255, 255, 255, 0.65); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); border-top: 2px solid rgba(255, 255, 255, 0.8); border-left: 2px solid rgba(255, 255, 255, 0.7); border-radius: 32px; padding: 40px; box-shadow: 0 25px 50px -12px rgba(12, 74, 110, 0.2); }
         
         /* Cấu trúc dòng thông tin phẳng */
         .row-flat { background: white; border-radius: 16px; border: 1px solid rgba(14, 165, 233, 0.15); transition: all 0.3s ease; cursor: pointer; }
         .row-flat:hover { transform: translateX(8px); border-color: #0ea5e9; box-shadow: 0 10px 20px rgba(14, 165, 233, 0.1); }
         .row-flat.active { border-color: #0b4a8f; background: rgba(224, 242, 254, 0.4); box-shadow: 0 0 0 2px #0b4a8f; }
 
-        .btn-back { display: inline-flex; align-items: center; gap: 10px; background: #ffffff; border: 1px solid #e2e8f0; color: #0c4a6e; padding: 14px 32px; border-radius: 16px; font-weight: 800; font-size: 13px; text-transform: uppercase; box-shadow: 0 4px 6px -1px rgba(12, 74, 110, 0.1); transition: all 0.3s ease; margin-bottom: 30px; }
-        .btn-back:hover { transform: translateY(-3px); border-color: #0ea5e9; color: #0ea5e9; box-shadow: 0 10px 20px -5px rgba(14, 165, 233, 0.3); }
+        .btn-back { display: inline-flex; align-items: center; gap: 10px; background: #ffffff; border: 1px solid #e2e8f0; color: #0c4a6e; padding: 12px 28px; border-radius: 14px; font-weight: 800; font-size: 12px; text-transform: uppercase; box-shadow: 0 4px 6px -1px rgba(12, 74, 110, 0.1); transition: all 0.3s ease; margin-bottom: 24px; }
+        .btn-back:hover { transform: translateY(-2px); border-color: #0ea5e9; color: #0ea5e9; box-shadow: 0 8px 16px -5px rgba(14, 165, 233, 0.3); }
     </style>
 </head>
 <body>
@@ -33,9 +35,9 @@
     <div class="container-wrapper">
         <a href="../home.html" class="btn-back">⬅️ Quay lại Trang chủ</a>
 
-        <header class="text-center mb-10">
-            <h1 class="title-main italic">Trụ sở các cơ quan hành chính trên địa bàn xã Bình Hưng</h1>
-            <p class="text-sky-800 font-bold uppercase tracking-[0.3em] mt-3 text-xs md:text-sm drop-shadow-sm">Cơ sở dữ liệu định vị địa giới chính quyền số liên thông</p>
+        <header class="text-center mb-8">
+            <h1 class="title-main tracking-tight">Trụ sở các cơ quan hành chính trên địa bàn xã Bình Hưng</h1>
+            <p class="text-sky-800/90 font-bold uppercase tracking-[0.2em] mt-2 text-[10px] md:text-xs drop-shadow-sm">Cơ sở dữ liệu định vị địa giới chính quyền số liên thông</p>
         </header>
 
         <div class="glass-panel space-y-8">
@@ -60,21 +62,19 @@
         </div>
     </div>
 
-    <footer class="text-center py-12 text-sky-900 font-bold text-xs uppercase tracking-widest drop-shadow-sm mt-auto">
+    <footer class="text-center py-10 text-sky-900 font-bold text-[10px] uppercase tracking-widest drop-shadow-sm mt-auto">
         © 2026 IOC Bình Hưng - Hệ thống Quản trị Bản đồ vị trí hành chính công
     </footer>
 
     <script>
         let localDataStore = [];
 
-        // 1. Hàm nạp dữ liệu từ file JSON cục bộ
         async function fetchTruSoData() {
             try {
                 const response = await fetch('data-tru-so.json');
                 localDataStore = await response.json();
                 renderList(localDataStore);
                 
-                // Mặc định nạp bản đồ của cơ quan đầu tiên khi vừa mở trang
                 if(localDataStore.length > 0) {
                     switchMapLocation(localDataStore[0].map_embed, localDataStore[0].id);
                 }
@@ -84,7 +84,6 @@
             }
         }
 
-        // 2. Hàm kết xuất dữ liệu thành cấu trúc từng dòng phẳng
         function renderList(dataArray) {
             const container = document.getElementById('list_container');
             if (dataArray.length === 0) {
@@ -103,20 +102,15 @@
             `).join('');
         }
 
-        // 3. Hàm cốt lõi: Đổi vị trí bản đồ sang mã nhúng nhúng chuẩn xác
         window.switchMapLocation = function(embedUrl, id) {
             const mapFrame = document.getElementById('map_frame');
-            
-            // Cập nhật URL nhúng thực tế từ Google Maps
             mapFrame.setAttribute('src', embedUrl);
             
-            // Đồng bộ hiệu ứng màu nền sáng cho hàng được chọn
             document.querySelectorAll('.row-flat').forEach(el => el.classList.remove('active'));
             const activeCard = document.getElementById(`card_item_${id}`);
             if(activeCard) activeCard.classList.add('active');
         }
 
-        // 4. Bộ lọc tìm kiếm thời gian thực
         document.getElementById('search_input').addEventListener('input', function(e) {
             const keyword = e.target.value.toLowerCase().trim();
             const filteredData = localDataStore.filter(item => 
