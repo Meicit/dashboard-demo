@@ -17,17 +17,16 @@
         }
         .container-wrapper { max-width: 1550px; margin: 30px auto; padding: 0 24px; width: 100%; }
         .glass-panel { background: rgba(30, 41, 59, 0.6); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 24px; box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.5); }
-        .input-dark { background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 12px; padding: 12px 16px; color: #ffffff; outline: none; transition: all 0.2s; }
+        .input-dark { background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 12px; padding: 10px 14px; color: #ffffff; outline: none; transition: all 0.2s; }
         .input-dark:focus { border-color: #0ea5e9; box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.25); }
         .custom-scrollbar::-webkit-scrollbar { width: 6px; }
         .custom-scrollbar::-webkit-scrollbar-track { background: rgba(0,0,0,0.1); }
         .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 10px; }
         .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.4); }
         
-        /* Hiệu ứng nhô khối 3D cho thẻ ấp */
-        .hamlet-card { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1); cursor: pointer; }
-        .hamlet-card:hover { transform: translateY(-4px) scale(1.02); background: rgba(14, 165, 233, 0.15); border-color: #0ea5e9; box-shadow: 0 10px 20px -5px rgba(14, 165, 233, 0.3); }
-        .hamlet-card.active { background: linear-gradient(135deg, rgba(2, 132, 199, 0.3) 0%, rgba(14, 165, 233, 0.1) 100%); border-color: #0ea5e9; box-shadow: 0 0 0 2px #0ea5e9; }
+        .hamlet-card { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.06); transition: all 0.25s cubic-bezier(0.165, 0.84, 0.44, 1); cursor: pointer; }
+        .hamlet-card:hover { transform: translateY(-3px); background: rgba(14, 165, 233, 0.12); border-color: #0ea5e9; box-shadow: 0 8px 16px -5px rgba(14, 165, 233, 0.25); }
+        .hamlet-card.active { background: linear-gradient(135deg, rgba(2, 132, 199, 0.25) 0%, rgba(14, 165, 233, 0.08) 100%); border-color: #0ea5e9; box-shadow: 0 0 0 2px #0ea5e9; }
     </style>
 </head>
 <body class="custom-scrollbar">
@@ -70,173 +69,175 @@
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-            
-            <div class="lg:col-span-8 space-y-6">
-                
-                <div class="glass-panel p-6">
-                    <div class="flex justify-between items-center mb-4">
-                        <h2 class="text-sm font-black uppercase tracking-wider text-sky-400">📊 Biểu đồ So sánh Quy mô Top 10 Ấp đông dân nhất</h2>
-                        <span class="text-[10px] bg-slate-800 text-slate-400 font-bold px-2 py-1 rounded">Dữ liệu đối chiếu</span>
-                    </div>
-                    <div class="w-full relative h-[320px]">
-                        <canvas id="hamletsChart"></canvas>
-                    </div>
+            <div class="lg:col-span-8 glass-panel p-5">
+                <div class="flex justify-between items-center mb-3">
+                    <h2 class="text-xs font-black uppercase tracking-wider text-sky-400">📊 Biểu đồ So sánh Quy mô Top 10 Ấp đông dân nhất</h2>
+                    <span class="text-[9px] bg-slate-800 text-slate-400 font-bold px-2 py-0.5 rounded">Dữ liệu đối chiếu</span>
                 </div>
-
-                <div class="glass-panel p-6">
-                    <h2 class="text-sm font-black uppercase tracking-wider text-amber-400 mb-4">📋 Biểu mẫu quản lý hồ sơ & Nhật ký điều hành ấp</h2>
-                    <form class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs font-['Inter']" onsubmit="event.preventDefault(); alert('Dữ liệu điều hành đã được ghi nhận vào hệ thống lưu trữ!');">
-                        <div class="flex flex-col space-y-1.5">
-                            <label class="font-bold text-slate-400 uppercase text-[10px]">Tên đơn vị Ấp</label>
-                            <input type="text" id="f_name" readonly class="input-dark text-slate-300 font-bold bg-slate-800/50" value="Ấp 49">
-                        </div>
-                        <div class="flex flex-col space-y-1.5">
-                            <label class="font-bold text-slate-400 uppercase text-[10px]">Diện tích tự nhiên</label>
-                            <input type="text" id="f_area" class="input-dark font-semibold" value="23.41ha">
-                        </div>
-                        <div class="flex flex-col space-y-1.5">
-                            <label class="font-bold text-slate-400 uppercase text-[10px]">Bí thư Chi bộ</label>
-                            <input type="text" id="f_secretary" class="input-dark font-semibold" value="Nguyễn Văn A">
-                        </div>
-                        <div class="flex flex-col space-y-1.5">
-                            <label class="font-bold text-slate-400 uppercase text-[10px]">Số hộ dân cư</label>
-                            <input type="text" id="f_households" class="input-dark font-semibold" value="1.253 hộ">
-                        </div>
-                        <div class="flex flex-col space-y-1.5">
-                            <label class="font-bold text-slate-400 uppercase text-[10px]">Tổng số nhân khẩu</label>
-                            <input type="text" id="f_population" class="input-dark font-semibold" value="3.951 nhân khẩu">
-                        </div>
-                        <div class="flex flex-col space-y-1.5">
-                            <label class="font-bold text-slate-400 uppercase text-[10px]">Trưởng Ban điều hành Ấp</label>
-                            <input type="text" id="f_leader" class="input-dark font-semibold" value="Trần Văn B">
-                        </div>
-                        <div class="md:col-span-2 flex flex-col space-y-1.5">
-                            <label class="font-bold text-slate-400 uppercase text-[10px]">Địa giới & Ranh giới địa lý tiếp giáp</label>
-                            <input type="text" id="f_boundary" class="input-dark font-semibold" value="Phía Bắc giáp...">
-                        </div>
-                        <div class="flex flex-col space-y-1.5">
-                            <label class="font-bold text-slate-400 uppercase text-[10px]">Số điện thoại liên lạc khẩn cấp</label>
-                            <input type="text" id="f_phone" class="input-dark font-mono font-bold text-sky-400" value="0900.000.000">
-                        </div>
-                        <div class="md:col-span-3 text-right pt-2">
-                            <button type="submit" class="bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white font-bold text-xs uppercase tracking-wider px-6 py-3 rounded-xl shadow-lg transition">
-                                💾 Cập nhật nhật ký điều hành ấp
-                            </button>
-                        </div>
-                    </form>
+                <div class="w-full relative h-[250px]">
+                    <canvas id="hamletsChart"></canvas>
                 </div>
-
             </div>
 
-            <div class="lg:col-span-4 glass-panel p-6 flex flex-col h-full">
-                <h2 class="text-sm font-black uppercase tracking-wider text-sky-400 mb-4">🏆 Bảng xếp hạng Top 5 Đơn vị Dẫn đầu</h2>
-                
-                <div class="flex border-b border-slate-700 text-[11px] font-bold uppercase mb-4">
-                    <button onclick="switchTab('tab_pop', this)" class="w-full text-center pb-2 border-b-2 border-sky-500 text-sky-400">Dân số</button>
-                    <button onclick="switchTab('tab_house', this)" class="w-full text-center pb-2 border-b-2 border-transparent text-slate-400 hover:text-white">Số hộ</button>
-                    <button onclick="switchTab('tab_area', this)" class="w-full text-center pb-2 border-b-2 border-transparent text-slate-400 hover:text-white">Diện tích</button>
+            <div class="lg:col-span-4 glass-panel p-5 flex flex-col justify-between">
+                <div>
+                    <h2 class="text-xs font-black uppercase tracking-wider text-sky-400 mb-3">🏆 Bảng xếp hạng Top 5 Đơn vị Dẫn đầu</h2>
+                    <div class="flex border-b border-slate-700 text-[10px] font-bold uppercase mb-3">
+                        <button onclick="switchTab('tab_pop', this)" class="w-full text-center pb-1.5 border-b-2 border-sky-500 text-sky-400">Dân số</button>
+                        <button onclick="switchTab('tab_house', this)" class="w-full text-center pb-1.5 border-b-2 border-transparent text-slate-400 hover:text-white">Số hộ</button>
+                        <button onclick="switchTab('tab_area', this)" class="w-full text-center pb-1.5 border-b-2 border-transparent text-slate-400 hover:text-white">Diện tích</button>
+                    </div>
                 </div>
-
-                <div class="space-y-4 flex-grow font-['Inter'] text-xs">
-                    <div id="tab_pop" class="tab-content space-y-4">
-                        <div class="space-y-1">
+                
+                <div class="space-y-2.5 font-['Inter'] text-[11px] flex-grow justify-center flex flex-col">
+                    <div id="tab_pop" class="tab-content space-y-2.5">
+                        <div class="space-y-0.5">
                             <div class="flex justify-between font-bold text-slate-300"><span>1. Ấp 49</span><span class="text-sky-400">3.951 người</span></div>
-                            <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden"><div class="bg-sky-500 h-full rounded-full" style="width: 100%"></div></div>
+                            <div class="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden"><div class="bg-sky-500 h-full rounded-full" style="width: 100%"></div></div>
                         </div>
-                        <div class="space-y-1">
+                        <div class="space-y-0.5">
                             <div class="flex justify-between font-bold text-slate-300"><span>2. Ấp 45</span><span class="text-sky-400">3.590 người</span></div>
-                            <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden"><div class="bg-sky-500 h-full rounded-full" style="width: 90%"></div></div>
+                            <div class="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden"><div class="bg-sky-500 h-full rounded-full" style="width: 90%"></div></div>
                         </div>
-                        <div class="space-y-1">
+                        <div class="space-y-0.5">
                             <div class="flex justify-between font-bold text-slate-300"><span>3. Ấp 57</span><span class="text-sky-400">3.461 người</span></div>
-                            <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden"><div class="bg-sky-500 h-full rounded-full" style="width: 87%"></div></div>
+                            <div class="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden"><div class="bg-sky-500 h-full rounded-full" style="width: 87%"></div></div>
                         </div>
-                        <div class="space-y-1">
+                        <div class="space-y-0.5">
                             <div class="flex justify-between font-bold text-slate-300"><span>4. Ấp 66</span><span class="text-sky-400">3.421 người</span></div>
-                            <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden"><div class="bg-sky-500 h-full rounded-full" style="width: 86%"></div></div>
+                            <div class="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden"><div class="bg-sky-500 h-full rounded-full" style="width: 86%"></div></div>
                         </div>
-                        <div class="space-y-1">
+                        <div class="space-y-0.5">
                             <div class="flex justify-between font-bold text-slate-300"><span>5. Ấp 70</span><span class="text-sky-400">3.384 người</span></div>
-                            <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden"><div class="bg-sky-500 h-full rounded-full" style="width: 85%"></div></div>
+                            <div class="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden"><div class="bg-sky-500 h-full rounded-full" style="width: 85%"></div></div>
                         </div>
                     </div>
 
-                    <div id="tab_house" class="tab-content space-y-4 hidden">
-                        <div class="space-y-1">
+                    <div id="tab_house" class="tab-content space-y-2.5 hidden">
+                        <div class="space-y-0.5">
                             <div class="flex justify-between font-bold text-slate-300"><span>1. Ấp 57</span><span class="text-amber-400">1.531 hộ</span></div>
-                            <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden"><div class="bg-amber-500 h-full rounded-full" style="width: 100%"></div></div>
+                            <div class="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden"><div class="bg-amber-500 h-full rounded-full" style="width: 100%"></div></div>
                         </div>
-                        <div class="space-y-1">
+                        <div class="space-y-0.5">
                             <div class="flex justify-between font-bold text-slate-300"><span>2. Ấp 49</span><span class="text-amber-400">1.253 hộ</span></div>
-                            <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden"><div class="bg-amber-500 h-full rounded-full" style="width: 81%"></div></div>
+                            <div class="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden"><div class="bg-amber-500 h-full rounded-full" style="width: 81%"></div></div>
                         </div>
-                        <div class="space-y-1">
+                        <div class="space-y-0.5">
                             <div class="flex justify-between font-bold text-slate-300"><span>3. Ấp 67</span><span class="text-amber-400">1.164 hộ</span></div>
-                            <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden"><div class="bg-amber-500 h-full rounded-full" style="width: 76%"></div></div>
+                            <div class="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden"><div class="bg-amber-500 h-full rounded-full" style="width: 76%"></div></div>
                         </div>
-                        <div class="space-y-1">
+                        <div class="space-y-0.5">
                             <div class="flex justify-between font-bold text-slate-300"><span>4. Ấp 70</span><span class="text-amber-400">1.130 hộ</span></div>
-                            <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden"><div class="bg-amber-500 h-full rounded-full" style="width: 73%"></div></div>
+                            <div class="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden"><div class="bg-amber-500 h-full rounded-full" style="width: 73%"></div></div>
                         </div>
-                        <div class="space-y-1">
+                        <div class="space-y-0.5">
                             <div class="flex justify-between font-bold text-slate-300"><span>5. Ấp 66</span><span class="text-amber-400">971 hộ</span></div>
-                            <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden"><div class="bg-amber-500 h-full rounded-full" style="width: 63%"></div></div>
+                            <div class="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden"><div class="bg-amber-500 h-full rounded-full" style="width: 63%"></div></div>
                         </div>
                     </div>
 
-                    <div id="tab_area" class="tab-content space-y-4 hidden">
-                        <div class="space-y-1">
+                    <div id="tab_area" class="tab-content space-y-2.5 hidden">
+                        <div class="space-y-0.5">
                             <div class="flex justify-between font-bold text-slate-300"><span>1. Ấp 53</span><span class="text-emerald-400">483,16 ha</span></div>
-                            <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden"><div class="bg-emerald-500 h-full rounded-full" style="width: 100%"></div></div>
+                            <div class="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden"><div class="bg-emerald-500 h-full rounded-full" style="width: 100%"></div></div>
                         </div>
-                        <div class="space-y-1">
+                        <div class="space-y-0.5">
                             <div class="flex justify-between font-bold text-slate-300"><span>2. Ấp 62</span><span class="text-emerald-400">340,68 ha</span></div>
-                            <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden"><div class="bg-emerald-500 h-full rounded-full" style="width: 70%"></div></div>
+                            <div class="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden"><div class="bg-emerald-500 h-full rounded-full" style="width: 70%"></div></div>
                         </div>
-                        <div class="space-y-1">
+                        <div class="space-y-0.5">
                             <div class="flex justify-between font-bold text-slate-300"><span>3. Ấp 30</span><span class="text-emerald-400">243,51 ha</span></div>
-                            <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden"><div class="bg-emerald-500 h-full rounded-full" style="width: 50%"></div></div>
+                            <div class="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden"><div class="bg-emerald-500 h-full rounded-full" style="width: 50%"></div></div>
                         </div>
-                        <div class="space-y-1">
+                        <div class="space-y-0.5">
                             <div class="flex justify-between font-bold text-slate-300"><span>4. Ấp 56</span><span class="text-emerald-400">175,99 ha</span></div>
-                            <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden"><div class="bg-emerald-500 h-full rounded-full" style="width: 36%"></div></div>
+                            <div class="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden"><div class="bg-emerald-500 h-full rounded-full" style="width: 36%"></div></div>
                         </div>
-                        <div class="space-y-1">
+                        <div class="space-y-0.5">
                             <div class="flex justify-between font-bold text-slate-300"><span>5. Ấp 70</span><span class="text-emerald-400">145,85 ha</span></div>
-                            <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden"><div class="bg-emerald-500 h-full rounded-full" style="width: 30%"></div></div>
+                            <div class="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden"><div class="bg-emerald-500 h-full rounded-full" style="width: 30%"></div></div>
                         </div>
                     </div>
                 </div>
             </div>
-
         </div>
 
-        <div class="glass-panel p-6 space-y-6">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
             
-            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
-                <div>
-                    <h2 class="text-sm font-black uppercase tracking-wider text-sky-400">🗂️ Danh bạ Hồ sơ chi tiết toàn bộ 70 Ấp</h2>
-                    <p class="text-[10px] text-slate-400 font-medium mt-0.5">Click vào một ấp bất kỳ để đổ dữ liệu tự động lên biểu mẫu quản trị điều hành phía trên</p>
-                </div>
-                <div class="relative w-full md:w-96">
-                    <span class="absolute left-4 top-3 text-sm">🔍</span>
-                    <input type="text" id="search_hamlet" placeholder="Nhập số ấp, tên lãnh đạo hoặc ranh giới..." class="w-full bg-slate-900/80 border border-slate-700 rounded-xl pl-10 pr-4 py-2.5 text-xs font-semibold text-white focus:outline-none focus:border-sky-500 placeholder-slate-500 font-['Inter']">
-                </div>
+            <div class="lg:col-span-5 glass-panel p-5 flex flex-col justify-between">
+                <h2 class="text-xs font-black uppercase tracking-wider text-amber-400 mb-3">📋 Biểu mẫu & Nhật ký điều hành ấp</h2>
+                <form class="space-y-3.5 text-[11px] font-['Inter'] flex-grow flex flex-col justify-between" onsubmit="event.preventDefault(); alert('Dữ liệu điều hành đã được ghi nhận vào hệ thống lưu trữ!');">
+                    <div class="grid grid-cols-2 gap-3">
+                        <div class="flex flex-col space-y-1">
+                            <label class="font-bold text-slate-400 uppercase text-[9px]">Tên đơn vị Ấp</label>
+                            <input type="text" id="f_name" readonly class="input-dark text-slate-300 font-bold bg-slate-800/50 py-2" value="Ấp 49">
+                        </div>
+                        <div class="flex flex-col space-y-1">
+                            <label class="font-bold text-slate-400 uppercase text-[9px]">Diện tích tự nhiên</label>
+                            <input type="text" id="f_area" class="input-dark font-semibold py-2" value="23.41ha">
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-2 gap-3">
+                        <div class="flex flex-col space-y-1">
+                            <label class="font-bold text-slate-400 uppercase text-[9px]">Số hộ dân cư</label>
+                            <input type="text" id="f_households" class="input-dark font-semibold py-2" value="1.253 hộ">
+                        </div>
+                        <div class="flex flex-col space-y-1">
+                            <label class="font-bold text-slate-400 uppercase text-[9px]">Tổng số nhân khẩu</label>
+                            <input type="text" id="f_population" class="input-dark font-semibold py-2" value="3.951 nhân khẩu">
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-2 gap-3">
+                        <div class="flex flex-col space-y-1">
+                            <label class="font-bold text-slate-400 uppercase text-[9px]">Bí thư Chi bộ</label>
+                            <input type="text" id="f_secretary" class="input-dark font-semibold py-2" value="Nguyễn Văn A">
+                        </div>
+                        <div class="flex flex-col space-y-1">
+                            <label class="font-bold text-slate-400 uppercase text-[9px]">Trưởng Ban điều hành Ấp</label>
+                            <input type="text" id="f_leader" class="input-dark font-semibold py-2" value="Trần Văn B">
+                        </div>
+                    </div>
+                    <div class="flex flex-col space-y-1">
+                        <label class="font-bold text-slate-400 uppercase text-[9px]">Số điện thoại liên lạc khẩn cấp</label>
+                        <input type="text" id="f_phone" class="input-dark font-mono font-bold text-sky-400 py-2" value="0900.000.000">
+                    </div>
+                    <div class="flex flex-col space-y-1">
+                        <label class="font-bold text-slate-400 uppercase text-[9px]">Địa giới & Ranh giới địa lý tiếp giáp</label>
+                        <textarea id="f_boundary" rows="2" class="input-dark font-semibold custom-scrollbar resize-none py-2 text-slate-300"></textarea>
+                    </div>
+                    <div class="text-right pt-1">
+                        <button type="submit" class="w-full bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white font-bold text-xs uppercase tracking-wider py-2.5 rounded-xl shadow-lg transition">
+                            💾 Cập nhật nhật ký điều hành
+                        </button>
+                    </div>
+                </form>
             </div>
 
-            <div id="hamlets_grid" class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4 max-h-[500px] overflow-y-auto pr-2 custom-scrollbar font-['Inter'] text-xs">
+            <div class="lg:col-span-7 glass-panel p-5 flex flex-col justify-between">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-3">
+                    <div>
+                        <h2 class="text-xs font-black uppercase tracking-wider text-sky-400">🗂️ Danh bạ Hồ sơ chi tiết 70 Ấp</h2>
+                        <p class="text-[9px] text-slate-400 font-medium mt-0.5">Chọn ô để liên thông dữ liệu sang biểu mẫu bên trái</p>
+                    </div>
+                    <div class="relative w-full sm:w-64">
+                        <span class="absolute left-3 top-2 text-xs">🔍</span>
+                        <input type="text" id="search_hamlet" placeholder="Tìm số ấp, cán bộ, ranh giới..." class="w-full bg-slate-900/80 border border-slate-700 rounded-xl pl-8 pr-3 py-1.5 text-[11px] font-semibold text-white focus:outline-none focus:border-sky-500 placeholder-slate-500 font-['Inter']">
+                    </div>
                 </div>
+
+                <div id="hamlets_grid" class="grid grid-cols-2 sm:grid-cols-3 gap-3 h-[395px] overflow-y-auto pr-1 custom-scrollbar font-['Inter'] text-[11px]">
+                    </div>
+            </div>
 
         </div>
 
     </div>
 
-    <footer class="w-full text-center py-8 text-slate-500 font-bold text-[10px] uppercase tracking-[0.3em] border-t border-slate-900 bg-slate-950/20 backdrop-blur-md mt-auto">
+    <footer class="w-full text-center py-6 text-slate-500 font-bold text-[10px] uppercase tracking-[0.3em] border-t border-slate-900 bg-slate-950/20 backdrop-blur-md mt-10">
         &copy; 2026 IOC Xã Bình Hưng — Hệ thống Quản trị thông tin địa bàn dân cư liên thông
     </footer>
 
     <script>
-        // Cấu trúc dữ liệu đầy đủ của toàn bộ 70 Ấp tại xã Bình Hưng
         const hamletsData = [
           {"name": "Ấp 1", "area": "4.87ha", "area_num": 4.87, "households": "575 hộ", "households_num": 575, "population": "2346 nhân khẩu", "population_num": 2346, "secretary": "Trần Tấn Tài", "leader": "Trần Tấn Tài", "phone": "0938.567.897", "boundary": "Phía Bắc giáp ranh phường 6, Quận 8, phía Nam giáp đường số 16,17,18 KDC Bình Hưng, phía Đông giáp đường số 1 KDC Bình Hưng, Phía Tây giáp Rạch Xu."},
           {"name": "Ấp 2", "area": "11.75ha", "area_num": 11.75, "households": "542 hộ", "households_num": 542, "population": "2571 nhân khẩu", "population_num": 2571, "secretary": "Nguyễn Thị Bích", "leader": "Nguyễn Văn Võ", "phone": "0903.710.968", "boundary": "Phía Bắc giáp ranh phường 6, Quận 8, phía Nam giáp hẻm chùa Linh Sơn, phía Đông giáp Quốc lộ 50, phía Tây giáp đường số 1, 9 KDC Bình Hưng."},
@@ -300,12 +301,9 @@
           {"name": "Ấp 70", "area": "145.85ha", "area_num": 145.85, "households": "1130 hộ", "households_num": 1130, "population": "3384 nhân khẩu", "population_num": 3384, "secretary": "Đinh La Thăng", "leader": "Đinh La Thăng", "phone": "0909.111.999", "boundary": "Khu hành chính tổng hợp quy hoạch mới ven trục cao tốc liên tỉnh kết nối xã."}
         ];
 
-        // 1. Khởi tạo đồ thị Chart.js trực quan hóa Top 10 Ấp đông dân cư nhất
         let chartInstance = null;
         function initChart() {
             const ctx = document.getElementById('hamletsChart').getContext('2d');
-            
-            // Số liệu đúc kết trực tiếp từ Top 10 của tệp dữ liệu
             const top10Labels = ['Ấp 49', 'Ấp 45', 'Ấp 57', 'Ấp 66', 'Ấp 70', 'Ấp 43', 'Ấp 24', 'Ấp 44', 'Ấp 50', 'Ấp 67'];
             const populationData = [3951, 3590, 3461, 3421, 3384, 3184, 3140, 3122, 3082, 3011];
             const householdData = [1253, 802, 1531, 971, 1130, 575, 844, 567, 887, 1164];
@@ -340,37 +338,34 @@
                         legend: { labels: { color: '#94a3b8', font: { weight: 'bold', size: 10 } } }
                     },
                     scales: {
-                        x: { grid: { display: false }, ticks: { color: '#94a3b8', font: { weight: 'bold' } } },
-                        y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#94a3b8' } }
+                        x: { grid: { display: false }, ticks: { color: '#94a3b8', font: { weight: 'bold', size: 9 } } },
+                        y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#94a3b8', font: { size: 9 } } }
                     }
                 }
             });
         }
 
-        // 2. Kết xuất 70 thẻ ấp lên màn hình
         function renderGrid(data) {
             const grid = document.getElementById('hamlets_grid');
             grid.innerHTML = data.map(h => `
-                <div id="card_${h.name.replace(' ', '_')}" onclick="selectHamlet('${h.name}')" class="hamlet-card p-4 rounded-xl flex flex-col justify-between gap-2">
+                <div id="card_${h.name.replace(' ', '_')}" onclick="selectHamlet('${h.name}')" class="hamlet-card p-3.5 rounded-xl flex flex-col justify-between gap-1.5">
                     <div class="flex justify-between items-center">
-                        <span class="font-black text-white text-sm">${h.name}</span>
-                        <span class="text-[9px] bg-slate-800 text-slate-400 font-bold px-1.5 py-0.5 rounded">${h.area}</span>
+                        <span class="font-black text-white text-xs">${h.name}</span>
+                        <span class="text-[8px] bg-slate-800 text-slate-400 font-bold px-1.5 py-0.5 rounded">${h.area}</span>
                     </div>
                     <div class="space-y-0.5 text-[10px] text-slate-400 font-medium">
-                        <p>👤 BT: <span class="text-slate-200 font-semibold">${h.secretary}</span></p>
-                        <p>🏠 Hộ: <span class="text-amber-400 font-bold">${h.households}</span></p>
-                        <p>👥 Dân: <span class="text-sky-400 font-bold">${h.population}</span></p>
+                        <p class="truncate">👤 BT: <span class="text-slate-200 font-semibold">${h.secretary}</span></p>
+                        <p>🏠 Hộ: <span class="text-amber-400 font-bold">${h.households_num}</span></p>
+                        <p>👥 Dân: <span class="text-sky-400 font-bold">${h.population_num}</span></p>
                     </div>
                 </div>
             `).join('');
         }
 
-        // 3. Hàm kích hoạt khi click chọn ấp -> Đổ dữ liệu tự động lên Form
         window.selectHamlet = function(name) {
             const hamlet = hamletsData.find(h => h.name === name);
             if(!hamlet) return;
 
-            // Đổ dữ liệu vào Form
             document.getElementById('f_name').value = hamlet.name;
             document.getElementById('f_area').value = hamlet.area;
             document.getElementById('f_secretary').value = hamlet.secretary;
@@ -380,7 +375,6 @@
             document.getElementById('f_boundary').value = hamlet.boundary;
             document.getElementById('f_phone').value = hamlet.phone;
 
-            // Highlight thẻ được chọn
             document.querySelectorAll('.hamlet-card').forEach(c => c.classList.remove('active'));
             const selectedCard = document.getElementById(`card_${name.replace(' ', '_')}`);
             if(selectedCard) {
@@ -389,12 +383,10 @@
             }
         }
 
-        // 4. Cơ chế chuyển đổi Tab bảng xếp hạng Top 5 khẩn cấp
         window.switchTab = function(tabId, btnElement) {
             document.querySelectorAll('.tab-content').forEach(c => c.classList.add('hidden'));
             document.getElementById(tabId).classList.remove('hidden');
 
-            // Đổi màu chữ và thanh underline active
             const buttons = btnElement.parentElement.children;
             for(let btn of buttons) {
                 btn.classList.remove('border-sky-500', 'text-sky-400');
@@ -404,7 +396,6 @@
             btnElement.classList.add('border-sky-500', 'text-sky-400');
         }
 
-        // 5. Kích hoạt tìm kiếm thời gian thực (Real-time Filtering)
         document.getElementById('search_hamlet').addEventListener('input', function(e) {
             const kw = e.target.value.toLowerCase().trim();
             const filtered = hamletsData.filter(h => 
@@ -416,11 +407,9 @@
             renderGrid(filtered);
         });
 
-        // Khởi động hệ thống tổng thể
         document.addEventListener("DOMContentLoaded", () => {
             initChart();
             renderGrid(hamletsData);
-            // Mặc định chọn ấp đầu tiên để khởi tạo Form mẫu
             selectHamlet('Ấp 49');
         });
     </script>
