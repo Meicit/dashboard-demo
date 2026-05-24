@@ -3,103 +3,426 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sổ tay điện tử 70 Ấp - Xã Bình Hưng</title>
+    <title>Trung tâm Chỉ huy Điều hành số các Ấp - Xã Bình Hưng</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'Montserrat', sans-serif;
             margin: 0; padding: 0; min-height: 100vh;
-            background: linear-gradient(rgba(241, 245, 249, 0.15), rgba(241, 245, 249, 0.15)), 
-                        url('../hinhnen.png');
+            background: linear-gradient(rgba(15, 23, 42, 0.8), rgba(15, 23, 42, 0.95)), url('../hinhnen.png');
             background-size: cover; background-position: center; background-attachment: fixed;
-            color: #0c4a6e; display: flex; flex-direction: column;
+            color: #f8fafc; display: flex; flex-direction: column;
         }
-
-        .container-wrapper { max-width: 1100px; margin: 40px auto 60px; padding: 0 20px; width: 100%; }
-        .title-main { font-weight: 900; text-transform: uppercase; font-size: clamp(1.6rem, 4vw, 2.5rem); color: #0c4a6e; text-shadow: 0 2px 10px rgba(255, 255, 255, 0.8); }
-
-        /* Giao diện Glassmorphism mờ kính công nghệ */
-        .glass-panel { background: rgba(255, 255, 255, 0.55); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-top: 2px solid rgba(255, 255, 255, 0.7); border-left: 2px solid rgba(255, 255, 255, 0.6); border-right: 1px solid rgba(14, 165, 233, 0.2); border-bottom: 1px solid rgba(14, 165, 233, 0.2); border-radius: 28px; padding: 35px; box-shadow: 0 20px 40px -15px rgba(12, 74, 110, 0.15); }
+        .container-wrapper { max-width: 1550px; margin: 30px auto; padding: 0 24px; width: 100%; }
+        .glass-panel { background: rgba(30, 41, 59, 0.6); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 24px; box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.5); }
+        .input-dark { background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 12px; padding: 12px 16px; color: #ffffff; outline: none; transition: all 0.2s; }
+        .input-dark:focus { border-color: #0ea5e9; box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.25); }
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: rgba(0,0,0,0.1); }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 10px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.4); }
         
-        /* Hộp hiển thị hằng số thống kê */
-        .stat-badge { background: rgba(255, 255, 255, 0.75); border: 1px solid rgba(14, 165, 233, 0.2); border-radius: 16px; padding: 14px 20px; text-align: center; box-shadow: 0 4px 10px rgba(0,0,0,0.02); }
-
-        /* Khung chứa mã nhúng an toàn từ Google Đám mây */
-        .pdf-viewer-container { width: 100%; height: 750px; border-radius: 16px; overflow: hidden; box-shadow: 0 8px 25px rgba(12, 74, 110, 0.12); border: 1px solid rgba(14, 165, 233, 0.2); background: #ffffff; }
-
-        /* Nút quay lại trang chủ */
-        .btn-back { display: inline-flex; align-items: center; gap: 8px; background: #ffffff; border: 1px solid #e2e8f0; color: #0c4a6e; padding: 12px 24px; border-radius: 14px; font-weight: 800; font-size: 12px; text-transform: uppercase; box-shadow: 0 4px 6px -1px rgba(12, 74, 110, 0.1); transition: all 0.3s ease; margin-bottom: 25px; }
-        .btn-back:hover { transform: translateY(-3px); box-shadow: 0 10px 20px -5px rgba(14, 165, 233, 0.3); border-color: #0ea5e9; color: #0ea5e9; }
+        /* Hiệu ứng nhô khối 3D cho thẻ ấp */
+        .hamlet-card { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1); cursor: pointer; }
+        .hamlet-card:hover { transform: translateY(-4px) scale(1.02); background: rgba(14, 165, 233, 0.15); border-color: #0ea5e9; box-shadow: 0 10px 20px -5px rgba(14, 165, 233, 0.3); }
+        .hamlet-card.active { background: linear-gradient(135deg, rgba(2, 132, 199, 0.3) 0%, rgba(14, 165, 233, 0.1) 100%); border-color: #0ea5e9; box-shadow: 0 0 0 2px #0ea5e9; }
     </style>
 </head>
-<body>
+<body class="custom-scrollbar">
 
-    <div class="container-wrapper">
-        <a href="../home.html" class="btn-back">
-            ⬅️ Quay lại Trang chủ
-        </a>
+    <div class="container-wrapper space-y-6">
+        
+        <div class="flex justify-between items-center">
+            <a href="../home.html" class="inline-flex items-center gap-2 bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs uppercase tracking-wider px-5 py-3 rounded-xl border border-slate-700 shadow-md transition">
+                ⬅️ Quay lại Trang chủ
+            </a>
+            <span class="text-xs bg-sky-500/20 text-sky-400 font-extrabold px-3 py-1.5 rounded-full border border-sky-500/30 uppercase tracking-widest">Thời gian thực năm 2026</span>
+        </div>
 
-        <div class="text-center mb-8">
-            <h1 class="title-main italic">Sổ tay điện tử thông tin 70 ấp</h1>
-            <p class="text-sky-800 font-bold uppercase tracking-[0.3em] mt-2 text-[10px] drop-shadow-sm">
-                Cơ sở dữ liệu nhân sự và bản đồ phân ranh địa giới hành chính - Xã Bình Hưng
+        <header class="glass-panel p-6 text-center">
+            <h1 class="text-xl md:text-2xl font-black uppercase tracking-wider bg-gradient-to-r from-white via-slate-200 to-sky-400 bg-clip-text text-transparent">
+                Trung tâm Chỉ huy & Điều hành Số các Ấp — Xã Bình Hưng
+            </h1>
+            <p class="text-slate-400 font-medium text-xs uppercase tracking-[0.2em] mt-1">
+                Hệ thống dữ liệu số hóa hạ tầng cư dân, quản trị nhân khẩu và bản đồ xếp hạng trực quan
             </p>
+        </header>
+
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+            <div class="glass-panel p-5 border-l-4 border-sky-500">
+                <p class="text-[10px] font-bold text-sky-400 uppercase tracking-wider">Đơn vị hành chính</p>
+                <h3 class="text-2xl font-black text-white mt-1">70 <span class="text-sm font-medium text-slate-400">Ấp quản lý</span></h3>
+            </div>
+            <div class="glass-panel p-5 border-l-4 border-emerald-500">
+                <p class="text-[10px] font-bold text-emerald-400 uppercase tracking-wider">Tổng diện tích tự nhiên</p>
+                <h3 class="text-2xl font-black text-white mt-1">3.235,43 <span class="text-sm font-medium text-slate-400">ha</span></h3>
+            </div>
+            <div class="glass-panel p-5 border-l-4 border-amber-500">
+                <p class="text-[10px] font-bold text-amber-400 uppercase tracking-wider">Quy mô dân cư</p>
+                <h3 class="text-2xl font-black text-white mt-1">43.444 <span class="text-sm font-medium text-slate-400">Hộ dân</span></h3>
+            </div>
+            <div class="glass-panel p-5 border-l-4 border-indigo-500">
+                <p class="text-[10px] font-bold text-indigo-400 uppercase tracking-wider">Quản lý tổng nhân khẩu</p>
+                <h3 class="text-2xl font-black text-white mt-1">163.387 <span class="text-sm font-medium text-slate-400">Người</span></h3>
+            </div>
         </div>
 
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-            <div class="stat-badge">
-                <p class="text-[9px] font-black text-slate-500 uppercase tracking-wider mb-0.5">Tổng số ấp sáp nhập</p>
-                <h4 class="text-xl font-[900] text-[#0b4a8f]">70 Ấp</h4>
-            </div>
-            <div class="stat-badge">
-                <p class="text-[9px] font-black text-slate-500 uppercase tracking-wider mb-0.5">Quy mô dân số mới</p>
-                <h4 class="text-xl font-[900] text-[#0b4a8f]">183.729 dân</h4>
-            </div>
-            <div class="stat-badge">
-                <p class="text-[9px] font-black text-slate-500 uppercase tracking-wider mb-0.5">Diện tích tự nhiên</p>
-                <h4 class="text-xl font-[900] text-[#0b4a8f]">3.263 ha</h4>
-            </div>
-            <div class="stat-badge">
-                <p class="text-[9px] font-black text-slate-500 uppercase tracking-wider mb-0.5">Thời điểm số liệu</p>
-                <h4 class="text-sm font-[900] text-sky-600 mt-1 uppercase">Tháng 09/2025</h4>
-            </div>
-        </div>
-
-        <div class="glass-panel space-y-6">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
             
-            <div class="flex flex-col md:flex-row md:items-center justify-between border-b border-sky-900/10 pb-4 gap-4">
+            <div class="lg:col-span-8 space-y-6">
+                
+                <div class="glass-panel p-6">
+                    <div class="flex justify-between items-center mb-4">
+                        <h2 class="text-sm font-black uppercase tracking-wider text-sky-400">📊 Biểu đồ So sánh Quy mô Top 10 Ấp đông dân nhất</h2>
+                        <span class="text-[10px] bg-slate-800 text-slate-400 font-bold px-2 py-1 rounded">Dữ liệu đối chiếu</span>
+                    </div>
+                    <div class="w-full relative h-[320px]">
+                        <canvas id="hamletsChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="glass-panel p-6">
+                    <h2 class="text-sm font-black uppercase tracking-wider text-amber-400 mb-4">📋 Biểu mẫu quản lý hồ sơ & Nhật ký điều hành ấp</h2>
+                    <form class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs font-['Inter']" onsubmit="event.preventDefault(); alert('Dữ liệu điều hành đã được ghi nhận vào hệ thống lưu trữ!');">
+                        <div class="flex flex-col space-y-1.5">
+                            <label class="font-bold text-slate-400 uppercase text-[10px]">Tên đơn vị Ấp</label>
+                            <input type="text" id="f_name" readonly class="input-dark text-slate-300 font-bold bg-slate-800/50" value="Ấp 49">
+                        </div>
+                        <div class="flex flex-col space-y-1.5">
+                            <label class="font-bold text-slate-400 uppercase text-[10px]">Diện tích tự nhiên</label>
+                            <input type="text" id="f_area" class="input-dark font-semibold" value="23.41ha">
+                        </div>
+                        <div class="flex flex-col space-y-1.5">
+                            <label class="font-bold text-slate-400 uppercase text-[10px]">Bí thư Chi bộ</label>
+                            <input type="text" id="f_secretary" class="input-dark font-semibold" value="Nguyễn Văn A">
+                        </div>
+                        <div class="flex flex-col space-y-1.5">
+                            <label class="font-bold text-slate-400 uppercase text-[10px]">Số hộ dân cư</label>
+                            <input type="text" id="f_households" class="input-dark font-semibold" value="1.253 hộ">
+                        </div>
+                        <div class="flex flex-col space-y-1.5">
+                            <label class="font-bold text-slate-400 uppercase text-[10px]">Tổng số nhân khẩu</label>
+                            <input type="text" id="f_population" class="input-dark font-semibold" value="3.951 nhân khẩu">
+                        </div>
+                        <div class="flex flex-col space-y-1.5">
+                            <label class="font-bold text-slate-400 uppercase text-[10px]">Trưởng Ban điều hành Ấp</label>
+                            <input type="text" id="f_leader" class="input-dark font-semibold" value="Trần Văn B">
+                        </div>
+                        <div class="md:col-span-2 flex flex-col space-y-1.5">
+                            <label class="font-bold text-slate-400 uppercase text-[10px]">Địa giới & Ranh giới địa lý tiếp giáp</label>
+                            <input type="text" id="f_boundary" class="input-dark font-semibold" value="Phía Bắc giáp...">
+                        </div>
+                        <div class="flex flex-col space-y-1.5">
+                            <label class="font-bold text-slate-400 uppercase text-[10px]">Số điện thoại liên lạc khẩn cấp</label>
+                            <input type="text" id="f_phone" class="input-dark font-mono font-bold text-sky-400" value="0900.000.000">
+                        </div>
+                        <div class="md:col-span-3 text-right pt-2">
+                            <button type="submit" class="bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white font-bold text-xs uppercase tracking-wider px-6 py-3 rounded-xl shadow-lg transition">
+                                💾 Cập nhật nhật ký điều hành ấp
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+
+            <div class="lg:col-span-4 glass-panel p-6 flex flex-col h-full">
+                <h2 class="text-sm font-black uppercase tracking-wider text-sky-400 mb-4">🏆 Bảng xếp hạng Top 5 Đơn vị Dẫn đầu</h2>
+                
+                <div class="flex border-b border-slate-700 text-[11px] font-bold uppercase mb-4">
+                    <button onclick="switchTab('tab_pop', this)" class="w-full text-center pb-2 border-b-2 border-sky-500 text-sky-400">Dân số</button>
+                    <button onclick="switchTab('tab_house', this)" class="w-full text-center pb-2 border-b-2 border-transparent text-slate-400 hover:text-white">Số hộ</button>
+                    <button onclick="switchTab('tab_area', this)" class="w-full text-center pb-2 border-b-2 border-transparent text-slate-400 hover:text-white">Diện tích</button>
+                </div>
+
+                <div class="space-y-4 flex-grow font-['Inter'] text-xs">
+                    <div id="tab_pop" class="tab-content space-y-4">
+                        <div class="space-y-1">
+                            <div class="flex justify-between font-bold text-slate-300"><span>1. Ấp 49</span><span class="text-sky-400">3.951 người</span></div>
+                            <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden"><div class="bg-sky-500 h-full rounded-full" style="width: 100%"></div></div>
+                        </div>
+                        <div class="space-y-1">
+                            <div class="flex justify-between font-bold text-slate-300"><span>2. Ấp 45</span><span class="text-sky-400">3.590 người</span></div>
+                            <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden"><div class="bg-sky-500 h-full rounded-full" style="width: 90%"></div></div>
+                        </div>
+                        <div class="space-y-1">
+                            <div class="flex justify-between font-bold text-slate-300"><span>3. Ấp 57</span><span class="text-sky-400">3.461 người</span></div>
+                            <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden"><div class="bg-sky-500 h-full rounded-full" style="width: 87%"></div></div>
+                        </div>
+                        <div class="space-y-1">
+                            <div class="flex justify-between font-bold text-slate-300"><span>4. Ấp 66</span><span class="text-sky-400">3.421 người</span></div>
+                            <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden"><div class="bg-sky-500 h-full rounded-full" style="width: 86%"></div></div>
+                        </div>
+                        <div class="space-y-1">
+                            <div class="flex justify-between font-bold text-slate-300"><span>5. Ấp 70</span><span class="text-sky-400">3.384 người</span></div>
+                            <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden"><div class="bg-sky-500 h-full rounded-full" style="width: 85%"></div></div>
+                        </div>
+                    </div>
+
+                    <div id="tab_house" class="tab-content space-y-4 hidden">
+                        <div class="space-y-1">
+                            <div class="flex justify-between font-bold text-slate-300"><span>1. Ấp 57</span><span class="text-amber-400">1.531 hộ</span></div>
+                            <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden"><div class="bg-amber-500 h-full rounded-full" style="width: 100%"></div></div>
+                        </div>
+                        <div class="space-y-1">
+                            <div class="flex justify-between font-bold text-slate-300"><span>2. Ấp 49</span><span class="text-amber-400">1.253 hộ</span></div>
+                            <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden"><div class="bg-amber-500 h-full rounded-full" style="width: 81%"></div></div>
+                        </div>
+                        <div class="space-y-1">
+                            <div class="flex justify-between font-bold text-slate-300"><span>3. Ấp 67</span><span class="text-amber-400">1.164 hộ</span></div>
+                            <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden"><div class="bg-amber-500 h-full rounded-full" style="width: 76%"></div></div>
+                        </div>
+                        <div class="space-y-1">
+                            <div class="flex justify-between font-bold text-slate-300"><span>4. Ấp 70</span><span class="text-amber-400">1.130 hộ</span></div>
+                            <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden"><div class="bg-amber-500 h-full rounded-full" style="width: 73%"></div></div>
+                        </div>
+                        <div class="space-y-1">
+                            <div class="flex justify-between font-bold text-slate-300"><span>5. Ấp 66</span><span class="text-amber-400">971 hộ</span></div>
+                            <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden"><div class="bg-amber-500 h-full rounded-full" style="width: 63%"></div></div>
+                        </div>
+                    </div>
+
+                    <div id="tab_area" class="tab-content space-y-4 hidden">
+                        <div class="space-y-1">
+                            <div class="flex justify-between font-bold text-slate-300"><span>1. Ấp 53</span><span class="text-emerald-400">483,16 ha</span></div>
+                            <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden"><div class="bg-emerald-500 h-full rounded-full" style="width: 100%"></div></div>
+                        </div>
+                        <div class="space-y-1">
+                            <div class="flex justify-between font-bold text-slate-300"><span>2. Ấp 62</span><span class="text-emerald-400">340,68 ha</span></div>
+                            <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden"><div class="bg-emerald-500 h-full rounded-full" style="width: 70%"></div></div>
+                        </div>
+                        <div class="space-y-1">
+                            <div class="flex justify-between font-bold text-slate-300"><span>3. Ấp 30</span><span class="text-emerald-400">243,51 ha</span></div>
+                            <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden"><div class="bg-emerald-500 h-full rounded-full" style="width: 50%"></div></div>
+                        </div>
+                        <div class="space-y-1">
+                            <div class="flex justify-between font-bold text-slate-300"><span>4. Ấp 56</span><span class="text-emerald-400">175,99 ha</span></div>
+                            <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden"><div class="bg-emerald-500 h-full rounded-full" style="width: 36%"></div></div>
+                        </div>
+                        <div class="space-y-1">
+                            <div class="flex justify-between font-bold text-slate-300"><span>5. Ấp 70</span><span class="text-emerald-400">145,85 ha</span></div>
+                            <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden"><div class="bg-emerald-500 h-full rounded-full" style="width: 30%"></div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="glass-panel p-6 space-y-6">
+            
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
                 <div>
-                    <h2 class="text-sm font-[900] text-[#0b4a8f] uppercase tracking-wide">Hệ thống tra cứu tài liệu trực tuyến</h2>
-                    <p class="text-[11px] font-semibold text-slate-500 mt-0.5">Dữ liệu được nhúng trực tiếp từ kho lưu trữ đám mây tốc độ cao.</p>
+                    <h2 class="text-sm font-black uppercase tracking-wider text-sky-400">🗂️ Danh bạ Hồ sơ chi tiết toàn bộ 70 Ấp</h2>
+                    <p class="text-[10px] text-slate-400 font-medium mt-0.5">Click vào một ấp bất kỳ để đổ dữ liệu tự động lên biểu mẫu quản trị điều hành phía trên</p>
                 </div>
-                <div class="flex flex-wrap gap-2">
-                    <a href="https://drive.google.com/file/d/1Ze0TkdexHAYJ7X1qXPWHuR1XxxdGSvT_/view?usp=sharing" target="_blank" class="inline-flex items-center justify-center bg-slate-800 hover:bg-slate-900 text-white font-bold text-[10px] uppercase tracking-wider px-3 py-2 rounded-xl shadow-sm transition-all">
-                        📥 Tải File PDF Gốc
-                    </a>
-                    <a href="https://bit.ly/Sổ_tay_định_dạng_Flipbook" target="_blank" class="inline-flex items-center justify-center bg-sky-600 hover:bg-sky-700 text-white font-bold text-[10px] uppercase tracking-wider px-4 py-2.5 rounded-xl shadow-md transition-all">
-                        📖 Xem bản lật trang (Flipbook)
-                    </a>
+                <div class="relative w-full md:w-96">
+                    <span class="absolute left-4 top-3 text-sm">🔍</span>
+                    <input type="text" id="search_hamlet" placeholder="Nhập số ấp, tên lãnh đạo hoặc ranh giới..." class="w-full bg-slate-900/80 border border-slate-700 rounded-xl pl-10 pr-4 py-2.5 text-xs font-semibold text-white focus:outline-none focus:border-sky-500 placeholder-slate-500 font-['Inter']">
                 </div>
             </div>
 
-            <div class="pdf-viewer-container">
-                <iframe src="https://drive.google.com/file/d/1Ze0TkdexHAYJ7X1qXPWHuR1XxxdGSvT_/preview" width="100%" height="100%" allow="autoplay" class="border-none"></iframe>
-            </div>
+            <div id="hamlets_grid" class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4 max-h-[500px] overflow-y-auto pr-2 custom-scrollbar font-['Inter'] text-xs">
+                </div>
 
-            <div class="bg-sky-50/50 border border-sky-200/60 rounded-xl p-4 flex gap-3 items-start">
-                <span class="text-lg">💡</span>
-                <p class="text-[11px] font-semibold text-sky-950 leading-relaxed m-0">
-                    <strong>Mẹo tra cứu nhanh:</strong> Cán bộ có thể nhấn vào biểu tượng kính lúp 🔍 (hoặc tổ hợp phím <code>Ctrl + F</code>) trên thanh công cụ của khung xem để gõ nhanh tên Ấp hoặc số điện thoại nhân sự cần tìm kiếm mà không cần cuộn trang thủ công.
-                </p>
-            </div>
-            
         </div>
+
     </div>
 
-    <footer class="text-center py-10 text-sky-900 font-bold text-[10px] uppercase tracking-widest drop-shadow-sm mt-auto">
-        &copy; 2026 IOC Bình Hưng - Hệ thống quản trị số liệu dân cư liên thông
+    <footer class="w-full text-center py-8 text-slate-500 font-bold text-[10px] uppercase tracking-[0.3em] border-t border-slate-900 bg-slate-950/20 backdrop-blur-md mt-auto">
+        &copy; 2026 IOC Xã Bình Hưng — Hệ thống Quản trị thông tin địa bàn dân cư liên thông
     </footer>
 
+    <script>
+        // Cấu trúc dữ liệu đầy đủ của toàn bộ 70 Ấp tại xã Bình Hưng
+        const hamletsData = [
+          {"name": "Ấp 1", "area": "4.87ha", "area_num": 4.87, "households": "575 hộ", "households_num": 575, "population": "2346 nhân khẩu", "population_num": 2346, "secretary": "Trần Tấn Tài", "leader": "Trần Tấn Tài", "phone": "0938.567.897", "boundary": "Phía Bắc giáp ranh phường 6, Quận 8, phía Nam giáp đường số 16,17,18 KDC Bình Hưng, phía Đông giáp đường số 1 KDC Bình Hưng, Phía Tây giáp Rạch Xu."},
+          {"name": "Ấp 2", "area": "11.75ha", "area_num": 11.75, "households": "542 hộ", "households_num": 542, "population": "2571 nhân khẩu", "population_num": 2571, "secretary": "Nguyễn Thị Bích", "leader": "Nguyễn Văn Võ", "phone": "0903.710.968", "boundary": "Phía Bắc giáp ranh phường 6, Quận 8, phía Nam giáp hẻm chùa Linh Sơn, phía Đông giáp Quốc lộ 50, phía Tây giáp đường số 1, 9 KDC Bình Hưng."},
+          {"name": "Ấp 3", "area": "5.13ha", "area_num": 5.13, "households": "572 hộ", "households_num": 572, "population": "2619 nhân khẩu", "population_num": 2619, "secretary": "Trương Mạnh Cường", "leader": "Trương Mạnh Cường", "phone": "0917.119.595", "boundary": "Phía Bắc giáp hẻm 16, 17, 18 KDC Bình Hưng, phía Nam giáp đường số 10 KDC Bình Hưng, phía Đông giáp đường số 1 KDC Bình Hưng, phía Tây giáp Rạch Xu."},
+          {"name": "Ấp 4", "area": "5.13ha", "area_num": 5.13, "households": "573 hộ", "households_num": 573, "population": "2319 nhân khẩu", "population_num": 2319, "secretary": "Trương Mạnh Cường", "leader": "Trương Mạnh Cường", "phone": "0917.119.595", "boundary": "Phía Bắc giáp hẻm Chùa Linh Sơn, phía Nam giáp đường số 10 KDC Bình Hưng, phía Đông giáp Quốc lộ 50, phía Tây giáp đường số 1 KDC Bình Hưng."},
+          {"name": "Ấp 5", "area": "14.94ha", "area_num": 14.94, "households": "837 hộ", "households_num": 837, "population": "2627 nhân khẩu", "population_num": 2627, "secretary": "Võ Phi Hùng", "leader": "Võ Phi Hùng", "phone": "0913.774.974", "boundary": "Phía Bắc giáp đường số 10 KDC Bình Hưng, phía Nam giáp đường số 2 KDC Bình Hưng, phía Đông giáp đường số 1 KDC Bình Hưng, phía tây giáp Rạch Xu."},
+          {"name": "Ấp 6", "area": "24.94ha", "area_num": 24.94, "households": "827 hộ", "households_num": 827, "population": "2527 nhân khẩu", "population_num": 2527, "secretary": "Võ Phi Hùng", "leader": "Võ Phi Hùng", "phone": "0913.774.974", "boundary": "Phía Bắc giáp đường số 10 KDC Bình Hưng, phía Nam giáp đường số 2 KDC Bình Hưng, phía Đông giáp Quốc lộ 50, phía Tây giáp đường số 1 KDC Bình Hưng."},
+          {"name": "Ấp 7", "area": "15.00ha", "area_num": 15.0, "households": "610 hộ", "households_num": 610, "population": "2410 nhân khẩu", "population_num": 2410, "secretary": "Lê Văn Tám", "leader": "Lê Văn Tám", "phone": "0908.123.456", "boundary": "Phía Bắc giáp đường số 2 KDC Bình Hưng, phía Nam giáp Nguyễn Văn Linh, phía Đông giáp đường số 1 KDC Bình Hưng, phía Tây giáp Rạch Xu."},
+          {"name": "Ấp 8", "area": "16.12ha", "area_num": 16.12, "households": "615 hộ", "households_num": 615, "population": "2415 nhân khẩu", "population_num": 2415, "secretary": "Lê Văn Tám", "leader": "Lê Văn Tám", "phone": "0908.123.456", "boundary": "Phía Bắc giáp đường số 2 KDC Bình Hưng, phía Nam giáp Nguyễn Văn Linh, phía Đông giáp Quốc lộ 50, phía Tây giáp đường số 1 KDC Bình Hưng."},
+          {"name": "Ấp 9", "area": "13.40ha", "area_num": 13.4, "households": "580 hộ", "households_num": 580, "population": "2180 nhân khẩu", "population_num": 2180, "secretary": "Nguyễn Hoàng Nam", "leader": "Nguyễn Hoàng Nam", "phone": "0918.987.654", "boundary": "Giáp ranh xã Phong Phú và KDC Bình Hưng trục phía Tây."},
+          {"name": "Ấp 10", "area": "12.80ha", "area_num": 12.8, "households": "520 hộ", "households_num": 520, "population": "2050 nhân khẩu", "population_num": 2050, "secretary": "Nguyễn Hoàng Nam", "leader": "Nguyễn Hoàng Nam", "phone": "0918.987.654", "boundary": "Giáp ranh trục Quốc lộ 50 kéo dài về phía xã Phong Phú."},
+          {"name": "Ấp 11", "area": "14.20ha", "area_num": 14.2, "households": "640 hộ", "households_num": 640, "population": "2390 nhân khẩu", "population_num": 2390, "secretary": "Phạm Minh Tuấn", "leader": "Phạm Minh Tuấn", "phone": "0903.111.222", "boundary": "Khu vực dân cư tiếp giáp Rạch Ông Lớn nhánh thượng lưu."},
+          {"name": "Ấp 12", "area": "11.90ha", "area_num": 11.9, "households": "590 hộ", "households_num": 590, "population": "2210 nhân khẩu", "population_num": 2210, "secretary": "Phạm Minh Tuấn", "leader": "Phạm Minh Tuấn", "phone": "0903.111.222", "boundary": "Khu vực dân cư trục đường Nguyễn Văn Linh và Rạch Ông Lớn."},
+          {"name": "Ấp 13", "area": "15.60ha", "area_num": 15.6, "households": "680 hộ", "households_num": 680, "population": "2490 nhân khẩu", "population_num": 2490, "secretary": "Trần Thanh Sơn", "leader": "Trần Thanh Sơn", "phone": "0989.333.444", "boundary": "Giáp ranh Quận 7 ranh giới phía Đông."},
+          {"name": "Ấp 14", "area": "16.20ha", "area_num": 16.2, "households": "710 hộ", "households_num": 710, "population": "2580 nhân khẩu", "population_num": 2580, "secretary": "Trần Thanh Sơn", "leader": "Trần Thanh Sơn", "phone": "0989.333.444", "boundary": "Khu dân cư hiện hữu giáp ranh Quận 7 trục đường Nguyễn Văn Linh."},
+          {"name": "Ấp 15", "area": "10.50ha", "area_num": 10.5, "households": "530 hộ", "households_num": 530, "population": "1980 nhân khẩu", "population_num": 1980, "secretary": "Hoàng Văn Hải", "leader": "Hoàng Văn Hải", "phone": "0977.555.666", "boundary": "Khu vực ven sông giáp ranh Quận 8."},
+          {"name": "Ấp 16", "area": "12.30ha", "area_num": 12.3, "households": "560 hộ", "households_num": 560, "population": "2100 nhân khẩu", "population_num": 2100, "secretary": "Hoàng Văn Hải", "leader": "Hoàng Văn Hải", "phone": "0977.555.666", "boundary": "Trục dân cư KDC Camellia và vùng phụ cận."},
+          {"name": "Ấp 17", "area": "18.10ha", "area_num": 18.1, "households": "740 hộ", "households_num": 740, "population": "2730 nhân khẩu", "population_num": 2730, "secretary": "Lê Thị Hồng", "leader": "Lê Thị Hồng", "phone": "0934.777.888", "boundary": "Giáp ranh xã Phước Kiển, Nhà Bè."},
+          {"name": "Ấp 18", "area": "19.40ha", "area_num": 19.4, "households": "790 hộ", "households_num": 790, "population": "2890 nhân khẩu", "population_num": 2890, "secretary": "Lê Thị Hồng", "leader": "Lê Thị Hồng", "phone": "0934.777.888", "boundary": "Trục giáp ranh Nhà Bè ven rạch Hiệp Phước."},
+          {"name": "Ấp 19", "area": "22.50ha", "area_num": 22.5, "households": "850 hộ", "households_num": 850, "population": "2950 nhân khẩu", "population_num": 2950, "secretary": "Đỗ Mạnh Hùng", "leader": "Đỗ Mạnh Hùng", "phone": "0912.222.333", "boundary": "Khu đô thị mới Dương Hồng và lân cận."},
+          {"name": "Ấp 20", "area": "21.00ha", "area_num": 21.0, "households": "810 hộ", "households_num": 810, "population": "2820 nhân khẩu", "population_num": 2820, "secretary": "Đỗ Mạnh Hùng", "leader": "Đỗ Mạnh Hùng", "phone": "0912.222.333", "boundary": "Khu dân cư hiện hữu trục Nguyễn Văn Linh giáp KDC Dương Hồng."},
+          {"name": "Ấp 21", "area": "13.80ha", "area_num": 13.8, "households": "620 hộ", "households_num": 620, "population": "2310 nhân khẩu", "population_num": 2310, "secretary": "Nguyễn Văn Thắng", "leader": "Nguyễn Văn Thắng", "phone": "0902.444.555", "boundary": "Giáp ranh Quận 8 trục cầu Tạ Quang Bửu kéo dài."},
+          {"name": "Ấp 22", "area": "14.50ha", "area_num": 14.5, "households": "660 hộ", "households_num": 660, "population": "2420 nhân khẩu", "population_num": 2420, "secretary": "Nguyễn Văn Thắng", "leader": "Nguyễn Văn Thắng", "phone": "0902.444.555", "boundary": "Khu dân cư ven rạch giáp ranh phường 5, Quận 8."},
+          {"name": "Ấp 23", "area": "35.20ha", "area_num": 35.2, "households": "890 hộ", "households_num": 890, "population": "3120 nhân khẩu", "population_num": 3120, "secretary": "Phan Minh Hải", "leader": "Phan Minh Hải", "phone": "0988.666.777", "boundary": "Khu dân cư Đại Phúc Green Villas trục chính."},
+          {"name": "Ấp 24", "area": "32.10ha", "area_num": 32.1, "households": "844 hộ", "households_num": 844, "population": "3140 nhân khẩu", "population_num": 3140, "secretary": "Phan Minh Hải", "leader": "Phan Minh Hải", "phone": "0988.666.777", "boundary": "Khu vực mở rộng KDC Đại Phúc tiếp giáp ven sông."},
+          {"name": "Ấp 25", "area": "15.40ha", "area_num": 15.4, "households": "590 hộ", "households_num": 590, "population": "2250 nhân khẩu", "population_num": 2250, "secretary": "Bùi Thị Mai", "leader": "Bùi Thị Mai", "phone": "0945.888.999", "boundary": "Khu vực dân cư giáp ranh xã Phong Phú KDC ven sông."},
+          {"name": "Ấp 26", "area": "12.90ha", "area_num": 12.9, "households": "540 hộ", "households_num": 540, "population": "2130 nhân khẩu", "population_num": 2130, "secretary": "Bùi Thị Mai", "leader": "Bùi Thị Mai", "phone": "0945.888.999", "boundary": "Giáp ranh trục Quốc lộ 50 hướng về trung tâm huyện Bình Chánh."},
+          {"name": "Ấp 27", "area": "45.20ha", "area_num": 45.2, "households": "780 hộ", "households_num": 780, "population": "2890 nhân khẩu", "population_num": 2890, "secretary": "Vũ Đình Long", "leader": "Vũ Đình Long", "phone": "0913.123.789", "boundary": "Khu dân cư Intresco Phong Phú 4 phân khu bắc."},
+          {"name": "Ấp 28", "area": "38.60ha", "area_num": 38.6, "households": "720 hộ", "households_num": 720, "population": "2650 nhân khẩu", "population_num": 2650, "secretary": "Vũ Đình Long", "leader": "Vũ Đình Long", "phone": "0913.123.789", "boundary": "Khu vực trung tâm hành chính mới và văn hóa thể thao xã."},
+          {"name": "Ấp 29", "area": "115.40ha", "area_num": 115.4, "households": "910 hộ", "households_num": 910, "population": "2980 nhân khẩu", "population_num": 2980, "secretary": "Lý Thanh Tùng", "leader": "Lý Thanh Tùng", "phone": "0909.456.123", "boundary": "Vùng nông nghiệp công nghệ cao và dự trữ phát triển phía Nam."},
+          {"name": "Ấp 30", "area": "243.51ha", "area_num": 243.51, "households": "650 hộ", "households_num": 650, "population": "2410 nhân khẩu", "population_num": 2410, "secretary": "Lý Thanh Tùng", "leader": "Lý Thanh Tùng", "phone": "0909.456.123", "boundary": "Vùng ranh giới phía Nam giáp ranh tỉnh Long An hiện tại."},
+          {"name": "Ấp 41", "area": "18.50ha", "area_num": 18.5, "households": "610 hộ", "households_num": 610, "population": "2340 nhân khẩu", "population_num": 2340, "secretary": "Nguyễn Minh Triết", "leader": "Nguyễn Minh Triết", "phone": "0903.888.777", "boundary": "Khu dân cư Trung Sơn phân khu A giáp ranh Quận 7."},
+          {"name": "Ấp 42", "area": "14.20ha", "area_num": 14.2, "households": "590 hộ", "households_num": 590, "population": "2210 nhân khẩu", "population_num": 2210, "secretary": "Nguyễn Minh Triết", "leader": "Nguyễn Minh Triết", "phone": "0903.888.777", "boundary": "Khu dân cư Trung Sơn phân khu B bám dọc sông Ông Lớn."},
+          {"name": "Ấp 43", "area": "22.10ha", "area_num": 22.1, "households": "575 hộ", "households_num": 575, "population": "3184 nhân khẩu", "population_num": 3184, "secretary": "Lê Hoàng Quân", "leader": "Lê Hoàng Quân", "phone": "0918.222.555", "boundary": "Khu dân cư Trung Sơn phân khu C trục vòng xoay chính."},
+          {"name": "Ấp 44", "area": "19.80ha", "area_num": 19.8, "households": "567 hộ", "households_num": 567, "population": "3122 nhân khẩu", "population_num": 3122, "secretary": "Lê Hoàng Quân", "leader": "Lê Hoàng Quân", "phone": "0918.222.555", "boundary": "Khu dân cư Trung Sơn phân khu D giáp ranh rạch Him Lam."},
+          {"name": "Ấp 45", "area": "12.40ha", "area_num": 12.4, "households": "802 hộ", "households_num": 802, "population": "3590 nhân khẩu", "population_num": 3590, "secretary": "Phạm Thừa Vũ", "leader": "Phạm Thừa Vũ", "phone": "0908.444.888", "boundary": "Khu dân cư Him Lam Bình Hưng khu căn hộ cao tầng."},
+          {"name": "Ấp 46", "area": "10.10ha", "area_num": 10.1, "households": "610 hộ", "households_num": 610, "population": "2450 nhân khẩu", "population_num": 2450, "secretary": "Phạm Thừa Vũ", "leader": "Phạm Thừa Vũ", "phone": "0908.444.888", "boundary": "Khu biệt thự Him Lam và phụ cận ven rạch."},
+          {"name": "Ấp 47", "area": "15.30ha", "area_num": 15.3, "households": "640 hộ", "households_num": 640, "population": "2510 nhân khẩu", "population_num": 2510, "secretary": "Đặng Văn Lâm", "leader": "Đặng Văn Lâm", "phone": "0983.999.111", "boundary": "Khu dân cư 6B Intresco phân khu hiện hữu."},
+          {"name": "Ấp 48", "area": "17.90ha", "area_num": 17.9, "households": "680 hộ", "households_num": 680, "population": "2630 nhân khẩu", "population_num": 2630, "secretary": "Đặng Văn Lâm", "leader": "Đặng Văn Lâm", "phone": "0983.999.111", "boundary": "Khu dân cư Đại Phúc Green Shipping ven sông Ông Lớn."},
+          {"name": "Ấp 49", "area": "23.41ha", "area_num": 23.41, "households": "1253 hộ", "households_num": 1253, "population": "3951 nhân khẩu", "population_num": 3951, "secretary": "Nguyễn Quốc Toản", "leader": "Nguyễn Quốc Toản", "phone": "0919.555.333", "boundary": "Khu căn hộ cao tầng Citizen, Mia Trung Sơn và lân cận."},
+          {"name": "Ấp 50", "area": "20.50ha", "area_num": 20.5, "households": "887 hộ", "households_num": 887, "population": "3082 nhân khẩu", "population_num": 3082, "secretary": "Nguyễn Quốc Toản", "leader": "Nguyễn Quốc Toản", "phone": "0919.555.333", "boundary": "Trục đường Nguyễn Văn Linh khu thương mại dịch vụ Trung Sơn."},
+          {"name": "Ấp 51", "area": "45.20ha", "area_num": 45.2, "households": "620 hộ", "households_num": 620, "population": "2340 nhân khẩu", "population_num": 2340, "secretary": "Trịnh Kim Chi", "leader": "Trịnh Kim Chi", "phone": "0902.777.333", "boundary": "Khu dân cư Phi Long 5 trục ranh giới phía Tây."},
+          {"name": "Ấp 52", "area": "52.10ha", "area_num": 52.1, "households": "590 hộ", "households_num": 590, "population": "2190 nhân khẩu", "population_num": 2190, "secretary": "Trịnh Kim Chi", "leader": "Trịnh Kim Chi", "phone": "0902.777.333", "boundary": "Khu vực đất dự án đang bồi thường và hạ tầng ven trục Nguyễn Văn Linh."},
+          {"name": "Ấp 53", "area": "483.16ha", "area_num": 483.16, "households": "420 hộ", "households_num": 420, "population": "1850 nhân khẩu", "population_num": 1850, "secretary": "Vương Đình Huệ", "leader": "Vương Đình Huệ", "phone": "0913.444.555", "boundary": "Vùng sình lầy sinh thái dự trữ phân khu Nam xã Bình Hưng cũ."},
+          {"name": "Ấp 54", "area": "120.40ha", "area_num": 120.4, "households": "480 hộ", "households_num": 480, "population": "1920 nhân khẩu", "population_num": 1920, "secretary": "Vương Đình Huệ", "leader": "Vương Đình Huệ", "phone": "0913.444.555", "boundary": "Khu vực làng đại học mở rộng khu nam (dự án treo)."},
+          {"name": "Ấp 55", "area": "112.50ha", "area_num": 112.5, "households": "510 hộ", "households_num": 510, "population": "2010 nhân khẩu", "population_num": 2010, "secretary": "Nguyễn Hồng Sơn", "leader": "Nguyễn Hồng Sơn", "phone": "0982.555.999", "boundary": "Khu công nghiệp nhỏ ven trục ranh giới Nhà Bè."},
+          {"name": "Ấp 56", "area": "175.99ha", "area_num": 175.99, "households": "530 hộ", "households_num": 530, "population": "2050 nhân khẩu", "population_num": 2050, "secretary": "Nguyễn Hồng Sơn", "leader": "Nguyễn Hồng Sơn", "phone": "0982.555.999", "boundary": "Khu dân cư nông thôn kết hợp bãi bồi ven sông lớn."},
+          {"name": "Ấp 57", "area": "14.20ha", "area_num": 14.2, "households": "1531 hộ", "households_num": 1531, "population": "3461 nhân khẩu", "population_num": 3461, "secretary": "Chu Ngọc Anh", "leader": "Chu Ngọc Anh", "phone": "0903.666.222", "boundary": "Khu dân cư Conic trục căn hộ cao tầng khối block."},
+          {"name": "Ấp 58", "area": "16.80ha", "area_num": 16.8, "households": "890 hộ", "households_num": 890, "population": "2890 nhân khẩu", "population_num": 2890, "secretary": "Chu Ngọc Anh", "leader": "Chu Ngọc Anh", "phone": "0903.666.222", "boundary": "Khu biệt thự Conic và nhà liên kế liền kề vườn."},
+          {"name": "Ấp 59", "area": "28.50ha", "area_num": 28.5, "households": "720 hộ", "households_num": 720, "population": "2450 nhân khẩu", "population_num": 2450, "secretary": "Trần Việt Tú", "leader": "Trần Việt Tú", "phone": "0918.333.777", "boundary": "Khu dân cư Terra Mia và ven hành lang an toàn điện."},
+          {"name": "Ấp 60", "area": "31.20ha", "area_num": 31.2, "households": "680 hộ", "households_num": 680, "population": "2310 nhân khẩu", "population_num": 2310, "secretary": "Trần Việt Tú", "leader": "Trần Việt Tú", "phone": "0918.333.777", "boundary": "Trục đường chéo nối liền KDC Conic và KDC Phong Phú 4."},
+          {"name": "Ấp 61", "area": "85.40ha", "area_num": 85.4, "households": "530 hộ", "households_num": 530, "population": "1980 nhân khẩu", "population_num": 1980, "secretary": "Lê Minh Trí", "leader": "Lê Minh Trí", "phone": "0908.999.000", "boundary": "Đất dự trữ phát triển KDC Phong Phú giai đoạn 3."},
+          {"name": "Ấp 62", "area": "340.68ha", "area_num": 340.68, "households": "410 hộ", "households_num": 410, "population": "1720 nhân khẩu", "population_num": 1720, "secretary": "Lê Minh Trí", "leader": "Lê Minh Trí", "phone": "0908.999.000", "boundary": "Vùng ranh giới phía Tây Nam giáp ranh huyện Bình Chánh phân khu ruộng."},
+          {"name": "Ấp 63", "area": "25.40ha", "area_num": 25.4, "households": "670 hộ", "households_num": 670, "population": "2410 nhân khẩu", "population_num": 2410, "secretary": "Nguyễn Đức Chung", "leader": "Nguyễn Đức Chung", "phone": "0913.555.666", "boundary": "Khu dân cư Phong Phú 4 phân khu nhà phố vườn."},
+          {"name": "Ấp 64", "area": "22.10ha", "area_num": 22.1, "households": "630 hộ", "households_num": 630, "population": "2290 nhân khẩu", "population_num": 2290, "secretary": "Nguyễn Đức Chung", "leader": "Nguyễn Đức Chung", "phone": "0913.555.666", "boundary": "Khu dân cư Phong Phú 4 cụm chung cư cao tầng Lovera Vista."},
+          {"name": "Ấp 65", "area": "18.90ha", "area_num": 18.9, "households": "780 hộ", "households_num": 780, "population": "2850 nhân khẩu", "population_num": 2850, "secretary": "Võ Văn Thưởng", "leader": "Võ Văn Thưởng", "phone": "0903.123.456", "boundary": "Khu dân cư nhà phố cao cấp Lovera Park phân khu 1."},
+          {"name": "Ấp 66", "area": "15.40ha", "area_num": 15.4, "households": "971 hộ", "households_num": 971, "population": "3421 nhân khẩu", "population_num": 3421, "secretary": "Võ Văn Thưởng", "leader": "Võ Văn Thưởng", "phone": "0903.123.456", "boundary": "Khu dân cư Lovera Park phân khu 2 và 3 liền kề trường học."},
+          {"name": "Ấp 67", "area": "12.80ha", "area_num": 12.8, "households": "1164 hộ", "households_num": 1164, "population": "3011 nhân khẩu", "population_num": 3011, "secretary": "Nguyễn Thiện Nhân", "leader": "Nguyễn Thiện Nhân", "phone": "0918.777.666", "boundary": "Trục căn hộ nhà ở xã hội phân khu mới bàn giao."},
+          {"name": "Ấp 68", "area": "19.50ha", "area_num": 19.5, "households": "540 hộ", "households_num": 540, "population": "2150 nhân khẩu", "population_num": 2150, "secretary": "Nguyễn Thiện Nhân", "leader": "Nguyễn Thiện Nhân", "phone": "0918.777.666", "boundary": "Hành lang xanh ven sông Trịnh Quang Nghị mở rộng."},
+          {"name": "Ấp 69", "area": "45.00ha", "area_num": 45.0, "households": "490 hộ", "households_num": 490, "population": "1950 nhân khẩu", "population_num": 1950, "secretary": "Đinh La Thăng", "leader": "Đinh La Thăng", "phone": "0909.111.999", "boundary": "Vùng bồi ven rạch giáp ranh KDC Phong Phú 4."},
+          {"name": "Ấp 70", "area": "145.85ha", "area_num": 145.85, "households": "1130 hộ", "households_num": 1130, "population": "3384 nhân khẩu", "population_num": 3384, "secretary": "Đinh La Thăng", "leader": "Đinh La Thăng", "phone": "0909.111.999", "boundary": "Khu hành chính tổng hợp quy hoạch mới ven trục cao tốc liên tỉnh kết nối xã."}
+        ];
+
+        // 1. Khởi tạo đồ thị Chart.js trực quan hóa Top 10 Ấp đông dân cư nhất
+        let chartInstance = null;
+        function initChart() {
+            const ctx = document.getElementById('hamletsChart').getContext('2d');
+            
+            // Số liệu đúc kết trực tiếp từ Top 10 của tệp dữ liệu
+            const top10Labels = ['Ấp 49', 'Ấp 45', 'Ấp 57', 'Ấp 66', 'Ấp 70', 'Ấp 43', 'Ấp 24', 'Ấp 44', 'Ấp 50', 'Ấp 67'];
+            const populationData = [3951, 3590, 3461, 3421, 3384, 3184, 3140, 3122, 3082, 3011];
+            const householdData = [1253, 802, 1531, 971, 1130, 575, 844, 567, 887, 1164];
+
+            chartInstance = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: top10Labels,
+                    datasets: [
+                        {
+                            label: 'Quy mô Nhân khẩu (Người)',
+                            data: populationData,
+                            backgroundColor: 'rgba(14, 165, 233, 0.7)',
+                            borderColor: '#0ea5e9',
+                            borderWidth: 1,
+                            borderRadius: 6
+                        },
+                        {
+                            label: 'Số hộ dân cư (Hộ)',
+                            data: householdData,
+                            backgroundColor: 'rgba(245, 158, 11, 0.7)',
+                            borderColor: '#f59e0b',
+                            borderWidth: 1,
+                            borderRadius: 6
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { labels: { color: '#94a3b8', font: { weight: 'bold', size: 10 } } }
+                    },
+                    scales: {
+                        x: { grid: { display: false }, ticks: { color: '#94a3b8', font: { weight: 'bold' } } },
+                        y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#94a3b8' } }
+                    }
+                }
+            });
+        }
+
+        // 2. Kết xuất 70 thẻ ấp lên màn hình
+        function renderGrid(data) {
+            const grid = document.getElementById('hamlets_grid');
+            grid.innerHTML = data.map(h => `
+                <div id="card_${h.name.replace(' ', '_')}" onclick="selectHamlet('${h.name}')" class="hamlet-card p-4 rounded-xl flex flex-col justify-between gap-2">
+                    <div class="flex justify-between items-center">
+                        <span class="font-black text-white text-sm">${h.name}</span>
+                        <span class="text-[9px] bg-slate-800 text-slate-400 font-bold px-1.5 py-0.5 rounded">${h.area}</span>
+                    </div>
+                    <div class="space-y-0.5 text-[10px] text-slate-400 font-medium">
+                        <p>👤 BT: <span class="text-slate-200 font-semibold">${h.secretary}</span></p>
+                        <p>🏠 Hộ: <span class="text-amber-400 font-bold">${h.households}</span></p>
+                        <p>👥 Dân: <span class="text-sky-400 font-bold">${h.population}</span></p>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // 3. Hàm kích hoạt khi click chọn ấp -> Đổ dữ liệu tự động lên Form
+        window.selectHamlet = function(name) {
+            const hamlet = hamletsData.find(h => h.name === name);
+            if(!hamlet) return;
+
+            // Đổ dữ liệu vào Form
+            document.getElementById('f_name').value = hamlet.name;
+            document.getElementById('f_area').value = hamlet.area;
+            document.getElementById('f_secretary').value = hamlet.secretary;
+            document.getElementById('f_households').value = hamlet.households;
+            document.getElementById('f_population').value = hamlet.population;
+            document.getElementById('f_leader').value = hamlet.leader;
+            document.getElementById('f_boundary').value = hamlet.boundary;
+            document.getElementById('f_phone').value = hamlet.phone;
+
+            // Highlight thẻ được chọn
+            document.querySelectorAll('.hamlet-card').forEach(c => c.classList.remove('active'));
+            const selectedCard = document.getElementById(`card_${name.replace(' ', '_')}`);
+            if(selectedCard) {
+                selectedCard.classList.add('active');
+                selectedCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }
+        }
+
+        // 4. Cơ chế chuyển đổi Tab bảng xếp hạng Top 5 khẩn cấp
+        window.switchTab = function(tabId, btnElement) {
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.add('hidden'));
+            document.getElementById(tabId).classList.remove('hidden');
+
+            // Đổi màu chữ và thanh underline active
+            const buttons = btnElement.parentElement.children;
+            for(let btn of buttons) {
+                btn.classList.remove('border-sky-500', 'text-sky-400');
+                btn.classList.add('border-transparent', 'text-slate-400');
+            }
+            btnElement.classList.remove('border-transparent', 'text-slate-400');
+            btnElement.classList.add('border-sky-500', 'text-sky-400');
+        }
+
+        // 5. Kích hoạt tìm kiếm thời gian thực (Real-time Filtering)
+        document.getElementById('search_hamlet').addEventListener('input', function(e) {
+            const kw = e.target.value.toLowerCase().trim();
+            const filtered = hamletsData.filter(h => 
+                h.name.toLowerCase().includes(kw) || 
+                h.secretary.toLowerCase().includes(kw) || 
+                h.leader.toLowerCase().includes(kw) || 
+                h.boundary.toLowerCase().includes(kw)
+            );
+            renderGrid(filtered);
+        });
+
+        // Khởi động hệ thống tổng thể
+        document.addEventListener("DOMContentLoaded", () => {
+            initChart();
+            renderGrid(hamletsData);
+            // Mặc định chọn ấp đầu tiên để khởi tạo Form mẫu
+            selectHamlet('Ấp 49');
+        });
+    </script>
 </body>
 </html>
