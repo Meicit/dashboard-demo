@@ -23,18 +23,56 @@
         .title-hero { font-weight: 900; text-transform: uppercase; font-size: clamp(2.5rem, 6vw, 4.2rem); color: #0c4a6e; letter-spacing: -1px; text-shadow: 0 2px 10px rgba(255, 255, 255, 0.8); }
         .subtitle-badge { display: inline-block; background: rgba(224, 242, 254, 0.65); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); border: 1.5px solid rgba(14, 165, 233, 0.3); padding: 12px 36px; border-radius: 99px; margin-top: 15px; box-shadow: 0 10px 25px -5px rgba(14, 165, 233, 0.2), inset 0 1px 2px rgba(255, 255, 255, 0.6); max-width: 90%; }
         
-        /* HỆ THỐNG LƯỚI ĐIỀU HÀNH 12 NÚT (4x3) */
+        /* HỆ THỐNG KHUNG LƯỚI 12 NÚT (4x3) */
         .grid-container { max-width: 1250px; margin: 0 auto 60px; padding: 0 20px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; width: 100%; }
         
-        /* Thiết kế thẻ phẳng mờ kính */
-        .nav-card { background: rgba(255, 255, 255, 0.45); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-top: 2px solid rgba(255, 255, 255, 0.6); border-left: 2px solid rgba(255, 255, 255, 0.5); border-right: 1px solid rgba(14, 165, 233, 0.2); border-bottom: 1px solid rgba(14, 165, 233, 0.2); border-radius: 26px; aspect-ratio: 1 / 0.85; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; padding: 20px; cursor: pointer; box-shadow: 0 6px 10px -1px rgba(12, 74, 110, 0.1), 0 14px 24px -5px rgba(12, 74, 110, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.5); transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1); }
-        .nav-card:hover { transform: translateY(-10px) scale(1.03); background: rgba(255, 255, 255, 0.85); border-top-color: rgba(14, 165, 233, 0.6); border-left-color: rgba(14, 165, 233, 0.4); box-shadow: 0 25px 40px -10px rgba(14, 165, 233, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.8); }
+        /* ĐỊNH DẠNG THẺ NÚT: Phóng to kích thước bằng ảnh nền, che phủ góc viền */
+        .nav-card { 
+            position: relative;
+            background-size: cover; 
+            background-position: center; 
+            background-repeat: no-repeat;
+            border-radius: 26px; 
+            aspect-ratio: 1 / 0.85; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            justify-content: flex-end; /* Đẩy chữ bám xuống đáy như hình mẫu */
+            overflow: hidden; /* Cắt viền ảnh thừa theo bo góc của nút */
+            cursor: pointer; 
+            box-shadow: 0 6px 10px -1px rgba(12, 74, 110, 0.15), 0 14px 24px -5px rgba(12, 74, 110, 0.2); 
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1); 
+            border: 2px solid rgba(255, 255, 255, 0.5);
+        }
         
-        /* Hiệu ứng hình ảnh biểu tượng đồ họa */
-        .nav-card .icon-img { width: 75px; height: 75px; object-fit: contain; filter: drop-shadow(0 6px 10px rgba(12, 74, 110, 0.2)); transition: transform 0.3s ease; }
-        .nav-card:hover .icon-img { transform: scale(1.12); }
+        /* Hiệu ứng nổi khối và đổi độ sáng khi di chuột vào */
+        .nav-card:hover { 
+            transform: translateY(-10px) scale(1.03); 
+            border-color: rgba(14, 165, 233, 0.6); 
+            box-shadow: 0 25px 40px -10px rgba(14, 165, 233, 0.4);
+        }
         
-        .nav-card h3 { font-size: 15px; font-weight: 900; text-transform: uppercase; letter-spacing: 0.3px; color: #0b4a8f; text-align: center; text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8); line-height: 1.4; }
+        /* Lớp mặt nạ mờ mỏng ở đáy nút giúp hiển thị chữ rõ nét trên nền ảnh bự */
+        .text-overlay {
+            width: 100%;
+            background: linear-gradient(to top, rgba(11, 74, 143, 0.95) 0%, rgba(11, 74, 143, 0.75) 70%, rgba(11, 74, 143, 0) 100%);
+            padding: 16px 10px 14px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        .nav-card:hover .text-overlay {
+            background: linear-gradient(to top, rgba(14, 165, 233, 0.98) 0%, rgba(14, 165, 233, 0.85) 80%, rgba(14, 165, 233, 0) 100%);
+        }
+        
+        /* Định dạng text chữ */
+        .nav-card h3 { 
+            font-size: 14px; 
+            font-weight: 900; 
+            text-transform: uppercase; 
+            letter-spacing: 0.5px; 
+            color: #ffffff; /* Chuyển sang chữ trắng để nổi bật trên nền ảnh */
+            line-height: 1.4;
+        }
         
         .content-section { max-width: 1250px; margin: 0 auto 80px; width: 100%; padding: 0 20px; }
         .info-box { background: rgba(255, 255, 255, 0.45); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.4); border-radius: 24px; padding: 40px; box-shadow: 0 10px 25px -5px rgba(12, 74, 110, 0.12); }
@@ -64,64 +102,76 @@
 
     <main class="grid-container">
         
-        <a href="gioithieu.html" class="nav-card">
-            <img src="icon/gioithieu.png" alt="Giới thiệu" class="icon-img">
-            <h3>Giới thiệu</h3>
+        <a href="gioithieu.html" class="nav-card" style="background-image: url('icon/gioithieu.png');">
+            <div class="text-overlay">
+                <h3>Giới thiệu</h3>
+            </div>
         </a>
         
-        <a href="gioithieu.html#tru-so" class="nav-card">
-            <img src="icon/truso.png" alt="Trụ sở" class="icon-img">
-            <h3>Địa chỉ trụ sở<br>cơ quan hành chính</h3>
+        <a href="gioithieu.html#tru-so" class="nav-card" style="background-image: url('icon/truso.png');">
+            <div class="text-overlay">
+                <h3>Trụ sở cơ quan<br>hành chính</h3>
+            </div>
         </a>
         
-        <div onclick="openLoginModal()" class="nav-card">
-            <img src="icon/dashboard.png" alt="i-Dashboard" class="icon-img">
-            <h3>Hệ thống i-Dashboard<br>điều hành xã</h3>
+        <div onclick="openLoginModal()" class="nav-card" style="background-image: url('icon/dashboard.png');">
+            <div class="text-overlay">
+                <h3>Hệ thống i-Dashboard<br>điều hành xã</h3>
+            </div>
         </div>
         
-        <a href="node-thong-tin-tthc/tthc.html" class="nav-card">
-            <img src="icon/tthc.png" alt="Thủ tục hành chính" class="icon-img">
-            <h3>Thông tin<br>Thủ tục hành chính</h3>
+        <a href="node-thong-tin-tthc/tthc.html" class="nav-card" style="background-image: url('icon/tthc.png');">
+            <div class="text-overlay">
+                <h3>Thông tin<br>Thủ tục hành chính</h3>
+            </div>
         </a>        
         
-        <div onclick="alert('Hệ thống Bản đồ số địa chính đang được chuẩn hóa dữ liệu liên thông.')" class="nav-card">
-            <img src="icon/bandoso.png" alt="Bản đồ số" class="icon-img">
-            <h3>Bản đồ số<br>xã Bình Hưng</h3>
+        <div onclick="alert('Hệ thống Bản đồ số địa chính đang được chuẩn hóa dữ liệu liên thông.')" class="nav-card" style="background-image: url('icon/bandoso.png');">
+            <div class="text-overlay">
+                <h3>Bản đồ số<br>xã Bình Hưng</h3>
+            </div>
         </div>
         
-        <div onclick="alert('Cổng thông tin kết nối các trường học trên địa bàn đang cấu hình máy chủ.')" class="nav-card">
-            <img src="icon/truonghoc.png" alt="Trường học" class="icon-img">
-            <h3>Trang điện tử<br>trường học</h3>
+        <div onclick="alert('Cổng thông tin kết nối các trường học trên địa bàn đang cấu hình máy chủ.')" class="nav-card" style="background-image: url('icon/truonghoc.png');">
+            <div class="text-overlay">
+                <h3>Trang điện tử<br>trường học</h3>
+            </div>
         </div>
         
-        <div onclick="alert('Kho học liệu số giáo dục đào tạo liên thông đang tích hợp dữ liệu.')" class="nav-card">
-            <img src="icon/hoclieu.png" alt="Học liệu số" class="icon-img">
-            <h3>Kho học liệu số<br>giáo dục</h3>
+        <div onclick="alert('Kho học liệu số giáo dục đào tạo liên thông đang tích hợp dữ liệu.')" class="nav-card" style="background-image: url('icon/hoclieu.png');">
+            <div class="text-overlay">
+                <h3>Kho học liệu số<br>giáo dục</h3>
+            </div>
         </div>
         
-        <a href="so-tay-70-ap/so-tay.html" class="nav-card">
-            <img src="icon/dieuhanhap.png" alt="Điều hành ấp" class="icon-img">
-            <h3>Trang điều hành Ấp<br>(Sổ tay 70 ấp)</h3>
+        <a href="so-tay-70-ap/so-tay.html" class="nav-card" style="background-image: url('icon/dieuhanhap.png');">
+            <div class="text-overlay">
+                <h3>Trang điều hành Ấp<br>(Sổ tay 70 ấp)</h3>
+            </div>
         </a>
 
-        <a href="tuyen-truyen/tuyen-truyen.html" class="nav-card">
-            <img src="icon/tuyentruyen.png" alt="Tuyên truyền" class="icon-img">
-            <h3>Thông tin<br>tuyên truyền</h3>
+        <a href="tuyen-truyen/tuyen-truyen.html" class="nav-card" style="background-image: url('icon/tuyentruyen.png');">
+            <div class="text-overlay">
+                <h3>Thông tin<br>tuyên truyền</h3>
+            </div>
         </a>
 
-        <a href="https://www.facebook.com" target="_blank" class="nav-card">
-            <img src="icon/fanpage.png" alt="Fanpage" class="icon-img">
-            <h3>Trang Fanpage<br>xã Bình Hưng</h3>
+        <a href="https://www.facebook.com" target="_blank" class="nav-card" style="background-image: url('icon/fanpage.png');">
+            <div class="text-overlay">
+                <h3>Trang Fanpage<br>xã Bình Hưng</h3>
+            </div>
         </a>
 
-        <div onclick="alert('Trợ lý ảo AI hành chính công phục vụ nhân dân đang chạy thử nghiệm nội bộ.')" class="nav-card">
-            <img src="icon/trolyao.png" alt="Trợ lý ảo" class="icon-img">
-            <h3>Trợ lý Ảo<br>xã Bình Hưng</h3>
+        <div onclick="alert('Trợ lý ảo AI hành chính công phục vụ nhân dân đang chạy thử nghiệm nội bộ.')" class="nav-card" style="background-image: url('icon/trolyao.png');">
+            <div class="text-overlay">
+                <h3>Trợ lý Ảo<br>xã Bình Hưng</h3>
+            </div>
         </div>
 
-        <a href="tuyen-truyen/tuyen-truyen.html#phan-anh" class="nav-card">
-            <img src="icon/phananh.png" alt="Phản ánh trực tuyến" class="icon-img">
-            <h3>Phản ánh<br>trực tuyến</h3>
+        <a href="tuyen-truyen/tuyen-truyen.html#phan-anh" class="nav-card" style="background-image: url('icon/phananh.png');">
+            <div class="text-overlay">
+                <h3>Phản ánh<br>trực tuyến</h3>
+            </div>
         </a>
     </main>
 
