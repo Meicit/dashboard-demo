@@ -8,31 +8,35 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        /* QUẢN LÝ MÀU CHỮ NỔI BẬT KHÔNG DÙNG TRẮNG / XÁM CHO NỀN TỐI (DARK THEME) */
+        /* QUẢN LÝ MÀU CHỮ NỔI BẬT CHO NỀN TỐI (DARK THEME) - KHÔNG DÙNG TRẮNG / XÁM */
         body.dark-theme {
             background: linear-gradient(rgba(15, 23, 42, 0.9), rgba(15, 23, 42, 0.98)), url('../hinhnen.png');
             background-size: cover; background-position: center; background-attachment: fixed;
-            color: #38bdf8; /* Xanh ngọc sáng */
+            color: #38bdf8;
         }
-        body.dark-theme .text-dynamic-title { color: #00f0ff; } /* Cyan Neon cực nổi */
+        body.dark-theme .text-dynamic-title { color: #00f0ff; } /* Cyan Neon */
         body.dark-theme .text-dynamic-body { color: #93c5fd; }  /* Xanh dương tươi */
-        body.dark-theme .text-dynamic-label { color: #fbbf24; } /* Vàng hổ phách rực rỡ */
+        body.dark-theme .text-dynamic-label { color: #fbbf24; } /* Vàng hổ phách */
         body.dark-theme .glass-panel { background: rgba(15, 23, 42, 0.75); border-color: rgba(56, 189, 248, 0.2); }
         body.dark-theme .card-target-item { background: rgba(30, 41, 59, 0.7); border-color: rgba(56, 189, 248, 0.15); }
         body.dark-theme .insight-card { background: rgba(15, 23, 42, 0.5); border-color: rgba(56, 189, 248, 0.1); }
+        body.dark-theme .btn-switcher-active { background: #0369a1; color: #00f0ff; border-color: #00f0ff; }
+        body.dark-theme .kpi-box { background: linear-gradient(135deg, #1e3a8a 0%, #0f172a 100%); border-color: #38bdf8; }
 
-        /* QUẢN LÝ MÀU CHỮ NỔI BẬT KHÔNG DÙNG TRẮNG / XÁM CHO NỀN SÁNG (LIGHT THEME) */
+        /* QUẢN LÝ MÀU CHỮ NỔI BẬT CHO NỀN SÁNG (LIGHT THEME) - KHÔNG DÙNG TRẮNG / XÁM */
         body.light-theme {
             background: linear-gradient(rgba(241, 245, 249, 0.9), rgba(241, 245, 249, 0.98)), url('../hinhnen.png');
             background-size: cover; background-position: center; background-attachment: fixed;
-            color: #0b4a8f; /* Xanh đại dương đậm */
+            color: #0b4a8f;
         }
-        body.light-theme .text-dynamic-title { color: #031b4e; } /* Xanh Navy siêu đậm bứt phá */
+        body.light-theme .text-dynamic-title { color: #031b4e; } /* Xanh Navy siêu đậm */
         body.light-theme .text-dynamic-body { color: #1e3a8a; }  /* Xanh indigo nguyên khối */
-        body.light-theme .text-dynamic-label { color: #b45309; } /* Cam đất đậm đà */
-        body.light-theme .glass-panel { background: rgba(255, 255, 255, 0.92); border-color: rgba(11, 74, 143, 0.3); box-shadow: 0 20px 40px -15px rgba(12, 74, 110, 0.2); }
-        body.light-theme .card-target-item { background: #ffffff; border-color: rgba(11, 74, 143, 0.2); box-shadow: 0 4px 12px rgba(12, 74, 110, 0.05); }
-        body.light-theme .insight-card { background: #f8fafc; border-color: rgba(11, 74, 143, 0.15); }
+        body.light-theme .text-dynamic-label { color: #b45309; } /* Cam đất đậm */
+        body.light-theme .glass-panel { background: rgba(226, 232, 240, 0.92); border-color: rgba(11, 74, 143, 0.3); box-shadow: 0 20px 40px -15px rgba(12, 74, 110, 0.2); }
+        body.light-theme .card-target-item { background: #e2e8f0; border-color: rgba(11, 74, 143, 0.2); box-shadow: 0 4px 12px rgba(12, 74, 110, 0.05); }
+        body.light-theme .insight-card { background: #cbd5e1; border-color: rgba(11, 74, 143, 0.15); }
+        body.light-theme .btn-switcher-active { background: #0b4a8f; color: #bfdbfe; border-color: #0b4a8f; box-shadow: 0 2px 8px rgba(11, 74, 143, 0.2); }
+        body.light-theme .kpi-box { background: linear-gradient(135deg, #0b4a8f 0%, #1e3a8a 100%); border-color: #031b4e; }
 
         body { font-family: 'Montserrat', sans-serif; margin: 0; padding: 0; min-height: 100vh; display: flex; flex-direction: column; transition: background 0.3s, color 0.3s; }
         .container-wrapper { max-width: 1550px; margin: 30px auto; padding: 0 24px; width: 100%; }
@@ -40,7 +44,7 @@
         .chart-container { position: relative; height: 280px; width: 100%; }
         
         .card-target-item { border: 1px solid; transition: all 0.25s cubic-bezier(0.165, 0.84, 0.44, 1); }
-        .card-target-item:hover { transform: translateY(-3px); border-color: #3b82f6; box-shadow: 0 10px 20px -5px rgba(59, 130, 246, 0.25); }
+        .card-target-item:hover { transform: translateY(-3px); border-color: #2563eb; box-shadow: 0 10px 20px -5px rgba(37, 99, 235, 0.25); }
 
         .btn-back { display: inline-flex; align-items: center; gap: 8px; background: rgba(14, 165, 233, 0.1); border: 1px solid rgba(14, 165, 233, 0.3); color: inherit; padding: 12px 24px; border-radius: 14px; font-weight: 800; font-size: 12px; text-transform: uppercase; transition: all 0.3s ease; }
         .btn-back:hover { transform: translateY(-2px); border-color: #ef4444; background: rgba(239, 68, 68, 0.1); }
@@ -55,12 +59,12 @@
         <div class="flex flex-col sm:flex-row justify-between items-center gap-4">
             <a href="home.html" class="btn-back">⬅️ Quay lại Trang chủ</a>
             
-            <div class="bg-slate-900/90 border border-slate-700 p-1 rounded-xl flex items-center shadow-md backdrop-blur">
-                <span class="text-[10px] font-black uppercase tracking-wider px-3 text-amber-400">Chế độ xem:</span>
-                <button onclick="setTheme('light')" id="btn-theme-light" class="flex items-center gap-1.5 text-[11px] font-extrabold uppercase px-3 py-1.5 rounded-lg transition text-slate-400 hover:text-sky-400">
+            <div class="bg-slate-900 border border-slate-700 p-1 rounded-xl flex items-center shadow-md backdrop-blur">
+                <span class="text-[10px] font-black uppercase tracking-wider px-3 text-dynamic-label">Chế độ xem:</span>
+                <button onclick="setTheme('light')" id="btn-theme-light" class="flex items-center gap-1.5 text-[11px] font-extrabold uppercase px-3 py-1.5 rounded-lg transition border border-transparent text-dynamic-body hover:text-sky-400">
                     🔵 Nền trắng
                 </button>
-                <button onclick="setTheme('dark')" id="btn-theme-dark" class="flex items-center gap-1.5 text-[11px] font-extrabold uppercase px-3 py-1.5 rounded-lg transition bg-sky-600 text-white shadow-sm">
+                <button onclick="setTheme('dark')" id="btn-theme-dark" class="flex items-center gap-1.5 text-[11px] font-extrabold uppercase px-3 py-1.5 rounded-lg transition border btn-switcher-active">
                     🟠 Nền đen
                 </button>
             </div>
@@ -75,9 +79,9 @@
                     UBND Xã Bình Hưng — Kế hoạch hành động chỉ huy mục tiêu năm 2026
                 </p>
             </div>
-            <div class="bg-gradient-to-br from-blue-700 to-indigo-900 px-6 py-3 rounded-2xl shadow-lg border border-sky-500 text-center min-w-[160px]">
-                <span class="text-[10px] font-black text-amber-300 uppercase block tracking-wider">Tổng tiến độ chung</span>
-                <span id="tong_tien_do" class="text-2xl font-black text-cyan-300">0%</span>
+            <div class="kpi-box px-6 py-3 rounded-2xl shadow-lg border text-center min-w-[160px]">
+                <span class="text-[10px] font-black text-dynamic-label uppercase block tracking-wider">Tổng tiến độ chung</span>
+                <span id="tong_tien_do" class="text-2xl font-black text-emerald-400">0%</span>
             </div>
         </header>
 
@@ -160,7 +164,6 @@
             renderCharts(data, isLight ? '#031b4e' : '#00f0ff');
         });
 
-        // HÀM RENDER ĐÃ LOẠI BỎ TOÀN BỘ CHỮ TRẮNG VÀ XÁM CỦA THẺ CHỈ TIÊU
         function renderList(data) {
             const container = document.getElementById('target-container');
             container.innerHTML = "";
@@ -236,7 +239,6 @@
             const avgTotal = (barData.reduce((a, b) => parseFloat(a) + parseFloat(b), 0) / 5).toFixed(1);
             document.getElementById('tong_tien_do').innerText = avgTotal + "%";
 
-            // Render Bar Chart
             const ctxBar = document.getElementById('barChart').getContext('2d');
             barChart = new Chart(ctxBar, {
                 type: 'bar',
@@ -259,7 +261,6 @@
                 }
             });
 
-            // Render Doughnut Chart
             const ctxPie = document.getElementById('pieChart').getContext('2d');
             doughnutChart = new Chart(ctxPie, {
                 type: 'doughnut',
@@ -280,7 +281,6 @@
             });
         }
 
-        // ĐIỀU HÀNH ĐỔI NỀN TRẮNG ĐEN TOÀN CỤC KHÔNG GIAN CHỈ HUY
         window.setTheme = function(themeName) {
             const body = document.getElementById('body-context');
             const btnLight = document.getElementById('btn-theme-light');
@@ -289,18 +289,19 @@
             if(themeName === 'light') {
                 body.classList.remove('dark-theme');
                 body.classList.add('light-theme');
-                btnLight.className = "flex items-center gap-1.5 text-[11px] font-extrabold uppercase px-3 py-1.5 rounded-lg transition bg-white text-blue-900 shadow-sm border border-slate-200";
+                
+                // Cấu hình lại nút sang dạng không màu trắng
+                btnLight.className = "flex items-center gap-1.5 text-[11px] font-extrabold uppercase px-3 py-1.5 rounded-lg transition bg-blue-900 text-sky-200 shadow-md border border-blue-700";
                 btnDark.className = "flex items-center gap-1.5 text-[11px] font-extrabold uppercase px-3 py-1.5 rounded-lg transition text-slate-500 hover:text-slate-800";
                 
-                // Đồng bộ chữ đồ thị sang màu Navy siêu đậm
                 if (currentRawSnapshot) renderCharts(currentRawSnapshot, '#031b4e');
             } else {
                 body.classList.remove('light-theme');
-                body.classList.add('dark-theme');
-                btnDark.className = "flex items-center gap-1.5 text-[11px] font-extrabold uppercase px-3 py-1.5 rounded-lg transition bg-sky-600 text-white shadow-sm";
-                btnLight.className = "flex items-center gap-1.5 text-[11px] font-extrabold uppercase px-3 py-1.5 rounded-lg transition text-slate-400 hover:text-white";
+                body.dark-theme || body.classList.add('dark-theme');
                 
-                // Đồng bộ chữ đồ thị sang màu Cyan Neon sáng bừng
+                btnDark.className = "flex items-center gap-1.5 text-[11px] font-extrabold uppercase px-3 py-1.5 rounded-lg transition bg-sky-600 text-sky-100 shadow-sm border border-sky-400";
+                btnLight.className = "flex items-center gap-1.5 text-[11px] font-extrabold uppercase px-3 py-1.5 rounded-lg transition text-slate-400 hover:text-sky-400";
+                
                 if (currentRawSnapshot) renderCharts(currentRawSnapshot, '#00f0ff');
             }
         }
