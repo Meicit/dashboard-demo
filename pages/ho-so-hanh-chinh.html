@@ -3,161 +3,282 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hệ thống Điều hành i-Dashboard - Xã Bình Hưng</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Inter', sans-serif; background-color: #f0f4f8; padding: 20px; }
-        .main-card { background: white; border-radius: 32px; padding: 28px; box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05); border: 1px solid #e2e8f0; height: 100%; }
-        .label-text { color: #0f172a; font-size: 11px; font-weight: 900; text-transform: uppercase; letter-spacing: 0.1em; }
-        .value-big { font-size: 48px; font-weight: 900; color: #0f172a; line-height: 1; }
-        .res-box { padding: 12px; border-radius: 16px; text-align: center; }
-        .res-label { font-size: 10px; font-weight: 900; text-transform: uppercase; margin-bottom: 4px; }
-        .res-value { font-size: 20px; font-weight: 900; }
+        /* CSS CONTEXT MẶC ĐỊNH CHO NỀN TỐI (DARK THEME) */
+        body.dark-theme {
+            background: linear-gradient(rgba(15, 23, 42, 0.85), rgba(15, 23, 42, 0.95)), url('../hinhnen.png');
+            background-size: cover; background-position: center; background-attachment: fixed;
+            color: #f8fafc;
+        }
+        body.dark-theme .glass-panel { background: rgba(30, 41, 59, 0.65); border-color: rgba(255, 255, 255, 0.1); }
+        body.dark-theme .text-main-title { color: #ffffff; }
+        body.dark-theme .card-stat { background: rgba(15, 23, 42, 0.4); border-color: rgba(255, 255, 255, 0.05); }
+        body.dark-theme .res-box { background: rgba(15, 23, 42, 0.5); border-color: rgba(255,255,255,0.08); }
+
+        /* CSS CONTEXT CHO NỀN SÁNG (LIGHT THEME) */
+        body.light-theme {
+            background: linear-gradient(rgba(241, 245, 249, 0.85), rgba(241, 245, 249, 0.95)), url('../hinhnen.png');
+            background-size: cover; background-position: center; background-attachment: fixed;
+            color: #0f172a;
+        }
+        body.light-theme .glass-panel { background: rgba(255, 255, 255, 0.85); border-color: rgba(14, 165, 233, 0.2); box-shadow: 0 20px 40px -15px rgba(12, 74, 110, 0.15); }
+        body.light-theme .text-main-title { color: #0b4a8f; }
+        body.light-theme .card-stat { background: #ffffff; border-color: rgba(14, 165, 233, 0.15); box-shadow: 0 4px 10px rgba(0,0,0,0.02); }
+        body.light-theme .res-box { background: #f8fafc; border-color: rgba(14, 165, 233, 0.12); }
+        body.light-theme .text-slate-400 { color: #475569; }
+        body.light-theme .text-slate-300 { color: #1e293b; }
+
+        body { font-family: 'Montserrat', sans-serif; margin: 0; padding: 0; min-height: 100vh; display: flex; flex-direction: column; transition: background 0.3s, color 0.3s; }
+        .container-wrapper { max-width: 1550px; margin: 30px auto; padding: 0 24px; width: 100%; }
+        .glass-panel { backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: 1px solid; border-radius: 24px; box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.4); transition: all 0.3s; }
+        
+        .label-text { font-size: 11px; font-weight: 900; text-transform: uppercase; letter-spacing: 0.05em; }
+        .value-big { font-size: 40px; font-weight: 900; line-height: 1; }
+        .res-box { padding: 12px; border-radius: 14px; text-align: center; border: 1px solid; font-family: 'Inter', sans-serif; }
+        .res-label { font-size: 10px; font-weight: 800; text-transform: uppercase; margin-bottom: 2px; }
+        .res-value { font-size: 18px; font-weight: 900; }
+
+        .btn-back { display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.15); color: inherit; padding: 12px 24px; border-radius: 14px; font-weight: 800; font-size: 12px; text-transform: uppercase; transition: all 0.3s ease; }
+        .btn-back:hover { transform: translateY(-2px); border-color: #0ea5e9; background: rgba(255,255,255,0.2); }
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(148, 163, 184, 0.3); border-radius: 10px; }
     </style>
 </head>
-<body>
-    <div class="max-w-7xl mx-auto italic">
-        <div class="bg-white p-6 rounded-[32px] mb-6 shadow-sm border border-indigo-100">
-            <h3 class="text-[11px] font-black text-indigo-900 uppercase mb-4 tracking-widest italic">Kết quả đánh giá Bộ chỉ số phục vụ</h3>
-            <div class="grid grid-cols-5 gap-4 text-center">
-                <div><p class="text-[10px] font-black text-indigo-700 uppercase mb-1">Tiến độ</p><p id="score_process" class="text-lg font-black text-slate-900">0</p></div>
-                <div><p class="text-[10px] font-black text-indigo-700 uppercase mb-1">Trực tuyến</p><p id="score_online" class="text-lg font-black text-slate-900">0</p></div>
-                <div><p class="text-[10px] font-black text-indigo-700 uppercase mb-1">Hài lòng</p><p id="score_satisfaction" class="text-lg font-black text-slate-900">0</p></div>
-                <div><p class="text-[10px] font-black text-indigo-700 uppercase mb-1">Số hóa</p><p id="score_digital" class="text-lg font-black text-slate-900">0</p></div>
-                <div class="bg-emerald-600 rounded-xl py-1 shadow-lg shadow-emerald-100"><p class="text-[10px] font-black text-white uppercase">Tổng điểm</p><p id="score_total" class="text-lg font-black text-white">0</p></div>
+<body class="dark-theme custom-scrollbar" id="body-context">
+
+    <div class="container-wrapper space-y-6">
+        
+        <div class="flex flex-col sm:flex-row justify-between items-center gap-4">
+            <a href="home.html" class="btn-back">⬅️ Quay lại Cổng chính</a>
+            
+            <div class="bg-slate-800/80 border border-slate-700 p-1 rounded-xl flex items-center shadow-md backdrop-blur">
+                <span class="text-[10px] font-black uppercase tracking-wider px-3 text-slate-400">Giao diện:</span>
+                <button onclick="setTheme('light')" id="btn-theme-light" class="flex items-center gap-1.5 text-[11px] font-bold uppercase px-3 py-1.5 rounded-lg transition text-slate-400 hover:text-white">
+                    ⚪ Nền trắng
+                </button>
+                <button onclick="setTheme('dark')" id="btn-theme-dark" class="flex items-center gap-1.5 text-[11px] font-bold uppercase px-3 py-1.5 rounded-lg transition bg-sky-600 text-white shadow-sm">
+                    ⚫ Nền đen
+                </button>
             </div>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-            
-            <div class="main-card border-t-[12px] border-blue-700">
-                <div class="flex flex-col mb-8">
-                    <div class="flex justify-between items-end mb-6">
-                        <div>
-                            <p class="label-text text-blue-800">Tiếp nhận trong tháng</p>
-                            <h2 id="month_total" class="value-big text-blue-700 mt-2">0</h2>
-                        </div>
-                        <div class="text-right">
-                             <p class="text-[10px] font-black text-slate-500 uppercase italic">Hồ sơ/Tháng</p>
-                        </div>
+        <header class="glass-panel p-5">
+            <h3 class="text-[11px] font-black text-sky-400 uppercase mb-3 tracking-widest italic">Kết quả đánh giá Bộ chỉ số phục vụ (Theo QĐ 766/QĐ-TTg)</h3>
+            <div class="grid grid-cols-2 md:grid-cols-5 gap-4 text-center">
+                <div class="card-stat p-3 rounded-xl border border-slate-700/40">
+                    <p class="text-[10px] font-bold text-sky-400 uppercase mb-0.5">Tiến độ</p>
+                    <p id="score_process" class="text-xl font-black">0</p>
+                </div>
+                <div class="card-stat p-3 rounded-xl border border-slate-700/40">
+                    <p class="text-[10px] font-bold text-sky-400 uppercase mb-0.5">Trực tuyến</p>
+                    <p id="score_online" class="text-xl font-black">0</p>
+                </div>
+                <div class="card-stat p-3 rounded-xl border border-slate-700/40">
+                    <p class="text-[10px] font-bold text-sky-400 uppercase mb-0.5">Hài lòng</p>
+                    <p id="score_satisfaction" class="text-xl font-black">0</p>
+                </div>
+                <div class="card-stat p-3 rounded-xl border border-slate-700/40">
+                    <p class="text-[10px] font-bold text-sky-400 uppercase mb-0.5">Số hóa</p>
+                    <p id="score_digital" class="text-xl font-black">0</p>
+                </div>
+                <div class="bg-gradient-to-r from-emerald-600 to-teal-600 rounded-xl p-3 shadow-md md:col-span-1 col-span-2">
+                    <p class="text-[10px] font-black text-white uppercase mb-0.5">Tổng điểm KPI Xã</p>
+                    <p id="score_total" class="text-xl font-black text-white">0</p>
+                </div>
+            </div>
+        </header>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+            <div class="lg:col-span-7 glass-panel p-5">
+                <h2 class="text-xs font-black uppercase tracking-wider text-sky-400 mb-3">📊 Đồ thị So sánh Tiếp nhận Hồ sơ (Trực tuyến vs Trực tiếp)</h2>
+                <div class="w-full relative h-[260px]">
+                    <canvas id="dashboardBarChart"></canvas>
+                </div>
+            </div>
+            <div class="lg:col-span-5 glass-panel p-5 flex flex-col justify-between">
+                <h2 class="text-xs font-black uppercase tracking-wider text-indigo-400 mb-3">🎯 Cơ cấu kết quả giải quyết thủ tục hành chính</h2>
+                <div class="w-full relative h-[220px] flex justify-center">
+                    <canvas id="dashboardPieChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="glass-panel p-5 border-t-[8px] border-blue-600 flex flex-col justify-between space-y-4">
+                <div class="flex justify-between items-end">
+                    <div>
+                        <p class="label-text text-blue-400">Tiếp nhận trong tháng</p>
+                        <h2 id="month_total" class="value-big text-blue-500 mt-1">0</h2>
                     </div>
-                    
-                    <div class="grid grid-cols-2 gap-4">
-                        <div class="bg-blue-50 p-4 rounded-2xl border border-blue-100">
-                            <p class="text-[10px] font-black text-blue-600 uppercase mb-1">Trực tuyến</p>
-                            <p id="month_online" class="text-3xl font-black text-blue-700">0</p>
-                        </div>
-                        <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200">
-                            <p class="text-[10px] font-black text-slate-700 uppercase mb-1">Trực tiếp</p>
-                            <p id="month_offline" class="text-3xl font-black text-slate-900">0</p>
-                        </div>
+                    <p class="text-[9px] font-bold text-slate-400 uppercase italic">Hồ sơ/Tháng</p>
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                    <div class="card-stat p-3 rounded-xl border border-blue-500/20">
+                        <p class="text-[9px] font-bold text-blue-400 uppercase mb-0.5">Trực tuyến</p>
+                        <p id="month_online" class="text-xl font-black text-blue-500">0</p>
+                    </div>
+                    <div class="card-stat p-3 rounded-xl border border-slate-700/30">
+                        <p class="text-[9px] font-bold text-slate-400 uppercase mb-0.5">Trực tiếp</p>
+                        <p id="month_offline" class="text-xl font-black">0</p>
                     </div>
                 </div>
-
                 <div>
-                    <p class="label-text text-slate-900 mb-4 border-b border-slate-100 pb-2 italic">Kết quả giải quyết (Tháng)</p>
-                    <div class="grid grid-cols-4 gap-3">
-                        <div class="res-box bg-emerald-50 text-emerald-700 border border-emerald-200">
-                            <p class="res-label">Trước hạn</p><p id="res_before" class="res-value">0</p>
-                        </div>
-                        <div class="res-box bg-blue-50 text-blue-700 border border-blue-200">
-                            <p class="res-label">Trong hạn</p><p id="res_in_time" class="res-value">0</p>
-                        </div>
-                        <div class="res-box bg-rose-50 text-rose-700 border border-rose-200">
-                            <p class="res-label">Trễ hạn</p><p id="res_late" class="res-value">0</p>
-                        </div>
-                        <div class="res-box bg-slate-900 text-white">
-                            <p class="res-label">Xin lỗi</p><p id="res_sorry" class="res-value">0</p>
-                        </div>
+                    <p class="label-text text-slate-400 mb-2 border-b border-slate-700/40 pb-1 italic">Kết quả giải quyết (Tháng)</p>
+                    <div class="grid grid-cols-4 gap-2">
+                        <div class="res-box text-emerald-400 border-emerald-500/30"><p class="res-label">Trước hạn</p><p id="res_before" class="res-value">0</p></div>
+                        <div class="res-box text-blue-400 border-blue-500/30"><p class="res-label">Trong hạn</p><p id="res_in_time" class="res-value">0</p></div>
+                        <div class="res-box text-rose-400 border-rose-500/30"><p class="res-label">Trễ hạn</p><p id="res_late" class="res-value">0</p></div>
+                        <div class="res-box text-slate-300 border-slate-600/30 bg-slate-800/40"><p class="res-label">Xin lỗi</p><p id="res_sorry" class="res-value">0</p></div>
                     </div>
                 </div>
             </div>
 
-            <div class="main-card border-t-[12px] border-emerald-700">
-                <div class="flex flex-col mb-8">
-                    <div class="flex justify-between items-end mb-6">
-                        <div>
-                            <p class="label-text text-emerald-800 uppercase">Lũy kế đến ngày <span id="luy_ke_date" class="text-emerald-700">--/--</span></p>
-                            <h2 id="total_luy_ke" class="value-big text-emerald-700 mt-2">0</h2>
-                        </div>
-                        <div class="text-right">
-                             <p class="text-[10px] font-black text-slate-500 uppercase italic">Tổng lũy kế</p>
-                        </div>
+            <div class="glass-panel p-5 border-t-[8px] border-emerald-600 flex flex-col justify-between space-y-4">
+                <div class="flex justify-between items-end">
+                    <div>
+                        <p class="label-text text-emerald-400">Lũy kế đến ngày <span id="luy_ke_date" class="text-white font-bold">--/--</span></p>
+                        <h2 id="total_luy_ke" class="value-big text-emerald-500 mt-1">0</h2>
                     </div>
-
-                    <div class="grid grid-cols-2 gap-4">
-                        <div class="bg-emerald-50 p-4 rounded-2xl border border-emerald-100">
-                            <p class="text-[10px] font-black text-emerald-600 uppercase mb-1">Trực tuyến</p>
-                            <p id="total_online" class="text-3xl font-black text-emerald-700">0</p>
-                        </div>
-                        <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200">
-                            <p class="text-[10px] font-black text-slate-700 uppercase mb-1">Trực tiếp</p>
-                            <p id="total_offline" class="text-3xl font-black text-slate-900">0</p>
-                        </div>
+                    <p class="text-[9px] font-bold text-slate-400 uppercase italic">Tổng lũy kế</p>
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                    <div class="card-stat p-3 rounded-xl border border-emerald-500/20">
+                        <p class="text-[9px] font-bold text-emerald-400 uppercase mb-0.5">Trực tuyến</p>
+                        <p id="total_online" class="text-xl font-black text-emerald-500">0</p>
+                    </div>
+                    <div class="card-stat p-3 rounded-xl border border-slate-700/30">
+                        <p class="text-[9px] font-bold text-slate-400 uppercase mb-0.5">Trực tiếp</p>
+                        <p id="total_offline" class="text-xl font-black">0</p>
                     </div>
                 </div>
-
                 <div>
-                    <p class="label-text text-slate-900 mb-4 border-b border-slate-100 pb-2 italic">Kết quả giải quyết (Lũy kế)</p>
-                    <div class="grid grid-cols-4 gap-3">
-                        <div class="res-box bg-emerald-50 text-emerald-700 border border-emerald-200">
-                            <p class="res-label">Trước hạn</p><p id="lk_res_before" class="res-value">0</p>
-                        </div>
-                        <div class="res-box bg-blue-50 text-blue-700 border border-blue-200">
-                            <p class="res-label">Trong hạn</p><p id="lk_res_in_time" class="res-value">0</p>
-                        </div>
-                        <div class="res-box bg-rose-50 text-rose-700 border border-rose-200">
-                            <p class="res-label">Trễ hạn</p><p id="lk_res_late" class="res-value">0</p>
-                        </div>
-                        <div class="res-box bg-slate-900 text-white">
-                            <p class="res-label">Xin lỗi</p><p id="lk_res_sorry" class="res-value">0</p>
-                        </div>
+                    <p class="label-text text-slate-400 mb-2 border-b border-slate-700/40 pb-1 italic">Kết quả giải quyết (Lũy kế)</p>
+                    <div class="grid grid-cols-4 gap-2">
+                        <div class="res-box text-emerald-400 border-emerald-500/30"><p class="res-label">Trước hạn</p><p id="lk_res_before" class="res-value">0</p></div>
+                        <div class="res-box text-blue-400 border-blue-500/30"><p class="res-label">Trong hạn</p><p id="lk_res_in_time" class="res-value">0</p></div>
+                        <div class="res-box text-rose-400 border-rose-500/30"><p class="res-label">Trễ hạn</p><p id="lk_res_late" class="res-value">0</p></div>
+                        <div class="res-box text-slate-300 border-slate-600/30 bg-slate-800/40"><p class="res-label">Xin lỗi</p><p id="lk_res_sorry" class="res-value">0</p></div>
                     </div>
                 </div>
             </div>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div class="main-card !p-6 flex justify-between items-center border-l-[12px] border-orange-600">
-                <div><p class="label-text text-orange-900">Mức độ hài lòng</p><p id="sat_rate" class="text-4xl font-black text-orange-600">0%</p></div>
-                <div class="text-right"><p class="text-[10px] font-black text-slate-900 uppercase">Lượt đánh giá</p><p id="sat_count" class="text-3xl font-black text-slate-900">0</p></div>
+            <div class="glass-panel p-4 flex justify-between items-center border-l-[8px] border-orange-500">
+                <div><p class="label-text text-orange-400">Mức độ hài lòng</p><p id="sat_rate" class="text-3xl font-black text-orange-500">0%</p></div>
+                <div class="text-right"><p class="text-[9px] font-bold text-slate-400 uppercase">Lượt đánh giá</p><p id="sat_count" class="text-2xl font-black">0</p></div>
             </div>
-            <div class="main-card !p-6 flex justify-between items-center border-l-[12px] border-indigo-700">
-                <div><p class="label-text text-indigo-900">Số hóa lũy kế</p><p id="total_digital" class="text-4xl font-black text-indigo-700">0</p></div>
-                <div class="w-14 h-14 bg-indigo-100 rounded-2xl flex items-center justify-center text-indigo-700 font-black text-sm shadow-inner">DIGI</div>
+            <div class="glass-panel p-4 flex justify-between items-center border-l-[8px] border-indigo-600">
+                <div><p class="label-text text-indigo-400">Số hóa lũy kế</p><p id="total_digital" class="text-3xl font-black text-indigo-500">0</p></div>
+                <div class="w-12 h-12 bg-indigo-500/10 border border-indigo-500/30 rounded-xl flex items-center justify-center text-indigo-400 font-black text-xs">DIGI</div>
             </div>
-            <div class="main-card !p-6 flex justify-between items-center border-l-[12px] border-cyan-600">
-                <div><p class="label-text text-cyan-900">Số hóa trong tháng</p><p id="month_digital" class="text-4xl font-black text-cyan-600">0</p></div>
-                <div class="w-14 h-14 bg-cyan-100 rounded-2xl flex items-center justify-center text-cyan-700 font-black text-sm shadow-inner">NEW</div>
+            <div class="glass-panel p-4 flex justify-between items-center border-l-[8px] border-cyan-500">
+                <div><p class="label-text text-cyan-400">Số hóa trong tháng</p><p id="month_digital" class="text-3xl font-black text-cyan-500">0</p></div>
+                <div class="w-12 h-12 bg-cyan-500/10 border border-cyan-500/30 rounded-xl flex items-center justify-center text-cyan-400 font-black text-xs">NEW</div>
             </div>
         </div>
+
+        <div class="glass-panel p-5 border border-sky-500/20 bg-gradient-to-r from-slate-900/50 to-sky-950/10">
+            <h2 class="text-xs font-black uppercase tracking-wider text-amber-400 mb-3 flex items-center gap-2">💡 Trung tâm phân tích i-Dashboard & Khuyến nghị điều hành tác vụ</h2>
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 font-['Inter'] text-xs leading-relaxed text-slate-400">
+                <div class="card-stat p-4 rounded-xl border border-slate-700/50 space-y-1">
+                    <h3 class="font-extrabold text-emerald-400">🟢 ĐÁNH GIÁ CHỈ SỐ HOÀN THÀNH</h3>
+                    <p>Tỷ lệ hồ sơ giải quyết <span class="text-white font-medium">Đúng hạn và Trước hạn</span> duy trì mức cao ổn định. Chỉ số <span class="text-emerald-400 font-bold">Mức độ hài lòng</span> của nhân dân đạt cột mốc tích cực, phản ánh hiệu quả cải cách thủ tục tại bộ phận Một cửa.</p>
+                </div>
+                <div class="card-stat p-4 rounded-xl border border-slate-700/50 space-y-1">
+                    <h3 class="font-extrabold text-amber-400">🟡 PHÂN TÍCH PHƯƠNG THỨC HỒ SƠ</h3>
+                    <p>Biểu đồ cột chỉ rõ biên độ dao động lớn giữa hồ sơ tiếp nhận Trực tuyến và Trực tiếp. Cần rà soát các nhóm đối tượng người dân lớn tuổi tại các ấp vùng ven để hỗ trợ chuyển đổi số công vụ, tăng tỷ lệ nộp hồ sơ qua cổng DVC.</p>
+                </div>
+                <div class="card-stat p-4 rounded-xl border border-slate-700/50 space-y-1">
+                    <h3 class="font-extrabold text-sky-400">🎯 QUYẾT ĐỊNH CHỈ ĐẠO CẤP BÁCH</h3>
+                    <p class="italic font-bold text-sky-400 mb-1">Đề xuất Ban điều hành chỉ đạo:</p>
+                    <ul class="list-disc list-inside space-y-0.5 pl-0.5">
+                        <li>Đẩy mạnh chiến dịch <span class="text-white font-medium">Số hóa kết quả TTHC</span> trong tháng để bắt kịp KPI tổng.</li>
+                        <li>Yêu cầu các phòng ban chuyên môn xử lý dứt điểm các hồ sơ thuộc nhóm nguy cơ trễ hạn, hạn chế tối đa việc phát hành văn bản xin lỗi nhân dân.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
     </div>
+
+    <footer class="w-full text-center py-6 text-slate-500 font-bold text-[10px] uppercase tracking-[0.3em] border-t border-slate-900 bg-slate-950/20 backdrop-blur-md">
+        &copy; 2026 IOC Xã Bình Hưng — Hệ thống điều hành Dashboard quản trị số liệu liên thông trực tuyến
+    </footer>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
         import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-database.js";
 
-        // Cấu hình Firebase
-        const firebaseConfig = { 
-            databaseURL: "https://dashboard-demo-ce0da-default-rtdb.asia-southeast1.firebasedatabase.app" 
-        };
+        const firebaseConfig = { databaseURL: "https://dashboard-demo-ce0da-default-rtdb.asia-southeast1.firebasedatabase.app" };
         const app = initializeApp(firebaseConfig);
         const db = getDatabase(app);
-
-        // Lắng nghe dữ liệu tại Node ho_so_chi_tiet
         const dbRef = ref(db, 'dashboard_binhhung/ho_so_chi_tiet');
 
+        let barChart = null;
+        let pieChart = null;
+        let currentSnapshotData = {}; // Bộ nhớ đệm lưu trữ dữ liệu Firebase phục vụ cơ chế hoán đổi theme
+
+        // Hàm cốt lõi dựng đồ thị Chart.js thích ứng màu chữ
+        function updateCharts(d, textColor) {
+            if(barChart) barChart.destroy();
+            if(pieChart) pieChart.destroy();
+
+            // Đồ thị cột (Bar Chart)
+            const ctxBar = document.getElementById('dashboardBarChart').getContext('2d');
+            barChart = new Chart(ctxBar, {
+                type: 'bar',
+                data: {
+                    labels: ['Trong tháng', 'Tổng lũy kế'],
+                    datasets: [
+                        { label: 'Hồ sơ Trực tuyến', data: [d.month_online || 0, d.total_online || 0], backgroundColor: 'rgba(59, 130, 246, 0.75)', borderColor: '#3b82f6', borderWidth: 1, borderRadius: 5 },
+                        { label: 'Hồ sơ Trực tiếp', data: [d.month_offline || 0, d.total_offline || 0], backgroundColor: 'rgba(148, 163, 184, 0.4)', borderColor: '#94a3b8', borderWidth: 1, borderRadius: 5 }
+                    ]
+                },
+                options: {
+                    responsive: true, maintainAspectRatio: false,
+                    plugins: { legend: { labels: { color: textColor, font: { weight: 'bold', size: 10 } } } },
+                    scales: {
+                        x: { grid: { display: false }, ticks: { color: textColor, font: { weight: 'bold', size: 9 } } },
+                        y: { grid: { color: 'rgba(148, 163, 184, 0.1)' }, ticks: { color: textColor, font: { size: 9 } } }
+                    }
+                }
+            });
+
+            // Đồ thị tròn (Pie Chart)
+            const ctxPie = document.getElementById('dashboardPieChart').getContext('2d');
+            pieChart = new Chart(ctxPie, {
+                type: 'pie',
+                data: {
+                    labels: ['Trước hạn', 'Trong hạn', 'Trễ hạn'],
+                    datasets: [{
+                        data: [d.lk_res_before || 0, d.lk_res_in_time || 0, d.lk_res_late || 0],
+                        backgroundColor: ['rgba(16, 185, 129, 0.75)', 'rgba(59, 130, 246, 0.75)', 'rgba(244, 63, 94, 0.75)'],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true, maintainAspectRatio: false,
+                    plugins: { legend: { position: 'right', labels: { color: textColor, font: { weight: 'bold', size: 9 } } } }
+                }
+            });
+        }
+
+        // Lắng nghe dữ liệu Firebase thời gian thực
         onValue(dbRef, (snap) => {
             const d = snap.val() || {};
+            currentSnapshotData = d; // Ghi dữ liệu vào bộ nhớ đệm
 
-            // 1. Bộ chỉ số đánh giá
+            // Đổ text số liệu vào các thẻ ID
             document.getElementById('score_process').innerText = d.score_process || 0;
             document.getElementById('score_online').innerText = d.score_online || 0;
             document.getElementById('score_satisfaction').innerText = d.score_satisfaction || 0;
             document.getElementById('score_digital').innerText = d.score_digital || 0;
             document.getElementById('score_total').innerText = d.score_total || 0;
-
-            // 2. Dữ liệu tháng
             document.getElementById('month_total').innerText = d.month_total || 0;
             document.getElementById('month_online').innerText = d.month_online || 0;
             document.getElementById('month_offline').innerText = d.month_offline || 0;
@@ -165,8 +286,6 @@
             document.getElementById('res_in_time').innerText = d.res_in_time || 0;
             document.getElementById('res_late').innerText = d.res_late || 0;
             document.getElementById('res_sorry').innerText = d.res_sorry || 0;
-
-            // 3. Dữ liệu lũy kế
             document.getElementById('total_luy_ke').innerText = d.total_luy_ke || 0;
             document.getElementById('total_online').innerText = d.total_online || 0;
             document.getElementById('total_offline').innerText = d.total_offline || 0;
@@ -175,13 +294,36 @@
             document.getElementById('lk_res_in_time').innerText = d.lk_res_in_time || 0;
             document.getElementById('lk_res_late').innerText = d.lk_res_late || 0;
             document.getElementById('lk_res_sorry').innerText = d.lk_res_sorry || 0;
-
-            // 4. Hài lòng và Số hóa
             document.getElementById('sat_rate').innerText = (d.sat_rate || 0) + "%";
             document.getElementById('sat_count').innerText = d.sat_count || 0;
             document.getElementById('total_digital').innerText = d.total_digital || 0;
             document.getElementById('month_digital').innerText = d.month_digital || 0;
+
+            // Kiểm tra theme hiện tại của body để thiết lập màu chữ cho đồ thị tương ứng
+            const isLight = document.getElementById('body-context').classList.contains('light-theme');
+            updateCharts(d, isLight ? '#334155' : '#94a3b8');
         });
+
+        // Xuất hàm setTheme ra phạm vi window để các thẻ HTML click gọi được trực tiếp
+        window.setTheme = function(themeName) {
+            const body = document.getElementById('body-context');
+            const btnLight = document.getElementById('btn-theme-light');
+            const btnDark = document.getElementById('btn-theme-dark');
+
+            if(themeName === 'light') {
+                body.classList.remove('dark-theme');
+                body.classList.add('light-theme');
+                btnLight.className = "flex items-center gap-1.5 text-[11px] font-bold uppercase px-3 py-1.5 rounded-lg transition bg-white text-blue-900 shadow-sm border border-slate-200";
+                btnDark.className = "flex items-center gap-1.5 text-[11px] font-bold uppercase px-3 py-1.5 rounded-lg transition text-slate-500 hover:text-slate-300";
+                updateCharts(currentSnapshotData, '#334155');
+            } else {
+                body.classList.remove('light-theme');
+                body.classList.add('dark-theme');
+                btnDark.className = "flex items-center gap-1.5 text-[11px] font-bold uppercase px-3 py-1.5 rounded-lg transition bg-sky-600 text-white shadow-sm";
+                btnLight.className = "flex items-center gap-1.5 text-[11px] font-bold uppercase px-3 py-1.5 rounded-lg transition text-slate-400 hover:text-white";
+                updateCharts(currentSnapshotData, '#94a3b8');
+            }
+        }
     </script>
 </body>
-</html>c
+</html>
