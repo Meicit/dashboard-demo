@@ -7,139 +7,186 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        body {
-            font-family: 'Montserrat', sans-serif;
-            margin: 0; padding: 0; min-height: 100vh;
+        /* QUẢN LÝ MÀU CHỮ NỔI BẬT CHO NỀN TỐI (DARK THEME) - KHÔNG DÙNG TRẮNG / XÁM TĨNH */
+        body.dark-theme {
             background: linear-gradient(rgba(15, 23, 42, 0.8), rgba(15, 23, 42, 0.95)), url('../hinhnen.png');
             background-size: cover; background-position: center; background-attachment: fixed;
-            color: #f8fafc; display: flex; flex-direction: column;
+            color: #f8fafc;
         }
+        body.dark-theme .text-dynamic-title { color: #ffffff; }
+        body.dark-theme .text-dynamic-header { color: #00f0ff; } /* Cyan Neon */
+        body.dark-theme .text-dynamic-body { color: #93c5fd; }  /* Xanh dương tươi */
+        body.dark-theme .text-dynamic-label { color: #fbbf24; } /* Vàng hổ phách */
+        body.dark-theme .glass-panel { background: rgba(30, 41, 59, 0.6); border-color: rgba(255, 255, 255, 0.1); box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.5); }
+        body.dark-theme .input-dark { background: rgba(15, 23, 42, 0.6); border-color: rgba(255, 255, 255, 0.15); color: #ffffff; }
+        body.dark-theme .officer-card { background: rgba(255, 255, 255, 0.03); border-color: rgba(255, 255, 255, 0.06); }
+        body.dark-theme .officer-card:hover { background: rgba(14, 165, 233, 0.1); border-color: #0ea5e9; }
+        body.dark-theme .portal-btn { background: rgba(255, 255, 255, 0.05); border-color: rgba(255, 255, 255, 0.1); }
+        body.dark-theme .btn-nav { background: rgba(255, 255, 255, 0.05); border-color: rgba(255, 255, 255, 0.1); color: #ffffff; }
+        body.dark-theme .btn-nav:hover { border-color: #0ea5e9; background: rgba(14, 165, 233, 0.15); }
+        body.dark-theme .btn-switcher-active { background: #0369a1; color: #00f0ff; border-color: #00f0ff; }
+        body.dark-theme .sub-card-container { background: rgba(15, 23, 42, 0.4); border-color: rgba(255, 255, 255, 0.08); }
+        body.dark-theme .ticket-item-bg { background: rgba(15, 23, 42, 0.4); border-color: rgba(255, 255, 255, 0.08); }
+
+        /* QUẢN LÝ MÀU CHỮ NỔI BẬT CHO NỀN SÁNG (LIGHT THEME) - KHÔNG DÙNG TRẮNG / XÁM TĨNH */
+        body.light-theme {
+            background: linear-gradient(rgba(241, 245, 249, 0.9), rgba(241, 245, 249, 0.98)), url('../hinhnen.png');
+            background-size: cover; background-position: center; background-attachment: fixed;
+            color: #0b4a8f;
+        }
+        body.light-theme .text-dynamic-title { color: #031b4e; } /* Xanh Navy đậm */
+        body.light-theme .text-dynamic-header { color: #0b4a8f; }
+        body.light-theme .text-dynamic-body { color: #1e3a8a; }  /* Xanh indigo */
+        body.light-theme .text-dynamic-label { color: #b45309; } /* Cam đất đậm */
+        body.light-theme .glass-panel { background: rgba(255, 255, 255, 0.9); border-color: rgba(11, 74, 143, 0.25); box-shadow: 0 20px 40px -15px rgba(12, 74, 110, 0.15); }
+        body.light-theme .input-dark { background: #ffffff; border-color: rgba(11, 74, 143, 0.3); color: #031b4e; }
+        body.light-theme .officer-card { background: #ffffff; border-color: rgba(11, 74, 143, 0.18); box-shadow: 0 4px 12px rgba(12, 74, 110, 0.03); }
+        body.light-theme .officer-card:hover { background: rgba(11, 74, 143, 0.05); border-color: #0ea5e9; }
+        body.light-theme .portal-btn { background: #ffffff; border-color: rgba(11, 74, 143, 0.18); box-shadow: 0 4px 12px rgba(12, 74, 110, 0.03); }
+        body.light-theme .btn-nav { background: #ffffff; border-color: rgba(11, 74, 143, 0.25); color: #0b4a8f; box-shadow: 0 2px 6px rgba(0,0,0,0.05); }
+        body.light-theme .btn-nav:hover { border-color: #0ea5e9; background: rgba(11, 74, 143, 0.08); }
+        body.light-theme .btn-switcher-active { background: #0b4a8f; color: #bfdbfe; border-color: #0b4a8f; box-shadow: 0 2px 8px rgba(11, 74, 143, 0.2); }
+        body.light-theme .sub-card-container { background: #f8fafc; border-color: rgba(11, 74, 143, 0.15); }
+        body.light-theme .ticket-item-bg { background: #ffffff; border-color: rgba(11, 74, 143, 0.15); box-shadow: 0 4px 12px rgba(0,0,0,0.02); }
+
+        body { font-family: 'Montserrat', sans-serif; margin: 0; padding: 0; min-height: 100vh; display: flex; flex-direction: column; transition: background 0.3s, color 0.3s; }
         .container-wrapper { max-width: 1550px; margin: 30px auto; padding: 0 24px; width: 100%; }
-        .glass-panel { background: rgba(30, 41, 59, 0.6); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 24px; box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.5); }
-        .input-dark { background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 12px; padding: 12px 16px; color: #ffffff; outline: none; transition: all 0.2s; font-family: 'Inter', sans-serif; }
+        .glass-panel { backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: 1px solid; border-radius: 24px; transition: all 0.3s; }
+        .input-dark { border-radius: 12px; padding: 12px 16px; outline: none; transition: all 0.2s; font-family: 'Inter', sans-serif; }
         .input-dark:focus { border-color: #0ea5e9; box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.25); }
         
         .custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
         .custom-scrollbar::-webkit-scrollbar-track { background: rgba(0,0,0,0.1); }
-        .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 10px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(14, 165, 233, 0.3); border-radius: 10px; }
         
-        .officer-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); transition: all 0.25s ease; }
-        .officer-card:hover { transform: translateX(5px); background: rgba(14, 165, 233, 0.1); border-color: #0ea5e9; }
+        .officer-card { border: 1px solid; border-radius: 16px; transition: all 0.25s ease; }
+        .officer-card:hover { transform: translateX(5px); }
         
-        .portal-btn { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1); }
+        .portal-btn { border: 1px solid; border-radius: 24px; transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1); }
         .portal-btn:hover { transform: translateY(-5px); box-shadow: 0 12px 24px -10px rgba(14, 165, 233, 0.4); }
 
-        .btn-nav { display: inline-flex; align-items: center; gap: 8px; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); color: #ffffff; padding: 12px 20px; border-radius: 14px; font-weight: 800; font-size: 11px; text-transform: uppercase; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2); transition: all 0.3s ease; cursor: pointer; }
-        .btn-nav:hover { transform: translateY(-2px); border-color: #0ea5e9; background: rgba(14, 165, 233, 0.15); }
-        .btn-nav.active-tab { background: #0ea5e9; border-color: #0ea5e9; box-shadow: 0 0 15px rgba(14, 165, 233, 0.4); }
+        .btn-nav { display: inline-flex; align-items: center; gap: 8px; padding: 12px 20px; border-radius: 14px; font-weight: 800; font-size: 11px; text-transform: uppercase; transition: all 0.3s ease; cursor: pointer; border: 1px solid; }
+        .btn-nav.active-tab { background: #0ea5e9 !important; color: #ffffff !important; border-color: #0ea5e9 !important; box-shadow: 0 0 15px rgba(14, 165, 233, 0.4); }
     </style>
 </head>
-<body class="custom-scrollbar">
+<body class="dark-theme custom-scrollbar" id="body-context">
 
     <div class="container-wrapper space-y-6">
         
-        <div class="flex flex-col sm:flex-row justify-between items-stretch sm:items-center gap-3">
+        <div class="flex flex-col lg:flex-row justify-between items-stretch lg:items-center gap-4">
             <div class="flex items-center gap-2.5 flex-wrap">
                 <a href="../home.html" class="btn-nav">⬅️ Trang chủ</a>
                 <button onclick="toggleMainView('form-view', this)" id="nav-form-btn" class="btn-nav active-tab">📝 Gửi phản ánh mới</button>
                 <button onclick="toggleMainView('result-view', this)" id="nav-result-btn" class="btn-nav">🔍 Xem kết quả giải quyết</button>
             </div>
-            <span class="text-center text-[10px] bg-emerald-500/25 text-emerald-400 font-extrabold px-3 py-2 rounded-full border border-emerald-500/30 uppercase tracking-widest whitespace-nowrap">Cổng tiếp nhận an toàn 24/7</span>
+            
+            <div class="flex flex-col sm:flex-row items-center gap-3">
+                <div class="bg-slate-900 border border-slate-700 p-1 rounded-xl flex items-center shadow-md backdrop-blur w-full sm:w-auto justify-center">
+                    <span class="text-[10px] font-black uppercase tracking-wider px-3 text-dynamic-label">Chế độ xem:</span>
+                    <button onclick="setTheme('light')" id="btn-theme-light" class="flex items-center gap-1.5 text-[11px] font-extrabold uppercase px-3 py-1.5 rounded-lg transition border border-transparent text-sky-400 hover:text-sky-300">
+                        🔵 Nền trắng
+                    </button>
+                    <button onclick="setTheme('dark')" id="btn-theme-dark" class="flex items-center gap-1.5 text-[11px] font-extrabold uppercase px-3 py-1.5 rounded-lg transition border btn-switcher-active">
+                        🟠 Nền đen
+                    </button>
+                </div>
+                <span class="text-center text-[10px] bg-emerald-500/25 text-emerald-400 font-extrabold px-3 py-2 rounded-full border border-emerald-500/30 uppercase tracking-widest whitespace-nowrap w-full sm:w-auto">Cổng tiếp nhận an toàn 24/7</span>
+            </div>
         </div>
 
         <header class="glass-panel p-6 text-center">
-            <h1 class="text-xl md:text-2xl font-black uppercase tracking-wider bg-gradient-to-r from-white via-slate-200 to-sky-400 bg-clip-text text-transparent">
+            <h1 class="text-xl md:text-2xl font-black uppercase tracking-wider text-dynamic-title">
                 Hệ thống tiếp nhận Phản ánh trực tuyến — Xã Bình Hưng
             </h1>
-            <p class="text-slate-400 font-medium text-xs uppercase tracking-[0.2em] mt-1">
+            <p class="text-dynamic-label font-bold text-xs uppercase tracking-[0.2em] mt-1">
                 Kênh tương tác trực tiếp giữa công dân và chính quyền cơ sở, nâng cao hiệu quả quản trị đô thị
             </p>
         </header>
 
         <div id="main-form-view" class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
             
-            <div class="lg:col-span-5 glass-panel p-6 flex flex-col justify-between">
+            <div class="lg:col-span-5 glass-panel p-6 flex flex-col justify-between space-y-4">
                 <div>
-                    <h2 class="text-sm font-black uppercase tracking-wider text-sky-400 mb-1">📞 Đầu mối đường dây nóng chuyên môn</h2>
-                    <p class="text-[10px] text-slate-400 font-medium mb-4">Danh sách Công chức phụ trách các phòng ban chuyên môn trực tiếp tiếp nhận xử lý khẩn cấp</p>
+                    <h2 class="text-sm font-black uppercase tracking-wider text-dynamic-header mb-1">📞 Đầu mối đường dây nóng chuyên môn</h2>
+                    <p class="text-[10px] text-dynamic-body font-bold mb-4">Danh sách Công chức phụ trách các phòng ban chuyên môn trực tiếp tiếp nhận xử lý khẩn cấp</p>
                     
                     <div class="space-y-3 font-['Inter'] text-xs">
-                        <div class="officer-card p-4 rounded-xl flex justify-between items-center">
+                        <div class="officer-card p-4 flex justify-between items-center">
                             <div class="space-y-1">
-                                <h3 class="font-extrabold text-white text-sm">Đồng chí Biện Ngọc Toàn</h3>
-                                <p class="text-slate-400 font-medium text-[11px]">Chức vụ: <span class="text-slate-300 font-semibold">Chủ tịch UBND Xã - Điều hành chung</span></p>
+                                <h3 class="font-extrabold text-dynamic-title text-sm">Đồng chí Biện Ngọc Toàn</h3>
+                                <p class="text-dynamic-body font-medium text-[11px]">Chức vụ: <span class="text-dynamic-title font-bold">Chủ tịch UBND Xã - Điều hành chung</span></p>
                             </div>
-                            <a href="tel:02838000001" class="bg-sky-500/20 text-sky-400 hover:bg-sky-500 hover:text-white transition font-bold px-3 py-2 rounded-lg border border-sky-500/30 text-[11px] whitespace-nowrap">📞 Gọi trực tiếp</a>
+                            <a href="tel:02838000001" class="bg-sky-500/20 text-sky-500 hover:bg-sky-500 hover:text-white transition font-bold px-3 py-2 rounded-lg border border-sky-500/30 text-[11px] whitespace-nowrap">📞 Gọi trực tiếp</a>
                         </div>
 
-                        <div class="officer-card p-4 rounded-xl flex justify-between items-center">
+                        <div class="officer-card p-4 flex justify-between items-center">
                             <div class="space-y-1">
-                                <h3 class="font-extrabold text-white text-sm">Đồng chí Bùi Trường Sơn</h3>
-                                <p class="text-slate-400 font-medium text-[11px]">Bộ phận: <span class="text-slate-300 font-semibold">Địa chính - Xây dựng - Đô thị & Môi trường</span></p>
+                                <h3 class="font-extrabold text-dynamic-title text-sm">Đồng chí Bùi Trường Sơn</h3>
+                                <p class="text-dynamic-body font-medium text-[11px]">Bộ phận: <span class="text-dynamic-title font-bold">Địa chính - Xây dựng - Đô thị & Môi trường</span></p>
                             </div>
                             <a href="tel:02838000002" class="bg-sky-500/20 text-sky-400 hover:bg-sky-500 hover:text-white transition font-bold px-3 py-2 rounded-lg border border-sky-500/30 text-[11px] whitespace-nowrap">📞 Gọi trực tiếp</a>
                         </div>
 
-                        <div class="officer-card p-4 rounded-xl flex justify-between items-center">
+                        <div class="officer-card p-4 flex justify-between items-center">
                             <div class="space-y-1">
-                                <h3 class="font-extrabold text-white text-sm">Đồng chí Huỳnh Trần Tấn Luật</h3>
-                                <p class="text-slate-400 font-medium text-[11px]">Bộ phận: <span class="text-slate-300 font-semibold">Tư pháp - Hộ tịch - Trả kết quả TTHC</span></p>
+                                <h3 class="font-extrabold text-dynamic-title text-sm">Đồng chí Huỳnh Trần Tấn Luật</h3>
+                                <p class="text-dynamic-body font-medium text-[11px]">Bộ phận: <span class="text-dynamic-title font-bold">Tư pháp - Hộ tịch - Trả kết quả TTHC</span></p>
                             </div>
                             <a href="tel:02838000003" class="bg-sky-500/20 text-sky-400 hover:bg-sky-500 hover:text-white transition font-bold px-3 py-2 rounded-lg border border-sky-500/30 text-[11px] whitespace-nowrap">📞 Gọi trực tiếp</a>
                         </div>
 
-                        <div class="officer-card p-4 rounded-xl flex justify-between items-center">
+                        <div class="officer-card p-4 flex justify-between items-center">
                             <div class="space-y-1">
-                                <h3 class="font-extrabold text-white text-sm">Đồng chí Đoàn Văn Thảo</h3>
-                                <p class="text-slate-400 font-medium text-[11px]">Bộ phận: <span class="text-slate-300 font-semibold">Văn hóa - Xã hội - Thông tin truyền thông</span></p>
+                                <h3 class="font-extrabold text-dynamic-title text-sm">Đồng chí Đoàn Văn Thảo</h3>
+                                <p class="text-dynamic-body font-medium text-[11px]">Bộ phận: <span class="text-dynamic-title font-bold">Văn hóa - Xã hội - Thông tin truyền thông</span></p>
                             </div>
                             <a href="tel:02838000004" class="bg-sky-500/20 text-sky-400 hover:bg-sky-500 hover:text-white transition font-bold px-3 py-2 rounded-lg border border-sky-500/30 text-[11px] whitespace-nowrap">📞 Gọi trực tiếp</a>
                         </div>
                     </div>
                 </div>
 
-                <div class="mt-4 p-4 rounded-xl bg-slate-900/40 border border-slate-700/60 text-[11px] font-medium text-slate-400 leading-relaxed font-['Inter']">
-                    ⚠️ <span class="text-slate-200 font-bold">Lưu ý nghiệp vụ:</span> Đường dây nóng chuyên môn tiếp nhận các phản ánh khẩn cấp liên quan đến trật tự lòng lề đường, ô nhiễm môi trường, xây dựng trái phép và thái độ thực thi công vụ.
+                <div class="p-4 rounded-xl sub-card-container text-[11px] font-medium text-dynamic-body leading-relaxed font-['Inter'] border">
+                    ⚠️ <span class="text-dynamic-label font-bold">Lưu ý nghiệp vụ:</span> Đường dây nóng chuyên môn tiếp nhận các phản ánh khẩn cấp liên quan đến trật tự lòng lề đường, ô nhiễm môi trường, xây dựng trái phép và thái độ thực thi công vụ.
                 </div>
             </div>
 
             <div class="lg:col-span-7 glass-panel p-6">
-                <h2 class="text-xs font-black uppercase tracking-wider text-amber-400 mb-4">📋 Biểu mẫu kê khai phản ánh kiến nghị công dân</h2>
+                <h2 class="text-xs font-black uppercase tracking-wider text-dynamic-label mb-4">📋 Biểu mẫu kê khai phản ánh kiến nghị công dân</h2>
                 
                 <form id="feedbackForm" class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
                     <div class="flex flex-col space-y-1">
-                        <label class="font-bold text-slate-400 uppercase text-[9px] tracking-wider">Họ và Tên công dân <span class="text-red-500">*</span></label>
+                        <label class="font-bold text-dynamic-body uppercase text-[9px] tracking-wider">Họ và Tên công dân <span class="text-red-500">*</span></label>
                         <input type="text" id="p_name" required placeholder="Nhập đầy đủ họ và tên..." class="input-dark font-semibold py-2.5">
                     </div>
 
                     <div class="flex flex-col space-y-1">
-                        <label class="font-bold text-slate-400 uppercase text-[9px] tracking-wider">Số điện thoại liên lạc <span class="text-red-500">*</span></label>
+                        <label class="font-bold text-dynamic-body uppercase text-[9px] tracking-wider">Số điện thoại liên lạc <span class="text-red-500">*</span></label>
                         <input type="tel" id="p_phone" required placeholder="Nhập số điện thoại chính chủ..." class="input-dark font-semibold py-2.5">
                     </div>
 
                     <div class="flex flex-col space-y-1">
-                        <label class="font-bold text-slate-400 uppercase text-[9px] tracking-wider">Số Định danh / CCCD <span class="text-red-500">*</span></label>
+                        <label class="font-bold text-dynamic-body uppercase text-[9px] tracking-wider">Số Định danh / CCCD <span class="text-red-500">*</span></label>
                         <input type="text" id="p_cccd" required placeholder="Nhập 12 số CCCD..." class="input-dark font-mono font-bold tracking-wider py-2.5">
                     </div>
 
                     <div class="flex flex-col space-y-1">
-                        <label class="font-bold text-slate-400 uppercase text-[9px] tracking-wider">Địa chỉ Email công dân <span class="text-red-500">*</span></label>
+                        <label class="font-bold text-dynamic-body uppercase text-[9px] tracking-wider">Địa chỉ Email công dân <span class="text-red-500">*</span></label>
                         <input type="email" id="p_email" required placeholder="vi_du@gmail.com" class="input-dark font-semibold py-2.5">
                     </div>
 
                     <div class="sm:col-span-2 flex flex-col space-y-1">
-                        <label class="font-bold text-slate-400 uppercase text-[9px] tracking-wider">Nội dung chi tiết vụ việc phản ánh <span class="text-red-500">*</span></label>
+                        <label class="font-bold text-dynamic-body uppercase text-[9px] tracking-wider">Nội dung chi tiết vụ việc phản ánh <span class="text-red-500">*</span></label>
                         <textarea id="p_content" required rows="3" placeholder="Mô tả cụ thể thời gian, địa điểm, sự việc diễn ra trên địa bàn..." class="input-dark font-semibold resize-none py-2.5"></textarea>
                     </div>
 
                     <div class="sm:col-span-2 flex flex-col space-y-1">
-                        <label class="font-bold text-slate-400 uppercase text-[9px] tracking-wider">Hình ảnh hiện trường (Tùy chọn)</label>
-                        <div class="relative flex items-center justify-center w-full bg-slate-900/50 border border-dashed border-slate-600 hover:border-sky-500 rounded-xl p-4 transition cursor-pointer group">
+                        <label class="font-bold text-dynamic-body uppercase text-[9px] tracking-wider">Hình ảnh hiện trường (Tùy chọn)</label>
+                        <div class="relative flex items-center justify-center w-full bg-slate-950/20 border border-dashed border-slate-500 hover:border-sky-500 rounded-xl p-4 transition cursor-pointer group">
                             <input type="file" id="p_image" accept="image/*" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer" onchange="previewImage(this)">
                             <div class="text-center space-y-1 pointer-events-none" id="upload_prompt">
                                 <span class="text-xl group-hover:scale-110 block transition-transform">📸</span>
-                                <p class="text-[10px] font-bold text-slate-400 uppercase group-hover:text-sky-400">Tải ảnh lên hệ thống</p>
-                                <p class="text-[9px] text-slate-500 font-medium">Hỗ trợ định dạng JPG, PNG đính kèm hiện trường</p>
+                                <p class="text-[10px] font-bold text-dynamic-body uppercase group-hover:text-sky-400">Tải ảnh lên hệ thống</p>
+                                <p class="text-[9px] text-dynamic-body font-medium">Hỗ trợ định dạng JPG, PNG đính kèm hiện trường</p>
                             </div>
                             <img id="image_preview" src="" alt="Xem trước" class="hidden max-h-16 rounded-lg border border-slate-700 object-contain">
                         </div>
@@ -155,19 +202,19 @@
         </div>
 
         <div id="main-result-view" class="hidden glass-panel p-6 space-y-6">
-            <div class="border-b border-slate-700 pb-3 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+            <div class="border-b border-slate-700/50 pb-3 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
                 <div>
-                    <h2 class="text-base font-black uppercase text-sky-400 tracking-wider">🔍 Danh sách & Tra cứu kết quả phản ánh công dân</h2>
-                    <p class="text-[11px] text-slate-400 font-medium font-['Inter']">Tra cứu minh bạch trạng thái xử lý, nội dung và biên bản trả lời từ bộ phận chuyên môn</p>
+                    <h2 class="text-base font-black uppercase text-dynamic-header tracking-wider">🔍 Danh sách & Tra cứu kết quả phản ánh công dân</h2>
+                    <p class="text-[11px] text-dynamic-body font-semibold font-['Inter']">Tra cứu minh bạch trạng thái xử lý, nội dung và biên bản trả lời từ bộ phận chuyên môn</p>
                 </div>
                 <div class="w-full sm:w-72 relative">
                     <input type="text" id="searchBar" onkeyup="filterTickets()" placeholder="Nhập mã hồ sơ hoặc họ tên..." class="w-full input-dark py-2 pl-3 pr-9 text-xs font-semibold">
-                    <span class="absolute right-3 top-2.5 text-slate-400 text-xs">🔍</span>
+                    <span class="absolute right-3 top-2.5 text-dynamic-body text-xs">🔍</span>
                 </div>
             </div>
 
             <div id="ticketsGrid" class="grid grid-cols-1 md:grid-cols-2 gap-4 max-h-[600px] overflow-y-auto pr-1 custom-scrollbar font-['Inter']">
-                <div id="loading-placeholder" class="col-span-full py-12 text-center text-slate-400 font-medium text-xs tracking-wider animate-pulse uppercase">
+                <div id="loading-placeholder" class="col-span-full py-12 text-center text-dynamic-body font-bold text-xs tracking-wider animate-pulse uppercase">
                     ⏳ Hệ thống đang kết nối cơ sở dữ liệu Firebase Realtime...
                 </div>
             </div>
@@ -177,25 +224,25 @@
             <div class="portal-btn glass-panel p-5 flex items-center gap-5">
                 <div class="w-14 h-14 bg-gradient-to-br from-orange-500 to-red-600 text-white rounded-2xl flex items-center justify-center font-black text-xl shadow-md select-none">1022</div>
                 <div class="flex-grow space-y-1">
-                    <h3 class="text-xs font-black uppercase text-orange-400 tracking-wide">Cổng tiếp nhận thông tin 1022 TP.HCM</h3>
-                    <p class="text-[10px] text-slate-400 font-medium leading-relaxed font-['Inter']">Hệ thống gửi phản ánh hạ tầng kỹ thuật đô thị liên thông toàn thành phố</p>
-                    <a href="https://1022.tphcm.gov.vn" target="_blank" class="inline-block text-[10px] text-sky-400 hover:text-sky-300 font-bold uppercase tracking-wider pt-1">Truy cập Cổng 1022 🌐</a>
+                    <h3 class="text-xs font-black uppercase text-orange-500 tracking-wide">Cổng tiếp nhận thông tin 1022 TP.HCM</h3>
+                    <p class="text-[10px] text-dynamic-body font-medium leading-relaxed font-['Inter']">Hệ thống gửi phản ánh hạ tầng kỹ thuật đô thị liên thông toàn thành phố</p>
+                    <a href="https://1022.tphcm.gov.vn" target="_blank" class="inline-block text-[10px] text-sky-500 hover:text-sky-400 font-bold uppercase tracking-wider pt-1">Truy cập Cổng 1022 🌐</a>
                 </div>
             </div>
 
             <div class="portal-btn glass-panel p-5 flex items-center gap-5">
                 <div class="w-14 h-14 bg-gradient-to-br from-red-600 to-amber-600 text-white rounded-2xl flex items-center justify-center font-black text-2xl shadow-md select-none">🚨</div>
                 <div class="flex-grow space-y-1">
-                    <h3 class="text-xs font-black uppercase text-red-400 tracking-wide">Ứng dụng SOS - Công an Thành phố</h3>
-                    <p class="text-[10px] text-slate-400 font-medium leading-relaxed font-['Inter']">Cổng thông tin tố giác tội phạm, khẩn cấp an ninh trật tự và phòng cháy chữa cháy</p>
-                    <a href="https://congan.hochiminhcity.gov.vn" target="_blank" class="inline-block text-[10px] text-sky-400 hover:text-sky-300 font-bold uppercase tracking-wider pt-1">Kết nối Ứng dụng CATP 📱</a>
+                    <h3 class="text-xs font-black uppercase text-red-500 tracking-wide">Ứng dụng SOS - Công an Thành phố</h3>
+                    <p class="text-[10px] text-dynamic-body font-medium leading-relaxed font-['Inter']">Cổng thông tin tố giác tội phạm, khẩn cấp an ninh trật tự và phòng cháy chữa cháy</p>
+                    <a href="https://congan.hochiminhcity.gov.vn" target="_blank" class="inline-block text-[10px] text-sky-500 hover:text-sky-400 font-bold uppercase tracking-wider pt-1">Kết nối Ứng dụng CATP 📱</a>
                 </div>
             </div>
         </div>
 
     </div>
 
-    <footer class="w-full text-center py-8 text-slate-500 font-bold text-[10px] uppercase tracking-[0.3em] border-t border-slate-900 bg-slate-950/20 backdrop-blur-md mt-auto">
+    <footer class="w-full text-center py-8 text-dynamic-body font-bold text-[10px] uppercase tracking-[0.3em] border-t border-slate-900 bg-slate-950/20 backdrop-blur-md mt-auto">
         &copy; 2026 IOC Xã Bình Hưng — Hệ thống tương tác Công dân & Chính quyền điện tử bảo mật
     </footer>
 
@@ -211,7 +258,7 @@
         const db = getDatabase(app);
         const recordsRootRef = ref(db, 'dashboard_binhhung/phan_anh_dan');
 
-        // CHUYỂN ĐỔI TAB ĐỘNG: Hàm hoán đổi luồng hiển thị giao diện chính
+        // CHUYỂN ĐỔI TAB ĐỘNG: Hoán đổi luồng hiển thị giao diện chính
         window.toggleMainView = function(viewType, btnElement) {
             const formView = document.getElementById('main-form-view');
             const resultView = document.getElementById('main-result-view');
@@ -225,7 +272,7 @@
                 resultView.classList.add('hidden');
             } else {
                 formView.classList.add('hidden');
-                resultView.classList.remove('hidden');
+                resultView.className = "glass-panel p-6 space-y-6"; // Đảm bảo giữ cấu trúc block flex
             }
         }
 
@@ -246,46 +293,43 @@
         // LUỒNG 1: LẮNG NGHE VÀ NẠP DANH SÁCH KẾT QUẢ PHẢN ÁNH THỜI GIAN THỰC (REALTIME)
         onValue(recordsRootRef, (snapshot) => {
             const gridContainer = document.getElementById('ticketsGrid');
-            gridContainer.innerHTML = ''; // Làm sạch lưới dữ liệu cũ
+            gridContainer.innerHTML = '';
 
             const data = snapshot.val();
             if (!data) {
                 gridContainer.innerHTML = `
-                    <div class="col-span-full py-10 text-center text-slate-500 font-bold text-xs uppercase tracking-wider">
+                    <div class="col-span-full py-10 text-center text-dynamic-body font-bold text-xs uppercase tracking-wider">
                         📭 Hiện tại chưa ghi nhận dữ liệu phản ánh nào trên hệ thống
                     </div>`;
                 return;
             }
 
-            // Duyệt cây JSON và sắp xếp hồ sơ mới lên đầu tiên
             const sortedTickets = Object.values(data).reverse();
 
             sortedTickets.forEach(ticket => {
-                // Định hình cấu trúc màu sắc huy hiệu dựa trên trạng thái xử lý hành chính
-                let statusClass = "bg-amber-500/20 text-amber-400 border-amber-500/30";
-                if(ticket.trang_thai_xu_ly === "Đang xử lý") statusClass = "bg-sky-500/20 text-sky-400 border-sky-500/30";
-                if(ticket.trang_thai_xu_ly === "Đã hoàn thành") statusClass = "bg-emerald-500/20 text-emerald-400 border-emerald-500/30";
+                let statusClass = "bg-amber-500/20 text-amber-500 border-amber-500/30 dark:text-amber-400";
+                if(ticket.trang_thai_xu_ly === "Đang xử lý") statusClass = "bg-sky-500/20 text-sky-600 border-sky-500/30 dark:text-sky-400";
+                if(ticket.trang_thai_xu_ly === "Đã hoàn thành") statusClass = "bg-emerald-500/20 text-emerald-600 border-emerald-500/30 dark:text-emerald-400";
 
-                // Định cấu trúc trường biên bản nội dung phản hồi chuyên môn
                 const phanHoiText = ticket.bien_ban_tra_loi ? ticket.bien_ban_tra_loi : "Bộ phận chuyên môn đang thẩm tra xác minh thực địa để ra văn bản trả lời công dân.";
 
                 const cardHtml = `
-                    <div class="ticket-card p-4 rounded-xl bg-slate-900/40 border border-slate-700/50 flex flex-col justify-between space-y-3 transition hover:border-slate-500">
+                    <div class="ticket-card p-4 rounded-xl ticket-item-bg border flex flex-col justify-between space-y-3 transition hover:border-sky-500">
                         <div class="flex justify-between items-start gap-2">
                             <div class="space-y-0.5">
-                                <span class="text-[10px] font-mono font-bold bg-slate-800 text-sky-400 px-2 py-0.5 rounded border border-slate-700">${ticket.ma_ho_so}</span>
-                                <h3 class="text-sm font-extrabold text-white mt-1.5">${ticket.ho_ten}</h3>
-                                <p class="text-[10px] text-slate-400 font-medium">Gửi ngày: ${ticket.thoi_gian_gui}</p>
+                                <span class="text-[10px] font-mono font-bold bg-slate-900 text-sky-400 px-2 py-0.5 rounded border border-slate-700">${ticket.ma_ho_so}</span>
+                                <h3 class="text-sm font-extrabold text-dynamic-title mt-1.5">${ticket.ho_ten}</h3>
+                                <p class="text-[10px] text-dynamic-body font-medium">Gửi ngày: ${ticket.thoi_gian_gui}</p>
                             </div>
                             <span class="text-[9px] font-black uppercase tracking-wider px-2.5 py-1 rounded-md border ${statusClass}">${ticket.trang_thai_xu_ly}</span>
                         </div>
-                        <div class="p-2.5 rounded-lg bg-slate-950/40 border border-slate-800/60">
-                            <span class="text-[9px] font-black text-amber-400 uppercase tracking-wider block mb-0.5">Nội dung phản ánh:</span>
-                            <p class="text-slate-300 text-[11px] leading-relaxed line-clamp-3">${ticket.noi_dung}</p>
+                        <div class="p-2.5 rounded-lg bg-slate-950/20 border border-slate-800/40">
+                            <span class="text-[9px] font-black text-dynamic-label uppercase tracking-wider block mb-0.5">Nội dung phản ánh:</span>
+                            <p class="text-dynamic-body text-[11px] leading-relaxed line-clamp-3">${ticket.noi_dung}</p>
                         </div>
-                        <div class="p-2.5 rounded-lg bg-emerald-950/20 border border-emerald-900/30">
-                            <span class="text-[9px] font-black text-emerald-400 uppercase tracking-wider block mb-0.5">Kết quả / Biên bản phản hồi:</span>
-                            <p class="text-slate-300 text-[11px] leading-relaxed italic">${phanHoiText}</p>
+                        <div class="p-2.5 rounded-lg bg-emerald-950/10 border border-emerald-900/20">
+                            <span class="text-[9px] font-black text-emerald-500 uppercase tracking-wider block mb-0.5">Kết quả / Biên bản phản hồi:</span>
+                            <p class="text-dynamic-body text-[11px] leading-relaxed italic">${phanHoiText}</p>
                         </div>
                     </div>
                 `;
@@ -327,7 +371,7 @@
                 noi_dung: content,
                 thoi_gian_gui: new Date().toLocaleString('vi-VN'),
                 trang_thai_xu_ly: "Chờ tiếp nhận",
-                bien_ban_tra_loi: "" // Khởi tạo biên bản trống chờ cán bộ phê duyệt
+                bien_ban_tra_loi: ""
             };
 
             set(recordPath, payload)
@@ -358,6 +402,25 @@
                 } else {
                     cards[i].style.display = "none";
                 }
+            }
+        }
+
+        // LUỒNG 4: BỘ ĐIỀU HÀNH HOÁN ĐỔI THEME CHỐNG XUNG ĐỘT MÀU CHỮ
+        window.setTheme = function(themeName) {
+            const body = document.getElementById('body-context');
+            const btnLight = document.getElementById('btn-theme-light');
+            const btnDark = document.getElementById('btn-theme-dark');
+
+            if(themeName === 'light') {
+                body.classList.remove('dark-theme');
+                body.classList.add('light-theme');
+                btnLight.className = "flex items-center gap-1.5 text-[11px] font-extrabold uppercase px-3 py-1.5 rounded-lg transition bg-blue-900 text-sky-200 shadow-md border border-blue-700";
+                btnDark.className = "flex items-center gap-1.5 text-[11px] font-extrabold uppercase px-3 py-1.5 rounded-lg transition border border-transparent text-blue-900 hover:text-slate-800";
+            } else {
+                body.classList.remove('light-theme');
+                body.classList.add('dark-theme');
+                btnDark.className = "flex items-center gap-1.5 text-[11px] font-extrabold uppercase px-3 py-1.5 rounded-lg transition border btn-switcher-active";
+                btnLight.className = "flex items-center gap-1.5 text-[11px] font-extrabold uppercase px-3 py-1.5 rounded-lg transition border border-transparent text-sky-400 hover:text-sky-300";
             }
         }
     </script>
