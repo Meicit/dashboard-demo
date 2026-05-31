@@ -23,16 +23,14 @@
         .custom-scrollbar::-webkit-scrollbar-track { background: rgba(0,0,0,0.1); }
         .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 10px; }
         
-        /* Hiệu ứng nhô khối cho thẻ liên hệ công chức */
         .officer-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); transition: all 0.25s ease; }
         .officer-card:hover { transform: translateX(5px); background: rgba(14, 165, 233, 0.1); border-color: #0ea5e9; }
         
-        /* Cổng kết nối hành chính ngoài */
         .portal-btn { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1); }
         .portal-btn:hover { transform: translateY(-5px); box-shadow: 0 12px 24px -10px rgba(14, 165, 233, 0.4); }
 
-        .btn-back { display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: #ffffff; padding: 12px 24px; border-radius: 14px; font-weight: 800; font-size: 12px; text-transform: uppercase; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2); transition: all 0.3s ease; }
-        .btn-back:hover { transform: translateY(-2px); background: rgba(255,255,255,0.15); border-color: #0ea5e9; }
+        .btn-back { display: inline-flex; align-items: center; gap: 8px; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); color: #ffffff; padding: 12px 24px; border-radius: 14px; font-weight: 800; font-size: 12px; text-transform: uppercase; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2); transition: all 0.3s ease; }
+        .btn-back:hover { transform: translateY(-2px); background: rgba(255, 255, 255, 0.15); border-color: #0ea5e9; }
     </style>
 </head>
 <body class="custom-scrollbar">
@@ -55,13 +53,13 @@
 
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
             
+            <!-- ĐẦU MỐI ĐƯỜNG DÂY NÓNG -->
             <div class="lg:col-span-5 glass-panel p-6 flex flex-col justify-between">
                 <div>
                     <h2 class="text-sm font-black uppercase tracking-wider text-sky-400 mb-1">📞 Đầu mối đường dây nóng chuyên môn</h2>
                     <p class="text-[10px] text-slate-400 font-medium mb-4">Danh sách Công chức phụ trách các phòng ban chuyên môn trực tiếp tiếp nhận xử lý khẩn cấp</p>
                     
                     <div class="space-y-3 font-['Inter'] text-xs">
-                        
                         <div class="officer-card p-4 rounded-xl flex justify-between items-center">
                             <div class="space-y-1">
                                 <h3 class="font-extrabold text-white text-sm">Đồng chí Biện Ngọc Toàn</h3>
@@ -93,49 +91,49 @@
                             </div>
                             <a href="tel:02838000004" class="bg-sky-500/20 text-sky-400 hover:bg-sky-500 hover:text-white transition font-bold px-3 py-2 rounded-lg border border-sky-500/30 text-[11px] whitespace-nowrap">📞 Gọi trực tiếp</a>
                         </div>
-
                     </div>
                 </div>
 
                 <div class="mt-4 p-4 rounded-xl bg-slate-900/40 border border-slate-700/60 text-[11px] font-medium text-slate-400 leading-relaxed font-['Inter']">
-                    ⚠️ <span class="text-slate-200 font-bold">Lưu ý nghiệp vụ:</span> Đường dây nóng chuyên môn tiếp nhận các phản ánh khẩn cấp liên quan đến trật tự lòng lề đường, ô nhiễm môi trường, xây dựng trái phép và thái độ thực thi công vụ của cán bộ chính quyền.
+                    ⚠️ <span class="text-slate-200 font-bold">Lưu ý nghiệp vụ:</span> Đường dây nóng chuyên môn tiếp nhận các phản ánh khẩn cấp liên quan đến trật tự lòng lề đường, ô nhiễm môi trường, xây dựng trái phép và thái độ thực thi công vụ.
                 </div>
             </div>
 
+            <!-- FORM ĐĂNG KÝ PHẢN ÁNH KIẾN NGHỊ -->
             <div class="lg:col-span-7 glass-panel p-6">
                 <h2 class="text-xs font-black uppercase tracking-wider text-amber-400 mb-4">📋 Biểu mẫu kê khai phản ánh kiến nghị công dân</h2>
                 
-                <form id="feedbackForm" class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs" onsubmit="handleFormSubmit(event)">
+                <form id="feedbackForm" class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
                     
                     <div class="flex flex-col space-y-1">
                         <label class="font-bold text-slate-400 uppercase text-[9px] tracking-wider">Họ và Tên công dân <span class="text-red-500">*</span></label>
-                        <input type="text" id="p_name" required placeholder="Nhập đầy đủ họ và tên..." class="input-light input-dark font-semibold py-2.5">
+                        <input type="text" id="p_name" required placeholder="Nhập đầy đủ họ và tên..." class="input-dark font-semibold py-2.5">
                     </div>
 
                     <div class="flex flex-col space-y-1">
                         <label class="font-bold text-slate-400 uppercase text-[9px] tracking-wider">Số điện thoại liên lạc <span class="text-red-500">*</span></label>
-                        <input type="tel" id="p_phone" required placeholder="Nhập số điện thoại chính chủ..." class="input-light input-dark font-semibold py-2.5">
+                        <input type="tel" id="p_phone" required placeholder="Nhập số điện thoại chính chủ..." class="input-dark font-semibold py-2.5">
                     </div>
 
                     <div class="flex flex-col space-y-1">
                         <label class="font-bold text-slate-400 uppercase text-[9px] tracking-wider">Số Định danh / CCCD <span class="text-red-500">*</span></label>
-                        <input type="text" id="p_cccd" required placeholder="Nhập 12 số CCCD..." class="input-light input-dark font-mono font-bold tracking-wider py-2.5">
+                        <input type="text" id="p_cccd" required placeholder="Nhập 12 số CCCD..." class="input-dark font-mono font-bold tracking-wider py-2.5">
                     </div>
 
                     <div class="flex flex-col space-y-1">
                         <label class="font-bold text-slate-400 uppercase text-[9px] tracking-wider">Địa chỉ Email công dân <span class="text-red-500">*</span></label>
-                        <input type="email" id="p_email" required placeholder="vi_du@gmail.com" class="input-light input-dark font-semibold py-2.5">
+                        <input type="email" id="p_email" required placeholder="vi_du@gmail.com" class="input-dark font-semibold py-2.5">
                     </div>
 
                     <div class="sm:col-span-2 flex flex-col space-y-1">
                         <label class="font-bold text-slate-400 uppercase text-[9px] tracking-wider">Nội dung chi tiết vụ việc phản ánh <span class="text-red-500">*</span></label>
-                        <textarea id="p_content" required rows="3" placeholder="Mô tả cụ thể thời gian, địa điểm, sự việc diễn ra trên địa bàn..." class="input-light input-dark font-semibold resize-none py-2.5"></textarea>
+                        <textarea id="p_content" required rows="3" placeholder="Mô tả cụ thể thời gian, địa điểm, sự việc diễn ra trên địa bàn..." class="input-dark font-semibold resize-none py-2.5"></textarea>
                     </div>
 
                     <div class="sm:col-span-2 flex flex-col space-y-1">
-                        <label class="font-bold text-slate-400 uppercase text-[9px] tracking-wider">Hình ảnh/Bằng chứng hiện trường phản ánh <span class="text-red-500">*</span></label>
+                        <label class="font-bold text-slate-400 uppercase text-[9px] tracking-wider">Hình ảnh hiện trường (Tùy chọn)</label>
                         <div class="relative flex items-center justify-center w-full bg-slate-900/50 border border-dashed border-slate-600 hover:border-sky-500 rounded-xl p-4 transition cursor-pointer group">
-                            <input type="file" id="p_image" required accept="image/*" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer" onchange="previewImage(this)">
+                            <input type="file" id="p_image" accept="image/*" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer" onchange="previewImage(this)">
                             <div class="text-center space-y-1 pointer-events-none" id="upload_prompt">
                                 <span class="text-xl group-hover:scale-110 block transition-transform">📸</span>
                                 <p class="text-[10px] font-bold text-slate-400 uppercase group-hover:text-sky-400">Tải ảnh lên hệ thống</p>
@@ -146,8 +144,8 @@
                     </div>
 
                     <div class="sm:col-span-2 text-right pt-1">
-                        <button type="submit" class="w-full bg-gradient-to-r from-sky-600 via-blue-600 to-indigo-700 hover:from-sky-700 hover:to-indigo-800 text-white font-bold text-xs uppercase tracking-wider py-3 rounded-xl shadow-lg transition">
-                            🚀 Gửi thông tin phản ánh lên Ban Điều Hành Xã
+                        <button type="submit" id="btnSubmit" class="w-full bg-gradient-to-r from-sky-600 via-blue-600 to-indigo-700 hover:from-sky-700 hover:to-indigo-800 text-white font-bold text-xs uppercase tracking-wider py-3 rounded-xl shadow-lg transition flex items-center justify-center gap-2">
+                            <span id="btnText">🚀 Gửi thông tin phản ánh lên Ban Điều Hành Xã</span>
                         </button>
                     </div>
 
@@ -156,12 +154,10 @@
 
         </div>
 
+        <!-- CỔNG LIÊN KẾT NGOÀI -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            
             <div class="portal-btn glass-panel p-5 flex items-center gap-5">
-                <div class="w-14 h-14 bg-gradient-to-br from-orange-500 to-red-600 text-white rounded-2xl flex items-center justify-center font-black text-xl shadow-md select-none">
-                    1022
-                </div>
+                <div class="w-14 h-14 bg-gradient-to-br from-orange-500 to-red-600 text-white rounded-2xl flex items-center justify-center font-black text-xl shadow-md select-none">1022</div>
                 <div class="flex-grow space-y-1">
                     <h3 class="text-xs font-black uppercase text-orange-400 tracking-wide">Cổng tiếp nhận thông tin 1022 TP.HCM</h3>
                     <p class="text-[10px] text-slate-400 font-medium leading-relaxed font-['Inter']">Hệ thống gửi phản ánh hạ tầng kỹ thuật đô thị liên thông toàn thành phố</p>
@@ -170,16 +166,13 @@
             </div>
 
             <div class="portal-btn glass-panel p-5 flex items-center gap-5">
-                <div class="w-14 h-14 bg-gradient-to-br from-red-600 to-amber-600 text-white rounded-2xl flex items-center justify-center font-black text-2xl shadow-md select-none">
-                    🚨
-                </div>
+                <div class="w-14 h-14 bg-gradient-to-br from-red-600 to-amber-600 text-white rounded-2xl flex items-center justify-center font-black text-2xl shadow-md select-none">🚨</div>
                 <div class="flex-grow space-y-1">
                     <h3 class="text-xs font-black uppercase text-red-400 tracking-wide">Ứng dụng SOS - Công an Thành phố</h3>
                     <p class="text-[10px] text-slate-400 font-medium leading-relaxed font-['Inter']">Cổng thông tin tố giác tội phạm, khẩn cấp an ninh trật tự và phòng cháy chữa cháy</p>
                     <a href="https://congan.hochiminhcity.gov.vn" target="_blank" class="inline-block text-[10px] text-sky-400 hover:text-sky-300 font-bold uppercase tracking-wider pt-1">Kết nối Ứng dụng CATP 📱</a>
                 </div>
             </div>
-
         </div>
 
     </div>
@@ -188,9 +181,23 @@
         &copy; 2026 IOC Xã Bình Hưng — Hệ thống tương tác Công dân & Chính quyền điện tử bảo mật
     </footer>
 
-    <script>
-        // 1. Hàm hiển thị hình ảnh xem trước ngay khi người dân chọn file đính kèm
-        function previewImage(input) {
+    <!-- ENGINE CẤU HÌNH LIÊN THÔNG FIREBASE thuần túy SERVERLESS -->
+    <script type="module">
+        // Tích hợp Firebase SDK từ CDN phân phối của Google
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+
+        // Cấu hình định danh Firebase Realtime Database
+        const firebaseConfig = {
+            databaseURL: "https://dashboard-demo-ce0da-default-rtdb.asia-southeast1.firebasedatabase.app"
+        };
+
+        // Khởi tạo thực thể kết nối ứng dụng
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+
+        // Xuất hàm xử lý xem trước ảnh ra phạm vi window để thẻ input file can thiệp được
+        window.previewImage = function(input) {
             const preview = document.getElementById('image_preview');
             const prompt = document.getElementById('upload_prompt');
             
@@ -205,31 +212,67 @@
             }
         }
 
-        // 2. Hàm xử lý Validation và thông báo gửi biểu mẫu thành công
-        function handleFormSubmit(event) {
-            event.preventDefault(); // Chặn đứng hành động load lại trang của form mặc định
+        // Động cơ bắt sự kiện submit và đóng gói cấu trúc cây JSON bắn lên Firebase
+        document.getElementById('feedbackForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const btnSubmit = document.getElementById('btnSubmit');
+            const btnText = document.getElementById('btnText');
             
             const name = document.getElementById('p_name').value.trim();
             const phone = document.getElementById('p_phone').value.trim();
             const cccd = document.getElementById('p_cccd').value.trim();
             const email = document.getElementById('p_email').value.trim();
             const content = document.getElementById('p_content').value.trim();
-            
-            // Kiểm tra định dạng số CCCD (Độ dài bắt buộc phải bằng 12 số)
+
+            // Thực thi kiểm tra định dạng độ dài căn cước công dân
             if(cccd.length !== 12 || isNaN(cccd)) {
                 alert("⚠️ Định dạng số Định danh cá nhân / CCCD không hợp lệ! Vui lòng nhập đúng chuỗi số gồm 12 ký tự.");
                 document.getElementById('p_cccd').focus();
                 return;
             }
 
-            // Gửi thông báo xác nhận hành chính trực quan cho công dân
-            alert(`✅ Hệ thống IOC Xã Bình Hưng đã tiếp nhận hồ sơ thành công!\n\n- Người gửi: ${name}\n- Mã CCCD xác thực: ${cccd}\n- Số điện thoại phản hồi: ${phone}\n\nHồ sơ đã được chuyển giao tự động sang bộ phận chuyên môn kiểm tra xác minh thực địa. Kết quả giải quyết sẽ gửi trực tiếp về Email ${email} của công dân trong thời hạn luật định.`);
+            // Trạng thái chờ xử lý (Loading state)
+            btnSubmit.disabled = true;
+            btnText.innerText = "⏳ Hệ thống đang mã hóa và gửi hồ sơ...";
+
+            // Tạo mã định danh hồ sơ tự động dựa vào mốc thời gian thực tế (Timestamp)
+            const ticketId = "PA-" + Date.now();
+
+            // Đóng gói mô hình cây JSON phẳng để bắn lên nhánh độc lập 'dashboard_binhhung/phan_anh_dan'
+            const recordPath = ref(db, 'dashboard_binhhung/phan_anh_dan/' + ticketId);
             
-            // Reset toàn bộ biểu mẫu về trạng thái ban đầu để sẵn sàng tiếp nhận lượt tiếp theo
-            document.getElementById('feedbackForm').reset();
-            document.getElementById('image_preview').classList.add('hidden');
-            document.getElementById('upload_prompt').classList.remove('hidden');
-        }
+            const payload = {
+                ma_ho_so: ticketId,
+                ho_ten: name,
+                so_dien_thoai: phone,
+                cccd: cccd,
+                email: email,
+                noi_dung: content,
+                thoi_gian_gui: new Date().toLocaleString('vi-VN'),
+                trang_thai_xu_ly: "Chờ tiếp nhận" // Khởi tạo luồng xử lý hành chính
+            };
+
+            // Thực thi lệnh set() thuần của Firebase đẩy thẳng tệp dữ liệu lên Cloud
+            set(recordPath, payload)
+                .then(() => {
+                    // Trả thông báo thành công rực rỡ cho người dân
+                    alert(`✅ Gửi phản ánh thành công thời gian thực!\n\n- Mã hồ sơ: ${ticketId}\n- Người gửi: ${name}\n\nDữ liệu đã được đồng bộ trực tiếp lên hệ thống IOC trung tâm Xã Bình Hưng để Ban điều hành phê duyệt điều động thực địa.`);
+                    
+                    // Khôi phục form về trạng thái tinh khôi ban đầu
+                    document.getElementById('feedbackForm').reset();
+                    document.getElementById('image_preview').classList.add('hidden');
+                    document.getElementById('upload_prompt').classList.remove('hidden');
+                })
+                .catch((error) => {
+                    alert("🚨 Lỗi kết nối luồng dữ liệu mạng: " + error.message);
+                })
+                .finally(() => {
+                    // Giải phóng trạng thái khóa nút bấm
+                    btnSubmit.disabled = false;
+                    btnText.innerText = "🚀 Gửi thông tin phản ánh lên Ban Điều Hành Xã";
+                });
+        });
     </script>
 </body>
 </html>
