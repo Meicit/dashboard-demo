@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Phản ánh trực tuyến - Xã Bình Hưng</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'Montserrat', sans-serif;
@@ -19,7 +19,7 @@
         .input-dark { background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 12px; padding: 12px 16px; color: #ffffff; outline: none; transition: all 0.2s; font-family: 'Inter', sans-serif; }
         .input-dark:focus { border-color: #0ea5e9; box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.25); }
         
-        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
         .custom-scrollbar::-webkit-scrollbar-track { background: rgba(0,0,0,0.1); }
         .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 10px; }
         
@@ -29,17 +29,22 @@
         .portal-btn { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1); }
         .portal-btn:hover { transform: translateY(-5px); box-shadow: 0 12px 24px -10px rgba(14, 165, 233, 0.4); }
 
-        .btn-back { display: inline-flex; align-items: center; gap: 8px; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); color: #ffffff; padding: 12px 24px; border-radius: 14px; font-weight: 800; font-size: 12px; text-transform: uppercase; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2); transition: all 0.3s ease; }
-        .btn-back:hover { transform: translateY(-2px); background: rgba(255, 255, 255, 0.15); border-color: #0ea5e9; }
+        .btn-nav { display: inline-flex; align-items: center; gap: 8px; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); color: #ffffff; padding: 12px 20px; border-radius: 14px; font-weight: 800; font-size: 11px; text-transform: uppercase; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2); transition: all 0.3s ease; cursor: pointer; }
+        .btn-nav:hover { transform: translateY(-2px); border-color: #0ea5e9; background: rgba(14, 165, 233, 0.15); }
+        .btn-nav.active-tab { background: #0ea5e9; border-color: #0ea5e9; box-shadow: 0 0 15px rgba(14, 165, 233, 0.4); }
     </style>
 </head>
 <body class="custom-scrollbar">
 
     <div class="container-wrapper space-y-6">
         
-        <div class="flex justify-between items-center">
-            <a href="../home.html" class="btn-back">⬅️ Quay lại Trang chủ</a>
-            <span class="text-xs bg-emerald-500/25 text-emerald-400 font-extrabold px-3 py-1.5 rounded-full border border-emerald-500/30 uppercase tracking-widest">Cổng tiếp nhận an toàn 24/7</span>
+        <div class="flex flex-col sm:flex-row justify-between items-stretch sm:items-center gap-3">
+            <div class="flex items-center gap-2.5 flex-wrap">
+                <a href="../home.html" class="btn-nav">⬅️ Trang chủ</a>
+                <button onclick="toggleMainView('form-view', this)" id="nav-form-btn" class="btn-nav active-tab">📝 Gửi phản ánh mới</button>
+                <button onclick="toggleMainView('result-view', this)" id="nav-result-btn" class="btn-nav">🔍 Xem kết quả giải quyết</button>
+            </div>
+            <span class="text-center text-[10px] bg-emerald-500/25 text-emerald-400 font-extrabold px-3 py-2 rounded-full border border-emerald-500/30 uppercase tracking-widest whitespace-nowrap">Cổng tiếp nhận an toàn 24/7</span>
         </div>
 
         <header class="glass-panel p-6 text-center">
@@ -51,9 +56,8 @@
             </p>
         </header>
 
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
+        <div id="main-form-view" class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
             
-            <!-- ĐẦU MỐI ĐƯỜNG DÂY NÓNG -->
             <div class="lg:col-span-5 glass-panel p-6 flex flex-col justify-between">
                 <div>
                     <h2 class="text-sm font-black uppercase tracking-wider text-sky-400 mb-1">📞 Đầu mối đường dây nóng chuyên môn</h2>
@@ -99,12 +103,10 @@
                 </div>
             </div>
 
-            <!-- FORM ĐĂNG KÝ PHẢN ÁNH KIẾN NGHỊ -->
             <div class="lg:col-span-7 glass-panel p-6">
                 <h2 class="text-xs font-black uppercase tracking-wider text-amber-400 mb-4">📋 Biểu mẫu kê khai phản ánh kiến nghị công dân</h2>
                 
                 <form id="feedbackForm" class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
-                    
                     <div class="flex flex-col space-y-1">
                         <label class="font-bold text-slate-400 uppercase text-[9px] tracking-wider">Họ và Tên công dân <span class="text-red-500">*</span></label>
                         <input type="text" id="p_name" required placeholder="Nhập đầy đủ họ và tên..." class="input-dark font-semibold py-2.5">
@@ -148,13 +150,29 @@
                             <span id="btnText">🚀 Gửi thông tin phản ánh lên Ban Điều Hành Xã</span>
                         </button>
                     </div>
-
                 </form>
             </div>
-
         </div>
 
-        <!-- CỔNG LIÊN KẾT NGOÀI -->
+        <div id="main-result-view" class="hidden glass-panel p-6 space-y-6">
+            <div class="border-b border-slate-700 pb-3 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+                <div>
+                    <h2 class="text-base font-black uppercase text-sky-400 tracking-wider">🔍 Danh sách & Tra cứu kết quả phản ánh công dân</h2>
+                    <p class="text-[11px] text-slate-400 font-medium font-['Inter']">Tra cứu minh bạch trạng thái xử lý, nội dung và biên bản trả lời từ bộ phận chuyên môn</p>
+                </div>
+                <div class="w-full sm:w-72 relative">
+                    <input type="text" id="searchBar" onkeyup="filterTickets()" placeholder="Nhập mã hồ sơ hoặc họ tên..." class="w-full input-dark py-2 pl-3 pr-9 text-xs font-semibold">
+                    <span class="absolute right-3 top-2.5 text-slate-400 text-xs">🔍</span>
+                </div>
+            </div>
+
+            <div id="ticketsGrid" class="grid grid-cols-1 md:grid-cols-2 gap-4 max-h-[600px] overflow-y-auto pr-1 custom-scrollbar font-['Inter']">
+                <div id="loading-placeholder" class="col-span-full py-12 text-center text-slate-400 font-medium text-xs tracking-wider animate-pulse uppercase">
+                    ⏳ Hệ thống đang kết nối cơ sở dữ liệu Firebase Realtime...
+                </div>
+            </div>
+        </div>
+
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div class="portal-btn glass-panel p-5 flex items-center gap-5">
                 <div class="w-14 h-14 bg-gradient-to-br from-orange-500 to-red-600 text-white rounded-2xl flex items-center justify-center font-black text-xl shadow-md select-none">1022</div>
@@ -181,26 +199,39 @@
         &copy; 2026 IOC Xã Bình Hưng — Hệ thống tương tác Công dân & Chính quyền điện tử bảo mật
     </footer>
 
-    <!-- ENGINE CẤU HÌNH LIÊN THÔNG FIREBASE thuần túy SERVERLESS -->
     <script type="module">
-        // Tích hợp Firebase SDK từ CDN phân phối của Google
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+        import { getDatabase, ref, set, onValue } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
-        // Cấu hình định danh Firebase Realtime Database
         const firebaseConfig = {
             databaseURL: "https://dashboard-demo-ce0da-default-rtdb.asia-southeast1.firebasedatabase.app"
         };
 
-        // Khởi tạo thực thể kết nối ứng dụng
         const app = initializeApp(firebaseConfig);
         const db = getDatabase(app);
+        const recordsRootRef = ref(db, 'dashboard_binhhung/phan_anh_dan');
 
-        // Xuất hàm xử lý xem trước ảnh ra phạm vi window để thẻ input file can thiệp được
+        // CHUYỂN ĐỔI TAB ĐỘNG: Hàm hoán đổi luồng hiển thị giao diện chính
+        window.toggleMainView = function(viewType, btnElement) {
+            const formView = document.getElementById('main-form-view');
+            const resultView = document.getElementById('main-result-view');
+            
+            document.getElementById('nav-form-btn').classList.remove('active-tab');
+            document.getElementById('nav-result-btn').classList.remove('active-tab');
+            btnElement.classList.add('active-tab');
+
+            if(viewType === 'form-view') {
+                formView.classList.remove('hidden');
+                resultView.classList.add('hidden');
+            } else {
+                formView.classList.add('hidden');
+                resultView.classList.remove('hidden');
+            }
+        }
+
         window.previewImage = function(input) {
             const preview = document.getElementById('image_preview');
             const prompt = document.getElementById('upload_prompt');
-            
             if (input.files && input.files[0]) {
                 const reader = new FileReader();
                 reader.onload = function(e) {
@@ -212,7 +243,57 @@
             }
         }
 
-        // Động cơ bắt sự kiện submit và đóng gói cấu trúc cây JSON bắn lên Firebase
+        // LUỒNG 1: LẮNG NGHE VÀ NẠP DANH SÁCH KẾT QUẢ PHẢN ÁNH THỜI GIAN THỰC (REALTIME)
+        onValue(recordsRootRef, (snapshot) => {
+            const gridContainer = document.getElementById('ticketsGrid');
+            gridContainer.innerHTML = ''; // Làm sạch lưới dữ liệu cũ
+
+            const data = snapshot.val();
+            if (!data) {
+                gridContainer.innerHTML = `
+                    <div class="col-span-full py-10 text-center text-slate-500 font-bold text-xs uppercase tracking-wider">
+                        📭 Hiện tại chưa ghi nhận dữ liệu phản ánh nào trên hệ thống
+                    </div>`;
+                return;
+            }
+
+            // Duyệt cây JSON và sắp xếp hồ sơ mới lên đầu tiên
+            const sortedTickets = Object.values(data).reverse();
+
+            sortedTickets.forEach(ticket => {
+                // Định hình cấu trúc màu sắc huy hiệu dựa trên trạng thái xử lý hành chính
+                let statusClass = "bg-amber-500/20 text-amber-400 border-amber-500/30";
+                if(ticket.trang_thai_xu_ly === "Đang xử lý") statusClass = "bg-sky-500/20 text-sky-400 border-sky-500/30";
+                if(ticket.trang_thai_xu_ly === "Đã hoàn thành") statusClass = "bg-emerald-500/20 text-emerald-400 border-emerald-500/30";
+
+                // Định cấu trúc trường biên bản nội dung phản hồi chuyên môn
+                const phanHoiText = ticket.bien_ban_tra_loi ? ticket.bien_ban_tra_loi : "Bộ phận chuyên môn đang thẩm tra xác minh thực địa để ra văn bản trả lời công dân.";
+
+                const cardHtml = `
+                    <div class="ticket-card p-4 rounded-xl bg-slate-900/40 border border-slate-700/50 flex flex-col justify-between space-y-3 transition hover:border-slate-500">
+                        <div class="flex justify-between items-start gap-2">
+                            <div class="space-y-0.5">
+                                <span class="text-[10px] font-mono font-bold bg-slate-800 text-sky-400 px-2 py-0.5 rounded border border-slate-700">${ticket.ma_ho_so}</span>
+                                <h3 class="text-sm font-extrabold text-white mt-1.5">${ticket.ho_ten}</h3>
+                                <p class="text-[10px] text-slate-400 font-medium">Gửi ngày: ${ticket.thoi_gian_gui}</p>
+                            </div>
+                            <span class="text-[9px] font-black uppercase tracking-wider px-2.5 py-1 rounded-md border ${statusClass}">${ticket.trang_thai_xu_ly}</span>
+                        </div>
+                        <div class="p-2.5 rounded-lg bg-slate-950/40 border border-slate-800/60">
+                            <span class="text-[9px] font-black text-amber-400 uppercase tracking-wider block mb-0.5">Nội dung phản ánh:</span>
+                            <p class="text-slate-300 text-[11px] leading-relaxed line-clamp-3">${ticket.noi_dung}</p>
+                        </div>
+                        <div class="p-2.5 rounded-lg bg-emerald-950/20 border border-emerald-900/30">
+                            <span class="text-[9px] font-black text-emerald-400 uppercase tracking-wider block mb-0.5">Kết quả / Biên bản phản hồi:</span>
+                            <p class="text-slate-300 text-[11px] leading-relaxed italic">${phanHoiText}</p>
+                        </div>
+                    </div>
+                `;
+                gridContainer.innerHTML += cardHtml;
+            });
+        });
+
+        // LUỒNG 2: XỬ LÝ GỬI ĐƠN PHẢN ÁNH MỚI LÊN FIREBASE
         document.getElementById('feedbackForm').addEventListener('submit', function(event) {
             event.preventDefault();
 
@@ -225,21 +306,16 @@
             const email = document.getElementById('p_email').value.trim();
             const content = document.getElementById('p_content').value.trim();
 
-            // Thực thi kiểm tra định dạng độ dài căn cước công dân
             if(cccd.length !== 12 || isNaN(cccd)) {
                 alert("⚠️ Định dạng số Định danh cá nhân / CCCD không hợp lệ! Vui lòng nhập đúng chuỗi số gồm 12 ký tự.");
                 document.getElementById('p_cccd').focus();
                 return;
             }
 
-            // Trạng thái chờ xử lý (Loading state)
             btnSubmit.disabled = true;
             btnText.innerText = "⏳ Hệ thống đang mã hóa và gửi hồ sơ...";
 
-            // Tạo mã định danh hồ sơ tự động dựa vào mốc thời gian thực tế (Timestamp)
             const ticketId = "PA-" + Date.now();
-
-            // Đóng gói mô hình cây JSON phẳng để bắn lên nhánh độc lập 'dashboard_binhhung/phan_anh_dan'
             const recordPath = ref(db, 'dashboard_binhhung/phan_anh_dan/' + ticketId);
             
             const payload = {
@@ -250,16 +326,13 @@
                 email: email,
                 noi_dung: content,
                 thoi_gian_gui: new Date().toLocaleString('vi-VN'),
-                trang_thai_xu_ly: "Chờ tiếp nhận" // Khởi tạo luồng xử lý hành chính
+                trang_thai_xu_ly: "Chờ tiếp nhận",
+                bien_ban_tra_loi: "" // Khởi tạo biên bản trống chờ cán bộ phê duyệt
             };
 
-            // Thực thi lệnh set() thuần của Firebase đẩy thẳng tệp dữ liệu lên Cloud
             set(recordPath, payload)
                 .then(() => {
-                    // Trả thông báo thành công rực rỡ cho người dân
-                    alert(`✅ Gửi phản ánh thành công thời gian thực!\n\n- Mã hồ sơ: ${ticketId}\n- Người gửi: ${name}\n\nDữ liệu đã được đồng bộ trực tiếp lên hệ thống IOC trung tâm Xã Bình Hưng để Ban điều hành phê duyệt điều động thực địa.`);
-                    
-                    // Khôi phục form về trạng thái tinh khôi ban đầu
+                    alert(`✅ Gửi phản ánh thành công thời gian thực!\n\nMã số hồ sơ của bạn là: ${ticketId}\n\nBạn có thể nhấn ngay vào nút "XEM KẾT QUẢ GIẢI QUYẾT" ở phía trên để theo dõi tiến độ xử lý hồ sơ của mình.`);
                     document.getElementById('feedbackForm').reset();
                     document.getElementById('image_preview').classList.add('hidden');
                     document.getElementById('upload_prompt').classList.remove('hidden');
@@ -268,11 +341,25 @@
                     alert("🚨 Lỗi kết nối luồng dữ liệu mạng: " + error.message);
                 })
                 .finally(() => {
-                    // Giải phóng trạng thái khóa nút bấm
                     btnSubmit.disabled = false;
                     btnText.innerText = "🚀 Gửi thông tin phản ánh lên Ban Điều Hành Xã";
                 });
         });
+
+        // LUỒNG 3: BỘ LỌC TÌM KIẾM NHANH HỒ SƠ TẠI FRONTEND
+        window.filterTickets = function() {
+            const query = document.getElementById('searchBar').value.toLowerCase().trim();
+            const cards = document.getElementsByClassName('ticket-card');
+
+            for (let i = 0; i < cards.length; i++) {
+                const textContent = cards[i].textContent.toLowerCase();
+                if (textContent.includes(query)) {
+                    cards[i].style.display = "";
+                } else {
+                    cards[i].style.display = "none";
+                }
+            }
+        }
     </script>
 </body>
 </html>
