@@ -57,6 +57,7 @@
         .btn-back { display: inline-flex; align-items: center; gap: 8px; background: rgba(14, 165, 233, 0.1); border: 1px solid rgba(14, 165, 233, 0.3); color: inherit; padding: 12px 24px; border-radius: 14px; font-weight: 800; font-size: 12px; text-transform: uppercase; transition: all 0.3s ease; }
         .btn-back:hover { transform: translateY(-2px); border-color: #ef4444; background: rgba(239, 68, 68, 0.1); }
         .custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: rgba(0,0,0,0.1); }
         .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(14, 165, 233, 0.3); border-radius: 10px; }
         .tab-btn { border: 1px solid transparent; transition: all 0.25s ease; }
     </style>
@@ -78,34 +79,34 @@
         <header class="glass-panel p-6 flex flex-col lg:flex-row justify-between items-center gap-4">
             <div class="text-center lg:text-left space-y-1">
                 <div class="flex items-center justify-center lg:justify-start gap-2 text-xs font-bold text-red-500 uppercase tracking-widest">
-                    <span>🏛️ QUYẾT ĐỊNH 4100/QĐ-UBND</span>
-                    <span class="px-2 py-0.5 rounded bg-red-500/10 border border-red-500/20 text-[10px]">CÔNG KHAI ĐIỀU CHỈNH</span>
+                    <span>🏛️ CƠ SỞ DỮ LIỆU ĐÁM MÂY — GOOGLE FIREBASE REALTIME</span>
+                    <span class="px-2 py-0.5 rounded bg-emerald-500/15 border border-emerald-500/30 text-[10px] text-emerald-400 font-extrabold">CONNECTED</span>
                 </div>
                 <h1 class="text-xl font-black uppercase tracking-wider text-dynamic-title">
                     Trung tâm Giám sát Điều hành Thu - Chi Ngân Sách Địa Phương
                 </h1>
                 <p class="text-dynamic-label font-bold text-xs uppercase tracking-[0.1em]">
-                    Hệ thống số hóa cân đối dự toán ngân sách Nhà nước Xã Bình Hưng năm 2025
+                    Hệ thống số hóa cân đối dự toán ngân sách Nhà nước Xã Bình Hưng năm 2025 [QĐ 4100/QĐ-UBND]
                 </p>
             </div>
             <div class="kpi-box px-6 py-3 rounded-2xl shadow-lg border text-center min-w-[210px]">
                 <span class="text-[9px] font-black text-dynamic-label uppercase block tracking-wider">Tổng dự toán thu - chi cân đối</span>
-                <span id="txt_tong_thu_chi" class="text-xl font-black text-emerald-400">⏳ Đang tải...</span>
+                <span id="txt_tong_thu_chi" class="text-xl font-black text-emerald-400">⏳ Đang kết nối...</span>
             </div>
         </header>
 
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <div class="glass-panel p-4.5 border-l-4 border-sky-500 flex flex-col justify-between">
                 <span class="text-[9px] font-black text-sky-400 uppercase tracking-wider">I. Thu xã hưởng 100% (Biểu 108)</span>
-                <h3 id="txt_thu_100" class="text-xl font-black text-dynamic-title mt-1">⏳ Đang tải...</h3>
+                <h3 id="txt_thu_100" class="text-xl font-black text-dynamic-title mt-1">⏳ Đang kết nối...</h3>
             </div>
             <div class="glass-panel p-4.5 border-l-4 border-amber-500 flex flex-col justify-between">
                 <span class="text-[9px] font-black text-amber-400 uppercase tracking-wider">II. Thu phân chia theo tỷ lệ (%)</span>
-                <h3 id="txt_thu_ty_le" class="text-xl font-black text-dynamic-title mt-1">⏳ Đang tải...</h3>
+                <h3 id="txt_thu_ty_le" class="text-xl font-black text-dynamic-title mt-1">⏳ Đang kết nối...</h3>
             </div>
             <div class="glass-panel p-4.5 border-l-4 border-purple-500 flex flex-col justify-between">
-                <span class="text-[9px] font-black text-purple-400 uppercase tracking-wider">III. Thu bổ sung từ cấp trên</span>
-                <h3 id="txt_thu_bo_sung" class="text-xl font-black text-dynamic-title mt-1">⏳ Đang tải...</h3>
+                <span class="text-[9px] font-black text-purple-400 uppercase tracking-wider">III. Thu bổ sung từ ngân sách cấp trên</span>
+                <h3 id="txt_thu_bo_sung" class="text-xl font-black text-dynamic-title mt-1">⏳ Đang kết nối...</h3>
             </div>
         </div>
 
@@ -138,7 +139,7 @@
                     <div class="w-val2">Thu Ngân Sách Xã (đ)</div>
                 </div>
                 <div id="thu-table-body" class="max-h-[400px] overflow-y-auto pr-1 custom-scrollbar font-semibold">
-                    <div class="text-center py-6 animate-pulse text-dynamic-body">⏳ Đang tải biểu mẫu thu từ Firebase Cloud...</div>
+                    <div class="text-center py-8 text-dynamic-body animate-pulse uppercase tracking-wider text-[11px]">⏳ Hệ thống đang rút cây dữ liệu số Biểu 109 từ Firebase...</div>
                 </div>
             </div>
 
@@ -150,7 +151,7 @@
                     <div class="w-val2">Kinh phí thường xuyên (đ)</div>
                 </div>
                 <div id="chi-table-body" class="max-h-[400px] overflow-y-auto pr-1 custom-scrollbar font-semibold">
-                    <div class="text-center py-6 text-dynamic-body">⏳ Đang tải biểu mẫu chi từ Firebase Cloud...</div>
+                    <div class="text-center py-8 text-dynamic-body animate-pulse uppercase tracking-wider text-[11px]">⏳ Hệ thống đang rút cây dữ liệu số Biểu 110 từ Firebase...</div>
                 </div>
             </div>
         </div>
@@ -161,10 +162,11 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
+        // Cấu hình địa chỉ phòng điều hành Firebase Realtime Database
         const firebaseConfig = { databaseURL: "https://dashboard-demo-ce0da-default-rtdb.asia-southeast1.firebasedatabase.app" };
         const db = getDatabase(initializeApp(firebaseConfig));
         
-        // ĐIỀU CHỈNH CHUẨN XÁC: Hướng Reference trực tiếp vào 3 node mới trên Firebase JSON tổng
+        // Căn chỉ mục Reference chính xác lên 3 nhánh độc lập
         const bieu108Ref = ref(db, 'dashboard_binhhung/bieu_108_can_doi_2025');
         const bieu109Ref = ref(db, 'dashboard_binhhung/bieu_109_thu_2025');
         const bieu110Ref = ref(db, 'dashboard_binhhung/bieu_110_chi_2025');
@@ -172,20 +174,15 @@
         let barChartInstance = null;
         let pieChartInstance = null;
         let currentLabelColor = '#94a3b8';
-        let localCache108 = null;
+        let firebaseCache108 = null;
 
-        // Định dạng dấu phẩy phân tách hàng nghìn cho số liệu ngân sách quốc gia
-        function formatMoney(num) {
-            return num ? num.toString().replace(/\B(?=(\d/\d+)*\d{3})+(?!\d)/g, ".") : "0";
-        }
-
-        // LUỒNG 1: LẮNG NGHE BIỂU 108 (CÂN ĐỐI TỔNG HỢP VÀ ĐỒ THỊ TRÒN CO CẤU THU)
+        // 🟢 LUỒNG KẾT NỐI 1: LIÊN THÔNG BIỂU TỔNG HỢP 108 VÀ VẼ ĐỒ THỊ TRÒN
         onValue(bieu108Ref, (snapshot) => {
             const data = snapshot.val();
             if(!data) return;
-            localCache108 = data;
+            firebaseCache108 = data;
 
-            // Bơm số liệu động thời gian thực từ Cloud vào các ô Card Stat
+            // Bơm số liệu thực tế động từ Firebase lên giao diện thẻ Card đầu não
             document.getElementById('txt_tong_thu_chi').innerHTML = `${data.tong_thu_chi.toLocaleString('vi-VN')} <small class="text-[10px] font-bold">đ</small>`;
             document.getElementById('txt_thu_100').innerHTML = `${data.cac_khoan_thu.thu_xa_huong_100.toLocaleString('vi-VN')} <small class="text-[10px] text-dynamic-label block font-medium">Đồng dự toán giao</small>`;
             document.getElementById('txt_thu_ty_le').innerHTML = `${data.cac_khoan_thu.thu_phan_chia_ty_le.toLocaleString('vi-VN')} <small class="text-[10px] text-dynamic-label block font-medium">Đồng dự toán giao</small>`;
@@ -195,21 +192,21 @@
             const mucTieu = data.cac_khoan_thu.thu_bo_sung_muc_tieu;
             document.getElementById('txt_thu_bo_sung').innerHTML = `${boSung.toLocaleString('vi-VN')} <small class="text-[10px] text-emerald-400 block font-bold">Cân đối: ${(canDoi/1e9).toFixed(1)} Tỷ | Mục tiêu: ${(mucTieu/1e9).toFixed(1)} Tỷ</small>`;
 
-            // Kích hoạt vẽ lại biểu đồ cơ cấu nguồn thu
+            // Gọi hàm render vẽ đồ thị tròn đồng bộ
             renderDoughnutChartEngine(data.cac_khoan_thu, currentLabelColor);
         });
 
-        // LUỒNG 2: LẮNG NGHE BIỂU 109 ĐỂ DỰNG BẢNG CHI TIẾT THU
+        // 🟢 LUỒNG KẾT NỐI 2: LIÊN THÔNG BIỂU CHI TIẾT THU 109 LÊN BẢNG LƯỚI
         onValue(bieu109Ref, (snapshot) => {
             const data = snapshot.val();
             if(!data) return;
 
             const container = document.getElementById('thu-table-body');
             container.innerHTML = data.map(item => `
-                <div class="table-row-item ${item.isHeader ? 'bg-sky-950/20 border-sky-500/30' : ''}">
+                <div class="table-row-item ${item.isHeader ? 'bg-sky-950/20 border-sky-500/30 shadow-md' : ''}">
                     <div class="grid-table-layout">
                         <div class="w-idx font-black text-dynamic-label">${item.stt}</div>
-                        <div class="w-name truncate ${item.isHeader ? 'text-dynamic-title font-black' : 'text-dynamic-body font-bold'}">${item.name}</div>
+                        <div class="w-name truncate ${item.isHeader ? 'text-dynamic-title font-black text-[13px]' : 'text-dynamic-body font-bold'}" title="${item.name}">${item.name}</div>
                         <div class="w-val1 font-mono text-dynamic-title text-right">${item.nsnn}</div>
                         <div class="w-val2 font-mono text-emerald-400 text-right">${item.nsx}</div>
                     </div>
@@ -217,36 +214,35 @@
             `).join('');
         });
 
-        // LUỒNG 3: LẮNG NGHE BIỂU 110 ĐỂ DỰNG BẢNG CHI VÀ BIỂU ĐỒ CỘT CHI
+        // 🟢 LUỒNG KẾT NỐI 3: LIÊN THÔNG BIỂU CHI TIẾT 110 LÊN BẢNG VÀ TỰ ĐỘNG TÍNH TOÁN DỰNG ĐỒ THỊ CỘT
         onValue(bieu110Ref, (snapshot) => {
             const data = snapshot.val();
             if(!data) return;
 
-            // 1. Dựng bảng kê chi tiết
+            // Dựng cấu trúc bảng thường xuyên
             const container = document.getElementById('chi-table-body');
             container.innerHTML = data.map(item => `
                 <div class="table-row-item">
                     <div class="grid-table-layout">
                         <div class="w-idx font-black text-dynamic-label">${item.stt}</div>
-                        <div class="w-name truncate text-dynamic-body font-bold">${item.name}</div>
+                        <div class="w-name truncate text-dynamic-body font-bold" title="${item.name}">${item.name}</div>
                         <div class="w-val1 font-mono text-slate-400 text-right">${item.investment}</div>
                         <div class="w-val2 font-mono text-red-400 text-right">${item.regular}</div>
                     </div>
                 </div>
             `).join('');
 
-            // 2. Trích xuất dải số liệu động để nạp vào biểu đồ cột Chart.js (Chuyển đổi chuỗi text tiền tệ sang mốc Tỷ đồng)
+            // Thuật toán động quét bóc tách tiền tệ, chuyển đổi chuỗi text dấu chấm sang Tỷ đồng để Chart.js vẽ tự động
             const mapExpenseDataset = data.map(item => {
-                const parseNum = parseFloat(item.regular.replace(/\./g, '')) || 0;
-                return parseFloat((parseNum / 1e9).toFixed(1)); // Chia 1 tỷ lấy mốc thập phân trực quan
+                const cleanNumber = parseFloat(item.regular.replace(/\./g, '')) || 0;
+                return parseFloat((cleanNumber / 1e9).toFixed(1)); 
             });
 
-            // Gán nhãn ngắn gọn tương thích khung đồ thị diện phẳng
             const barLabels = ['Giáo dục', 'Y tế', 'Văn hóa', 'Phát thanh', 'Thể thao', 'Môi trường', 'Kinh tế', 'Quản lý NN', 'An sinh XH', 'An ninh QP', 'Khác', 'Dự phòng'];
             renderBarChartEngine(barLabels, mapExpenseDataset, currentLabelColor);
         });
 
-        // ĐIỀU PHỐI TAB KHÔNG GIAN SỐ
+        // HÀM ĐIỀU PHỐI TAB KHÔNG GIAN SỐ
         window.switchBudgetTab = function(tabId, btnElement) {
             document.querySelectorAll('.budget-tab-content').forEach(c => c.classList.add('hidden'));
             document.getElementById(tabId).classList.remove('hidden');
@@ -257,7 +253,7 @@
             btnElement.className = "tab-btn px-4 py-2 rounded-xl bg-sky-600 text-white font-bold shadow-md";
         }
 
-        // ENGINE VẼ CÁC CARD ĐỒ THỊ CHART.JS
+        // ĐỘNG CƠ KHỞI TẠO BẢN ĐỒ BIỂU ĐỒ CHART.JS
         function renderBarChartEngine(labels, dataset, textColor) {
             if(barChartInstance) barChartInstance.destroy();
             const ctxBar = document.getElementById('expenseBarChart').getContext('2d');
@@ -267,7 +263,7 @@
                 data: {
                     labels: labels,
                     datasets: [{
-                        label: 'Giá trị điều chỉnh bổ sung (Tỷ đồng)',
+                        label: 'Giá trị dự toán điều chỉnh bổ sung (Tỷ đồng)',
                         data: dataset,
                         backgroundColor: ['#2563eb','#10b981','#f59e0b','#06b6d4','#3b82f6','#d97706','#64748b','#8b5cf6','#ec4899','#f43f5e','#14b8a6','#475569'],
                         borderRadius: 4
@@ -305,7 +301,7 @@
             });
         }
 
-        // ĐIỀU HÀNH HOÁN ĐỔI THEME TRẮNG ĐEN CHỐNG KHUYẾT TẬT ĐÈ MÀU CHỮ
+        // HỆ THỐNG ĐỔI NỀN TRẮNG/ĐEN KHÔNG GIAN PHẲNG
         window.setTheme = function(themeName) {
             const body = document.getElementById('body-context');
             const btnLight = document.getElementById('btn-theme-light');
@@ -323,9 +319,9 @@
                 currentLabelColor = '#00f0ff';
             }
             
-            // Ép buộc đồ thị tròn render đồng bộ màu chữ
-            if(localCache108) {
-                renderDoughnutChartEngine(localCache108.cac_khoan_thu, currentLabelColor);
+            // Buộc đồ thị tròn nạp lại màu nhãn chữ tương phản trục tọa độ mới
+            if(firebaseCache108) {
+                renderDoughnutChartEngine(firebaseCache108.cac_khoan_thu, currentLabelColor);
             }
         }
     </script>
