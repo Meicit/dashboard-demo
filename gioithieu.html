@@ -12,17 +12,25 @@
             margin: 0;
             padding: 0;
             min-height: 100vh;
-            background: linear-gradient(rgba(241, 245, 249, 0.15), rgba(241, 245, 249, 0.15)), 
-                        url('hinhnen.png');
+            /* Phía dưới là hình nền lấy file hinhnen.png */
+            background: url('hinhnen.png') no-repeat center center fixed;
             background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
             color: #1e293b;
             display: flex;
             flex-direction: column;
         }
 
-        /* KHUNG CHỨA SIÊU ĐẠI (1440px) */
+        /* PHẦN HEADER PHÍA TRÊN MÀU XANH TƯỜNG MINH */
+        .main-header {
+            background-color: #0b4a8f; /* Hệ màu xanh công vụ */
+            color: #ffffff;
+            padding: 40px 20px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            text-align: center;
+        }
+
+        /* KHUNG CHỨA SIÊU ĐẠI (1440px) CHỨA KHỐI NỘI DUNG PHÍA DƯỚI */
         .container-wrapper {
             max-width: 1440px;
             margin: 40px auto 100px;
@@ -30,34 +38,23 @@
             width: 100%;
         }
 
-        .title-box {
-            text-align: center;
-            margin-bottom: 50px;
-        }
-
-        /* TIÊU ĐỀ KHỔ LỚN */
+        /* TIÊU ĐỀ KHỔ LỚN TRÊN HEADER */
         .title-main {
             font-weight: 900;
             text-transform: uppercase;
-            font-size: clamp(2.0rem, 4.5vw, 3.5rem);
-            color: #0c4a6e;
-            letter-spacing: -1px;
-            text-shadow: 0 2px 15px rgba(255, 255, 255, 0.9);
+            font-size: clamp(1.8rem, 4.5vw, 3.2rem);
+            color: #ffffff;
+            letter-spacing: -0.5px;
             line-height: 1.3;
         }
 
-        /* ARTICLE CARD HIỂN THỊ ĐẠI THỂ */
+        /* ARTICLE CARD HIỂN THỊ CHUYỂN SANG MÀU XANH NGỌC BÍCH #80ffe8 */
         .article-card {
-            background: rgba(255, 255, 255, 0.78);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border-top: 2px solid rgba(255, 255, 255, 0.85);
-            border-left: 2px solid rgba(255, 255, 255, 0.75);
-            border-right: 1px solid rgba(14, 165, 233, 0.25);
-            border-bottom: 1px solid rgba(14, 165, 233, 0.25);
+            background-color: #80ffe8; /* Màu xanh ngọc bích */
+            border: 1px solid rgba(11, 74, 143, 0.25);
             border-radius: 40px;
             padding: 70px 90px; 
-            box-shadow: 0 30px 60px -15px rgba(12, 74, 110, 0.25);
+            box-shadow: 0 30px 60px -15px rgba(12, 74, 110, 0.35);
         }
 
         /* KHOẢNG CÁCH PHÂN ĐOẠN KHỐI (60px) */
@@ -80,16 +77,16 @@
             letter-spacing: 0.5px;
         }
 
-        /* NỘI DUNG PHÓNG TO TOÀN DIỆN - CỠ CHIẾN LƯỢC 20px SẮC NÉT */
+        /* NỘI DUNG PHÓNG TO TOÀN DIỆN - CỠ CHIẾN LƯỢC 20px SẮC NÉT KHỚP MÀU NỀN */
         .text-paragraph {
             font-size: 20px; 
             line-height: 2.1; 
-            font-weight: 600;
-            color: #334155;
+            font-weight: 700;
+            color: #0f172a; /* Chữ tối siêu tương phản trên nền ngọc bích */
             text-align: justify;
         }
 
-        /* NÚT QUAY LẠI CỠ LỚN */
+        /* NÚT QUAY LẠI CỠ LỚN ĐỒNG BỘ */
         .btn-back {
             display: inline-flex;
             align-items: center;
@@ -103,7 +100,7 @@
             font-size: 14px;
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            box-shadow: 0 6px 10px -1px rgba(12, 74, 110, 0.1);
+            box-shadow: 0 6px 10px -1px rgba(0, 0, 0, 0.15);
             transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             margin-bottom: 35px;
         }
@@ -118,14 +115,15 @@
 </head>
 <body>
 
+    <header class="main-header">
+        <h1 class="title-main">XÃ BÌNH HƯNG – ĐỘNG LỰC PHÁT TRIỂN MỚI Ở CỬA NGÕ TÂY NAM THÀNH PHỐ HỒ CHÍ MINH</h1>
+    </header>
+
     <div class="container-wrapper">
+        
         <a href="home.html" class="btn-back">
             ⬅️ Quay lại Trang chủ
         </a>
-
-        <div class="title-box">
-            <h1 class="title-main">XÃ BÌNH HƯNG – ĐỘNG LỰC PHÁT TRIỂN MỚI Ở CỬA NGÕ TÂY NAM THÀNH PHỐ HỒ CHÍ MINH</h1>
-        </div>
 
         <article class="article-card">
             
@@ -136,7 +134,7 @@
                     Thực hiện chủ trương của Đảng và Nhà nước về sắp xếp đơn vị hành chính các cấp nhằm tinh gọn bộ máy, nâng cao hiệu lực, hiệu quả quản lý nhà nước, ngày 16 tháng 6 năm 2025, Ủy ban Thường vụ Quốc hội đã ban hành Nghị quyết số 1685/NQ-UBTVQH15 về việc sắp xếp các đơn vị hành chính cấp xã của Thành phố Hồ Chí Minh năm 2025.<br><br>
                     Theo Nghị quyết, từ ngày 01 tháng 7 năm 2025, xã Bình Hưng chính thức được thành lập trên cơ sở sáp nhập toàn bộ diện tích tự nhiên và quy mô dân số của xã Bình Hưng, xã Phong Phú (huyện Bình Chánh cũ) và một phần diện tích tự nhiên, dân số của phường 7 (Quận 8 cũ).<br><br>
                     Sau khi thành lập, xã Bình Hưng có diện tích tự nhiên 3.263 ha (32,63 km²), gồm 70 ấp, dân số trên 183.729 người. Đây là một trong những đơn vị hành chính có quy mô dân số lớn của Thành phố Hồ Chí Minh, tạo điều kiện thuận lợi để tập trung nguồn lực, mở rộng không gian phát triển và nâng cao chất lượng phục vụ nhân dân.<br><br>
-                    Đẳng bộ xã Bình Hưng được thành lập theo Quyết định số 3206-QĐ/TU ngày 21 tháng 6 năm 2025 của Thành ủy Thành phố Hồ Chí Minh, gồm 95 tổ chức đảng trực thuộc với hơn 1.700 đảng viên. Bộ máy chính trị được kiện toàn đồng bộ, bảo đảm hoạt động thông suốt, hiệu lực, hiệu quả ngay từ những ngày đầu đi vào hoạt động.<br><br>
+                    Đảng bộ xã Bình Hưng được thành lập theo Quyết định số 3206-QĐ/TU ngày 21 tháng 6 năm 2025 của Thành ủy Thành phố Hồ Chí Minh, gồm 95 tổ chức đảng trực thuộc with hơn 1.700 đảng viên. Bộ máy chính trị được kiện toàn đồng bộ, bảo đảm hoạt động thông suốt, hiệu lực, hiệu quả ngay từ những ngày đầu đi vào hoạt động.<br><br>
                     Trụ sở Đảng ủy - HĐND - UBND - Ủy ban MTTQ Việt Nam xã Bình Hưng đặt tại A10/26A đường số 10, Khu dân cư Bình Hưng, xã Bình Hưng, Thành phố Hồ Chí Minh.
                 </p>
             </div>
@@ -148,8 +146,8 @@
                     Những năm qua, cơ cấu kinh tế của địa phương chuyển dịch mạnh theo hướng thương mại - dịch vụ, công nghiệp - xây dựng và nông nghiệp đô thị. Trên địa bàn hiện có hơn 8.348 doanh nghiệp và gần 3.166 hộ kinh doanh đang hoạt động. Hệ thống thương mại phát triển với 2 trung tâm thương mại, 3 siêu thị tổng hợp, 8 siêu thị chuyên doanh, 62 cửa hàng tiện lợi cùng nhiều cơ sở dịch vụ, đáp ứng nhu cầu ngày càng cao của người dân.<br><br>
                     Thu ngân sách nhà nước ước thực hiện năm 2025 là 144,655/91,676 tỷ đồng (đạt 157,79%). Trong đó, thu thuế công thương nghiệp 40,288/25,400 tỷ đồng (đạt 158,61%).<br><br>
                     Cùng với tốc độ đô thị hóa nhanh, Bình Hưng vẫn duy trì hiệu quả mô hình nông nghiệp đô thị với các sản phẩm có giá trị kinh tế cao như hoa lan, cây kiểng, cá kiểng, thủy sản, rau nhút và bồn bồn. Địa phương hiện có 2 sản phẩm OCOP: “Bộ khay gỗ nguyên khối tối giản” và sản phẩm Khô cá vồ đém một nắng Minh Hiếu được công nhận theo chương trình mỗi xã một sản phẩm.<br><br>
-                    Công tác quy hoạch, xây dựng và phát triển hạ tầng được chú trọng thực hiện. Trên địa bàn hiện có 33 đồ án quy hoạch phân khu được phê duyệt với tổng diện tích gần 2.292 ha. Nhiều dự án trọng điểm đang được triển khai như Dự án nâng cấp Quốc lộ 50, Dự án Quốc lộ 50 song hành, Dự án kè chống sạt lở bờ tả thượng lưu cầu Xóm Củi và Dự án nạo vét trục thoát nước rạch Xóm Củi.<br><br>
-                    Địa phương hiện có 33 nhà chung cư với 66 block nhà ở, từng bước hình thành các khu dân cư hiện đại, văn minh. Hệ thống hạ tầng kỹ thuật, hạ tầng xã hội tiếp tục được đầu tư đồng bộ, tạo nền tảng cho quá trình phát triển đô thị trong tương lai.<br><br>
+                    Công tác quy hoạch, xây dựng và phát triển hạ tầng được chú trọng thực hiện. Trên địa bàn hiện có 33 đồ án quy hoạch phân khu được phê duyệt with tổng diện tích gần 2.292 ha. Nhiều dự án trọng điểm đang được triển khai như Dự án nâng cấp Quốc lộ 50, Dự án Quốc lộ 50 song hành, Dự án kè chống sạt lở bờ tả thượng lưu cầu Xóm Củi và Dự án nạo vét trục thoát nước rạch Xóm Củi.<br><br>
+                    Địa phương hiện có 33 nhà chung cư with 66 block nhà ở, từng bước hình thành các khu dân cư hiện đại, văn minh. Hệ thống hạ tầng kỹ thuật, hạ tầng xã hội tiếp tục được đầu tư đồng bộ, tạo nền tảng cho quá trình phát triển đô thị trong tương lai.<br><br>
                     Đặc biệt, xã đã hoàn thành 19/19 tiêu chí xây dựng nông thôn mới, hoàn thành 6 tiêu chuẩn xã “Văn hóa - Văn minh đô thị”, góp phần nâng cao chất lượng sống của người dân và tạo nền tảng quan trọng cho quá trình phát triển bền vững.
                 </p>
             </div>
