@@ -11,31 +11,46 @@
         body {
             font-family: 'Inter', 'Be Vietnam Pro', sans-serif;
             margin: 0; padding: 0; min-height: 100vh;
-            /* Đổi ảnh nền thô sang nền Gradient tinh tế kết hợp Layer Mesh hiện đại */
-            background: radial-gradient(circle at 0% 0%, rgba(224, 242, 254, 0.4) 0%, transparent 40%),
-                        radial-gradient(circle at 100% 100%, rgba(204, 251, 241, 0.3) 0%, transparent 40%),
-                        linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
-            background-attachment: fixed;
+            /* PHÍA DƯỚI LÀ HÌNH NỀN LẤY FILE HINHNEN.PNG */
+            background: url('hinhnen.png') no-repeat center center fixed;
+            background-size: cover;
             color: #0f172a;
             display: flex;
             flex-direction: column;
         }
 
-        /* HERO REFINEMENT */
+        /* PHẦN HEADER PHÍA TRÊN MÀU XANH CÔNG VỤ UY NGHIÊM */
+        .main-header {
+            background-color: #0b4a8f;
+            color: #ffffff;
+            padding: 35px 24px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            text-align: center;
+        }
+
+        /* HERO REFINEMENT ANMTATION */
         .logo-main {
-            width: 95px;
+            width: 85px;
             animation: float 4s ease-in-out infinite;
         }
         @keyframes float {
-            0%, 100% { transform: translateY(0) scale(1); filter: drop-shadow(0 12px 24px rgba(14, 165, 233, 0.25)); }
-            50% { transform: translateY(-8px) scale(1.02); filter: drop-shadow(0 20px 32px rgba(14, 165, 233, 0.15)); }
+            0%, 100% { transform: translateY(0) scale(1); filter: drop-shadow(0 8px 20px rgba(255, 255, 255, 0.15)); }
+            50% { transform: translateY(-6px) scale(1.02); filter: drop-shadow(0 15px 25px rgba(255, 255, 255, 0.25)); }
         }
 
-        /* GRID SYSTEM & GLASSMORPHISM */
+        /* BẢNG PHÂN KHU NỀN PHÍA DƯỚI 12 NÚT MÀU XANH NGỌC BÍCH #80ffe8 */
+        .menu-panel-wrapper {
+            background-color: #80ffe8;
+            border: 1px solid rgba(11, 74, 143, 0.25);
+            border-radius: 36px;
+            box-shadow: 0 25px 50px -15px rgba(12, 74, 110, 0.35);
+            padding: 40px 24px;
+            width: 100%;
+        }
+
+        /* GRID SYSTEM */
         .grid-container {
-            max-width: 1280px;
-            margin: 0 auto 40px;
-            padding: 0 24px;
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             gap: 24px;
@@ -72,12 +87,12 @@
 
         .nav-card:hover { 
             transform: translateY(-6px); 
-            border-color: rgba(14, 165, 233, 0.4); 
-            box-shadow: 0 20px 30px -10px rgba(14, 165, 233, 0.18), 0 1px 3px rgba(0,0,0,0.05);
+            border-color: rgba(11, 74, 143, 0.4); 
+            box-shadow: 0 20px 30px -10px rgba(11, 74, 143, 0.25), 0 1px 3px rgba(0,0,0,0.05);
         }
 
         .nav-card:hover::before {
-            background: linear-gradient(180deg, rgba(14, 165, 233, 0) 10%, rgba(11, 43, 91, 0.5) 50%, rgba(7, 89, 133, 0.95) 100%);
+            background: linear-gradient(180deg, rgba(14, 165, 233, 0) 10%, rgba(11, 43, 91, 0.5) 50%, rgba(11, 74, 143, 0.95) 100%);
         }
 
         /* TEXT OVERLAY IN CARD */
@@ -86,7 +101,7 @@
             padding: 20px;
             position: relative;
             z-index: 2;
-            text-align: left; /* Đổi sang canh lề trái nhìn sẽ công sở và tây hơn */
+            text-align: left;
         }
         
         .nav-card h3 { 
@@ -125,121 +140,124 @@
         /* RESPONSIVE DESIGN */
         @media (max-width: 1100px) { .grid-container { grid-template-columns: repeat(3, 1fr); gap: 20px; } }
         @media (max-width: 768px) { 
-            .grid-container { grid-template-columns: repeat(2, 1fr); gap: 16px; padding: 0 16px; } 
-            body { background-attachment: scroll; }
+            .grid-container { grid-template-columns: repeat(2, 1fr); gap: 16px; } 
+            .article-card { padding: 40px 30px; }
         }
     </style>
 </head>
 <body>
 
-    <header class="py-12 px-6 text-center max-w-4xl mx-auto space-y-4">
+    <header class="main-header space-y-3">
         <img src="logo.png" alt="Logo" class="logo-main mx-auto">
-        <h1 class="text-3xl md:text-5xl font-extrabold tracking-tight text-slate-900 uppercase">
-            Xã Bình Hưng
-        </h1>
-        <div class="inline-flex items-center justify-center bg-white/70 backdrop-blur-md border border-slate-200/60 px-6 py-2.5 rounded-full shadow-sm">
-            <p class="text-sky-950 font-bold tracking-wider text-xs md:text-sm uppercase text-center leading-relaxed">
-                Cổng thông tin và điều hành số xã Bình Hưng <span class="text-sky-500 mx-1">•</span> IOC BÌNH HƯNG
+        <h1 class="title-main">Xã Bình Hưng</h1>
+        <div class="inline-flex items-center justify-center bg-white/10 backdrop-blur-md border border-white/20 px-6 py-2 rounded-full shadow-inner">
+            <p class="text-white font-bold tracking-wider text-xs md:text-sm uppercase text-center leading-relaxed">
+                Cổng thông tin và điều hành số xã Bình Hưng <span class="text-cyan-300 mx-1">•</span> IOC BÌNH HƯNG
             </p>
         </div>
     </header>
 
-    <main class="grid-container">
+    <div class="max-w-[1320px] w-full mx-auto px-6 my-10 space-y-8">
         
-        <a href="gioithieu.html" class="nav-card" style="background-image: url('icon/gioithieu.png');">
-            <div class="text-overlay">
-                <h3>Giới thiệu</h3>
-            </div>
-        </a>
-        
-        <a href="pages/tru-so-hanh-chinh.html" class="nav-card" style="background-image: url('icon/truso.png');">
-            <div class="text-overlay">
-                <h3>Trụ sở cơ quan<br>hành chính</h3>
-            </div>
-        </a>
-        
-        <div onclick="openLoginModal()" class="nav-card" style="background-image: url('icon/dashboard.png');">
-            <div class="text-overlay">
-                <h3>Hệ thống i-Dashboard<br>điều hành xã</h3>
-            </div>
-        </div>
-        
-        <a href="node-thong-tin-tthc/tthc.html" class="nav-card" style="background-image: url('icon/tthc.png');">
-            <div class="text-overlay">
-                <h3>Thông tin<br>Thủ tục hành chính</h3>
-            </div>
-        </a>        
-        
-        <div onclick="alert('Hệ thống Bản đồ số địa chính đang được chuẩn hóa dữ liệu liên thông.')" class="nav-card" style="background-image: url('icon/bandoso.png');">
-            <div class="text-overlay">
-                <h3>Bản đồ số<br>xã Bình Hưng</h3>
-            </div>
-        </div>
-        
-        <div onclick="alert('Cổng thông tin kết nối các trường học trên địa bàn đang cấu hình máy chủ.')" class="nav-card" style="background-image: url('icon/truonghoc.png');">
-            <div class="text-overlay">
-                <h3>Trang điện tử<br>trường học</h3>
-            </div>
-        </div>
-        
-        <div onclick="alert('Kho học liệu số giáo dục đào tạo liên thông đang tích hợp dữ liệu.')" class="nav-card" style="background-image: url('icon/hoclieu.png');">
-            <div class="text-overlay">
-                <h3>Kho học liệu số<br>giáo dục</h3>
-            </div>
-        </div>
-        
-        <a href="so-tay-70-ap/so-tay.html" class="nav-card" style="background-image: url('icon/dieuhanhap.png');">
-            <div class="text-overlay">
-                <h3>Trang điều hành số 70 ấp</h3>
-            </div>
-        </a>
+        <div class="menu-panel-wrapper">
+            <main class="grid-container">
+                
+                <a href="gioithieu.html" class="nav-card" style="background-image: url('icon/gioithieu.png');">
+                    <div class="text-overlay">
+                        <h3>Giới thiệu</h3>
+                    </div>
+                </a>
+                
+                <a href="pages/tru-so-hanh-chinh.html" class="nav-card" style="background-image: url('icon/truso.png');">
+                    <div class="text-overlay">
+                        <h3>Trụ sở cơ quan<br>hành chính</h3>
+                    </div>
+                </a>
+                
+                <div onclick="openLoginModal()" class="nav-card" style="background-image: url('icon/dashboard.png');">
+                    <div class="text-overlay">
+                        <h3>Hệ thống i-Dashboard<br>điều hành xã</h3>
+                    </div>
+                </div>
+                
+                <a href="node-thong-tin-tthc/tthc.html" class="nav-card" style="background-image: url('icon/tthc.png');">
+                    <div class="text-overlay">
+                        <h3>Thông tin<br>Thủ tục hành chính</h3>
+                    </div>
+                </a>        
+                
+                <div onclick="alert('Hệ thống Bản đồ số địa chính đang được chuẩn hóa dữ liệu liên thông.')" class="nav-card" style="background-image: url('icon/bandoso.png');">
+                    <div class="text-overlay">
+                        <h3>Bản đồ số<br>xã Bình Hưng</h3>
+                    </div>
+                </div>
+                
+                <div onclick="alert('Cổng thông tin kết nối các trường học trên địa bàn đang cấu hình máy chủ.')" class="nav-card" style="background-image: url('icon/truonghoc.png');">
+                    <div class="text-overlay">
+                        <h3>Trang điện tử<br>trường học</h3>
+                    </div>
+                </div>
+                
+                <div onclick="alert('Kho học liệu số giáo dục đào tạo liên thông đang tích hợp dữ liệu.')" class="nav-card" style="background-image: url('icon/hoclieu.png');">
+                    <div class="text-overlay">
+                        <h3>Kho học liệu số<br>giáo dục</h3>
+                    </div>
+                </div>
+                
+                <a href="so-tay-70-ap/so-tay.html" class="nav-card" style="background-image: url('icon/dieuhanhap.png');">
+                    <div class="text-overlay">
+                        <h3>Trang điều hành số 70 ấp</h3>
+                    </div>
+                </a>
 
-        <a href="tuyen-truyen/tuyen-truyen.html" class="nav-card" style="background-image: url('icon/tuyentruyen.png');">
-            <div class="text-overlay">
-                <h3>Thông tin<br>tuyên truyền</h3>
-            </div>
-        </a>
+                <a href="tuyen-truyen/tuyen-truyen.html" class="nav-card" style="background-image: url('icon/tuyentruyen.png');">
+                    <div class="text-overlay">
+                        <h3>Thông tin<br>tuyên truyền</h3>
+                    </div>
+                </a>
 
-        <a href="https://www.facebook.com/p/X%C3%A3-B%C3%ACnh-H%C3%B9ng-Th%C3%A0nh-Ph%E1%BB%91-H%E1%BB%93-Ch%C3%AD-Minh-100063653432652/" target="_blank" class="nav-card" style="background-image: url('icon/fanpage.png');">
-            <div class="text-overlay">
-                <h3>Trang Fanpage<br>xã Bình Hưng</h3>
-            </div>
-        </a>
+                <a href="https://www.facebook.com/p/X%C3%A3-B%C3%ACnh-H%C3%B9ng-Th%C3%A0nh-Ph%E1%BB%91-H%E1%BB%93-Ch%C3%AD-Minh-100063653432652/" target="_blank" class="nav-card" style="background-image: url('icon/fanpage.png');">
+                    <div class="text-overlay">
+                        <h3>Trang Fanpage<br>xã Bình Hưng</h3>
+                    </div>
+                </a>
 
-        <div onclick="alert('Trợ lý ảo AI hành chính công phục vụ nhân dân đang chạy thử nghiệm nội bộ.')" class="nav-card" style="background-image: url('icon/trolyao.png');">
-            <div class="text-overlay">
-                <h3>Trợ lý Ảo<br>xã Bình Hưng</h3>
-            </div>
+                <div onclick="alert('Trợ lý ảo AI hành chính công phục vụ nhân dân đang chạy thử nghiệm nội bộ.')" class="nav-card" style="background-image: url('icon/trolyao.png');">
+                    <div class="text-overlay">
+                        <h3>Trợ lý Ảo<br>xã Bình Hưng</h3>
+                    </div>
+                </div>
+
+                <a href="tuyen-truyen/phan-anh.html" class="nav-card" style="background-image: url('icon/phananh.png');">
+                    <div class="text-overlay">
+                        <h3>Phản ánh<br>trực tuyến</h3>
+                    </div>
+                </a>
+            </main>
         </div>
 
-        <a href="tuyen-truyen/phan-anh.html" class="nav-card" style="background-image: url('icon/phananh.png');">
-            <div class="text-overlay">
-                <h3>Phản ánh<br>trực tuyến</h3>
+        <section class="w-full">
+            <div class="bg-white/75 backdrop-blur-md border border-white/60 rounded-3xl p-8 md:p-10 shadow-lg max-w-xl">
+                <h2 class="text-lg font-bold uppercase tracking-wider text-slate-900 border-b border-slate-200 pb-3 mb-6 flex items-center gap-2">
+                    <span class="w-1.5 h-5 bg-blue-700 rounded-full"></span> Thông tin liên hệ
+                </h2>
+                <div class="space-y-4 text-slate-700 text-sm font-semibold">
+                    <p class="flex items-start gap-3.5">
+                        <span class="text-base bg-slate-100 p-1.5 rounded-lg text-slate-500">📍</span> 
+                        <span class="pt-0.5">Xã Bình Hưng, Thành phố Hồ Chí Minh</span>
+                    </p>
+                    <p class="flex items-start gap-3.5">
+                        <span class="text-base bg-slate-100 p-1.5 rounded-lg text-slate-500">📞</span> 
+                        <span class="pt-0.5">(028) 3981 0015</span>
+                    </p>
+                    <p class="flex items-start gap-3.5">
+                        <span class="text-base bg-slate-100 p-1.5 rounded-lg text-slate-500">📧</span> 
+                        <span class="pt-0.5">binhhung@tphcm.gov.vn</span>
+                    </p>
+                </div>
             </div>
-        </a>
-    </main>
-
-    <section class="max-w-[1280px] w-full mx-auto px-6 mb-16">
-        <div class="bg-white/60 backdrop-blur-md border border-white/80 rounded-3xl p-8 md:p-10 shadow-sm max-w-xl">
-            <h2 class="text-lg font-bold uppercase tracking-wider text-slate-900 border-b border-slate-200 pb-3 mb-6 flex items-center gap-2">
-                <span class="w-1.5 h-5 bg-sky-500 rounded-full"></span> Thông tin liên hệ
-            </h2>
-            <div class="space-y-4 text-slate-600 text-sm font-medium">
-                <p class="flex items-start gap-3.5">
-                    <span class="text-base bg-slate-100 p-1.5 rounded-lg text-slate-500">📍</span> 
-                    <span class="pt-0.5">Xã Bình Hưng, Thành phố Hồ Chí Minh</span>
-                </p>
-                <p class="flex items-start gap-3.5">
-                    <span class="text-base bg-slate-100 p-1.5 rounded-lg text-slate-500">📞</span> 
-                    <span class="pt-0.5">(028) 3981 0015</span>
-                </p>
-                <p class="flex items-start gap-3.5">
-                    <span class="text-base bg-slate-100 p-1.5 rounded-lg text-slate-500">📧</span> 
-                    <span class="pt-0.5">binhhung@tphcm.gov.vn</span>
-                </p>
-            </div>
-        </div>
-    </section>
+        </section>
+    </div>
 
     <div id="loginModal" class="modal-overlay">
         <div class="modal-card">
@@ -251,12 +269,12 @@
             
             <form id="loginForm" class="space-y-5" onsubmit="submitAuth(event)">
                 <div>
-                    <label class="text-xs font-600 text-slate-700 block mb-2 ml-1">Email quản trị</label>
+                    <label class="text-xs font-semibold text-slate-700 block mb-2 ml-1">Email quản trị</label>
                     <input type="email" id="email" required placeholder="name@tphcm.gov.vn" 
                         class="w-full bg-white/80 border border-slate-200 rounded-xl px-4 py-3 text-sm font-medium text-slate-900 outline-none transition focus:border-sky-500 focus:bg-white focus:ring-4 focus:ring-sky-500/10">
                 </div>
                 <div>
-                    <label class="text-xs font-600 text-slate-700 block mb-2 ml-1">Mật mã bảo mật</label>
+                    <label class="text-xs font-semibold text-slate-700 block mb-2 ml-1">Mật mã bảo mật</label>
                     <input type="password" id="password" required placeholder="••••••••" 
                         class="w-full bg-white/80 border border-slate-200 rounded-xl px-4 py-3 text-sm font-medium text-slate-900 outline-none transition focus:border-sky-500 focus:bg-white focus:ring-4 focus:ring-sky-500/10">
                 </div>
@@ -300,6 +318,7 @@
             if (auth.currentUser) {
                 window.location.href = "index.html";
             } else {
+                document.getElementById('loginModal').open = true;
                 document.getElementById('loginModal').classList.add('open');
                 document.getElementById('email').focus();
             }
