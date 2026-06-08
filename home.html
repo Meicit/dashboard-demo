@@ -20,26 +20,23 @@
             transition: background 0.4s ease, color 0.4s ease;
         }
 
-        /* ================= CHUYỂN ĐỔI THEME CHỈ TÁC ĐỘNG LÊN LỚP NỀN HEADER ================= */
+        /* ================= THEME PHẲNG ĐẶC - LOẠI BỎ TOÀN BỘ HIỆU ỨNG KÍNH MỜ MÀU MÈ ================= */
         
         /* 🔵 PHONG CÁCH XANH IOS (MẶC ĐỊNH CHÍNH PHỦ SỐ) */
         body.theme-xanh-ios .main-header {
-            background: linear-gradient(135deg, rgba(0, 122, 255, 0.85), rgba(9, 68, 143, 0.95));
-            border-bottom: 1px solid rgba(0, 122, 255, 0.3);
-            box-shadow: 0 8px 32px rgba(0, 122, 255, 0.15), inset 0 1px 0 rgba(255,255,255,0.25);
+            background-color: #0b4a8f; /* Màu xanh đặc công vụ */
+            box-shadow: 0 4px 15px rgba(11, 74, 143, 0.2);
+            border-bottom: 2px solid #032b5c;
         }
-        body.theme-xanh-ios .contact-indicator-dot { background-color: #007aff; }
 
         /* 🔴 PHONG CÁCH ĐỎ HÀNH CHÍNH (CƠ QUAN ĐẢNG) */
         body.theme-do-hanhchinh .main-header {
-            background: linear-gradient(135deg, rgba(220, 38, 38, 0.85), rgba(153, 27, 27, 0.95));
-            border-bottom: 1px solid rgba(220, 38, 38, 0.3);
-            box-shadow: 0 8px 32px rgba(153, 27, 27, 0.2), inset 0 1px 0 rgba(255,255,255,0.25);
+            background-color: #dc2626; /* Màu đỏ đặc hành chính */
+            box-shadow: 0 4px 15px rgba(220, 38, 38, 0.2);
+            border-bottom: 2px solid #991b1b;
         }
-        body.theme-do-hanhchinh .contact-indicator-dot { background-color: #dc2626; }
 
-
-        /* KHỐI NỀN MÀU XANH NGỌC TRONG SUỐT - LUÔN CỐ ĐỊNH, KHÔNG BỊ THAY ĐỔI THEO THEME */
+        /* KHỐI NỀN MÀU XANH NGỌC TRONG SUỐT - LUÔN CỐ ĐỊNH PHÍA DƯỚI */
         .menu-panel-wrapper {
             background-color: rgba(128, 255, 232, 0.65);
             backdrop-filter: blur(20px);
@@ -51,13 +48,13 @@
             width: 100%;
         }
 
-        /* LOGO MAIN ANIMATION */
+        /* LOGO ANIMATION CHUYỂN ĐỘNG NHẸ */
         .logo-main {
             animation: float 4s ease-in-out infinite;
         }
         @keyframes float {
-            0%, 100% { transform: translateY(0) scale(1); filter: drop-shadow(0 6px 12px rgba(255, 255, 255, 0.15)); }
-            50% { transform: translateY(-4px) scale(1.03); filter: drop-shadow(0 12px 20px rgba(255, 255, 255, 0.3)); }
+            0%, 100% { transform: translateY(0); filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.15)); }
+            50% { transform: translateY(-3px); filter: drop-shadow(0 8px 12px rgba(0, 0, 0, 0.25)); }
         }
 
         /* GRID SYSTEM: ĐỊNH DẠNG 6 CỘT X 2 HÀNG CỐ ĐỊNH */
@@ -96,10 +93,9 @@
             transition: all 0.5s ease;
         }
 
-        /* Hiệu ứng di chuột lên các nút điều hành tương tác mượt mà trên nền ngọc bích */
         .nav-card:hover { 
             transform: translateY(-8px); 
-            border-color: rgba(0, 122, 255, 0.4); 
+            border-color: rgba(11, 74, 143, 0.4); 
             box-shadow: 0 20px 30px -10px rgba(12, 74, 110, 0.25);
         }
         .nav-card:hover::before {
@@ -138,24 +134,24 @@
 </head>
 <body class="theme-xanh-ios custom-scrollbar" id="dynamic-body">
 
-    <header class="main-header flex flex-col items-center justify-center py-5 px-4 select-none relative overflow-hidden h-auto min-h-0 transition-all duration-300">
+    <header class="main-header flex items-center justify-center py-6 px-4 select-none width-full transition-all duration-300">
         
-        <div class="absolute -top-16 w-80 h-12 bg-white/10 rounded-full blur-2xl pointer-events-none animate-pulse"></div>
-
-        <div class="flex flex-col items-center justify-center text-center space-y-3 z-10 max-w-4xl w-full">
+        <div class="flex flex-row items-center justify-center space-x-6 max-w-5xl w-auto">
             
-            <img src="logo.png" alt="Logo" class="logo-main w-14 h-auto transition-all duration-500 hover:scale-105 filter drop-shadow-[0_4px_8px_rgba(0,0,0,0.4)]">
+            <img src="logo.png" alt="Logo" class="logo-main w-14 h-auto flex-shrink-0 filter drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)]">
             
-            <h1 class="title-main text-2xl md:text-3xl lg:text-4xl font-black uppercase tracking-[0.25em] bg-gradient-to-b from-white via-slate-100 to-slate-300 bg-clip-text text-transparent drop-shadow-[0_4px_6px_rgba(0,0,0,0.7)] font-['Montserrat'] leading-none m-0 p-0">
-                Xã Bình Hưng
-            </h1>
-            
-            <div class="bg-slate-950/40 backdrop-blur-xl border border-white/10 px-6 py-2 rounded-full shadow-[inset_0_1px_1px_rgba(255,255,255,0.2)]">
-                <p class="text-white font-semibold tracking-[0.12em] text-[9px] md:text-[11px] uppercase leading-none m-0 p-0">
-                    Cổng thông tin và điều hành số xã Bình Hưng 
-                    <span class="text-cyan-400 font-black px-1 inline-block animate-pulse">•</span> 
-                    <span class="bg-gradient-to-r from-cyan-300 to-sky-300 bg-clip-text text-transparent font-extrabold">IOC BÌNH HƯNG</span>
-                </p>
+            <div class="flex flex-col items-start justify-center space-y-2.5 text-left">
+                <h1 class="title-main text-2xl md:text-3xl lg:text-4xl font-black uppercase tracking-[0.18em] text-white font-['Montserrat'] leading-none m-0 p-0">
+                    Xã Bình Hưng
+                </h1>
+                
+                <div class="bg-black/25 border border-white/10 px-5 py-1.5 rounded-full">
+                    <p class="text-white/95 font-semibold tracking-[0.08em] text-[9px] md:text-[11px] uppercase leading-none m-0 p-0">
+                        Cổng thông tin và điều hành số xã Bình Hưng 
+                        <span class="text-cyan-300 font-black px-1">•</span> 
+                        <span class="text-cyan-300 font-extrabold">IOC BÌNH HƯNG</span>
+                    </p>
+                </div>
             </div>
             
         </div>
@@ -163,7 +159,7 @@
     </header>
 
     <div class="max-w-[1550px] w-full mx-auto px-6 mt-6 flex justify-end">
-        <div class="bg-white/80 backdrop-blur-xl border border-slate-200/60 p-1.5 rounded-2xl flex items-center shadow-lg select-none">
+        <div class="bg-white border border-slate-200 p-1.5 rounded-2xl flex items-center shadow-md select-none">
             <span class="text-[10px] font-black uppercase tracking-wider px-3 text-slate-400">Chuyên đề chỉ đạo:</span>
             
             <button onclick="switchSystemTheme('xanh')" id="btn-theme-xanh" 
@@ -260,7 +256,7 @@
             <section class="w-full pt-4 border-t border-slate-900/10">
                 <div class="bg-white/40 backdrop-blur-md border border-white/50 rounded-3xl p-6 md:p-8 shadow-inner max-w-xl">
                     <h2 class="text-base font-bold uppercase tracking-wider text-slate-900 pb-2 mb-4 flex items-center gap-2 border-b border-slate-900/10">
-                        <span id="contact-indicator" class="contact-indicator-dot w-1.5 h-4 rounded-full transition-colors duration-300"></span> Thông tin liên hệ
+                        <span id="contact-indicator" class="w-1.5 h-4 bg-blue-800 rounded-full"></span> Thông tin liên hệ
                     </h2>
                     <div class="space-y-3.5 text-slate-800 text-xs md:text-sm font-semibold">
                         <p class="flex items-start gap-3">
