@@ -17,21 +17,17 @@
             transition: background 0.4s ease, color 0.4s ease;
         }
 
-        /* ================= CẤU HÌNH LỰA CHỌN PH N NỀN BODY ================= */
-        /* Mặc định chạy nền ảnh hinhnen.png */
+        /* ================= CẤU HÌNH LỰA CHỌN PHÂN NỀN BODY ================= */
         body.bg-image-mode {
             background: url('hinhnen.png') no-repeat center center fixed;
             background-size: cover;
         }
-        /* Chuyển sang nền màu trắng tinh khôi */
         body.bg-white-mode {
             background-color: #ffffff;
             background-image: none;
         }
 
         /* ================= KỸ THUẬT NỀN ĐỘNG PHẲNG GIẢ LẬP FILE GIF HIỆU NĂNG CAO ================= */
-        
-        /* 🔵 THEME XANH IOS - Sóng ánh sáng xanh neon chuyển động ngầm */
         body.theme-xanh-ios .main-header {
             background: linear-gradient(-45deg, #0b4a8f, #05234a, #0d5cb3, #02142d);
             background-size: 400% 400%;
@@ -40,7 +36,6 @@
             border-bottom: 2px solid #032b5c;
         }
 
-        /* 🔴 THEME ĐỎ HÀNH CHÍNH - Sóng ánh sáng đỏ nhung & magma quyền lực chuyển động ngầm */
         body.theme-do-hanhchinh .main-header {
             background: linear-gradient(-45deg, #dc2626, #7f1d1d, #ef4444, #450a0a);
             background-size: 400% 400%;
@@ -49,7 +44,6 @@
             border-bottom: 2px solid #991b1b;
         }
 
-        /* Engine dịch chuyển dải màu tạo hiệu ứng hoạt họa như file GIF */
         @keyframes gradientGIF {
             0% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
@@ -85,52 +79,62 @@
             width: 100%;
         }
 
-        /* CARD STYLE: ASPECT-RATIO 1:1 HÌNH VUÔNG LỚN */
+        /* CARD STYLE: ĐÃ TINH CHỈNH THU NHỎ PHẦN VIỀN MỜ VÀ ĐỔ BÓNG HOVER */
         .nav-card { 
             position: relative;
             background-size: cover; 
             background-position: center; 
             background-repeat: no-repeat;
-            border-radius: 24px; 
+            border-radius: 20px; 
             aspect-ratio: 1 / 1; 
             display: flex; 
             flex-direction: column; 
             justify-content: flex-end;
             overflow: hidden; 
             cursor: pointer; 
-            border: 1px solid rgba(255, 255, 255, 0.85);
+            border: 1px solid rgba(255, 255, 255, 0.8);
             background-color: #ffffff;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05), inset 0 2px 4px rgba(255,255,255,0.9);
-            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04), inset 0 1px 2px rgba(255,255,255,0.8);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
         
         .nav-card::before {
             content: '';
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(180deg, rgba(15, 23, 42, 0) 15%, rgba(15, 23, 42, 0.45) 55%, rgba(11, 37, 74, 0.9) 100%);
+            background: linear-gradient(180deg, rgba(15, 23, 42, 0) 20%, rgba(15, 23, 42, 0.4) 60%, rgba(11, 37, 74, 0.85) 100%);
             z-index: 1;
-            transition: all 0.5s ease;
+            transition: all 0.4s ease;
         }
 
+        /* Thu nhỏ độ nảy dọc và làm gọn phần đổ bóng mờ viền khi hover */
         .nav-card:hover { 
-            transform: translateY(-8px); 
-            border-color: rgba(11, 74, 143, 0.4); 
-            box-shadow: 0 20px 30px -10px rgba(12, 74, 110, 0.25);
+            transform: translateY(-4px); 
+            border-color: rgba(11, 74, 143, 0.35); 
+            box-shadow: 0 12px 20px -8px rgba(12, 74, 110, 0.2), 0 1px 3px rgba(0,0,0,0.04);
         }
         .nav-card:hover::before {
-            background: linear-gradient(180deg, rgba(14, 165, 233, 0) 5%, rgba(11, 43, 91, 0.5) 45%, rgba(11, 37, 74, 0.95) 100%);
+            background: linear-gradient(180deg, rgba(14, 165, 233, 0) 5%, rgba(11, 43, 91, 0.4) 50%, rgba(11, 37, 74, 0.9) 100%);
         }
 
         .text-overlay {
-            width: 100%; padding: 22px; position: relative; z-index: 2; text-align: left;
+            width: 100%; padding: 16px; position: relative; z-index: 2; text-align: left;
         }
+        
+        /* ĐÃ THU NHỎ CHỮ TRONG CÁC NÚT XUỐNG 14PX (TEXT-SM) */
         .nav-card h3 { 
-            font-size: 16px; font-weight: 800; color: #ffffff; line-height: 1.4; letter-spacing: -0.2px; transition: transform 0.3s ease;
+            font-size: 14px; 
+            font-weight: 700; 
+            color: #ffffff;
+            line-height: 1.35;
+            letter-spacing: -0.1px;
+            transition: transform 0.3s ease;
         }
-        .nav-card:hover h3 { transform: translateX(5px); }
+        .nav-card:hover h3 {
+            transform: translateX(3px);
+        }
 
-        /* MODAL KHUNG ĐĂNG NHẬP */
+        /* FLOATING INPUT & MODAL */
         .modal-overlay { 
             position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
             background: rgba(15, 23, 42, 0.3); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); 
@@ -145,10 +149,11 @@
         }
         .modal-overlay.open .modal-card { transform: scale(1) translateY(0); }
 
-        @media (max-width: 1400px) { .grid-container { grid-template-columns: repeat(3, 1fr); gap: 20px; } }
+        @media (max-width: 1400px) { .grid-container { grid-template-columns: repeat(3, 1fr); gap: 18px; } }
         @media (max-width: 768px) { 
-            .grid-container { grid-template-columns: repeat(2, 1fr); gap: 16px; } 
-            .menu-panel-wrapper { padding: 25px 20px; border-radius: 24px; }
+            .grid-container { grid-template-columns: repeat(2, 1fr); gap: 14px; } 
+            .menu-panel-wrapper { padding: 20px 16px; border-radius: 24px; }
+            .nav-card h3 { font-size: 13px; }
         }
     </style>
 </head>
@@ -223,7 +228,7 @@
                     </div>
                 </a>
                 
-                <div onclick="openLoginModal()" class="nav-card" style="background-image: url('icon/dashboarb.png');">
+                <div onclick="openLoginModal()" class="nav-card" style="background-image: url('icon/dashboard.png');">
                     <div class="text-overlay">
                         <h3>Hệ thống i-Dashboard<br>điều hành xã</h3>
                     </div>
@@ -342,10 +347,6 @@
         </div>
     </div>
 
-    <footer class="mt-auto text-center py-8 text-slate-400 font-medium text-[11px] uppercase tracking-widest border-t border-slate-200/50 bg-white/20 backdrop-blur-sm">
-        &copy; IOC BINH HƯNG — BẢN QUYỀN THUỘC UBND XÃ BÌNH HƯNG
-    </footer>
-
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
@@ -374,7 +375,6 @@
                 body.classList.remove('bg-image-mode');
                 body.classList.add('bg-white-mode');
                 
-                // Cập nhật lại màu sắc của nút lựa chọn nền
                 btnWhite.className = "flex items-center gap-1.5 text-[11px] font-extrabold uppercase px-3.5 py-2 rounded-xl transition-all duration-300 bg-slate-800 text-white shadow-sm";
                 btnImg.className = "flex items-center gap-1.5 text-[11px] font-extrabold uppercase px-3.5 py-2 rounded-xl transition-all duration-300 text-slate-600 hover:text-slate-900 ml-1";
             } else {
