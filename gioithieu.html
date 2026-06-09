@@ -5,156 +5,150 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Giới thiệu chung - Xã Bình Hưng</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700;800&family=Montserrat:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    
     <style>
         body {
-            font-family: 'Montserrat', sans-serif;
-            margin: 0;
-            padding: 0;
-            min-height: 100vh;
-            /* Phía dưới là hình nền lấy file hinhnen.png */
-            background: url('hinhnen.png') no-repeat center center fixed;
-            background-size: cover;
-            color: #1e293b;
+            font-family: 'Inter', 'Be Vietnam Pro', sans-serif;
+            margin: 0; padding: 0; min-height: 100vh;
+            background-color: #f8fafc; /* Nền phẳng xám trắng sạch sẽ đồng bộ home.html */
+            color: #0f172a;
             display: flex;
             flex-direction: column;
+            transition: background 0.4s ease, color 0.4s ease;
         }
 
-        /* PHẦN HEADER PHÍA TRÊN MÀU XANH TƯỜNG MINH */
-        .main-header {
-            background-color: #0b4a8f; /* Hệ màu xanh công vụ */
-            color: #ffffff;
-            padding: 40px 20px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-            width: 100%;
-            text-align: center;
+        /* ================= KỸ THUẬT NỀN ĐỘNG GRADIENT TẠI HEADER ĐỒNG BỘ HOME.HTML ================= */
+        body.theme-xanh-ios .main-header {
+            background: linear-gradient(-45deg, #0b4a8f, #05234a, #0d5cb3, #02142d);
+            background-size: 400% 400%;
+            animation: gradientGIF 12s ease infinite;
+            box-shadow: 0 4px 15px rgba(11, 74, 143, 0.15);
+            border-bottom: 2px solid #032b5c;
         }
 
-        /* KHUNG CHỨA SIÊU ĐẠI (1440px) CHỨA KHỐI NỘI DUNG PHÍA DƯỚI */
-        .container-wrapper {
-            max-width: 1440px;
-            margin: 40px auto 100px;
-            padding: 0 40px;
-            width: 100%;
+        body.theme-do-hanhchinh .main-header {
+            background: linear-gradient(-45deg, #dc2626, #7f1d1d, #ef4444, #450a0a);
+            background-size: 400% 400%;
+            animation: gradientGIF 12s ease infinite;
+            box-shadow: 0 4px 15px rgba(220, 38, 38, 0.15);
+            border-bottom: 2px solid #991b1b;
         }
 
-        /* TIÊU ĐỀ KHỔ LỚN TRÊN HEADER */
-        .title-main {
-            font-weight: 900;
-            text-transform: uppercase;
-            font-size: clamp(1.8rem, 4.5vw, 3.2rem);
-            color: #ffffff;
-            letter-spacing: -0.5px;
-            line-height: 1.3;
+        @keyframes gradientGIF {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
-        /* ARTICLE CARD HIỂN THỊ CHUYỂN SANG MÀU XANH NGỌC BÍCH #80ffe8 */
-        .article-card {
-            background-color: #80ffe8; /* Màu xanh ngọc bích */
-            border: 1px solid rgba(11, 74, 143, 0.25);
+        /* KHỐI NỀN MÀU XANH NGỌC TRONG SUỐT ĐÃ ĐƯỢC MỞ RỘNG DIỆN TÍCH PHÍA DƯỚI */
+        .menu-panel-wrapper {
+            background-color: rgba(128, 255, 232, 0.45);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.6);
             border-radius: 40px;
-            padding: 70px 90px; 
-            box-shadow: 0 30px 60px -15px rgba(12, 74, 110, 0.35);
+            box-shadow: 0 20px 50px -10px rgba(12, 74, 110, 0.15);
+            width: 100%;
         }
 
-        /* KHOẢNG CÁCH PHÂN ĐOẠN KHỐI (60px) */
-        .info-section {
-            margin-bottom: 60px;
+        /* LOGO ANIMATION CHUYỂN ĐỘNG NHẸ */
+        .logo-main {
+            animation: float 4s ease-in-out infinite;
         }
-        .info-section:last-child {
-            margin-bottom: 0;
-        }
-
-        /* TIÊU ĐỀ MỤC LỚN ĐẬM NÉT - 24px */
-        .section-heading {
-            font-size: 24px; 
-            font-weight: 900;
-            text-transform: uppercase;
-            color: #0b4a8f;
-            border-left: 6px solid #ef4444;
-            padding-left: 20px;
-            margin-bottom: 26px; 
-            letter-spacing: 0.5px;
+        @keyframes float {
+            0%, 100% { transform: translateY(0); filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.2)); }
+            50% { transform: translateY(-3px); filter: drop-shadow(0 8px 12px rgba(0, 0, 0, 0.3)); }
         }
 
-        /* NỘI DUNG PHÓNG TO TOÀN DIỆN - CỠ CHIẾN LƯỢC 20px SẮC NÉT KHỚP MÀU NỀN */
-        .text-paragraph {
-            font-size: 20px; 
-            line-height: 2.1; 
-            font-weight: 700;
-            color: #0f172a; /* Chữ tối siêu tương phản trên nền ngọc bích */
-            text-align: justify;
-        }
-
-        /* NÚT QUAY LẠI CỠ LỚN ĐỒNG BỘ */
-        .btn-back {
-            display: inline-flex;
-            align-items: center;
-            gap: 12px;
-            background: #ffffff;
-            border: 1px solid #cbd5e1;
-            color: #0c4a6e;
-            padding: 14px 35px;
-            border-radius: 20px;
-            font-weight: 800;
-            font-size: 14px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            box-shadow: 0 6px 10px -1px rgba(0, 0, 0, 0.15);
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            margin-bottom: 35px;
-        }
-
-        .btn-back:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 35px -5px rgba(14, 165, 233, 0.4);
-            border-color: #0ea5e9;
-            color: #0ea5e9;
+        @media (max-width: 1024px) {
+            .header-layout { flex-direction: column !important; }
+            .theme-selector-vertical { 
+                position: relative !important; top: 0 !important; right: 0 !important; 
+                margin-top: 16px; flex-direction: row !important; space-x: 2; width: auto !important;
+            }
+            .theme-selector-vertical button { margin-left: 4px; margin-right: 4px; }
         }
     </style>
 </head>
-<body>
+<body class="theme-xanh-ios custom-scrollbar" id="dynamic-body">
 
-    <header class="main-header">
-        <h1 class="title-main">XÃ BÌNH HƯNG – ĐỘNG LỰC PHÁT TRIỂN MỚI Ở CỬA NGÕ TÂY NAM THÀNH PHỐ HỒ CHÍ MINH</h1>
+    <header class="main-header w-full py-6 px-6 md:px-12 select-none relative transition-all duration-300">
+        <div class="max-w-[1550px] mx-auto flex flex-col items-center justify-center relative header-layout">
+            
+            <div class="flex flex-row items-center space-x-6 w-auto">
+                
+                <div class="flex-shrink-0">
+                    <img src="logo.png" alt="Logo" class="logo-main w-20 h-auto">
+                </div>
+                
+                <div class="flex flex-col items-start justify-center space-y-2 text-left">
+                    <p class="text-white font-black tracking-[0.12em] text-xl md:text-2xl lg:text-3xl uppercase leading-none m-0 p-0 drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)] font-['Montserrat']">
+                        IOC BINH HUNG
+                    </p>
+                    <h1 class="title-main text-sm md:text-base lg:text-lg font-bold uppercase tracking-[0.08em] text-white/90 leading-tight m-0 p-0 drop-shadow-[0_2px_4px_rgba(0,0,0,0.2)]">
+                        Cổng thông tin và điều hành xã Bình Hưng, Thành phố Hồ Chí Minh
+                    </h1>
+                </div>
+                
+            </div>
+
+            <div class="theme-selector-vertical lg:absolute lg:top-0 lg:right-0 bg-white/10 backdrop-blur-md border border-white/20 p-1.5 rounded-xl flex flex-col space-y-1.5 w-[75px] z-20 shadow-inner">
+                <button onclick="switchSystemTheme('xanh')" id="btn-theme-xanh" 
+                    class="w-full text-center text-[10px] font-extrabold uppercase py-1.5 rounded-lg transition-all duration-300 bg-blue-600 text-white shadow-md">
+                    🔵 Xanh
+                </button>
+                <button onclick="switchSystemTheme('do')" id="btn-theme-do" 
+                    class="w-full text-center text-[10px] font-extrabold uppercase py-1.5 rounded-lg transition-all duration-300 text-white/80 hover:text-white">
+                    🔴 Đỏ
+                </button>
+            </div>
+            
+        </div>
     </header>
 
-    <div class="container-wrapper">
+    <div class="max-w-[1550px] w-full mx-auto px-4 md:px-6 my-6 flex flex-col items-start">
         
-        <a href="home.html" class="btn-back">
+        <a href="home.html" class="inline-flex items-center gap-2 bg-white hover:bg-slate-50 border border-slate-200 text-slate-700 px-4 py-2 rounded-xl font-bold text-xs uppercase tracking-wider shadow-sm transition-all duration-300 hover:-translate-y-0.5 mb-6">
             ⬅️ Quay lại Trang chủ
         </a>
 
-        <article class="article-card">
+        <article class="menu-panel-wrapper p-6 md:p-12 lg:p-16 space-y-12">
             
-            <div class="info-section">
-                <h2 class="section-heading">Quá trình hình thành xã Bình Hưng</h2>
-                <p class="text-paragraph">
+            <div class="space-y-4">
+                <h2 class="text-lg md:text-xl lg:text-2xl font-black uppercase tracking-wide text-[#0b4a8f] border-left-none border-l-4 border-red-500 pl-4">
+                    Quá trình hình thành xã Bình Hưng
+                </h2>
+                <p class="text-sm md:text-base lg:text-lg font-bold text-slate-900 leading-relaxed md:leading-loose text-justify">
                     Trải qua quá trình khai phá và hình thành vùng đất Nam Bộ, Bình Hưng - Phong Phú là vùng đất giàu truyền thống đoàn kết, cần cù lao động và năng động trong phát triển kinh tế. Được bồi đắp bởi hệ thống sông ngòi, kênh rạch tự nhiên cùng vị trí cửa ngõ kết nối khu Nam Thành phố Hồ Chí Minh, nơi đây đã từng bước chuyển mình từ vùng sản xuất nông nghiệp truyền thống trở thành khu vực đô thị hóa năng động của thành phố.<br><br>
                     Thực hiện chủ trương của Đảng và Nhà nước về sắp xếp đơn vị hành chính các cấp nhằm tinh gọn bộ máy, nâng cao hiệu lực, hiệu quả quản lý nhà nước, ngày 16 tháng 6 năm 2025, Ủy ban Thường vụ Quốc hội đã ban hành Nghị quyết số 1685/NQ-UBTVQH15 về việc sắp xếp các đơn vị hành chính cấp xã của Thành phố Hồ Chí Minh năm 2025.<br><br>
                     Theo Nghị quyết, từ ngày 01 tháng 7 năm 2025, xã Bình Hưng chính thức được thành lập trên cơ sở sáp nhập toàn bộ diện tích tự nhiên và quy mô dân số của xã Bình Hưng, xã Phong Phú (huyện Bình Chánh cũ) và một phần diện tích tự nhiên, dân số của phường 7 (Quận 8 cũ).<br><br>
                     Sau khi thành lập, xã Bình Hưng có diện tích tự nhiên 3.263 ha (32,63 km²), gồm 70 ấp, dân số trên 183.729 người. Đây là một trong những đơn vị hành chính có quy mô dân số lớn của Thành phố Hồ Chí Minh, tạo điều kiện thuận lợi để tập trung nguồn lực, mở rộng không gian phát triển và nâng cao chất lượng phục vụ nhân dân.<br><br>
-                    Đảng bộ xã Bình Hưng được thành lập theo Quyết định số 3206-QĐ/TU ngày 21 tháng 6 năm 2025 của Thành ủy Thành phố Hồ Chí Minh, gồm 95 tổ chức đảng trực thuộc with hơn 1.700 đảng viên. Bộ máy chính trị được kiện toàn đồng bộ, bảo đảm hoạt động thông suốt, hiệu lực, hiệu quả ngay từ những ngày đầu đi vào hoạt động.<br><br>
+                    Đảng bộ xã Bình Hưng được thành lập theo Quyết định số 3206-QĐ/TU ngày 21 tháng 6 năm 2025 của Thành ủy Thành phố Hồ Chí Minh, gồm 95 tổ chức đảng trực thuộc với hơn 1.700 đảng viên. Bộ máy chính trị được kiện toàn đồng bộ, bảo đảm hoạt động thông suốt, hiệu lực, hiệu quả ngay từ những ngày đầu đi vào hoạt động.<br><br>
                     Trụ sở Đảng ủy - HĐND - UBND - Ủy ban MTTQ Việt Nam xã Bình Hưng đặt tại A10/26A đường số 10, Khu dân cư Bình Hưng, xã Bình Hưng, Thành phố Hồ Chí Minh.
                 </p>
             </div>
 
-            <div class="info-section">
-                <h2 class="section-heading">Đặc điểm tình hình</h2>
-                <p class="text-paragraph">
+            <div class="space-y-4">
+                <h2 class="text-lg md:text-xl lg:text-2xl font-black uppercase tracking-wide text-[#0b4a8f] border-l-4 border-red-500 pl-4">
+                    Đặc điểm tình hình
+                </h2>
+                <p class="text-sm md:text-base lg:text-lg font-bold text-slate-900 leading-relaxed md:leading-loose text-justify">
                     Xã Bình Hưng nằm ở cửa ngõ Tây Nam Thành phố Hồ Chí Minh, giữ vai trò kết nối giữa khu vực trung tâm thành phố với các địa phương phía Nam. Địa phương có vị trí địa lý thuận lợi khi tiếp giáp nhiều phường, xã của Thành phố Hồ Chí Minh và sở hữu hệ thống giao thông đối ngoại quan trọng như đường Nguyễn Văn Linh, đường Văn Tiến Dũng, Quốc lộ 50, Quốc lộ 50 song hành cùng tuyến sông Cần Giuộc và mạng lưới sông, rạch kết nối liên vùng.<br><br>
                     Những năm qua, cơ cấu kinh tế của địa phương chuyển dịch mạnh theo hướng thương mại - dịch vụ, công nghiệp - xây dựng và nông nghiệp đô thị. Trên địa bàn hiện có hơn 8.348 doanh nghiệp và gần 3.166 hộ kinh doanh đang hoạt động. Hệ thống thương mại phát triển với 2 trung tâm thương mại, 3 siêu thị tổng hợp, 8 siêu thị chuyên doanh, 62 cửa hàng tiện lợi cùng nhiều cơ sở dịch vụ, đáp ứng nhu cầu ngày càng cao của người dân.<br><br>
-                    Thu ngân sách nhà nước ước thực hiện năm 2025 là 144,655/91,676 tỷ đồng (đạt 157,79%). Trong đó, thu thuế công thương nghiệp 40,288/25,400 tỷ đồng (đạt 158,61%).<br><br>
+                    Thu ngân sách nhà nước ước thực hiện năm 2025 là 144,655/91,676 lý đồng (đạt 157,79%). Trong đó, thu thuế công thương nghiệp 40,288/25,400 tỷ đồng (đạt 158,61%).<br><br>
                     Cùng với tốc độ đô thị hóa nhanh, Bình Hưng vẫn duy trì hiệu quả mô hình nông nghiệp đô thị với các sản phẩm có giá trị kinh tế cao như hoa lan, cây kiểng, cá kiểng, thủy sản, rau nhút và bồn bồn. Địa phương hiện có 2 sản phẩm OCOP: “Bộ khay gỗ nguyên khối tối giản” và sản phẩm Khô cá vồ đém một nắng Minh Hiếu được công nhận theo chương trình mỗi xã một sản phẩm.<br><br>
-                    Công tác quy hoạch, xây dựng và phát triển hạ tầng được chú trọng thực hiện. Trên địa bàn hiện có 33 đồ án quy hoạch phân khu được phê duyệt with tổng diện tích gần 2.292 ha. Nhiều dự án trọng điểm đang được triển khai như Dự án nâng cấp Quốc lộ 50, Dự án Quốc lộ 50 song hành, Dự án kè chống sạt lở bờ tả thượng lưu cầu Xóm Củi và Dự án nạo vét trục thoát nước rạch Xóm Củi.<br><br>
-                    Địa phương hiện có 33 nhà chung cư with 66 block nhà ở, từng bước hình thành các khu dân cư hiện đại, văn minh. Hệ thống hạ tầng kỹ thuật, hạ tầng xã hội tiếp tục được đầu tư đồng bộ, tạo nền tảng cho quá trình phát triển đô thị trong tương lai.<br><br>
-                    Đặc biệt, xã đã hoàn thành 19/19 tiêu chí xây dựng nông thôn mới, hoàn thành 6 tiêu chuẩn xã “Văn hóa - Văn minh đô thị”, góp phần nâng cao chất lượng sống của người dân và tạo nền tảng quan trọng cho quá trình phát triển bền vững.
+                    Công tác quy hoạch, xây dựng và phát triển hạ tầng được chú trọng thực hiện. Trên địa bàn hiện có 33 đồ án quy hoạch phân khu được phê duyệt với tổng diện tích gần 2.292 ha. Nhiều dự án trọng điểm đang được triển khai như Dự án nâng cấp Quốc lộ 50, Dự án Quốc lộ 50 song hành, Dự án kè chống sạt lở bờ tả thượng lưu cầu Xóm Củi và Dự án nạo vét trục thoát nước rạch Xóm Củi.<br><br>
+                    Địa phương hiện có 33 nhà chung cư với 66 block nhà ở, từng bước hình thành các khu dân cư hiện đại, văn minh. Hệ thống hạ tầng kỹ thuật, hạ tầng xã hội tiếp tục được đầu tư đồng bộ, tạo nền tảng cho quá trình phát triển đô thị trong tương lai.<br><br>
+                    Đặt biệt, xã đã hoàn thành 19/19 tiêu chí xây dựng nông thôn mới, hoàn thành 6 tiêu chuẩn xã “Văn hóa - Văn minh đô thị”, góp phần nâng cao chất lượng sống của người dân và tạo nền tảng quan trọng cho quá trình phát triển bền vững.
                 </p>
             </div>
 
-            <div class="info-section">
-                <h2 class="section-heading">Động lực phát triển trong tương lai</h2>
-                <p class="text-paragraph">
+            <div class="space-y-4">
+                <h2 class="text-lg md:text-xl lg:text-2xl font-black uppercase tracking-wide text-[#0b4a8f] border-l-4 border-red-500 pl-4">
+                    Động lực phát triển trong tương lai
+                </h2>
+                <p class="text-sm md:text-base lg:text-lg font-bold text-slate-900 leading-relaxed md:leading-loose text-justify">
                     Bước vào nhiệm kỳ 2025 - 2030, xã Bình Hưng đứng trước nhiều thời cơ và vận hội mới. Vị trí địa lý chiến lược, hệ thống giao thông ngày càng hoàn thiện, tốc độ đô thị hóa cao cùng tiềm năng phát triển thương mại - dịch vụ là những lợi thế quan trọng để địa phương bứt phá trong giai đoạn tới.<br><br>
                     Chủ đề Đại hội Đảng bộ xã Bình Hưng nhiệm kỳ 2025 - 2030 xác định: “Xây dựng Đảng bộ và hệ thống chính trị trong sạch, vững mạnh toàn diện; tự tin bước vào kỷ nguyên vươn mình của dân tộc; giữ vững quốc phòng - an ninh; quyết tâm phát triển kinh tế - xã hội xã Bình Hưng nhanh và bền vững, chất lượng sống cao”.<br><br>
                     Đây là kim chỉ nam cho toàn Đảng bộ, chính quyền và Nhân dân xã trong quá trình xây dựng địa phương phát triển toàn diện, lấy người dân làm trung tâm, nâng cao chất lượng sống và xây dựng môi trường đô thị văn minh, hiện đại.<br><br>
@@ -167,9 +161,30 @@
         </article>
     </div>
 
-    <footer class="text-center py-12 text-sky-900 font-bold text-sm uppercase tracking-widest drop-shadow-sm mt-auto">
-        &copy; 2026 IOC Bình Hưng - Smart Government Solution
+    <footer class="mt-auto text-center py-6 text-slate-400 font-medium text-[11px] uppercase tracking-widest border-t border-slate-200 bg-white shadow-sm">
+        &copy; 2026 IOC Bình Hưng — Smart Government Solution
     </footer>
 
+    <script>
+        window.switchSystemTheme = function(modeName) {
+            const body = document.getElementById('dynamic-body');
+            const btnXanh = document.getElementById('btn-theme-xanh');
+            const btnDo = document.getElementById('btn-theme-do');
+
+            if (modeName === 'do') {
+                body.classList.remove('theme-xanh-ios');
+                body.classList.add('theme-do-hanhchinh');
+                
+                btnDo.className = "w-full text-center text-[10px] font-extrabold uppercase py-1.5 rounded-lg transition-all duration-300 bg-red-600 text-white shadow-md";
+                btnXanh.className = "w-full text-center text-[10px] font-extrabold uppercase py-1.5 rounded-lg transition-all duration-300 text-white/80 hover:text-white";
+            } else {
+                body.classList.remove('theme-do-hanhchinh');
+                body.classList.add('theme-xanh-ios');
+                
+                btnXanh.className = "w-full text-center text-[10px] font-extrabold uppercase py-1.5 rounded-lg transition-all duration-300 bg-blue-600 text-white shadow-md";
+                btnDo.className = "w-full text-center text-[10px] font-extrabold uppercase py-1.5 rounded-lg transition-all duration-300 text-white/80 hover:text-white";
+            }
+        }
+    </script>
 </body>
 </html>
