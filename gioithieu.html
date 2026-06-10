@@ -61,6 +61,63 @@
             50% { transform: translateY(-3px); filter: drop-shadow(0 8px 12px rgba(0, 0, 0, 0.3)); }
         }
 
+        /* ================= HIỆU ỨNG DI CHUYỂN LÊN TRÊN BÊN TRÁI & HIỆN ĐOẠN GIỚI THIỆU ================= */
+        .btn-back-container {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 24px;
+        }
+
+        .btn-back-interactive {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            color: #334155;
+            padding: 8px 16px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 12px;
+            text-transform: uppercase;
+            tracking-width: 0.05em;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .btn-back-container:hover .btn-back-interactive {
+            transform: translate(-6px, -4px);
+            border-color: #0b4a8f;
+            color: #0b4a8f;
+            box-shadow: 6px 6px 12px rgba(11, 74, 143, 0.15);
+        }
+
+        .btn-tooltip-box {
+            position: absolute;
+            top: calc(100% + 8px);
+            left: -6px;
+            width: 280px;
+            background-color: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 12px 14px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(4px);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            z-index: 50;
+            pointer-events: none;
+        }
+
+        .btn-back-container:hover .btn-tooltip-box {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
         @media (max-width: 1024px) {
             .header-layout { flex-direction: column !important; }
             .theme-selector-vertical { 
@@ -68,6 +125,9 @@
                 margin-top: 16px; flex-direction: row !important; space-x: 2; width: auto !important;
             }
             .theme-selector-vertical button { margin-left: 4px; margin-right: 4px; }
+        }
+        @media (max-width: 768px) {
+            .btn-tooltip-box { width: 230px; }
         }
     </style>
 </head>
@@ -109,14 +169,28 @@
 
     <div class="max-w-[1550px] w-full mx-auto px-4 md:px-6 my-6 flex flex-col items-start">
         
-        <a href="home.html" class="inline-flex items-center gap-2 bg-white hover:bg-slate-50 border border-slate-200 text-slate-700 px-4 py-2 rounded-xl font-bold text-xs uppercase tracking-wider shadow-sm transition-all duration-300 hover:-translate-y-0.5 mb-6">
-            ⬅️ Quay lại Trang chủ
-        </a>
+        <div class="btn-back-container">
+            <a href="home.html" class="btn-back-interactive">
+                ⬅️ Quay lại Trang chủ
+            </a>
+            <div class="btn-tooltip-box">
+                <p class="text-cyan-400 font-extrabold text-[10px] uppercase tracking-wider mb-1">Hệ Thống IOC Điều Hành</p>
+                <p class="text-white/90 font-medium text-xs leading-normal">
+                    Nhấp vào nút để thoát phân hệ xem báo cáo và quay trở lại Bảng lưới 12 giải pháp số hóa Trang chủ xã Bình Hưng.
+                </p>
+            </div>
+        </div>
 
         <article class="menu-panel-wrapper p-6 md:p-12 lg:p-16 space-y-12">
             
+            <div class="text-center md:text-left border-b border-slate-900/10 pb-6">
+                <h1 class="text-2xl md:text-3xl lg:text-4xl font-black uppercase tracking-wide text-[#0b4a8f] font-['Montserrat'] drop-shadow-sm">
+                    Giới thiệu chung về xã Bình Hưng
+                </h1>
+            </div>
+            
             <div class="space-y-4">
-                <h2 class="text-lg md:text-xl lg:text-2xl font-black uppercase tracking-wide text-[#0b4a8f] border-left-none border-l-4 border-red-500 pl-4">
+                <h2 class="text-lg md:text-xl lg:text-2xl font-black uppercase tracking-wide text-[#0b4a8f] border-l-4 border-red-500 pl-4">
                     Quá trình hình thành xã Bình Hưng
                 </h2>
                 <p class="text-sm md:text-base lg:text-lg font-bold text-slate-900 leading-relaxed md:leading-loose text-justify">
