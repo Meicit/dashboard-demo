@@ -66,15 +66,20 @@
             width: 100%;
         }
 
-        /* Khung chứa nội dung nhúng (Iframe/Object) */
+        /* Khung chứa nội dung nhúng (Iframe/Object/Accordion) */
         .content-viewer-container {
             width: 100%;
             height: 750px;
             border-radius: 20px;
-            overflow: hidden;
+            overflow-y: auto;
             box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
             border: 1px solid rgba(255, 255, 255, 0.5);
             background: #ffffff;
+        }
+        
+        body.bg-dark-mode .content-viewer-container {
+            background: #1e293b;
+            border-color: rgba(255, 255, 255, 0.1);
         }
 
         /* Ẩn thanh cuộn của nhóm nút tab chuyển đổi */
@@ -149,20 +154,14 @@
             </div>
 
             <div class="w-full flex flex-row gap-2 overflow-x-auto pb-2 scrollbar-none snap-x touch-pan-x">
-                <button onclick="changeContent('pdf', 'QR TTHC.pdf', this)" class="tab-btn active flex-shrink-0 snap-start bg-white border border-slate-200 text-slate-700 font-extrabold text-xs uppercase px-4 py-2.5 rounded-xl shadow-sm transition-all duration-200 hover:bg-slate-50 [&.active]:bg-blue-800 [&.active]:text-white [&.active]:border-blue-800">
+                <button onclick="changeContent('pdf', 'Thủ tục_Lĩnh vực_LiênThông.pdf', this)" class="tab-btn active flex-shrink-0 snap-start bg-white border border-slate-200 text-slate-700 font-extrabold text-xs uppercase px-4 py-2.5 rounded-xl shadow-sm transition-all duration-200 hover:bg-slate-50 [&.active]:bg-blue-800 [&.active]:text-white [&.active]:border-blue-800">
                     📦 Bộ TTHC Tổng Hợp
                 </button>
-                <button onclick="changeContent('pdf', 'ma-qr-tthc-2.pdf', this)" class="tab-btn flex-shrink-0 snap-start bg-white border border-slate-200 text-slate-700 font-extrabold text-xs uppercase px-4 py-2.5 rounded-xl shadow-sm transition-all duration-200 hover:bg-slate-50 [&.active]:bg-blue-800 [&.active]:text-white [&.active]:border-blue-800">
-                    📋 Lĩnh Vực Đất Đai / Đô Thị
-                </button>
-                <button onclick="changeContent('pdf', 'ma-qr-tthc-3.pdf', this)" class="tab-btn flex-shrink-0 snap-start bg-white border border-slate-200 text-slate-700 font-extrabold text-xs uppercase px-4 py-2.5 rounded-xl shadow-sm transition-all duration-200 hover:bg-slate-50 [&.active]:bg-blue-800 [&.active]:text-white [&.active]:border-blue-800">
-                    👤 Lĩnh Vực Tư Pháp / Hộ Tịch
-                </button>
-                <button onclick="changeContent('iframe', 'https://dichvucong.gov.vn/p/home/dvc-tra-cuu-thu-tuc.html', this)" class="tab-btn flex-shrink-0 snap-start bg-white border border-slate-200 text-slate-700 font-extrabold text-xs uppercase px-4 py-2.5 rounded-xl shadow-sm transition-all duration-200 hover:bg-slate-50 [&.active]:bg-blue-800 [&.active]:text-white [&.active]:border-blue-800 text-blue-700">
-                    🌐 Cổng Dịch vụ công Quốc gia
-                </button>
-                <button onclick="changeContent('search-tool', '', this)" class="tab-btn flex-shrink-0 snap-start bg-white border border-slate-200 text-emerald-700 font-extrabold text-xs uppercase px-4 py-2.5 rounded-xl shadow-sm transition-all duration-200 hover:bg-slate-50 [&.active]:bg-blue-800 [&.active]:text-white [&.active]:border-blue-800">
+                <button onclick="changeContent('search-tool', '', this)" class="tab-btn flex-shrink-0 snap-start bg-white border border-slate-200 text-slate-700 font-extrabold text-xs uppercase px-4 py-2.5 rounded-xl shadow-sm transition-all duration-200 hover:bg-slate-50 [&.active]:bg-blue-800 [&.active]:text-white [&.active]:border-blue-800">
                     🔍 Tra cứu Thủ tục công
+                </button>
+                <button onclick="changeContent('accordion-guide', '', this)" class="tab-btn flex-shrink-0 snap-start bg-white border border-slate-200 text-emerald-700 font-extrabold text-xs uppercase px-4 py-2.5 rounded-xl shadow-sm transition-all duration-200 hover:bg-slate-50 [&.active]:bg-blue-800 [&.active]:text-white [&.active]:border-blue-800">
+                    📖 Hướng dẫn thực hiện TTHC
                 </button>
             </div>
 
@@ -204,32 +203,56 @@
             const searchBox = document.getElementById('dynamic-search-box');
 
             if (type === 'search-tool') {
-                // Hiển thị hộp tìm kiếm động
                 searchBox.classList.remove('hidden');
                 searchBox.classList.add('flex');
                 
-                // Set giao diện trống làm nền cho form tìm kiếm
                 viewport.innerHTML = `
-                    <div class="w-full h-full flex flex-col items-center justify-center bg-slate-50 text-slate-400 p-6 text-center select-none font-['Inter']">
+                    <div class="w-full h-full flex flex-col items-center justify-center bg-slate-50 text-slate-400 p-6 text-center select-none font-['Inter'] dark:bg-slate-800">
                         <span class="text-5xl mb-3">⌨️</span>
-                        <p class="text-sm font-bold">Vui lòng nhập tên thủ tục vào ô tìm kiếm phía trên và nhấn Enter hoặc nút Tìm kiếm.</p>
+                        <p class="text-sm font-bold text-slate-700 dark:text-slate-200">Vui lòng nhập tên thủ tục vào ô tìm kiếm phía trên và nhấn Enter hoặc nút Tìm kiếm.</p>
                         <p class="text-xs font-medium text-slate-400 mt-1">Cơ chế URL Parameters sẽ tự động xử lý chuỗi truy vấn liên thông.</p>
                     </div>
                 `;
                 helperText.innerHTML = `ℹ️ Hệ thống sẽ tự động chuyển hướng kết quả sang một thẻ tab mới trên trình duyệt để đảm bảo an toàn bảo mật.`;
             } 
-            else if (type === 'iframe') {
+            else if (type === 'accordion-guide') {
+                // KÍCH HOẠT TAB 3: HIỂN THỊ DANH SÁCH THẺ ACCORDION SỔ XUỐNG
                 searchBox.classList.remove('flex');
                 searchBox.classList.add('hidden');
                 
-                viewport.innerHTML = `
-                    <iframe src="${sourceUrl}" width="100%" height="100%" style="border:none;" allowfullscreen frameBorder="0">
-                        <p>Trình duyệt của bạn không hỗ trợ hiển thị khung Iframe.</p>
-                    </iframe>
-                `;
-                helperText.innerHTML = `🌐 Bạn đang xem trang tra cứu trực tiếp của Cổng Dịch vụ công Quốc gia. Nếu khung hiển thị bị chặn, <a href="https://dichvucong.gov.vn/tra-cuu-thu-tuc/danh-sach" target="_blank" class="text-blue-600 underline font-black">bấm vào đây để mở trang bằng Tab mới.</a>`;
-            } 
-            else { // Xem PDF thông thường
+                // Mảng chứa tên 7 TTHC
+                const guides = [
+                    "ĐĂNG KÝ KHAI SINH",
+                    "CẤP BẢN SAO TRÍCH LỤC HỘ TỊCH, BẢN SAO GIẤY KHAI SINH",
+                    "THỦ TỤC ĐĂNG KÝ KHAI TỬ",
+                    "QUY TRÌNH CHỨNG THỰC BẢN SAO ĐIỆN TỬ TOÀN TRÌNH",
+                    "QUY TRÌNH THỰC HIỆN THỦ TỤC HÀNH CHÍNH CUNG CẤP THÔNG TIN QUY HOẠCH TRỰC TUYẾN TOÀN TRÌNH",
+                    "HỖ TRỢ SINH ĐỦ 02 CON TRƯỚC 35 TUỔI",
+                    "HƯỚNG DẪN TRA CỨU BẢO HIỂM Y TẾ"
+                ];
+
+                let accordionHtml = `<div class="p-4 md:p-6 space-y-3 font-['Inter']">`;
+                guides.forEach((title, index) => {
+                    accordionHtml += `
+                        <div class="border border-slate-200 dark:border-slate-700 rounded-xl overflow-hidden bg-slate-50 dark:bg-slate-800 shadow-sm">
+                            <button onclick="toggleAccordion(${index + 1})" class="w-full flex items-center justify-between px-5 py-4 text-left font-bold text-xs md:text-sm text-slate-800 dark:text-slate-100 hover:bg-slate-100 dark:hover:bg-slate-700/50 transition duration-200">
+                                <span>${index + 1}. ${title}</span>
+                                <span id="arrow-${index + 1}" class="transform transition-transform duration-200 text-slate-400">▼</span>
+                            </button>
+                            <div id="content-${index + 1}" class="hidden border-t border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 p-4 transition-all duration-300">
+                                <div class="max-w-4xl mx-auto rounded-lg overflow-hidden border border-slate-100 shadow-inner">
+                                    <img src="icon/huongdan${index + 1}.png" alt="Hướng dẫn ${title}" class="w-full h-auto object-contain mx-auto" onerror="this.src='https://placehold.co/800x600/f1f5f9/0f172a?text=Hinh+Anh+Huong+Dan+Chua+Dong+Bo'">
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                });
+                accordionHtml += `</div>`;
+                
+                viewport.innerHTML = accordionHtml;
+                helperText.innerHTML = `💡 Hướng dẫn: Nhấp vào tiêu đề dòng thủ tục để mở bung dải sơ đồ đồ họa hướng dẫn các bước thực hiện chi tiết.`;
+            }
+            else { // Xem PDF thông thường (Tab 1)
                 searchBox.classList.remove('flex');
                 searchBox.classList.add('hidden');
                 
@@ -250,6 +273,29 @@
             buttonElement.classList.add('active');
         }
 
+        // ENGINE QUẢN LÝ ẨN HIỆN ACCORDION (CHỈ SỔ 1 Ô DUY NHẤT KHI CLICK)
+        window.toggleAccordion = function(id) {
+            const currentContent = document.getElementById(`content-${id}`);
+            const currentArrow = document.getElementById(`arrow-${id}`);
+            const isHidden = currentContent.classList.contains('hidden');
+
+            // Ẩn tất cả các ô khác để tạo hiệu ứng chuyên nghiệp
+            document.querySelectorAll('[id^="content-"]').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('[id^="arrow-"]').forEach(el => {
+                el.innerText = '▼';
+                el.classList.remove('text-blue-600');
+            });
+
+            // Nếu ô vừa kích hoạt đang ẩn -> Mở bung ô đó ra
+            if (isHidden) {
+                currentContent.classList.remove('hidden');
+                currentArrow.innerText = '▲';
+                currentArrow.classList.add('text-blue-600');
+                // Cuộn nhẹ nhàng đưa thẻ vừa mở lên tầm nhìn
+                currentContent.parentElement.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }
+        }
+
         // KÍCH HOẠT NHẤN ENTER TRÊN Ô INPUT
         function handleKeyPress(event) {
             if (event.key === 'Enter') {
@@ -268,11 +314,8 @@
                 return;
             }
 
-            // Mã hóa chuỗi ký tự chuẩn URL (Biến khoảng trắng thành dấu cộng)
             const formattedKeyword = encodeURIComponent(keyword).replace(/%20/g, '+');
             const finalQueryUrl = `https://dichvucong.gov.vn/tra-cuu-thu-tuc/danh-sach?keyword=${formattedKeyword}&showAdvanced=false&formalityType=STANDARD&limit=10&activeKey=STANDARD`;
-
-            // Mở tab mới dẫn thẳng tới trang kết quả truy vấn
             window.open(finalQueryUrl, '_blank');
         }
 
@@ -293,6 +336,10 @@
                 btnLight.className = "text-[9px] font-extrabold uppercase px-2.5 py-1 rounded-md transition-all bg-slate-800 text-white shadow-sm";
                 btnDark.className = "text-[9px] font-extrabold uppercase px-2.5 py-1 rounded-md transition-all text-white/80 hover:text-white ml-1";
             }
+            
+            // Kích hoạt nạp lại trạng thái nếu đang đứng ở tab 3 để cập nhật màu chữ accordion
+            const activeTab3 = document.querySelector('.tab-btn[onclick*="accordion-guide"].active');
+            if (activeTab3) { activeTab3.click(); }
         }
 
         // HÀM CHUYỂN ĐỔI CHUYÊN ĐỀ CHỈ ĐẠO HEADER (XANH / ĐỎ)
