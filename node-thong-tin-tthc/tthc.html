@@ -9,50 +9,38 @@
     
     <style>
         body { font-family: 'Inter', 'Be Vietnam Pro', sans-serif; margin: 0; padding: 0; min-height: 100vh; display: flex; flex-direction: column; transition: background 0.4s ease, color 0.4s ease; }
-        body.bg-light-mode { background-color: #f8fafc; color: #0f172a; }
-        body.bg-dark-mode { background-color: #0f172a; color: #f8fafc; }
-        body.bg-dark-mode .instruction-text { color: #38bdf8 !important; }
-        body.bg-dark-mode footer { background-color: #1e293b !important; border-color: #334155 !important; }
-        body.bg-dark-mode .btn-back-interactive { background: #1e293b; border-color: #334155; color: #f1f5f9; }
-        body.bg-dark-mode .btn-back-interactive:hover { border-color: #38bdf8; color: #38bdf8; }
-        
-        body.theme-xanh-ios .main-header { background: linear-gradient(-45deg, #0b4a8f, #05234a, #0d5cb3, #02142d); background-size: 400% 400%; animation: gradientGIF 12s ease infinite; box-shadow: 0 4px 15px rgba(11, 74, 143, 0.15); border-bottom: 2px solid #032b5c; }
-        body.theme-do-hanhchinh .main-header { background: linear-gradient(-45deg, #dc2626, #7f1d1d, #ef4444, #450a0a); background-size: 400% 400%; animation: gradientGIF 12s ease infinite; box-shadow: 0 4px 15px rgba(220, 38, 38, 0.15); border-bottom: 2px solid #991b1b; }
+        .main-header { background: linear-gradient(-45deg, #0b4a8f, #05234a, #0d5cb3, #02142d); background-size: 400% 400%; animation: gradientGIF 12s ease infinite; box-shadow: 0 4px 15px rgba(11, 74, 143, 0.15); border-bottom: 2px solid #032b5c; }
         @keyframes gradientGIF { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
-        
-        .menu-panel-wrapper { background-color: rgba(128, 255, 232, 0.45); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.6); border-radius: 40px; box-shadow: 0 20px 50px -10px rgba(12, 74, 110, 0.15); width: 100%; }
+        .menu-panel-wrapper { background-color: rgba(128, 255, 232, 0.45); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.6); border-radius: 40px; box-shadow: 0 20px 50px -10px rgba(12, 74, 110, 0.15); width: 100%; padding: 45px 35px; }
         .content-viewer-container { width: 100%; height: 750px; border-radius: 20px; overflow-y: auto; box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08); border: 1px solid rgba(255, 255, 255, 0.5); background: #ffffff; }
-        body.bg-dark-mode .content-viewer-container { background: #1e293b; border-color: rgba(255, 255, 255, 0.1); }
-        .scrollbar-none::-webkit-scrollbar { display: none; }
-        .scrollbar-none { -ms-overflow-style: none; scrollbar-width: none; }
+        .tab-btn { background: white; border: 1px solid #e2e8f0; color: #334155; font-weight: 800; font-size: 0.75rem; text-transform: uppercase; padding: 12px 24px; border-radius: 12px; transition: all 0.2s; }
+        .tab-btn.active { background: #1e40af; color: white; border-color: #1e40af; }
     </style>
 </head>
-<body class="theme-xanh-ios bg-light-mode" id="dynamic-body">
+<body class="bg-slate-50">
 
-    <header class="main-header w-full py-6 px-6 md:px-12 relative transition-all duration-300">
-        <div class="max-w-[1550px] mx-auto flex flex-col items-center justify-center relative">
-            <div class="flex flex-row items-center space-x-6">
-                <img src="logo.png" alt="Logo" class="w-20 h-auto">
-                <div class="flex flex-col items-start space-y-1">
-                    <p class="text-white font-black tracking-[0.12em] text-xl md:text-3xl uppercase font-['Montserrat']">IOC BINH HUNG</p>
-                    <h1 class="text-sm text-white/90 font-bold uppercase tracking-[0.08em]">Cổng thông tin và điều hành xã Bình Hưng</h1>
-                </div>
+    <header class="main-header w-full py-6 px-6 md:px-12">
+        <div class="max-w-[1550px] mx-auto flex flex-row items-center space-x-6">
+            <img src="logo.png" alt="Logo" class="w-20 h-auto">
+            <div class="flex flex-col items-start space-y-1 text-white">
+                <p class="font-black tracking-[0.12em] text-xl md:text-3xl uppercase font-['Montserrat']">IOC BINH HUNG</p>
+                <h1 class="text-sm font-bold uppercase tracking-[0.08em] opacity-90">Cổng thông tin và điều hành xã Bình Hưng</h1>
             </div>
         </div>
     </header>
 
     <div class="max-w-[1550px] w-full mx-auto px-4 md:px-6 my-6">
-        <article class="menu-panel-wrapper p-6 md:p-12 flex flex-col space-y-6">
+        <article class="menu-panel-wrapper flex flex-col space-y-6">
             <h2 class="text-2xl font-black text-[#0b4a8f] uppercase">Tra cứu bộ mã QR Thủ tục hành chính</h2>
             
-            <div class="flex flex-row gap-2 overflow-x-auto pb-2 scrollbar-none">
-                <button onclick="changeContent('pdf', 'QR TTHC.pdf', this)" class="tab-btn active bg-white border border-slate-200 text-slate-700 font-extrabold text-xs uppercase px-6 py-3 rounded-xl hover:bg-blue-800 hover:text-white transition-all [&.active]:bg-blue-800 [&.active]:text-white">📦 Bộ TTHC Tổng Hợp</button>
-                <button onclick="changeContent('search-tool', '', this)" class="tab-btn bg-white border border-slate-200 text-slate-700 font-extrabold text-xs uppercase px-6 py-3 rounded-xl hover:bg-blue-800 hover:text-white transition-all [&.active]:bg-blue-800 [&.active]:text-white">🔍 Tra cứu Thủ tục công</button>
-                <button onclick="changeContent('accordion-guide', '', this)" class="tab-btn bg-white border border-slate-200 text-slate-700 font-extrabold text-xs uppercase px-6 py-3 rounded-xl hover:bg-blue-800 hover:text-white transition-all [&.active]:bg-blue-800 [&.active]:text-white">📖 Hướng dẫn TTHC</button>
+            <div class="flex flex-row gap-2 overflow-x-auto pb-2">
+                <button onclick="changeContent('search-tool', '', this)" class="tab-btn">🔍 Tra cứu Thủ tục công</button>
+                <button onclick="changeContent('pdf', 'QR TTHC.pdf', this)" class="tab-btn">📦 Bộ TTHC Tổng Hợp</button>
+                <button onclick="changeContent('accordion-guide', '', this)" class="tab-btn">📖 Hướng dẫn TTHC</button>
             </div>
 
             <div id="dynamic-search-box" class="w-full max-w-2xl mx-auto bg-white p-4 rounded-2xl border border-slate-200 shadow-md hidden flex-row gap-3 items-center">
-                <input type="text" id="search_input" placeholder="Nhập tên thủ tục..." class="w-full bg-slate-50 border rounded-xl px-4 py-3 text-sm">
+                <input type="text" id="search_input" placeholder="Nhập tên thủ tục cần tìm..." class="w-full bg-slate-50 border rounded-xl px-4 py-3 text-sm">
                 <button onclick="executeUrlSearch()" class="bg-blue-800 text-white font-bold px-6 py-3 rounded-xl">Tìm</button>
             </div>
 
@@ -66,22 +54,24 @@
             const viewport = document.getElementById('viewer-viewport');
             const searchBox = document.getElementById('dynamic-search-box');
             
+            // Xử lý logic hiển thị theo loại tab
             if (type === 'search-tool') {
                 searchBox.classList.remove('hidden'); searchBox.classList.add('flex');
-                viewport.innerHTML = `<div class="p-10 text-center">Vui lòng nhập từ khóa tìm kiếm.</div>`;
+                viewport.innerHTML = `<div class="p-10 text-center">Vui lòng nhập từ khóa tìm kiếm và nhấn Tìm.</div>`;
             } else if (type === 'accordion-guide') {
                 searchBox.classList.add('hidden');
-                viewport.innerHTML = `<div class="p-6">Hướng dẫn sẽ được liệt kê tại đây.</div>`; // Bạn có thể fill dữ liệu ở đây
+                viewport.innerHTML = `<div class="p-6 text-center font-bold">Hướng dẫn chi tiết sẽ được hiển thị tại đây.</div>`;
             } else {
                 searchBox.classList.add('hidden');
                 viewport.innerHTML = `<object data="${sourceUrl}" type="application/pdf" width="100%" height="100%"></object>`;
             }
 
+            // Xử lý active tab
             document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
             buttonElement.classList.add('active');
         }
 
-        // TỰ ĐỘNG MỞ TAB ĐẦU TIÊN
+        // TỰ ĐỘNG MỞ TAB ĐẦU TIÊN KHI TRANG TẢI XONG
         window.addEventListener('load', function() {
             const firstTab = document.querySelector('.tab-btn');
             if (firstTab) firstTab.click();
