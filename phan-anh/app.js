@@ -1,28 +1,105 @@
-// Hàm chuyển đổi File ảnh sang chuỗi văn bản Base64
-function convertFileToBase64(file) {
+import { db } from "./firebase-config.js";
+import { collection, addDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+// Hàm chuyên trách nén ảnh bằng HTML5 Canvas ngầm
+function compressImageToBase64(file, maxWidth = 600, quality = 0.6) {
     return new Promise((resolve, reject) => {
         const reader = new FileReader();
         reader.readAsDataURL(file);
-        reader.onload = () => resolve(reader.result);
-        reader.onerror = error => reject(error);
+        reader.onload = (event) => {
+            const img = new Image();
+            img.src = event.target.result;
+            img.onload = () => {
+                const canvas = document.createElement('canvas');
+                let width = img.width;
+                let height = img.height;
+
+                // Tính toán tỷ lệ để co chiều rộng về mức tối đa cho phép
+                if (width > maxWidth) {
+                    height = Math.round((height * maxWidth) / width);
+                    width = maxWidth;
+                }
+
+                canvas.width = width;
+                canvas.height = height;
+
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(img, 0, 0, width, height);
+
+                // Xuất ảnh ra định dạng chuỗi nén JPEG siêu nhẹ
+                const compressedBase64 = canvas.toDataURL('image/jpeg', quality);
+                resolve(compressedBase64);
+            };
+            img.onerror = (err) => reject(err);
+        };
+        reader.onerror = (err) => reject(err);
     });
 }
 
-// Bên trong sự kiện form.addEventListener('submit', ...)
-let base64Image = "";
-if (imageFile) {
-    // Nếu file ảnh lớn hơn 800KB, hãy cảnh báo để tránh vượt hạn mức 1MB của Firestore
-    if (imageFile.size > 800 * 1024) {
-        alert("⚠️ Ảnh quá lớn! Vui lòng chọn ảnh dưới 800KB để hệ thống xử lý.");
-        return;
-    }
-    base64Image = await convertFileToBase64(imageFile); // Biến ảnh thành chữ
+function generateTrackingCode() {
+    const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    let code = "";
+    for (let i = 0; i < 8; i++) { code += chars.charAt(Math.floor(Math.random() * chars.length)); }
+    return code;
 }
 
-const complaintData = {
-    trackingCode: trackingCode,
-    fullname: fullname,
-    content: content,
-    imageUrl: base64Image, // Lưu chuỗi chữ Base64 này thẳng vào Firestore
-    createdAt: new Date().toISOString()
-};
+document.getElementById('complaintForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const submitBtn = document.getElementById('submitBtn');
+    const fullname = document.getElementById('fullname').value.trim();
+    const cccd = document.getElementById('cccd').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const content = document.getElementById('content').value.trim();
+    const imageFile = document.getElementById('imageFile').files[0];
+
+    const cccdRegex = /^\d{12}$/;
+    if (!cccdRegex.test(cccd)) {
+        alert("⚠️ Số Căn cước công dân không hợp lệ! Vui lòng nhập đúng và đủ 12 chữ số.");
+        document.getElementById('cccd').focus();
+        return;
+    }
+
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = `<span>Hệ thống đang tối ưu ảnh và tải lên...</span>`;
+
+    try {
+        let finalImageData = "";
+
+        // Tiến hành kích hoạt nén ảnh nếu người dân có chọn file đính kèm
+        if (imageFile) {
+            console.log("Phát hiện tệp ảnh gốc. Đang tiến hành thuật toán nén Canvas...");
+            finalImageData = await compressImageToBase64(imageFile, 600, 0.6);
+            console.log("Nén ảnh Base64 hoàn tất thành công!");
+        }
+
+        const trackingCode = generateTrackingCode();
+        const complaintData = {
+            trackingCode: trackingCode,
+            fullname: fullname,
+            cccd: cccd,
+            email: email,
+            content: content,
+            imageUrl: finalImageData, // Lưu chuỗi văn bản ảnh đã nén thẳng vào Firestore
+            status: "Đang tiếp nhận",
+            replyContent: "",
+            createdAt: new Date().toISOString()
+        };
+
+        // Ghi dữ liệu vào Firestore
+        await addDoc(collection(db, "complaints"), complaintData);
+
+        document.getElementById('trackingCodeDisplay').innerText = trackingCode;
+        const modal = document.getElementById('successModal');
+        const card = document.getElementById('modalCard');
+        modal.classList.remove('opacity-0', 'pointer-events-none');
+        card.classList.remove('scale-95');
+
+    } catch (globalError) {
+        console.error("Lỗi tiến trình gửi đơn:", globalError);
+        alert(`❌ Không thể gửi phản ánh. Vui lòng kiểm tra lại Firestore Rules!\nChi tiết: ${globalError.message}`);
+    } finally {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = `<span>Xác nhận gửi phản ánh</span> 🚀`;
+    }
+});
