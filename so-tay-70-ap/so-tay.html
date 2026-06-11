@@ -8,23 +8,17 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800;900&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
-        /* CSS GIAO DIỆN ĐỒNG BỘ */
         body { font-family: 'Inter', sans-serif; transition: all 0.3s; min-height: 100vh; }
         .main-header { background-size: 400% 400%; animation: gradientGIF 12s ease infinite; }
         @keyframes gradientGIF { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
-        
-        /* Chủ đề Xanh/Đỏ */
         body.theme-xanh-ios .main-header { background: linear-gradient(-45deg, #0b4a8f, #05234a, #0d5cb3, #02142d); }
         body.theme-do-hanhchinh .main-header { background: linear-gradient(-45deg, #dc2626, #7f1d1d, #ef4444, #450a0a); }
-        
-        /* Chế độ Sáng/Tối */
         body.bg-light-mode { background-color: #f8fafc; color: #0f172a; }
         body.bg-dark-mode { background-color: #0f172a; color: #f8fafc; }
-        
         .glass-panel { background: rgba(255, 255, 255, 0.95); border: 1px solid #e2e8f0; border-radius: 20px; }
         body.bg-dark-mode .glass-panel { background: rgba(30, 41, 59, 0.7); border-color: #334155; }
-        
         .tab-btn.active { border-bottom: 2px solid #0ea5e9; color: #0ea5e9; font-weight: 800; }
+        .input-box { background: rgba(255,255,255,0.1); border: 1px solid #cbd5e1; border-radius: 8px; padding: 8px; width: 100%; }
     </style>
 </head>
 <body class="theme-xanh-ios bg-light-mode" id="body-context">
@@ -54,33 +48,40 @@
         </div>
 
         <div id="content-ap" class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+            <div class="lg:col-span-8 glass-panel p-6">
+                <h2 class="text-sm font-bold mb-4">Danh sách & Bản đồ phân bố</h2>
+                <div class="h-[400px] bg-slate-200 rounded-xl flex items-center justify-center">Bản đồ số hóa...</div>
             </div>
+            <div class="lg:col-span-4 glass-panel p-6">
+                <h2 class="text-sm font-bold mb-4">Điều chỉnh thông tin</h2>
+                <div class="space-y-3">
+                    <input type="text" placeholder="Tên đơn vị..." class="input-box">
+                    <input type="number" placeholder="Số dân..." class="input-box">
+                    <button class="w-full bg-blue-600 text-white py-2 rounded-lg font-bold uppercase text-xs">Cập nhật Firebase</button>
+                </div>
+            </div>
+        </div>
 
         <div id="content-chungcu" class="hidden grid grid-cols-1 lg:grid-cols-12 gap-6">
+            <div class="lg:col-span-12 glass-panel p-6 text-center text-slate-500">
+                Chưa có dữ liệu chi tiết cho các Chung cư.
             </div>
+        </div>
     </div>
 
     <script>
-        // Hàm chuyển tab
         window.switchTab = function(type, btn) {
             document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
-            if(type === 'ap') {
-                document.getElementById('content-ap').classList.remove('hidden');
-                document.getElementById('content-chungcu').classList.add('hidden');
-            } else {
-                document.getElementById('content-ap').classList.add('hidden');
-                document.getElementById('content-chungcu').classList.remove('hidden');
-            }
+            document.getElementById('content-ap').classList.toggle('hidden', type !== 'ap');
+            document.getElementById('content-chungcu').classList.toggle('hidden', type !== 'chungcu');
         }
 
-        // Hàm chuyển chủ đề màu
         window.switchSystemTheme = function(mode) {
             const body = document.getElementById('body-context');
             body.className = body.className.replace(/theme-xanh-ios|theme-do-hanhchinh/g, '') + (mode === 'do' ? ' theme-do-hanhchinh' : ' theme-xanh-ios');
         }
 
-        // Hàm chuyển nền sáng/tối
         window.setTheme = function(mode) {
             const body = document.getElementById('body-context');
             body.className = body.className.replace(/bg-light-mode|bg-dark-mode/g, '') + (mode === 'dark' ? ' bg-dark-mode' : ' bg-light-mode');
