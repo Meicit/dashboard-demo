@@ -14,9 +14,9 @@
             background-size: cover; background-position: center; background-attachment: fixed;
             color: #38bdf8;
         }
-        body.dark-theme .text-dynamic-title { color: #00f0ff; } /* Cyan Neon */
-        body.dark-theme .text-dynamic-body { color: #93c5fd; }  /* Xanh dương tươi */
-        body.dark-theme .text-dynamic-label { color: #fbbf24; } /* Vàng hổ phách */
+        body.dark-theme .text-dynamic-title { color: #00f0ff; } 
+        body.dark-theme .text-dynamic-body { color: #93c5fd; }  
+        body.dark-theme .text-dynamic-label { color: #fbbf24; } 
         body.dark-theme .glass-panel { background: rgba(15, 23, 42, 0.75); border-color: rgba(56, 189, 248, 0.2); }
         body.dark-theme .hamlet-card { background: rgba(255, 255, 255, 0.04); border-color: rgba(255, 255, 255, 0.06); }
         body.dark-theme .hamlet-card:hover { background: rgba(14, 165, 233, 0.12); border-color: #0ea5e9; }
@@ -58,7 +58,7 @@
         .tab-content { transition: all 0.2s; }
     </style>
 </head>
-<body class="dark-theme custom-scrollbar" id="body-context">
+<body class="light-theme custom-scrollbar" id="body-context">
 
     <div class="container-wrapper space-y-6">
         
@@ -67,10 +67,10 @@
             
             <div class="bg-slate-900 border border-slate-700 p-1 rounded-xl flex items-center shadow-md backdrop-blur">
                 <span class="text-[10px] font-black uppercase tracking-wider px-3 text-dynamic-label">Chế độ xem:</span>
-                <button onclick="setTheme('light')" id="btn-theme-light" class="flex items-center gap-1.5 text-[11px] font-extrabold uppercase px-3 py-1.5 rounded-lg transition border border-transparent text-dynamic-body hover:text-sky-400">
+                <button onclick="setTheme('light')" id="btn-theme-light" class="flex items-center gap-1.5 text-[11px] font-extrabold uppercase px-3 py-1.5 rounded-lg transition border btn-switcher-active">
                     🔵 Nền trắng
                 </button>
-                <button onclick="setTheme('dark')" id="btn-theme-dark" class="flex items-center gap-1.5 text-[11px] font-extrabold uppercase px-3 py-1.5 rounded-lg transition border btn-switcher-active">
+                <button onclick="setTheme('dark')" id="btn-theme-dark" class="flex items-center gap-1.5 text-[11px] font-extrabold uppercase px-3 py-1.5 rounded-lg transition border border-transparent text-dynamic-body hover:text-sky-400">
                     🟠 Nền đen
                 </button>
             </div>
@@ -216,15 +216,14 @@
         const app = initializeApp(firebaseConfig);
         const db = getDatabase(app);
         
-        // Trỏ trực tiếp vào nhánh cơ sở dữ liệu số chuyên đề tự định nghĩa
         const hamletsNodeRef = ref(db, 'dashboard_binhhung/so_tay_70_ap');
 
         let hamletsData = []; 
         let chartInstance = null;
-        let lastTheme = 'dark';
+        // 🌟 ĐÃ CẬP NHẬT: Thay đổi biến trạng thái bộ nhớ theme sang 'light' để đồng bộ tiến trình load dữ liệu ban đầu
+        let lastTheme = 'light';
         let currentSelectedHamlet = 'Ấp 49';
 
-        // 🟢 LUỒNG 1: LẮNG NGHE BIẾN ĐỘNG TRỰC TIẾP TỪ FIREBASE CLOUD (REALTIME ENGINE)
         onValue(hamletsNodeRef, (snapshot) => {
             const remoteData = snapshot.val();
             if(!remoteData) {
@@ -232,17 +231,14 @@
                 return;
             }
 
-            // Chuyển cấu trúc Object hoặc mảng từ Firebase về mảng Javascript chuẩn
             hamletsData = Object.values(remoteData);
 
-            // Tự động kích hoạt toàn bộ công cụ tính toán và vẽ bảng biểu ngay khi Firebase đổi số
             renderGrid(hamletsData);
             renderRankings(hamletsData);
             setTheme(lastTheme);
             selectHamlet(currentSelectedHamlet);
         });
 
-        // Hàm vẽ bảng lưới các thẻ ấp
         function renderGrid(data) {
             const grid = document.getElementById('hamlets_grid');
             grid.innerHTML = data.map(h => `
@@ -260,13 +256,11 @@
             `).join('');
         }
 
-        // Tự động nhặt dữ liệu thô từ Firebase ra tính toán thuật toán Top 5 thuật toán động
         function renderRankings(data) {
             const maxArea = Math.max(...data.map(h => h.area_num));
             const maxHouse = Math.max(...data.map(h => h.households_num));
             const maxPop = Math.max(...data.map(h => h.population_num));
 
-            // Top 5 Dân số
             const topPop = [...data].sort((a,b) => b.population_num - a.population_num).slice(0,5);
             document.getElementById('tab_pop').innerHTML = topPop.map((h, i) => `
                 <div class="space-y-0.5">
@@ -275,7 +269,6 @@
                 </div>
             `).join('');
 
-            // Top 5 Số hộ
             const topHouse = [...data].sort((a,b) => b.households_num - a.households_num).slice(0,5);
             document.getElementById('tab_house').innerHTML = topHouse.map((h, i) => `
                 <div class="space-y-0.5">
@@ -284,7 +277,6 @@
                 </div>
             `).join('');
 
-            // Top 5 Diện tích
             const topArea = [...data].sort((a,b) => b.area_num - a.area_num).slice(0,5);
             document.getElementById('tab_area').innerHTML = topArea.map((h, i) => `
                 <div class="space-y-0.5">
@@ -293,7 +285,6 @@
                 </div>
             `).join('');
             
-            // Đồng bộ cập nhật vẽ đồ thị dựa trên Top 10 thực tế thời gian thực
             const top10 = [...data].sort((a,b) => b.population_num - a.population_num).slice(0,10);
             updateChartData(top10);
         }
@@ -327,7 +318,6 @@
             }
         }
 
-        // 🔵 LUỒNG 2: THỰC THI GHI/CẬP NHẬT DỮ LIỆU NGƯỢC LÊN FIREBASE (WRITE LOGIC)
         document.getElementById('hamletEditForm').addEventListener('submit', function(event) {
             event.preventDefault();
             
@@ -335,10 +325,8 @@
             btnSave.disabled = true;
             btnSave.innerText = "⏳ Hệ thống đang đồng bộ dữ liệu lên Cloud...";
 
-            // Bóc tách tên ấp để tìm đường dẫn chính xác (Ví dụ: 'Ấp 1' -> 'Ấp 1')
             const nameKey = document.getElementById('f_name').value;
             
-            // Tìm kiếm index hoặc tên Node gốc của ấp trên database để update chính xác
             const targetIndex = hamletsData.findIndex(h => h.name === nameKey);
             if(targetIndex === -1) {
                 alert("Không xác định được chỉ mục ấp!");
@@ -346,7 +334,6 @@
                 return;
             }
 
-            // Đóng gói mô hình JSON
             const recordSpecificRef = ref(db, `dashboard_binhhung/so_tay_70_ap/${targetIndex}`);
             
             const txtArea = document.getElementById('f_area').value.trim();
@@ -366,7 +353,6 @@
                 boundary: document.getElementById('f_boundary').value.trim()
             };
 
-            // Thực hiện ghi đè dữ liệu cục bộ thời gian thực bằng update() của Firebase
             update(recordSpecificRef, payload)
                 .then(() => {
                     alert(`✅ Đã cập nhật thành công số liệu ${nameKey} thời gian thực lên Firebase Cloud!`);
@@ -378,7 +364,6 @@
                 });
         });
 
-        // LUỒNG TÌM KIẾM NHANH TẠI TRẬN
         document.getElementById('search_hamlet').addEventListener('input', function(e) {
             const kw = e.target.value.toLowerCase().trim();
             const filtered = hamletsData.filter(h => 
@@ -390,7 +375,6 @@
             renderGrid(filtered);
         });
 
-        // QUẢN LÝ ENGINE ĐỒ THỊ CHỮ THEME SWAPPER
         window.renderChart = function(textColor) {
             if(chartInstance) chartInstance.destroy();
             const ctx = document.getElementById('hamletsChart').getContext('2d');
@@ -436,7 +420,7 @@
                 renderChart('#031b4e');
             } else {
                 body.classList.remove('light-theme'); body.classList.add('dark-theme');
-                document.getElementById('btn-theme-dark').className = "flex items-center gap-1.5 text-[11px] font-extrabold uppercase px-3 py-1.5 rounded-lg transition border btn-switcher-active";
+                document.getElementById('btn-theme-dark').className = "flex items-center gap-1.5 text-[11px] font-extrabold uppercase px-3 py-1.5 rounded-lg transition border border-transparent btn-switcher-active";
                 document.getElementById('btn-theme-light').className = "flex items-center gap-1.5 text-[11px] font-extrabold uppercase px-3 py-1.5 rounded-lg transition border border-transparent text-sky-400";
                 for(let btn of tabWrapper.children) {
                     if(!btn.classList.contains('text-sky-400')) btn.className = "w-full text-center pb-1.5 border-b-2 border-transparent text-slate-400 font-bold hover:text-white";
