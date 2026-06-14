@@ -24,47 +24,37 @@
         .btn-back:hover { transform: translateY(-2px); border-color: #ef4444; background: rgba(239, 68, 68, 0.1); color: #ef4444 !important; }
         .tab-content { transition: all 0.2s; }
 
-        /* ================= KỸ THUẬT SIÊU SÁNG & HIỆU ỨNG CHỮ NỔI 3D ĐỒNG BỘ ĐẦY ĐỦ Ở HEADER ================= */
-        .text-3d-main {
+        /* ================= CẤU HÌNH ĐỘC QUYỀN CHỮ TRẮNG TINH 3D ĐỘ TƯƠNG PHẢN CAO ================= */
+        .text-3d-white-main {
             font-family: 'Montserrat', sans-serif;
             font-weight: 900;
             text-transform: uppercase;
             letter-spacing: 0.12em;
-            /* Tinh chỉnh dải màu ánh kim trắng bạc siêu sáng */
-            background: linear-gradient(180deg, #ffffff 0%, #f8fafc 40%, #e2e8f0 75%, #cbd5e1 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            /* Khối đổ bóng 3D dày dặn tăng chiều sâu */
+            color: #ffffff; /* Sửa thành màu trắng tinh khiết */
+            /* Đổ bóng tối nâng khối chữ nổi lên khỏi background */
             text-shadow: 
                 0 1px 0 #cbd5e1,
                 0 2px 0 #94a3b8,
                 0 3px 0 #64748b,
                 0 4px 0 #475569,
-                0 5px 0 #334155,
-                0 6px 2px rgba(0,0,0,0.15),
-                0 0 8px rgba(255,255,255,0.2),
-                0 2px 4px rgba(0,0,0,0.4),
-                0 4px 6px rgba(0,0,0,0.3),
-                0 8px 15px rgba(0,0,0,0.35);
+                0 5px 0 #1e293b,
+                0 6px 3px rgba(0,0,0,0.4),
+                0 1px 5px rgba(0,0,0,0.5),
+                0 4px 10px rgba(0,0,0,0.45);
         }
 
-        .text-3d-sub {
+        .text-3d-white-sub {
             font-family: 'Montserrat', sans-serif;
-            font-weight: 800;
+            font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 0.06em;
-            /* Phối dải màu ngọc sáng dịu hơn dòng chính một chút để giữ phân cấp thị giác */
-            background: linear-gradient(180deg, #ffffff 20%, #f1f5f9 50%, #cbd5e1 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            /* Đổ bóng khối 3D tinh gọn phù hợp kích thước chữ nhỏ */
+            letter-spacing: 0.04em;
+            color: #ffffff; /* Sửa thành màu trắng tinh khiết */
+            /* Đổ bóng tinh gọn sắc nét cho dòng mô tả */
             text-shadow: 
-                0 1px 0 #cbd5e1,
-                0 2px 0 #94a3b8,
-                0 3px 0 #475569,
-                0 4px 1px rgba(0,0,0,0.2),
-                0 1px 3px rgba(0,0,0,0.35),
-                0 3px 8px rgba(0,0,0,0.25);
+                0 1px 0 #94a3b8,
+                0 2px 0 #475569,
+                0 3px 2px rgba(0,0,0,0.5),
+                0 1px 4px rgba(0,0,0,0.4);
         }
 
         /* ☀️ NỀN SÁNG (Mặc định) */
@@ -110,8 +100,8 @@
                     <img src="logo.png" alt="Logo" class="logo-main w-20 h-auto">
                 </div>
                 <div class="flex flex-col items-start justify-center space-y-2 text-left">
-                    <p class="text-3xl font-black leading-none m-0 p-0 text-3d-main pb-1">IOC BINH HUNG</p>
-                    <h1 class="text-xs md:text-sm lg:text-base font-bold text-3d-sub leading-tight m-0 p-0">Cổng thông tin và điều hành xã Bình Hưng, Thành phố Hồ Chí Minh</h1>
+                    <p class="text-3xl font-black leading-none m-0 p-0 text-3d-white-main pb-1">IOC BINH HUNG</p>
+                    <h1 class="text-xs md:text-sm lg:text-base font-bold text-3d-white-sub leading-tight m-0 p-0">Cổng thông tin và điều hành xã Bình Hưng, Thành phố Hồ Chí Minh</h1>
                 </div>
             </div>
             <div class="theme-selector-vertical lg:absolute lg:top-0 lg:right-0 bg-white/10 backdrop-blur-md border border-white/20 p-1.5 rounded-xl flex flex-col space-y-1.5 w-[75px] z-20 shadow-inner">
