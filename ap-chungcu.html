@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Danh sách 39 Ấp - Xã Bình Hưng</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-50 p-8">
+
+    <div class="max-w-6xl mx-auto">
+        <h1 class="text-3xl font-black text-blue-900 mb-8 text-center uppercase">Danh sách 39 Ấp - Xã Bình Hưng</h1>
+        
+        <div id="danh-sach-ap" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            </div>
+    </div>
+
+    <script>
+        // Dữ liệu 39 ấp được lấy từ file JSON của bạn
+        const duLieuAp = [
+            { "name": "Ấp 1", "households": "1.344 hộ", "population": "6.312 người" },
+            { "name": "Ấp 2", "households": "1.034 hộ", "population": "4.196 người" },
+            { "name": "Ấp 3", "households": "1.184 hộ", "population": "3.826 người" },
+            { "name": "Ấp 4", "households": "738 hộ", "population": "2.726 người" },
+            { "name": "Ấp 5", "households": "1.695 hộ", "population": "3.909 người" },
+            { "name": "Ấp 6", "households": "706 hộ", "population": "1.810 người" },
+            { "name": "Ấp 7", "households": "810 hộ", "population": "2.199 người" },
+            { "name": "Ấp 8", "households": "1.122 hộ", "population": "3.212 người" },
+            { "name": "Ấp 9", "households": "740 hộ", "population": "2.359 người" },
+            { "name": "Ấp 10", "households": "1.405 hộ", "population": "3.624 người" },
+            { "name": "Ấp 11", "households": "1.355 hộ", "population": "4.160 người" },
+            { "name": "Ấp 12", "households": "1.051 hộ", "population": "2.854 người" },
+            { "name": "Ấp 13", "households": "1.182 hộ", "population": "4.074 người" },
+            { "name": "Ấp 14", "households": "717 hộ", "population": "3.086 người" },
+            { "name": "Ấp 15", "households": "1.582 hộ", "population": "5.291 người" },
+            { "name": "Ấp 16", "households": "809 hộ", "population": "1.883 người" },
+            { "name": "Ấp 17", "households": "1.168 hộ", "population": "3.180 người" },
+            { "name": "Ấp 18", "households": "1.890 hộ", "population": "4.231 người" },
+            { "name": "Ấp 19", "households": "1.602 hộ", "population": "6.327 người" },
+            { "name": "Ấp 20", "households": "1.441 hộ", "population": "2.978 người" },
+            { "name": "Ấp 21", "households": "1.567 hộ", "population": "5.518 người" },
+            { "name": "Ấp 22", "households": "1.703 hộ", "population": "7.026 người" },
+            { "name": "Ấp 23", "households": "885 hộ", "population": "3.985 người" },
+            { "name": "Ấp 24", "households": "1.357 hộ", "population": "5.517 người" },
+            { "name": "Ấp 25", "households": "1.191 hộ", "population": "4.177 người" },
+            { "name": "Ấp 26", "households": "1.286 hộ", "population": "4.029 người" },
+            { "name": "Ấp 27", "households": "1.555 hộ", "population": "4.498 người" },
+            { "name": "Ấp 28", "households": "933 hộ", "population": "3.470 người" },
+            { "name": "Ấp 29", "households": "1.590 hộ", "population": "5.106 người" },
+            { "name": "Ấp 30", "households": "1.709 hộ", "population": "5.259 người" },
+            { "name": "Ấp 31", "households": "1.770 hộ", "population": "7.258 người" },
+            { "name": "Ấp 32", "households": "1.857 hộ", "population": "4.891 người" },
+            { "name": "Ấp 33", "households": "1.694 hộ", "population": "4.682 người" },
+            { "name": "Ấp 34", "households": "1.876 hộ", "population": "3.080 người" },
+            { "name": "Ấp 35", "households": "1.216 hộ", "population": "3.904 người" },
+            { "name": "Ấp 36", "households": "1.212 hộ", "population": "2.716 người" },
+            { "name": "Ấp 37", "households": "1.831 hộ", "population": "3.378 người" },
+            { "name": "Ấp 38", "households": "1.571 hộ", "population": "2.271 người" },
+            { "name": "Ấp 39", "households": "1.363 hộ", "population": "3.246 người" }
+        ];
+
+        const container = document.getElementById('danh-sach-ap');
+        
+        duLieuAp.forEach(ap => {
+            container.innerHTML += `
+                <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 hover:shadow-md transition">
+                    <h2 class="text-lg font-black text-blue-800">${ap.name}</h2>
+                    <p class="text-sm text-slate-600 mt-2">🏠 Số hộ: <span class="font-bold">${ap.households}</span></p>
+                    <p class="text-sm text-slate-600">👥 Dân số: <span class="font-bold text-sky-600">${ap.population}</span></p>
+                </div>
+            `;
+        });
+    </script>
+</body>
+</html>
