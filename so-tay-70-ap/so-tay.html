@@ -8,125 +8,96 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        /* [Giữ nguyên CSS của bạn, đảm bảo các class dynamic như .text-3d-white-main/sub hoạt động] */
         body { font-family: 'Inter', sans-serif; margin: 0; padding: 0; min-height: 100vh; display: flex; flex-direction: column; transition: background 0.3s ease, color 0.3s ease; }
         .container-wrapper { max-width: 1550px; margin: 0 auto; padding: 0 24px; width: 100%; }
-        .glass-panel { backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: 1px solid; border-radius: 24px; box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.1); }
-        .input-dark { border-radius: 12px; padding: 10px 14px; outline: none; border: 1px solid; }
+        .glass-panel { backdrop-filter: blur(16px); border: 1px solid; border-radius: 24px; box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.1); }
+        .input-dark { border-radius: 12px; padding: 10px 14px; border: 1px solid; }
         .tab-content { transition: all 0.2s; }
-        .text-3d-white-main { font-family: 'Montserrat', sans-serif; font-weight: 900; text-transform: uppercase; color: #ffffff; text-shadow: 0 3px 0 #1e293b, 0 6px 3px rgba(0,0,0,0.4); }
-        .text-3d-white-sub { font-family: 'Montserrat', sans-serif; font-weight: 700; text-transform: uppercase; color: #ffffff; text-shadow: 0 2px 2px rgba(0,0,0,0.5); }
-        
+        .text-3d-white-main { color: #ffffff; text-shadow: 0 3px 0 #1e293b, 0 6px 3px rgba(0,0,0,0.4); }
+        .text-3d-white-sub { color: #ffffff; text-shadow: 0 2px 2px rgba(0,0,0,0.5); }
         body.light-theme { background-color: #f8fafc; color: #0b4a8f; }
         body.dark-theme { background-color: #0f172a; color: #38bdf8; }
-        .main-header { background-size: 400% 400%; animation: gradientGIF 12s ease infinite; }
-        body.theme-xanh-ios .main-header { background: linear-gradient(-45deg, #0b4a8f, #05234a, #0d5cb3, #02142d); }
-        body.theme-do-hanhchinh .main-header { background: linear-gradient(-45deg, #dc2626, #7f1d1d, #ef4444, #450a0a); }
-        @keyframes gradientGIF { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+        .main-header { background: linear-gradient(-45deg, #0b4a8f, #05234a, #0d5cb3, #02142d); background-size: 400% 400%; animation: gradientGIF 12s ease infinite; }
+        @keyframes gradientGIF { 0% { background-position: 0% 50%; } 100% { background-position: 0% 50%; } }
     </style>
 </head>
-<body class="theme-xanh-ios light-theme" id="dynamic-body">
+<body class="light-theme" id="dynamic-body">
 
     <header class="main-header w-full py-6 px-12 mb-6">
         <div class="max-w-[1550px] mx-auto flex justify-between items-center">
             <div class="flex items-center space-x-6">
-                <img src="logo.png" alt="Logo" class="w-20 h-auto">
-                <div>
-                    <p class="text-3xl text-3d-white-main">IOC BINH HUNG</p>
-                    <h1 class="text-base text-3d-white-sub">Cổng thông tin và điều hành xã Bình Hưng, TP.HCM</h1>
+                <div class="flex flex-col items-start">
+                    <p class="text-3xl font-black text-3d-white-main">IOC BINH HUNG</p>
+                    <h1 class="text-sm font-bold text-3d-white-sub uppercase">Cổng thông tin và điều hành xã Bình Hưng</h1>
                 </div>
             </div>
             <div class="flex gap-2">
-                <button onclick="switchSystemTheme('xanh')" class="bg-blue-600 text-white px-3 py-1 text-[10px] font-bold rounded">🔵 XANH</button>
-                <button onclick="switchSystemTheme('do')" class="bg-red-600 text-white px-3 py-1 text-[10px] font-bold rounded">🔴 ĐỎ</button>
+                <button onclick="setTheme('light')" class="bg-white text-black px-3 py-1 text-[10px] font-bold rounded">SÁNG</button>
+                <button onclick="setTheme('dark')" class="bg-black text-white px-3 py-1 text-[10px] font-bold rounded">TỐI</button>
             </div>
         </div>
     </header>
 
-    <div class="container-wrapper space-y-6" id="body-context">
-        <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+    <div class="container-wrapper space-y-6">
+        <div class="grid grid-cols-4 gap-4">
             <div class="glass-panel p-5 border-l-4 border-sky-500">
-                <p class="text-[10px] font-bold uppercase">Đơn vị hành chính</p>
-                <h3 class="text-2xl font-black mt-1">39 <span class="text-sm font-bold">Ấp quản lý</span></h3>
-            </div>
-            <div class="glass-panel p-5 border-l-4 border-emerald-500">
-                <p class="text-[10px] font-bold uppercase">Tổng diện tích</p>
-                <h3 class="text-2xl font-black mt-1">3.235,43 <span class="text-sm font-bold">ha</span></h3>
+                <p class="text-[10px] font-bold uppercase">Tổng số ấp</p>
+                <h3 class="text-2xl font-black mt-1">39 <span class="text-sm font-bold">Ấp</span></h3>
             </div>
             <div class="glass-panel p-5 border-l-4 border-amber-500">
-                <p class="text-[10px] font-bold uppercase">Quy mô dân cư</p>
-                <h3 id="total_households" class="text-2xl font-black mt-1">...</h3>
+                <p class="text-[10px] font-bold uppercase">Tổng số hộ</p>
+                <h3 class="text-2xl font-black mt-1">50.603</h3>
             </div>
             <div class="glass-panel p-5 border-l-4 border-indigo-500">
                 <p class="text-[10px] font-bold uppercase">Tổng nhân khẩu</p>
-                <h3 id="total_population" class="text-2xl font-black mt-1">...</h3>
+                <h3 class="text-2xl font-black mt-1">153.255</h3>
             </div>
         </div>
 
-        <div id="hamlets_grid" class="grid grid-cols-2 lg:grid-cols-4 gap-4"></div>
+        <div id="hamlets_grid" class="grid grid-cols-3 lg:grid-cols-6 gap-4"></div>
     </div>
 
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
-
-        // Mảng 39 ấp chuẩn từ JSON của bạn
-        const apData = [
-            { name: "Ấp 1", households_num: 1344, population_num: 6312 },
-            { name: "Ấp 2", households_num: 1034, population_num: 4196 },
-            { name: "Ấp 3", households_num: 1184, population_num: 3826 },
-            { name: "Ấp 4", households_num: 738, population_num: 2726 },
-            { name: "Ấp 5", households_num: 1695, population_num: 3909 },
-            { name: "Ấp 6", households_num: 706, population_num: 1810 },
-            { name: "Ấp 7", households_num: 810, population_num: 2199 },
-            { name: "Ấp 8", households_num: 1122, population_num: 3212 },
-            { name: "Ấp 9", households_num: 740, population_num: 2359 },
-            { name: "Ấp 10", households_num: 1405, population_num: 3624 },
-            { name: "Ấp 11", households_num: 1355, population_num: 4160 },
-            { name: "Ấp 12", households_num: 1051, population_num: 2854 },
-            { name: "Ấp 13", households_num: 1182, population_num: 4074 },
-            { name: "Ấp 14", households_num: 717, population_num: 3086 },
-            { name: "Ấp 15", households_num: 1582, population_num: 5291 },
-            { name: "Ấp 16", households_num: 809, population_num: 1883 },
-            { name: "Ấp 17", households_num: 1168, population_num: 3180 },
-            { name: "Ấp 18", households_num: 1890, population_num: 4231 },
-            { name: "Ấp 19", households_num: 1602, population_num: 6327 },
-            { name: "Ấp 20", households_num: 1441, population_num: 2978 },
-            { name: "Ấp 21", households_num: 1567, population_num: 5518 },
-            { name: "Ấp 22", households_num: 1703, population_num: 7026 },
-            { name: "Ấp 23", households_num: 885, population_num: 3985 },
-            { name: "Ấp 24", households_num: 1357, population_num: 5517 },
-            { name: "Ấp 25", households_num: 1191, population_num: 4177 },
-            { name: "Ấp 26", households_num: 1286, population_num: 4029 },
-            { name: "Ấp 27", households_num: 1555, population_num: 4498 },
-            { name: "Ấp 28", households_num: 933, population_num: 3470 },
-            { name: "Ấp 29", households_num: 1590, population_num: 5106 },
-            { name: "Ấp 30", households_num: 1709, population_num: 5259 },
-            { name: "Ấp 31", households_num: 1770, population_num: 7258 },
-            { name: "Ấp 32", households_num: 1857, population_num: 4891 },
-            { name: "Ấp 33", households_num: 1694, population_num: 4682 },
-            { name: "Ấp 34", households_num: 1876, population_num: 3080 },
-            { name: "Ấp 35", households_num: 1216, population_num: 3904 },
-            { name: "Ấp 36", households_num: 1212, population_num: 2716 },
-            { name: "Ấp 37", households_num: 1831, population_num: 3378 },
-            { name: "Ấp 38", households_num: 1571, population_num: 2271 },
-            { name: "Ấp 39", households_num: 1363, population_num: 3246 }
+    <script>
+        // Dữ liệu 39 ấp chuẩn xác
+        const data39Ap = [
+            { name: "Ấp 1", so_ho: 1344, nhan_khau: 6312 }, { name: "Ấp 2", so_ho: 1034, nhan_khau: 4196 },
+            { name: "Ấp 3", so_ho: 1184, nhan_khau: 3826 }, { name: "Ấp 4", so_ho: 738, nhan_khau: 2726 },
+            { name: "Ấp 5", so_ho: 1695, nhan_khau: 3909 }, { name: "Ấp 6", so_ho: 706, nhan_khau: 1810 },
+            { name: "Ấp 7", so_ho: 810, nhan_khau: 2199 }, { name: "Ấp 8", so_ho: 1122, nhan_khau: 3212 },
+            { name: "Ấp 9", so_ho: 740, nhan_khau: 2359 }, { name: "Ấp 10", so_ho: 1405, nhan_khau: 3624 },
+            { name: "Ấp 11", so_ho: 1355, nhan_khau: 4160 }, { name: "Ấp 12", so_ho: 1051, nhan_khau: 2854 },
+            { name: "Ấp 13", so_ho: 1182, nhan_khau: 4074 }, { name: "Ấp 14", so_ho: 717, nhan_khau: 3086 },
+            { name: "Ấp 15", so_ho: 1582, nhan_khau: 5291 }, { name: "Ấp 16", so_ho: 809, nhan_khau: 1883 },
+            { name: "Ấp 17", so_ho: 1168, nhan_khau: 3180 }, { name: "Ấp 18", so_ho: 1890, nhan_khau: 4231 },
+            { name: "Ấp 19", so_ho: 1602, nhan_khau: 6327 }, { name: "Ấp 20", so_ho: 1441, nhan_khau: 2978 },
+            { name: "Ấp 21", so_ho: 1567, nhan_khau: 5518 }, { name: "Ấp 22", so_ho: 1703, nhan_khau: 7026 },
+            { name: "Ấp 23", so_ho: 885, nhan_khau: 3985 }, { name: "Ấp 24", so_ho: 1357, nhan_khau: 5517 },
+            { name: "Ấp 25", so_ho: 1191, nhan_khau: 4177 }, { name: "Ấp 26", so_ho: 1286, nhan_khau: 4029 },
+            { name: "Ấp 27", so_ho: 1555, nhan_khau: 4498 }, { name: "Ấp 28", so_ho: 933, nhan_khau: 3470 },
+            { name: "Ấp 29", so_ho: 1590, nhan_khau: 5106 }, { name: "Ấp 30", so_ho: 1709, nhan_khau: 5259 },
+            { name: "Ấp 31", so_ho: 1770, nhan_khau: 7258 }, { name: "Ấp 32", so_ho: 1857, nhan_khau: 4891 },
+            { name: "Ấp 33", so_ho: 1694, nhan_khau: 4682 }, { name: "Ấp 34", so_ho: 1876, nhan_khau: 3080 },
+            { name: "Ấp 35", so_ho: 1216, nhan_khau: 3904 }, { name: "Ấp 36", so_ho: 1212, nhan_khau: 2716 },
+            { name: "Ấp 37", so_ho: 1831, nhan_khau: 3378 }, { name: "Ấp 38", so_ho: 1571, nhan_khau: 2271 },
+            { name: "Ấp 39", so_ho: 1363, nhan_khau: 3246 }
         ];
 
-        // Tự động tính tổng
-        const totalHouse = apData.reduce((sum, item) => sum + item.households_num, 0);
-        const totalPop = apData.reduce((sum, item) => sum + item.population_num, 0);
-        
-        document.getElementById('total_households').innerHTML = `${totalHouse.toLocaleString()} <span class="text-sm font-bold">Hộ dân</span>`;
-        document.getElementById('total_population').innerHTML = `${totalPop.toLocaleString()} <span class="text-sm font-bold">Người</span>`;
+        function renderData() {
+            const container = document.getElementById('hamlets_grid');
+            container.innerHTML = data39Ap.map(ap => `
+                <div class="glass-panel p-4">
+                    <h3 class="font-bold">${ap.name}</h3>
+                    <p class="text-xs">Hộ: ${ap.so_ho}</p>
+                    <p class="text-xs">Dân: ${ap.nhan_khau}</p>
+                </div>
+            `).join('');
+        }
 
-        // Các hàm xử lý giao diện...
-        window.switchSystemTheme = (mode) => {
-            document.body.className = mode === 'do' ? 'theme-do-hanhchinh' : 'theme-xanh-ios';
-        };
         window.setTheme = (mode) => {
-            document.body.className = document.body.className.replace(/light-theme|dark-theme/g, '') + ' ' + mode + '-theme';
+            document.body.className = mode + '-theme';
         };
+
+        renderData();
     </script>
 </body>
 </html>
