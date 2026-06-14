@@ -24,7 +24,30 @@
         .btn-back:hover { transform: translateY(-2px); border-color: #ef4444; background: rgba(239, 68, 68, 0.1); color: #ef4444 !important; }
         .tab-content { transition: all 0.2s; }
 
-        /* ================= CỦ SỬA LỖI MÀU SẮC PH N PHỐI THEME ĐỘNG ================= */
+        /* ================= KỸ THUẬT CHỮ NỔI 3D KHỐI S U TẠI HEADER ================= */
+        .text-3d-title {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            background: linear-gradient(180deg, #ffffff 30%, #cbd5e1 60%, #94a3b8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            /* Lớp bóng đổ chồng tạo khối 3D đùn trục dọc nghiêng */
+            text-shadow: 
+                0 1px 0 #94a3b8,
+                0 2px 0 #64748b,
+                0 3px 0 #475569,
+                0 4px 0 #334155,
+                0 5px 0 #1e293b,
+                0 6px 1px rgba(0,0,0,0.1),
+                0 0 5px rgba(0,0,0,0.1),
+                0 1px 3px rgba(0,0,0,0.3),
+                0 3px 5px rgba(0,0,0,0.2),
+                0 5px 10px rgba(0,0,0,0.25),
+                0 10px 10px rgba(0,0,0,0.2);
+        }
+
         /* ☀️ NỀN SÁNG (Mặc định) */
         body.light-theme { background-color: #f8fafc; color: #0b4a8f; }
         body.light-theme .text-dynamic-title { color: #031b4e !important; } 
@@ -68,7 +91,7 @@
                     <img src="logo.png" alt="Logo" class="logo-main w-20 h-auto">
                 </div>
                 <div class="flex flex-col items-start justify-center space-y-2 text-left">
-                    <p class="text-white font-black tracking-[0.12em] text-xl md:text-2xl lg:text-3xl uppercase leading-none m-0 p-0 drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)] font-['Montserrat']">IOC BINH HUNG</p>
+                    <p class="text-3xl font-black leading-none m-0 p-0 text-3d-title pb-1">IOC BINH HUNG</p>
                     <h1 class="title-main text-sm md:text-base lg:text-lg font-bold uppercase tracking-[0.08em] text-white/90 leading-tight m-0 p-0 drop-shadow-[0_2px_4px_rgba(0,0,0,0.2)]">Cổng thông tin và điều hành xã Bình Hưng, Thành phố Hồ Chí Minh</h1>
                 </div>
             </div>
@@ -218,7 +241,7 @@
 
         let hamletsData = []; 
         let chartInstance = null;
-        let lastTheme = 'light'; // 🌟 Khởi tạo nền sáng chuẩn
+        let lastTheme = 'light'; 
         let currentSelectedHamlet = 'Ấp 49';
 
         onValue(hamletsNodeRef, (snapshot) => {
@@ -230,7 +253,7 @@
             hamletsData = Object.values(remoteData);
             renderGrid(hamletsData);
             renderRankings(hamletsData);
-            setTheme(lastTheme); // Đồng bộ nạp lại theme khi dữ liệu cập nhật
+            setTheme(lastTheme); 
             selectHamlet(currentSelectedHamlet);
         });
 
@@ -378,7 +401,6 @@
             }
         }
 
-        // 🌟 SỬA TRIỆT ĐỂ LỖI ĐỔI THEME VÀ CHỮ BIẾN MẤT
         window.setTheme = function(themeName) {
             lastTheme = themeName;
             const body = document.getElementById('body-context');
