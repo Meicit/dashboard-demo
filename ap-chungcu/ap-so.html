@@ -110,7 +110,8 @@
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
             <div class="lg:col-span-8 glass-panel p-5">
                 <div class="flex justify-between items-center mb-3">
-                    <h2 class="text-xs font-black uppercase tracking-wider text-dynamic-title">📊 Biểu đồ So sánh Quy mô Top 10 Ấp đông dân nhất</h2>
+                    <!-- Đã điều chỉnh tiêu đề hiển thị từ Top 10 sang Top 5 -->
+                    <h2 class="text-xs font-black uppercase tracking-wider text-dynamic-title">📊 Biểu đồ So sánh Quy mô Top 5 Ấp đông dân nhất</h2>
                     <span class="text-[9px] bg-slate-900 border border-slate-700 text-amber-400 font-bold px-2 py-0.5 rounded">Dữ liệu đối chiếu</span>
                 </div>
                 <div class="w-full relative h-[250px]">
@@ -279,15 +280,73 @@
                 </div>
             `).join('');
             
-            const top10 = [...data].sort((a,b) => b.population_num - a.population_num).slice(0,10);
-            updateChartData(top10);
+            // Đã đổi cấu trúc lấy dữ liệu từ Top 10 sang Top 5 cho phần biểu đồ cột
+            const top5ChartData = [...data].sort((a,b) => b.population_num - a.population_num).slice(0,5);
+            updateChartData(top5ChartData);
         }
 
-        function updateChartData(top10Data) {
+        window.renderChart = function(textColor) {
+            if(chartInstance) chartInstance.destroy();
+            const ctx = document.getElementById('hamletsChart').getContext('2d');
+            
+            const showDataLabelsPlugin = {
+                id: 'showDataLabels',
+                afterDatasetsDraw(chart) {
+                    const { ctx } = chart;
+                    chart.data.datasets.forEach((dataset, i) => {
+                        const meta = chart.getDatasetMeta(i);
+                        if (!meta.hidden) {
+                            meta.data.forEach((bar, index) => {
+                                const dataVal = dataset.data[index];
+                                if (dataVal > 0) {
+                                    ctx.fillStyle = textColor; 
+                                    ctx.font = 'bold 10px Inter';
+                                    ctx.textAlign = 'center';
+                                    ctx.textBaseline = 'bottom';
+                                    ctx.fillText(dataVal.toLocaleString('vi-VN'), bar.x, bar.y - 4);
+                                }
+                            });
+                        }
+                    });
+                }
+            };
+
+            chartInstance = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: [],
+                    datasets: [
+                        { label: 'Quy mô Nhân khẩu (Người)', data: [], backgroundColor: 'rgba(14, 165, 233, 0.75)', borderColor: '#0ea5e9', borderWidth: 1, borderRadius: 5 },
+                        { label: 'Số hộ dân cư (Hộ)', data: [], backgroundColor: 'rgba(245, 158, 11, 0.75)', borderColor: '#f59e0b', borderWidth: 1, borderRadius: 5 }
+                    ]
+                },
+                plugins: [showDataLabelsPlugin], 
+                options: {
+                    responsive: true, maintainAspectRatio: false,
+                    layout: {
+                        padding: {
+                            top: 25 
+                        }
+                    },
+                    plugins: { legend: { labels: { color: textColor, font: { weight: 'bold', size: 10 } } } },
+                    scales: {
+                        x: { grid: { display: false }, ticks: { color: textColor, font: { weight: 'bold', size: 9 } } },
+                        y: { grid: { color: 'rgba(148, 163, 184, 0.1)' }, ticks: { color: textColor, font: { size: 9 } } }
+                    }
+                }
+            });
+            if(hamletsData.length > 0) {
+                // Đã đổi cấu trúc lát cắt sang lấy Top 5 khi khởi tạo vẽ lại biểu đồ
+                const top5ChartData = [...hamletsData].sort((a,b) => b.population_num - a.population_num).slice(0,5);
+                updateChartData(top5ChartData);
+            }
+        }
+
+        function updateChartData(chartData) {
             if(!chartInstance) return;
-            chartInstance.data.labels = top10Data.map(h => h.name);
-            chartInstance.data.datasets[0].data = top10Data.map(h => h.population_num);
-            chartInstance.data.datasets[1].data = top10Data.map(h => h.households_num);
+            chartInstance.data.labels = chartData.map(h => h.name);
+            chartInstance.data.datasets[0].data = chartData.map(h => h.population_num);
+            chartInstance.data.datasets[1].data = chartData.map(h => h.households_num);
             chartInstance.update();
         }
 
@@ -348,34 +407,6 @@
             );
             renderGrid(filtered);
         });
-
-        window.renderChart = function(textColor) {
-            if(chartInstance) chartInstance.destroy();
-            const ctx = document.getElementById('hamletsChart').getContext('2d');
-            
-            chartInstance = new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: [],
-                    datasets: [
-                        { label: 'Quy mô Nhân khẩu (Người)', data: [], backgroundColor: 'rgba(14, 165, 233, 0.75)', borderColor: '#0ea5e9', borderWidth: 1, borderRadius: 5 },
-                        { label: 'Số hộ dân cư (Hộ)', data: [], backgroundColor: 'rgba(245, 158, 11, 0.75)', borderColor: '#f59e0b', borderWidth: 1, borderRadius: 5 }
-                    ]
-                },
-                options: {
-                    responsive: true, maintainAspectRatio: false,
-                    plugins: { legend: { labels: { color: textColor, font: { weight: 'bold', size: 10 } } } },
-                    scales: {
-                        x: { grid: { display: false }, ticks: { color: textColor, font: { weight: 'bold', size: 9 } } },
-                        y: { grid: { color: 'rgba(148, 163, 184, 0.1)' }, ticks: { color: textColor, font: { size: 9 } } }
-                    }
-                }
-            });
-            if(hamletsData.length > 0) {
-                const top10 = [...hamletsData].sort((a,b) => b.population_num - a.population_num).slice(0,10);
-                updateChartData(top10);
-            }
-        }
 
         // 🌟 SỬA TRIỆT ĐỂ LỖI ĐỔI THEME VÀ CHỮ BIẾN MẤT
         window.setTheme = function(themeName) {
