@@ -22,7 +22,7 @@
     <header class="main-header w-full py-6 px-6 md:px-12 select-none relative transition-all duration-300">
         <div class="max-w-[1550px] mx-auto flex flex-col items-center justify-center relative header-layout">
             <div class="flex flex-row items-center space-x-6 w-auto">
-                <div class="flex-shrink-0"><img src="../logo.png" alt="Logo" class="logo-main w-20 h-auto"></div>
+                <div class="flex-shrink-0"><img src="../logo.png" alt="Logo" class="logo-main w-20 h-auto" onerror="this.src='logo.png'"></div>
                 <div class="flex flex-col items-start justify-center space-y-2 text-left">
                     <p class="text-white font-black tracking-[0.12em] text-xl md:text-2xl lg:text-3xl uppercase leading-none m-0 p-0 drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)] font-['Montserrat']">IOC BINH HUNG</p>
                     <h1 class="title-main text-sm md:text-base lg:text-lg font-bold uppercase tracking-[0.08em] text-white/90 leading-tight m-0 p-0 drop-shadow-[0_2px_4px_rgba(0,0,0,0.2)]">Cổng thông tin và điều hành xã Bình Hưng, Thành phố Hồ Chí Minh</h1>
@@ -35,20 +35,36 @@
         </div>
     </header>
 
-    <div class="max-w-[1550px] w-full mx-auto px-4 md:px-6 my-6 flex flex-col items-start space-y-4">
-        <div class="w-full flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-            <a href="../home.html" class="inline-flex items-center gap-2 bg-white hover:bg-slate-50 border border-slate-200 text-slate-700 px-4 py-2 rounded-xl font-bold text-xs uppercase tracking-wider shadow-sm transition-all duration-300 hover:-translate-y-0.5">⬅️ Quay lại Trang chủ</a>
-            <div class="flex gap-2 bg-slate-200/60 p-1 rounded-xl border border-slate-200">
-                <a href="phan-anh.html" class="bg-white px-4 py-2 rounded-lg text-xs font-bold uppercase text-blue-900 shadow-sm">✍️ Tạo phản ánh</a>
-                <a href="lookup.html" class="text-slate-600 hover:text-slate-900 px-4 py-2 rounded-lg text-xs font-bold uppercase transition">🔍 Tra cứu tiến độ</a>
-            </div>
+    <div class="max-w-[1550px] w-full mx-auto px-4 md:px-6 mt-6">
+        <div class="py-4 md:py-5 px-8 text-center shadow-lg rounded-2xl bg-sky-500 border-b-4 border-sky-600">
+            <h2 class="font-['Montserrat'] text-xl md:text-3xl font-black text-white uppercase tracking-wider leading-tight">
+                PHẢN ÁNH TRỰC TIẾP TỪ NGƯỜI DÂN
+            </h2>
         </div>
+    </div>
 
-        <div class="menu-panel-wrapper p-6 md:p-10 lg:p-12">
-            <div class="bg-white/80 backdrop-blur-md border border-white rounded-3xl p-6 md:p-10 shadow-lg max-w-4xl mx-auto">
+    <div class="max-w-[1550px] w-full mx-auto px-4 md:px-6 my-6 flex flex-col items-start space-y-4 flex-grow mb-12">
+        <div class="menu-panel-wrapper p-6 md:p-8 lg:p-10 space-y-6">
+            
+            <div class="flex flex-col md:flex-row justify-between items-center gap-4 w-full">
+                <a href="../home.html" class="inline-flex items-center gap-2 bg-white hover:bg-slate-50 border border-slate-200 text-slate-700 px-5 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider shadow-sm transition-all duration-300 hover:-translate-y-0.5 shrink-0">
+                    ⬅️ Quay lại Trang chủ
+                </a>
+
+                <div class="flex gap-2 bg-white/40 backdrop-blur p-1.5 rounded-xl border border-white/50 shadow-sm w-full md:w-auto overflow-x-auto">
+                    <a href="phan-anh.html" class="bg-blue-700 text-white px-6 py-2.5 rounded-lg text-xs font-bold uppercase shadow-md transition-all hover:bg-blue-800 whitespace-nowrap">
+                        ✍️ Tạo phản ánh
+                    </a>
+                    <a href="lookup.html" class="bg-white/80 text-slate-700 hover:text-blue-700 hover:bg-white px-6 py-2.5 rounded-lg text-xs font-bold uppercase transition-all shadow-sm whitespace-nowrap">
+                        🔍 Tra cứu tiến độ
+                    </a>
+                </div>
+            </div>
+
+            <div class="bg-white/90 backdrop-blur-xl border border-white rounded-3xl p-6 md:p-10 shadow-lg w-full">
                 <div class="border-b border-slate-200/60 pb-4 mb-6">
                     <h2 class="text-lg md:text-xl font-black text-slate-900 uppercase tracking-wide">Gửi phản ánh - kiến nghị trực tuyến</h2>
-                    <p class="text-xs font-medium text-slate-400 mt-1">Ý kiến và hình ảnh của công dân sẽ được lưu ngầm trực tiếp trên cơ sở dữ liệu hệ thống.</p>
+                    <p class="text-xs font-medium text-slate-500 mt-1">Ý kiến và hình ảnh của công dân sẽ được lưu ngầm trực tiếp trên cơ sở dữ liệu hệ thống.</p>
                 </div>
 
                 <form id="complaintForm" class="space-y-5">
@@ -74,7 +90,7 @@
                         <label class="text-xs font-bold text-slate-700 block mb-2">Hình ảnh hiện trường đính kèm (Hệ thống tự động nén tối ưu)</label>
                         <input type="file" id="imageFile" accept="image/*" class="w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-black file:uppercase file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 transition cursor-pointer">
                     </div>
-                    <div class="pt-2">
+                    <div class="pt-2 max-w-md mx-auto">
                         <button type="submit" id="submitBtn" class="w-full bg-blue-800 hover:bg-blue-900 text-white font-extrabold text-xs uppercase tracking-wider py-4 rounded-xl shadow-md transition flex items-center justify-center gap-2">
                             <span>Xác nhận gửi phản ánh</span> 🚀
                         </button>
@@ -97,12 +113,35 @@
         </div>
     </div>
 
-    <footer class="mt-auto text-center py-6 text-slate-400 font-medium text-[11px] uppercase tracking-widest border-t border-slate-200 bg-white shadow-sm">&copy; 2026 IOC BINH HƯNG — BẢN QUYỀN THUỘC UBND XÃ BÌNH HƯNG</footer>
+    <footer class="mt-auto text-center py-6 text-slate-400 font-medium text-[11px] uppercase tracking-widest border-t border-slate-200 bg-white shadow-sm">
+        &copy; 2026 IOC BINH HƯNG — BẢN QUYỀN THUỘC UBND XÃ BÌNH HƯNG
+    </footer>
 
     <script type="module" src="app.js"></script>
     <script>
-        function closeModal() { document.getElementById('successModal').classList.add('opacity-0', 'pointer-events-none'); document.getElementById('modalCard').classList.add('scale-95'); document.getElementById('complaintForm').reset(); }
-        window.switchSystemTheme = function(modeName) { const body = document.getElementById('dynamic-body'); const btnXanh = document.getElementById('btn-theme-xanh'); const btnDo = document.getElementById('btn-theme-do'); if (modeName === 'do') { body.classList.remove('theme-xanh-ios'); body.classList.add('theme-do-hanhchinh'); btnDo.className = "w-full text-center text-[10px] font-extrabold uppercase py-1.5 rounded-lg transition bg-red-600 text-white shadow-md"; btnXanh.className = "w-full text-center text-[10px] font-extrabold uppercase py-1.5 rounded-lg transition text-white/80 hover:text-white"; } else { body.classList.remove('theme-do-hanhchinh'); body.classList.add('theme-xanh-ios'); btnXanh.className = "w-full text-center text-[10px] font-extrabold uppercase py-1.5 rounded-lg transition bg-blue-600 text-white shadow-md"; btnDo.className = "w-full text-center text-[10px] font-extrabold uppercase py-1.5 rounded-lg transition text-white/80 hover:text-white"; } }
+        function closeModal() { 
+            document.getElementById('successModal').classList.add('opacity-0', 'pointer-events-none'); 
+            document.getElementById('modalCard').classList.add('scale-95'); 
+            document.getElementById('complaintForm').reset(); 
+        }
+
+        window.switchSystemTheme = function(modeName) { 
+            const body = document.getElementById('dynamic-body'); 
+            const btnXanh = document.getElementById('btn-theme-xanh'); 
+            const btnDo = document.getElementById('btn-theme-do'); 
+            
+            if (modeName === 'do') { 
+                body.classList.remove('theme-xanh-ios'); 
+                body.classList.add('theme-do-hanhchinh'); 
+                btnDo.className = "w-full text-center text-[10px] font-extrabold uppercase py-1.5 rounded-lg transition bg-red-600 text-white shadow-md"; 
+                btnXanh.className = "w-full text-center text-[10px] font-extrabold uppercase py-1.5 rounded-lg transition text-white/80 hover:text-white"; 
+            } else { 
+                body.classList.remove('theme-do-hanhchinh'); 
+                body.classList.add('theme-xanh-ios'); 
+                btnXanh.className = "w-full text-center text-[10px] font-extrabold uppercase py-1.5 rounded-lg transition bg-blue-600 text-white shadow-md"; 
+                btnDo.className = "w-full text-center text-[10px] font-extrabold uppercase py-1.5 rounded-lg transition text-white/80 hover:text-white"; 
+            } 
+        }
     </script>
 </body>
 </html>
