@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Điều phối Quản lý Dân cư - Xã Bình Hưng</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&family=Inter:wght@300;400;500;600;700;800&family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     
     <style>
         body { font-family: 'Inter', 'Be Vietnam Pro', sans-serif; margin: 0; padding: 0; min-height: 100vh; display: flex; flex-direction: column; transition: background 0.3s ease, color 0.3s ease; }
@@ -15,7 +15,7 @@
         .btn-back { display: inline-flex; align-items: center; gap: 8px; background: rgba(14, 165, 233, 0.1); border: 1px solid rgba(14, 165, 233, 0.3); padding: 12px 24px; border-radius: 14px; font-weight: 800; font-size: 12px; text-transform: uppercase; transition: all 0.3s ease; }
         .btn-back:hover { transform: translateY(-2px); border-color: #ef4444; background: rgba(239, 68, 68, 0.1); color: #ef4444 !important; }
 
-        /* ================= KỸ THUẬT NỀN ĐỘNG VÀ THEME ================= */
+        /* ================= KỸ THUẬT NỀN ĐỘNG VÀ THEME NỘI DUNG ================= */
         /* NỀN SÁNG (Mặc định) */
         body.light-theme { background-color: #f8fafc; color: #0b4a8f; }
         body.light-theme .text-dynamic-title { color: #031b4e !important; } 
@@ -32,23 +32,46 @@
         body.dark-theme .module-card { background: rgba(30, 41, 59, 0.8); border-color: rgba(56, 189, 248, 0.15); }
         body.dark-theme .btn-back { color: #38bdf8; }
 
-        /* HEADER */
-        .main-header { background-size: 400% 400%; animation: gradientGIF 12s ease infinite; }
-        body.theme-xanh-ios .main-header { background: linear-gradient(-45deg, #0b4a8f, #05234a, #0d5cb3, #02142d); border-bottom: 2px solid #032b5c; box-shadow: 0 4px 15px rgba(11, 74, 143, 0.15); }
-        body.theme-do-hanhchinh .main-header { background: linear-gradient(-45deg, #dc2626, #7f1d1d, #ef4444, #450a0a); border-bottom: 2px solid #991b1b; box-shadow: 0 4px 15px rgba(220, 38, 38, 0.15); }
-        @keyframes gradientGIF { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+        /* ================= KỸ THUẬT NỀN ĐỘNG GRADIENT TẠI HEADER ĐỒNG BỘ ================= */
+        .main-header {
+            background-size: 400% 400%;
+            animation: gradientGIF 12s ease infinite;
+        }
+        body.theme-xanh-ios .main-header {
+            background: linear-gradient(-45deg, #0b4a8f, #05234a, #0d5cb3, #02142d);
+            box-shadow: 0 4px 15px rgba(11, 74, 143, 0.15);
+            border-bottom: 2px solid #032b5c;
+        }
+        body.theme-do-hanhchinh .main-header {
+            background: linear-gradient(-45deg, #dc2626, #7f1d1d, #ef4444, #450a0a);
+            box-shadow: 0 4px 15px rgba(220, 38, 38, 0.15);
+            border-bottom: 2px solid #991b1b;
+        }
 
+        @keyframes gradientGIF {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* LOGO ANIMATION CHUYỂN ĐỘNG NHẸ */
         .logo-main { animation: float 4s ease-in-out infinite; }
-        @keyframes float { 0%, 100% { transform: translateY(0); filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.2)); } 50% { transform: translateY(-3px); filter: drop-shadow(0 8px 12px rgba(0, 0, 0, 0.3)); } }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.2)); }
+            50% { transform: translateY(-3px); filter: drop-shadow(0 8px 12px rgba(0, 0, 0, 0.3)); }
+        }
 
         /* ANIMATION CARD ĐIỀU PHỐI */
         .module-card { transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1); cursor: pointer; border: 1px solid transparent; overflow: hidden; }
         .module-card:hover { transform: translateY(-8px); box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); }
         
-        /* Chỉnh lại layout mobile header */
+        /* RESPONSIVE CHO KHỐI ĐIỀU HƯỚNG THEME TRÊN ĐIỆN THOẠI ĐỒNG BỘ */
         @media (max-width: 1024px) {
             .header-layout { flex-direction: column !important; }
-            .theme-selector-vertical { position: relative !important; top: 0 !important; right: 0 !important; margin-top: 16px; flex-direction: row !important; space-x: 2; width: auto !important; }
+            .theme-selector-vertical { 
+                position: relative !important; top: 0 !important; right: 0 !important; 
+                margin-top: 16px; flex-direction: row !important; space-x: 2; width: auto !important;
+            }
             .theme-selector-vertical button { margin-left: 4px; margin-right: 4px; }
         }
     </style>
@@ -59,9 +82,11 @@
         <div class="max-w-[1550px] mx-auto flex flex-col items-center justify-center relative header-layout">
             
             <div class="flex flex-row items-center space-x-6 w-auto">
+                
                 <div class="flex-shrink-0">
                     <img src="../logo.png" alt="Logo" class="logo-main w-20 h-auto" onerror="this.src='logo.png'">
                 </div>
+                
                 <div class="flex flex-col items-start justify-center space-y-2 text-left">
                     <p class="text-white font-black tracking-[0.12em] text-xl md:text-2xl lg:text-3xl uppercase leading-none m-0 p-0 drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)] font-['Montserrat']">
                         IOC BINH HUNG
@@ -70,11 +95,18 @@
                         Cổng thông tin và điều hành xã Bình Hưng, Thành phố Hồ Chí Minh
                     </h1>
                 </div>
+                
             </div>
 
             <div class="theme-selector-vertical lg:absolute lg:top-0 lg:right-0 bg-white/10 backdrop-blur-md border border-white/20 p-1.5 rounded-xl flex flex-col space-y-1.5 w-[75px] z-20 shadow-inner">
-                <button onclick="switchSystemTheme('xanh')" id="btn-theme-xanh" class="w-full text-center text-[10px] font-extrabold uppercase py-1.5 rounded-lg transition-all duration-300 bg-blue-600 text-white shadow-md">🔵 Xanh</button>
-                <button onclick="switchSystemTheme('do')" id="btn-theme-do" class="w-full text-center text-[10px] font-extrabold uppercase py-1.5 rounded-lg transition-all duration-300 text-white/80 hover:text-white">🔴 Đỏ</button>
+                <button onclick="switchSystemTheme('xanh')" id="btn-theme-xanh" 
+                    class="w-full text-center text-[10px] font-extrabold uppercase py-1.5 rounded-lg transition-all duration-300 bg-blue-600 text-white shadow-md">
+                    🔵 Xanh
+                </button>
+                <button onclick="switchSystemTheme('do')" id="btn-theme-do" 
+                    class="w-full text-center text-[10px] font-extrabold uppercase py-1.5 rounded-lg transition-all duration-300 text-white/80 hover:text-white">
+                    🔴 Đỏ
+                </button>
             </div>
             
         </div>
@@ -147,7 +179,7 @@
     </footer>
 
     <script>
-        // HOÁN ĐỔI THEME SÁNG / TỐI NỘI DUNG
+        // HOÁN ĐỔI THEME SÁNG / TỐI CHO PHẦN NỘI DUNG (BODY)
         window.setTheme = function(themeName) {
             const body = document.getElementById('dynamic-body');
             const btnLight = document.getElementById('btn-theme-light');
@@ -166,7 +198,7 @@
             }
         }
 
-        // HOÁN ĐỔI THEME HEADER (XANH / ĐỎ)
+        // HOÁN ĐỔI THEME HEADER (XANH / ĐỎ) ĐỒNG BỘ HOME.HTML
         window.switchSystemTheme = function(modeName) {
             const body = document.getElementById('dynamic-body');
             const btnXanh = document.getElementById('btn-theme-xanh');
@@ -182,7 +214,7 @@
             }
         }
 
-        // Đặt Light Theme làm mặc định khi tải trang
+        // Đặt chế độ Sáng làm mặc định khi mở trang
         document.addEventListener('DOMContentLoaded', () => {
             setTheme('light');
         });
