@@ -11,14 +11,14 @@
         body {
             font-family: 'Inter', 'Be Vietnam Pro', sans-serif;
             margin: 0; padding: 0; min-height: 100vh;
-            background-color: #f8fafc; /* Nền phẳng xám trắng sạch sẽ đồng bộ home.html */
+            background-color: #f8fafc;
             color: #0f172a;
             display: flex;
             flex-direction: column;
             transition: background 0.4s ease, color 0.4s ease;
         }
 
-        /* ================= KỸ THUẬT NỀN ĐỘNG GRADIENT TẠI HEADER ĐỒNG BỘ HOME.HTML ================= */
+        /* ================= KỸ THUẬT NỀN ĐỘNG GRADIENT TẠI HEADER ================= */
         body.theme-xanh-ios .main-header {
             background: linear-gradient(-45deg, #0b4a8f, #05234a, #0d5cb3, #02142d);
             background-size: 400% 400%;
@@ -41,7 +41,6 @@
             100% { background-position: 0% 50%; }
         }
 
-        /* KHỐI NỀN TRONG SUỐT PHÍA DƯỚI CHỨA PH N HỆ BẢN ĐỒ */
         .menu-panel-wrapper {
             background-color: rgba(128, 255, 232, 0.45);
             backdrop-filter: blur(20px);
@@ -52,7 +51,6 @@
             width: 100%;
         }
 
-        /* LOGO ANIMATION CHUYỂN ĐỘNG NHẸ */
         .logo-main {
             animation: float 4s ease-in-out infinite;
         }
@@ -61,11 +59,9 @@
             50% { transform: translateY(-3px); filter: drop-shadow(0 8px 12px rgba(0, 0, 0, 0.3)); }
         }
 
-        /* Ẩn thanh cuộn của menu ngang trên các trình duyệt nhưng vẫn giữ tính năng vuốt trượt */
         .scrollbar-none::-webkit-scrollbar { display: none; }
         .scrollbar-none { -ms-overflow-style: none; scrollbar-width: none; }
 
-        /* MENU TABS ĐỊA ĐIỂM NGANG PHẲNG */
         .tab-flat-item {
             background: #ffffff;
             border: 1px solid rgba(14, 165, 233, 0.15);
@@ -82,9 +78,10 @@
             color: #ffffff !important;
             box-shadow: 0 4px 12px rgba(11, 74, 143, 0.2);
         }
-        /* Đồng bộ đổi màu chữ trong tab active */
+        
+        /* Đổi màu chữ khi tab active */
         .tab-flat-item.active p { color: rgba(255, 255, 255, 0.8) !important; }
-        .tab-flat-item.active .dynamic-phone { color: #f59e0b !important; } /* Màu vàng nổi bật khi tab active */
+        .tab-flat-item.active .dynamic-phone { color: #f59e0b !important; } /* Số ĐT vàng khi active */
         .tab-flat-item.active h3 { color: #ffffff !important; }
 
         @media (max-width: 1024px) {
@@ -103,11 +100,9 @@
         <div class="max-w-[1550px] mx-auto flex flex-col items-center justify-center relative header-layout">
             
             <div class="flex flex-row items-center space-x-6 w-auto">
-                
                 <div class="flex-shrink-0">
                     <img src="logo.png" alt="Logo" class="logo-main w-20 h-auto">
                 </div>
-                
                 <div class="flex flex-col items-start justify-center space-y-2 text-left">
                     <p class="text-white font-black tracking-[0.12em] text-xl md:text-2xl lg:text-3xl uppercase leading-none m-0 p-0 drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)] font-['Montserrat']">
                         IOC BINH HUNG
@@ -116,7 +111,6 @@
                         Cổng thông tin và điều hành xã Bình Hưng, Thành phố Hồ Chí Minh
                     </h1>
                 </div>
-                
             </div>
 
             <div class="theme-selector-vertical lg:absolute lg:top-0 lg:right-0 bg-white/10 backdrop-blur-md border border-white/20 p-1.5 rounded-xl flex flex-col space-y-1.5 w-[75px] z-20 shadow-inner">
@@ -159,14 +153,12 @@
     </div>
 
     <footer class="mt-auto text-center py-6 text-slate-400 font-medium text-[11px] uppercase tracking-widest border-t border-slate-200 bg-white shadow-sm">
-        &copy; 2026 IOC Bình Hưng — Smart Government Solution
+        © 2026 IOC Bình Hưng — Smart Government Solution
     </footer>
 
     <script>
-        let localDataStore = [];
-
-        // ĐỒNG BỘ KHO DỮ LIỆU ĐẦY ĐỦ 9 THỂ CƠ QUAN HÀNH CHÍNH QUY CHUẨN KÈM SỐ ĐIỆN THOẠI[cite: 2, 4]
-        const fallbackData = [
+        // SỬ DỤNG TRỰC TIẾP DỮ LIỆU CHUẨN KÈM SỐ ĐIỆN THOẠI
+        const localDataStore = [
             {
                 "id": 1,
                 "name": "Đảng ủy xã Bình Hưng",
@@ -232,23 +224,7 @@
             }
         ];
 
-        async function fetchTruSoData() {
-            try {
-                const response = await fetch('data-tru-so.json');
-                if (!response.ok) throw new Error("Không tìm thấy file JSON");
-                localDataStore = await response.json();
-            } catch (error) {
-                console.log("Sử dụng cơ sở dữ liệu tích hợp sẵn của hệ thống.");
-                localDataStore = fallbackData;
-            } finally {
-                renderHorizontalMenu(localDataStore);
-                if(localDataStore.length > 0) {
-                    switchMapLocation(localDataStore[0].map_embed, localDataStore[0].id);
-                }
-            }
-        }
-
-        // HÀM BIẾN ĐỔI DANH SÁCH THÀNH CÁC TAB CHỮ NGANG PHẲNG HIỆN ĐẠI (ĐÃ THÊM SỐ ĐIỆN THOẠI)[cite: 2]
+        // HÀM HIỂN THỊ DANH SÁCH
         function renderHorizontalMenu(dataArray) {
             const container = document.getElementById('list_container');
             if (dataArray.length === 0) {
@@ -266,13 +242,13 @@
                         <span class="opacity-70 flex-shrink-0">📍</span> ${item.address}
                     </p>
                     <p class="text-[10px] md:text-[11px] font-bold text-sky-600 truncate flex items-center gap-1.5 dynamic-phone">
-                        <span class="opacity-70 flex-shrink-0">📞</span> ${item.phone}
+                        <span class="opacity-70 flex-shrink-0">📞</span> ${item.phone || 'Đang cập nhật'}
                     </p>
                 </div>
             `).join('');
         }
 
-        // ĐIỀU HƯỚNG BẢN ĐỒ IFRAME VÀ ACTIVE TAB NGANG VỪA CHỌN[cite: 2]
+        // ĐIỀU HƯỚNG BẢN ĐỒ VÀ ACTIVE TAB
         window.switchMapLocation = function(embedUrl, id) {
             const mapFrame = document.getElementById('map_frame');
             mapFrame.setAttribute('src', embedUrl);
@@ -281,27 +257,26 @@
             const activeTab = document.getElementById(`card_item_${id}`);
             if(activeTab) {
                 activeTab.classList.add('active');
-                // Tự động cuộn tab được chọn ra giữa tầm nhìn của thanh menu ngang[cite: 2]
                 activeTab.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
             }
         }
 
-        // TRA CỨU ĐỊA ĐIỂM DỰA TRÊN Ô INPUT[cite: 2]
+        // TÌM KIẾM
         document.getElementById('search_input').addEventListener('input', function(e) {
             const keyword = e.target.value.toLowerCase().trim();
             const filteredData = localDataStore.filter(item => 
                 item.name.toLowerCase().includes(keyword) || 
-                item.address.toLowerCase().includes(keyword)
+                item.address.toLowerCase().includes(keyword) ||
+                (item.phone && item.phone.toLowerCase().includes(keyword))
             );
             renderHorizontalMenu(filteredData);
             
-            // Nếu có kết quả sau bộ lọc, tự động kích hoạt địa điểm đầu tiên[cite: 2]
             if(filteredData.length > 0) {
                 switchMapLocation(filteredData[0].map_embed, filteredData[0].id);
             }
         });
 
-        // HÀM CHUYỂN ĐỔI THEME ĐỘNG HEADER[cite: 2]
+        // CHUYỂN ĐỔI THEME HEADER XANH / ĐỎ
         window.switchSystemTheme = function(modeName) {
             const body = document.getElementById('dynamic-body');
             const btnXanh = document.getElementById('btn-theme-xanh');
@@ -320,7 +295,13 @@
             }
         }
 
-        document.addEventListener("DOMContentLoaded", fetchTruSoData);
+        // KHỞI CHẠY KHI MỞ TRANG
+        document.addEventListener("DOMContentLoaded", () => {
+            renderHorizontalMenu(localDataStore);
+            if(localDataStore.length > 0) {
+                switchMapLocation(localDataStore[0].map_embed, localDataStore[0].id);
+            }
+        });
     </script>
 </body>
 </html>
