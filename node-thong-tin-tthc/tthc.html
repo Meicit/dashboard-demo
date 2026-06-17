@@ -75,10 +75,13 @@
         <article class="menu-panel-wrapper flex flex-col space-y-6">
             
             <div class="flex flex-col md:flex-row justify-between items-center gap-4 border-b border-white/40 pb-4">
-                <a href="../home.html" class="inline-flex items-center gap-2 bg-white/80 backdrop-blur hover:bg-white border border-slate-200 text-slate-700 px-5 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider shadow-sm transition-all duration-300 hover:-translate-y-0.5 shrink-0">
+                <a href="home.html" class="inline-flex items-center gap-2 bg-white/80 backdrop-blur hover:bg-white border border-slate-200 text-slate-700 px-5 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider shadow-sm transition-all duration-300 hover:-translate-y-0.5 shrink-0">
                     ⬅️ Quay lại Trang chủ
                 </a>
-                          </div>
+                <h2 class="text-xl md:text-2xl font-black text-[#0b4a8f] uppercase text-center w-full md:text-right">
+                    Tra cứu bộ mã QR Thủ tục hành chính
+                </h2>
+            </div>
             
             <div class="flex flex-row gap-3 overflow-x-auto pb-2 custom-scrollbar">
                 <button onclick="changeContent('accordion-guide', '', this)" class="tab-btn shrink-0">📖 Hướng dẫn TTHC</button>
@@ -112,7 +115,7 @@
             }
         }
 
-        // HÀM ĐỔI TAB NỘI DUNG TTHC
+        // HÀM ĐỔI TAB NỘI DUNG TTHC VÀ DỰNG GIAO DIỆN HÌNH ẢNH
         function changeContent(type, sourceUrl, buttonElement) {
             const viewport = document.getElementById('viewer-viewport');
             
@@ -128,16 +131,22 @@
                     "HƯỚNG DẪN TRA CỨU BẢO HIỂM Y TẾ"
                 ];
 
-                let html = `<div class="p-6 space-y-3">`;
+                let html = `<div class="p-6 space-y-4">`;
                 guides.forEach((title, index) => {
+                    // Tự động mở (không thêm class 'hidden') cho mục đầu tiên
+                    const isFirst = (index === 0);
+                    const hiddenClass = isFirst ? '' : 'hidden';
+                    const arrowIcon = isFirst ? '▲' : '▼';
+                    const bgClass = isFirst ? 'bg-sky-50 text-sky-900' : 'bg-white text-slate-800';
+
                     html += `
-                        <div class="border border-slate-200 rounded-xl overflow-hidden bg-white">
-                            <button onclick="toggleAccordion(${index + 1})" class="w-full flex justify-between items-center px-5 py-4 font-bold text-xs uppercase text-slate-800 hover:bg-slate-50 transition">
+                        <div class="border border-slate-200 rounded-xl overflow-hidden shadow-sm transition-all duration-300 bg-white">
+                            <button onclick="toggleAccordion(${index + 1})" class="w-full flex justify-between items-center px-5 py-4 font-bold text-xs uppercase hover:bg-slate-50 transition-colors ${bgClass}">
                                 ${index + 1}. ${title}
-                                <span id="arrow-${index + 1}" class="text-slate-400">▼</span>
+                                <span id="arrow-${index + 1}" class="text-slate-400 text-sm font-black">${arrowIcon}</span>
                             </button>
-                            <div id="content-${index + 1}" class="hidden p-4 border-t bg-slate-50 transition-all">
-                                <img src="hinh-anh/huongdan${index + 1}.png" alt="Hướng dẫn" class="w-full h-auto rounded-lg shadow-sm" onerror="this.src='https://placehold.co/800x400?text=Chua+co+hinh+anh'">
+                            <div id="content-${index + 1}" class="${hiddenClass} p-4 md:p-6 border-t border-slate-100 bg-slate-50 transition-all">
+                                <img src="hinh-anh/huongdan${index + 1}.png" alt="Hướng dẫn ${index + 1}" class="w-full h-auto rounded-xl shadow-sm border border-slate-200/60" onerror="this.onerror=null; this.src='https://via.placeholder.com/800x400.png?text=Hinh+Anh+Huong+Dan+Thu+Tuc+${index + 1}'">
                             </div>
                         </div>`;
                 });
@@ -158,17 +167,19 @@
             const arrow = document.getElementById(`arrow-${id}`);
             const isHidden = content.classList.contains('hidden');
             
+            // Đóng tất cả
             document.querySelectorAll('[id^="content-"]').forEach(el => el.classList.add('hidden'));
             document.querySelectorAll('[id^="arrow-"]').forEach(el => el.innerText = '▼');
             
+            // Mở mục vừa click
             if (isHidden) { 
                 content.classList.remove('hidden'); 
                 arrow.innerText = '▲'; 
             }
         };
 
-        // KÍCH HOẠT TAB ĐẦU TIÊN KHI TẢI TRANG (Vì đã đảo lên trước, nó sẽ mở Hướng dẫn TTHC)
-        window.addEventListener('load', function() {
+        // KÍCH HOẠT TAB ĐẦU TIÊN KHI KHUNG HTML VỪA TẢI XONG
+        document.addEventListener('DOMContentLoaded', function() {
             const firstTab = document.querySelector('.tab-btn');
             if (firstTab) firstTab.click();
         });
