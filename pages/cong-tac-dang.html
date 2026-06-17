@@ -9,7 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
     <style>
         /* ================= QUẢN LÝ MÀU NỀN & THEME ================= */
-        /* CSS MẶC ĐỊNH CHO NỀN TỐI (DARK MODE) - ĐÃ BỎ HÌNH NỀN */
+        /* CSS MẶC ĐỊNH CHO NỀN TỐI (DARK MODE) */
         body.dark-theme {
             background-color: #0f172a;
             color: #f8fafc;
@@ -20,7 +20,7 @@
         body.dark-theme .insight-card { background: rgba(15, 23, 42, 0.4); border-color: rgba(255, 255, 255, 0.05); }
         body.dark-theme .teal-wrapper { background-color: rgba(20, 184, 166, 0.05); border: 1px solid rgba(20, 184, 166, 0.2); box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.5); }
 
-        /* CSS CHUYỂN ĐỔI SANG NỀN SÁNG (LIGHT THEME) - ĐÃ BỎ HÌNH NỀN */
+        /* CSS CHUYỂN ĐỔI SANG NỀN SÁNG (LIGHT THEME) */
         body.light-theme {
             background-color: #f8fafc;
             color: #0f172a;
@@ -30,7 +30,6 @@
         body.light-theme .text-main-title { color: #0b4a8f; }
         body.light-theme .insight-card { background: #f8fafc; border-color: rgba(14, 165, 233, 0.15); }
         body.light-theme .teal-wrapper { background-color: rgba(20, 184, 166, 0.12); border: 1px solid rgba(20, 184, 166, 0.3); box-shadow: 0 20px 40px -15px rgba(20, 184, 166, 0.2); }
-        /* Tự động ghi đè màu chữ trên nền sáng */
         body.light-theme .text-slate-400 { color: #475569; }
         body.light-theme .text-slate-300 { color: #1e293b; }
         body.light-theme .bg-slate-900 { background-color: #e2e8f0; border-color: #cbd5e1; color: #1e293b; }
@@ -42,14 +41,6 @@
         /* Cấu hình khối xanh ngọc bích */
         .teal-wrapper { backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-radius: 36px; padding: 24px; transition: all 0.4s ease; }
         @media (min-width: 768px) { .teal-wrapper { padding: 36px; } }
-
-        /* HEADER DYNAMIC ĐỒNG BỘ HOME.HTML */
-        .main-header { background-size: 400% 400%; animation: gradientGIF 12s ease infinite; }
-        body.theme-xanh-ios .main-header { background: linear-gradient(-45deg, #0b4a8f, #05234a, #0d5cb3, #02142d); border-bottom: 2px solid #032b5c; box-shadow: 0 4px 15px rgba(11, 74, 143, 0.15); }
-        body.theme-do-hanhchinh .main-header { background: linear-gradient(-45deg, #dc2626, #7f1d1d, #ef4444, #450a0a); border-bottom: 2px solid #991b1b; box-shadow: 0 4px 15px rgba(220, 38, 38, 0.15); }
-        @keyframes gradientGIF { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
-        .logo-main { animation: float 4s ease-in-out infinite; }
-        @keyframes float { 0%, 100% { transform: translateY(0); filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.2)); } 50% { transform: translateY(-3px); filter: drop-shadow(0 8px 12px rgba(0, 0, 0, 0.3)); } }
 
         /* BẢNG CHỈ TIÊU */
         .grid-row { display: flex; align-items: center; width: 100%; padding: 14px 20px; position: relative; font-family: 'Inter', sans-serif; }
@@ -71,16 +62,11 @@
         .btn-back:hover { transform: translateY(-2px); border-color: #ef4444; background: rgba(239, 68, 68, 0.1); }
         .custom-scrollbar::-webkit-scrollbar { width: 6px; }
         .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(148, 163, 184, 0.3); border-radius: 10px; }
-        
-        @media (max-width: 1024px) {
-            .header-layout { flex-direction: column !important; }
-            .theme-selector-vertical { position: relative !important; top: 0 !important; right: 0 !important; margin-top: 16px; flex-direction: row !important; space-x: 2; width: auto !important; }
-            .theme-selector-vertical button { margin-left: 4px; margin-right: 4px; }
-        }
     </style>
 </head>
-<body class="theme-xanh-ios light-theme custom-scrollbar" id="body-context">
-    <div class="container-wrapper">
+<body class="light-theme custom-scrollbar" id="body-context">
+
+    <div class="container-wrapper mt-8">
         
         <div class="teal-wrapper space-y-6">
             
@@ -92,6 +78,16 @@
                     <button onclick="setTheme('dark')" id="btn-theme-dark" class="flex items-center gap-1.5 text-[11px] font-extrabold uppercase px-3 py-1.5 rounded-lg transition border border-transparent text-white">Tối</button>
                 </div>
             </div>
+
+            <header class="glass-panel p-6 text-center">
+                <h1 class="text-xl md:text-2xl font-black uppercase tracking-wider bg-gradient-to-r from-sky-700 via-blue-600 to-red-500 dark:from-white dark:via-slate-300 dark:to-red-400 bg-clip-text text-transparent text-main-title">
+                    Chỉ tiêu Công tác Đảng hằng năm — Xã Bình Hưng
+                </h1>
+                <p class="text-slate-400 font-medium text-xs uppercase tracking-[0.2em] mt-2">
+                    Hệ thống theo dõi tiến độ, phân tích số liệu trực quan phục vụ công tác xây dựng tổ chức Đảng vững mạnh
+                </p>
+            </header>
+
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div class="glass-panel p-5 border-l-4 border-red-600">
                     <p class="text-[10px] font-bold text-red-500 uppercase tracking-wider">Kết nạp Đảng viên mới (2026)</p>
@@ -210,7 +206,6 @@
         function renderTableEngine(chiTieuList) {
             const container = document.getElementById('cong-tac-dang-container');
             container.innerHTML = chiTieuList.map((item, index) => {
-                // Thuật toán bóc tách giá trị số và tính phần trăm hoàn thành thực tế tự động
                 const targetNum = parseFloat(item.target_val);
                 const currentNum = parseFloat(item.current_val);
                 
@@ -219,7 +214,6 @@
                     percentRate = parseFloat(((currentNum / targetNum) * 100).toFixed(1));
                 }
                 
-                // Giới hạn đồ thị bar-width tối đa 100% để tránh vỡ khung giao diện phẳng
                 const barWidth = percentRate > 100 ? 100 : percentRate;
 
                 return `
@@ -246,17 +240,14 @@
         }
 
         function syncStatCards(chiTieuList) {
-            // Card 1: Kết nạp Đảng viên (Phần tử số 0)
             const kn = chiTieuList[0];
             const knRate = ((kn.current_val / kn.target_val) * 100).toFixed(0);
             document.getElementById('card_ket_nap').innerHTML = `${kn.current_val} <span class="text-xs font-bold text-slate-400">/ Chỉ tiêu ${kn.target_val} (Đạt ${knRate}%)</span>`;
 
-            // Card 2: Tổ chức đảng 4 tốt (Phần tử số 1)
             const bt = chiTieuList[1];
             const btDiff = (bt.current_val - bt.target_val).toFixed(1);
             document.getElementById('card_bon_tot').innerHTML = `${bt.current_val}% <span class="text-xs font-bold text-emerald-500">(Vượt ${btDiff}%)</span>`;
 
-            // Card 3: Hoàn thành tốt nhiệm vụ trở lên (Phần tử số 3)
             const ht = chiTieuList[3];
             const htDiff = (ht.current_val - ht.target_val).toFixed(1);
             document.getElementById('card_hoan_thanh').innerHTML = `${ht.current_val}% <span class="text-xs font-bold text-emerald-500">(Vượt ${htDiff}%)</span>`;
@@ -266,11 +257,9 @@
             if(barChartInstance) barChartInstance.destroy();
             if(pieChartInstance) pieChartInstance.destroy();
 
-            // Rút dữ liệu mảng ra mảng số liệu để đồng bộ hóa Chart.js trục hoành
             const chartTargets = data.chi_tieu_co_so.map(item => item.target_val);
             const chartCurrents = data.chi_tieu_co_so.map(item => item.current_val);
 
-            // 1. Bar Chart - So sánh tiến độ chỉ tiêu thực tế
             const ctxBar = document.getElementById('dangBarChart').getContext('2d');
             barChartInstance = new Chart(ctxBar, {
                 type: 'bar',
@@ -291,7 +280,6 @@
                 }
             });
 
-            // 2. Pie Chart - Cơ cấu chất lượng chi bộ trực thuộc
             const ctxPie = document.getElementById('dangPieChart').getContext('2d');
             const pieData = data.co_cau_chi_bo;
             pieChartInstance = new Chart(ctxPie, {
@@ -312,22 +300,6 @@
             });
         }
 
-        // ĐIỀU HÀNH ENGINE THEME (XANH ĐỎ Ở HEADER)
-        window.switchSystemTheme = function(modeName) {
-            const body = document.getElementById('body-context');
-            const btnXanh = document.getElementById('btn-theme-xanh');
-            const btnDo = document.getElementById('btn-theme-do');
-            if (modeName === 'do') {
-                body.classList.remove('theme-xanh-ios'); body.classList.add('theme-do-hanhchinh');
-                btnDo.className = "w-full text-center text-[10px] font-extrabold uppercase py-1.5 rounded-lg transition-all duration-300 bg-red-600 text-white shadow-md";
-                btnXanh.className = "w-full text-center text-[10px] font-extrabold uppercase py-1.5 rounded-lg transition-all duration-300 text-white/80 hover:text-white";
-            } else {
-                body.classList.remove('theme-do-hanhchinh'); body.classList.add('theme-xanh-ios');
-                btnXanh.className = "w-full text-center text-[10px] font-extrabold uppercase py-1.5 rounded-lg transition-all duration-300 bg-blue-600 text-white shadow-md";
-                btnDo.className = "w-full text-center text-[10px] font-extrabold uppercase py-1.5 rounded-lg transition-all duration-300 text-white/80 hover:text-white";
-            }
-        }
-
         // ĐIỀU HÀNH ENGINE THEME (SÁNG TỐI Ở CONTENT) CHỐNG KHUYẾT TẬT ĐÈ MÀU
         window.setTheme = function(themeName) {
             const body = document.getElementById('body-context');
@@ -337,15 +309,15 @@
             if(themeName === 'light') {
                 body.classList.remove('dark-theme');
                 body.classList.add('light-theme');
-                btnLight.className = "flex items-center gap-1.5 text-[11px] font-extrabold uppercase px-3 py-1.5 rounded-lg transition bg-blue-900 text-sky-200 shadow-md border border-blue-700";
-                btnDark.className = "flex items-center gap-1.5 text-[11px] font-extrabold uppercase px-3 py-1.5 rounded-lg transition border border-transparent text-slate-400 hover:text-blue-900";
+                btnLight.className = "flex items-center gap-1.5 text-[11px] font-bold uppercase px-3 py-1.5 rounded-lg transition bg-white text-blue-900 shadow-sm border border-slate-200";
+                btnDark.className = "flex items-center gap-1.5 text-[11px] font-bold uppercase px-3 py-1.5 rounded-lg transition text-slate-500 hover:text-slate-800";
                 
                 currentLabelColor = '#334155';
             } else {
                 body.classList.remove('light-theme');
                 body.classList.add('dark-theme');
-                btnDark.className = "flex items-center gap-1.5 text-[11px] font-extrabold uppercase px-3 py-1.5 rounded-lg transition bg-sky-700 text-white shadow-md border border-sky-500";
-                btnLight.className = "flex items-center gap-1.5 text-[11px] font-extrabold uppercase px-3 py-1.5 rounded-lg transition border border-transparent text-slate-400 hover:text-sky-400";
+                btnDark.className = "flex items-center gap-1.5 text-[11px] font-bold uppercase px-3 py-1.5 rounded-lg transition bg-red-600 text-white shadow-sm";
+                btnLight.className = "flex items-center gap-1.5 text-[11px] font-bold uppercase px-3 py-1.5 rounded-lg transition text-slate-400 hover:text-white";
                 
                 currentLabelColor = '#94a3b8';
             }
