@@ -86,10 +86,12 @@
             <div class="flex flex-row gap-3 overflow-x-auto pb-2 custom-scrollbar">
                 <button onclick="changeContent('accordion-guide', '', this)" class="tab-btn shrink-0">📖 Hướng dẫn TTHC</button>
                 <button onclick="changeContent('pdf', 'danh-sach-tthc-2026-06-10-19-37.pdf', this)" class="tab-btn shrink-0">📦 Danh mục Thủ tục hành chính</button>
+                <button onclick="changeContent('lookup-links', '', this)" class="tab-btn shrink-0">🔍 Tra cứu trực tuyến</button>
             </div>
 
             <div id="viewer-viewport" class="content-viewer-container"></div>
-            <p id="helper-text" class="text-center text-xs font-bold text-blue-900 italic">💡 Hướng dẫn: Quét mã QR hoặc xem hướng dẫn chi tiết bên trên.</p>
+            
+            <p id="helper-text" class="text-center text-xs font-bold text-blue-900 italic">💡 Hướng dẫn: Quét mã QR, xem hướng dẫn chi tiết hoặc bấm sang tab Tra cứu trực tuyến.</p>
         </article>
         
     </div>
@@ -115,7 +117,7 @@
             }
         }
 
-        // HÀM ĐỔI TAB NỘI DUNG TTHC VÀ DỰNG GIAO DIỆN HÌNH ẢNH
+        // HÀM ĐỔI TAB NỘI DUNG TTHC
         function changeContent(type, sourceUrl, buttonElement) {
             const viewport = document.getElementById('viewer-viewport');
             
@@ -133,7 +135,6 @@
 
                 let html = `<div class="p-6 space-y-4">`;
                 guides.forEach((title, index) => {
-                    // Tự động mở (không thêm class 'hidden') cho mục đầu tiên
                     const isFirst = (index === 0);
                     const hiddenClass = isFirst ? '' : 'hidden';
                     const arrowIcon = isFirst ? '▲' : '▼';
@@ -146,12 +147,56 @@
                                 <span id="arrow-${index + 1}" class="text-slate-400 text-sm font-black">${arrowIcon}</span>
                             </button>
                             <div id="content-${index + 1}" class="${hiddenClass} p-4 md:p-6 border-t border-slate-100 bg-slate-50 transition-all">
-                                <img src="hinh-anh/huongdan${index + 1}.png" alt="Hướng dẫn ${index + 1}" class="w-full h-auto rounded-xl shadow-sm border border-slate-200/60" onerror="this.onerror=null; this.src='https://via.placeholder.com/800x400.png?text=Hinh+Anh+Huong+Dan+Thu+Tuc+${index + 1}'">
+                                <img src="icon/huongdan${index + 1}.png" alt="Hướng dẫn ${index + 1}" class="w-full h-auto rounded-xl shadow-sm border border-slate-200/60" onerror="this.onerror=null; this.src='https://via.placeholder.com/800x400.png?text=Hinh+Anh+Huong+Dan+Thu+Tuc+${index + 1}'">
                             </div>
                         </div>`;
                 });
                 html += `</div>`;
                 viewport.innerHTML = html;
+
+            } else if (type === 'lookup-links') {
+                // ĐÃ THÊM: Nội dung của Tab Tra cứu với 3 nút bấm sang trang ngoài
+                viewport.innerHTML = `
+                    <div class="p-6 md:p-10 flex flex-col items-center justify-start h-full space-y-5 bg-slate-50/50">
+                        <div class="text-center mb-6">
+                            <h3 class="text-xl font-black text-[#0b4a8f] uppercase tracking-wide">Cổng Tra cứu Trực tuyến</h3>
+                            <div class="h-1 w-16 bg-[#0b4a8f] mx-auto mt-3 rounded-full"></div>
+                        </div>
+                        
+                        <a href="https://baohiemxahoi.gov.vn/tracuu/Pages/tra-cuu-thoi-han-su-dung-the-bhyt.aspx" target="_blank" class="w-full max-w-2xl bg-white border-2 border-sky-100 hover:border-sky-400 hover:bg-sky-50 text-slate-800 p-5 rounded-2xl flex items-center justify-between shadow-sm hover:shadow-md transition-all group">
+                            <div class="flex items-center gap-5">
+                                <div class="w-12 h-12 bg-sky-100 text-sky-600 rounded-xl flex items-center justify-center text-2xl shadow-inner shrink-0">🏥</div>
+                                <div class="flex flex-col text-left">
+                                    <span class="font-black uppercase text-sm group-hover:text-sky-700 transition-colors">Tra cứu BHYT</span>
+                                    <span class="text-xs text-slate-500 font-medium mt-1">Tra cứu thời hạn sử dụng thẻ Bảo hiểm Y tế</span>
+                                </div>
+                            </div>
+                            <span class="text-slate-300 group-hover:text-sky-500 font-black text-xl transition-transform group-hover:translate-x-1 shrink-0">➔</span>
+                        </a>
+                        
+                        <a href="https://baohiemxahoi.gov.vn/tracuu/Pages/tra-cuu-ho-gia-dinh.aspx" target="_blank" class="w-full max-w-2xl bg-white border-2 border-emerald-100 hover:border-emerald-500 hover:bg-emerald-50 text-slate-800 p-5 rounded-2xl flex items-center justify-between shadow-sm hover:shadow-md transition-all group">
+                            <div class="flex items-center gap-5">
+                                <div class="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-xl flex items-center justify-center text-2xl shadow-inner shrink-0">📘</div>
+                                <div class="flex flex-col text-left">
+                                    <span class="font-black uppercase text-sm group-hover:text-emerald-700 transition-colors">Tra cứu số sổ BHXH</span>
+                                    <span class="text-xs text-slate-500 font-medium mt-1">Tra cứu mã số Bảo hiểm Xã hội cá nhân</span>
+                                </div>
+                            </div>
+                            <span class="text-slate-300 group-hover:text-emerald-500 font-black text-xl transition-transform group-hover:translate-x-1 shrink-0">➔</span>
+                        </a>
+
+                        <a href="https://dichvucong.gov.vn" target="_blank" class="w-full max-w-2xl bg-white border-2 border-amber-100 hover:border-amber-400 hover:bg-amber-50 text-slate-800 p-5 rounded-2xl flex items-center justify-between shadow-sm hover:shadow-md transition-all group">
+                            <div class="flex items-center gap-5">
+                                <div class="w-12 h-12 bg-amber-100 text-amber-600 rounded-xl flex items-center justify-center text-2xl shadow-inner shrink-0">🏛️</div>
+                                <div class="flex flex-col text-left">
+                                    <span class="font-black uppercase text-sm group-hover:text-amber-700 transition-colors">Tra cứu TTHC trên Cổng DVC Quốc gia</span>
+                                    <span class="text-xs text-slate-500 font-medium mt-1">Kết nối trực tiếp Cổng Dịch vụ công Quốc gia</span>
+                                </div>
+                            </div>
+                            <span class="text-slate-300 group-hover:text-amber-500 font-black text-xl transition-transform group-hover:translate-x-1 shrink-0">➔</span>
+                        </a>
+                    </div>
+                `;
             } else {
                 viewport.innerHTML = `<object data="${sourceUrl}" type="application/pdf" width="100%" height="100%"></object>`;
             }
@@ -167,18 +212,16 @@
             const arrow = document.getElementById(`arrow-${id}`);
             const isHidden = content.classList.contains('hidden');
             
-            // Đóng tất cả
             document.querySelectorAll('[id^="content-"]').forEach(el => el.classList.add('hidden'));
             document.querySelectorAll('[id^="arrow-"]').forEach(el => el.innerText = '▼');
             
-            // Mở mục vừa click
             if (isHidden) { 
                 content.classList.remove('hidden'); 
                 arrow.innerText = '▲'; 
             }
         };
 
-        // KÍCH HOẠT TAB ĐẦU TIÊN KHI KHUNG HTML VỪA TẢI XONG
+        // KÍCH HOẠT TAB ĐẦU TIÊN KHI TẢI TRANG
         document.addEventListener('DOMContentLoaded', function() {
             const firstTab = document.querySelector('.tab-btn');
             if (firstTab) firstTab.click();
