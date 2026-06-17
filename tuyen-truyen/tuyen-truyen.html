@@ -18,10 +18,8 @@
         body.dark-theme .glass-panel { background: rgba(15, 23, 42, 0.75); border-color: rgba(56, 189, 248, 0.2); }
         body.dark-theme .btn-switcher-active { background: #0369a1; color: #00f0ff; border-color: #00f0ff; }
         body.dark-theme .list-item-hover:hover { background: rgba(56, 189, 248, 0.1); }
-        /* Thanh tiêu đề đậm hơn */
         body.dark-theme .title-block { background-color: rgba(30, 58, 138, 0.7); border-color: #2563eb; }
         body.dark-theme .title-text { color: #93c5fd; }
-        /* Vùng nền xanh ngọc bích */
         body.dark-theme .teal-wrapper { background-color: rgba(20, 184, 166, 0.05); border: 1px solid rgba(20, 184, 166, 0.2); box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.5); }
 
         /* QUẢN LÝ MÀU CHỮ VÀ NỀN CHO CHẾ ĐỘ SÁNG (LIGHT THEME) */
@@ -35,10 +33,8 @@
         body.light-theme .glass-panel { background: rgba(255, 255, 255, 0.95); border-color: rgba(11, 74, 143, 0.15); box-shadow: 0 10px 30px -10px rgba(12, 74, 110, 0.1); }
         body.light-theme .btn-switcher-active { background: #0b4a8f; color: #bfdbfe; border-color: #0b4a8f; box-shadow: 0 2px 8px rgba(11, 74, 143, 0.2); }
         body.light-theme .list-item-hover:hover { background: rgba(11, 74, 143, 0.05); }
-        /* Thanh tiêu đề đậm hơn */
         body.light-theme .title-block { background-color: #bfdbfe; border-color: #60a5fa; }
         body.light-theme .title-text { color: #1e3a8a; }
-        /* Vùng nền xanh ngọc bích */
         body.light-theme .teal-wrapper { background-color: rgba(20, 184, 166, 0.12); border: 1px solid rgba(20, 184, 166, 0.3); box-shadow: 0 20px 40px -15px rgba(20, 184, 166, 0.2); }
 
         /* CSS CHUNG */
@@ -98,7 +94,6 @@
 </head>
 <body class="theme-xanh-ios light-theme custom-scrollbar" id="body-context">
 
-    <!-- ĐÃ ĐIỀU CHỈNH: Bỏ margin-bottom quá lớn ở Header -->
     <header class="main-header w-full py-6 px-6 md:px-12 select-none relative transition-all duration-300">
         <div class="max-w-[1550px] mx-auto flex flex-col items-center justify-center relative header-layout">
             
@@ -124,7 +119,6 @@
         </div>
     </header>
 
-    <!-- ĐÃ ĐIỀU CHỈNH: Rút gọn margin top/bottom để gần với Header và Khung bên dưới hơn -->
     <div class="max-w-[1550px] w-full mx-auto px-4 md:px-6 mt-5 mb-4">
         <div class="title-block py-4 md:py-5 px-8 text-center shadow-sm rounded-2xl border-b-4 transition-colors duration-300">
             <h2 class="title-text font-['Montserrat'] text-xl md:text-3xl font-black uppercase tracking-wider leading-tight">
@@ -135,10 +129,8 @@
 
     <div class="container-wrapper">
         
-        <!-- VÙNG NỀN XANH NGỌC BÍCH BAO BỌC TOÀN BỘ -->
         <div class="teal-wrapper space-y-6">
             
-            <!-- NÚT QUAY LẠI VÀ CHUYỂN ĐỔI SÁNG/TỐI -->
             <div class="flex flex-col sm:flex-row justify-between items-center gap-4">
                 <a href="../home.html" class="btn-back bg-white/50 backdrop-blur">⬅️ Quay lại Trang chủ</a>
                 <div class="bg-slate-900/90 border border-slate-700 p-1 rounded-xl flex items-center shadow-md backdrop-blur">
@@ -147,7 +139,6 @@
                 </div>
             </div>
 
-            <!-- BÀI VIẾT NỔI BẬT -->
             <div class="glass-panel p-5 md:p-6">
                 <h2 class="text-xs font-black uppercase tracking-wider text-dynamic-label border-l-4 border-sky-400 pl-3 mb-4">📰 Bài viết nổi bật / Tin tức tiêu điểm hành chính</h2>
                 
@@ -178,55 +169,8 @@
                     <div class="lg:col-span-6 xl:col-span-5 flex flex-col h-full font-['Inter']">
                         <h3 class="text-[11px] font-black uppercase text-dynamic-title border-b border-slate-500/30 pb-2 mb-4">Tin tức mới cập nhật</h3>
                         
-                        <div class="flex flex-col space-y-3">
-                            <a href="tin-phu-1.html" class="list-item-hover group flex gap-4 items-center p-2 -mx-2 rounded-xl transition cursor-pointer">
-                                <div class="w-24 h-16 md:w-28 md:h-20 flex-shrink-0 rounded-lg overflow-hidden border border-slate-700/20 dark:border-slate-700/40">
-                                    <img src="images/banner2.jpg" alt="Tin phụ" class="w-full h-full object-cover group-hover:scale-110 transition duration-300">
-                                </div>
-                                <div class="flex flex-col space-y-1.5">
-                                    <h4 class="text-xs font-bold text-dynamic-title leading-snug group-hover:text-sky-500 transition line-clamp-2">
-                                        Triển khai hệ thống thanh toán trực tuyến phí dịch vụ công tại Bộ phận Một cửa
-                                    </h4>
-                                    <span class="text-[9px] text-dynamic-label font-medium">24/05/2026</span>
-                                </div>
-                            </a>
-
-                            <a href="tin-phu-2.html" class="list-item-hover group flex gap-4 items-center p-2 -mx-2 rounded-xl transition cursor-pointer">
-                                <div class="w-24 h-16 md:w-28 md:h-20 flex-shrink-0 rounded-lg overflow-hidden border border-slate-700/20 dark:border-slate-700/40">
-                                    <img src="images/banner1.jpg" alt="Tin phụ" class="w-full h-full object-cover group-hover:scale-110 transition duration-300">
-                                </div>
-                                <div class="flex flex-col space-y-1.5">
-                                    <h4 class="text-xs font-bold text-dynamic-title leading-snug group-hover:text-sky-500 transition line-clamp-2">
-                                        Ra quân tổng vệ sinh môi trường, phòng chống dịch bệnh sốt xuất huyết mùa mưa
-                                    </h4>
-                                    <span class="text-[9px] text-dynamic-label font-medium">22/05/2026</span>
-                                </div>
-                            </a>
-
-                            <a href="tin-phu-3.html" class="list-item-hover group flex gap-4 items-center p-2 -mx-2 rounded-xl transition cursor-pointer">
-                                <div class="w-24 h-16 md:w-28 md:h-20 flex-shrink-0 rounded-lg overflow-hidden border border-slate-700/20 dark:border-slate-700/40">
-                                    <img src="images/banner2.jpg" alt="Tin phụ" class="w-full h-full object-cover group-hover:scale-110 transition duration-300">
-                                </div>
-                                <div class="flex flex-col space-y-1.5">
-                                    <h4 class="text-xs font-bold text-dynamic-title leading-snug group-hover:text-sky-500 transition line-clamp-2">
-                                        Hội Liên hiệp Phụ nữ Xã trao tặng 50 suất học bổng cho học sinh nghèo vượt khó
-                                    </h4>
-                                    <span class="text-[9px] text-dynamic-label font-medium">20/05/2026</span>
-                                </div>
-                            </a>
-                            
-                            <a href="tin-phu-4.html" class="list-item-hover group flex gap-4 items-center p-2 -mx-2 rounded-xl transition cursor-pointer">
-                                <div class="w-24 h-16 md:w-28 md:h-20 flex-shrink-0 rounded-lg overflow-hidden border border-slate-700/20 dark:border-slate-700/40">
-                                    <img src="images/banner1.jpg" alt="Tin phụ" class="w-full h-full object-cover group-hover:scale-110 transition duration-300">
-                                </div>
-                                <div class="flex flex-col space-y-1.5">
-                                    <h4 class="text-xs font-bold text-dynamic-title leading-snug group-hover:text-sky-500 transition line-clamp-2">
-                                        Cập nhật tiến độ dự án mở rộng Quốc lộ 50 đoạn qua địa bàn Xã Bình Hưng
-                                    </h4>
-                                    <span class="text-[9px] text-dynamic-label font-medium">18/05/2026</span>
-                                </div>
-                            </a>
-                        </div>
+                        <div id="danh_sach_tin_tuc" class="flex flex-col space-y-3">
+                            </div>
                         
                         <div class="mt-auto pt-4 text-right">
                             <a href="danh-sach-tin.html" class="inline-flex items-center gap-1 text-[10px] font-black uppercase text-sky-600 dark:text-sky-500 hover:text-sky-500 transition bg-sky-500/10 px-3 py-1.5 rounded-lg border border-sky-500/20 hover:border-sky-500">
@@ -237,7 +181,6 @@
                 </div>
             </div>
 
-            <!-- SLIDER HÌNH ẢNH -->
             <div class="glass-panel p-5 md:p-6">
                 <h2 class="text-xs font-black uppercase tracking-wider text-dynamic-label border-l-4 border-sky-400 pl-3 mb-4">📸 Hình ảnh Hoạt động trực quan & Cổ động</h2>
                 <div class="slider-container">
@@ -249,7 +192,6 @@
                 </div>
             </div>
 
-            <!-- VIDEO -->
             <div class="glass-panel p-5 md:p-6">
                 <h2 class="text-xs font-black uppercase tracking-wider text-dynamic-label border-l-4 border-sky-400 pl-3 mb-4">🎥 Video Tư liệu / Bản tin thời sự cơ sở</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -262,15 +204,76 @@
                 </div>
             </div>
 
-        </div> <!-- END TEAL WRAPPER -->
-    </div>
+        </div> </div>
 
     <footer class="w-full text-center py-6 text-dynamic-label font-bold text-[10px] uppercase tracking-[0.3em] border-t border-slate-900/10 dark:border-slate-900 bg-slate-950/5 dark:bg-slate-950/20 backdrop-blur-md mt-auto">
         &copy; 2026 IOC Xã Bình Hưng — Hệ thống thông tin tuyên truyền và thông điệp cổ động số liên thông
     </footer>
 
     <script>
-        // 1. Logic vận hành Slider biểu ngữ cổ động
+        // =========================================================
+        // KHU VỰC QUẢN LÝ DỮ LIỆU TIN TỨC
+        // Muốn thêm bài viết, chỉ cần copy 1 cặp ngoặc nhọn { ... } 
+        // và thêm vào danh sách dưới đây!
+        // =========================================================
+        const tinTucData = [
+            {
+                title: "Triển khai hệ thống thanh toán trực tuyến phí dịch vụ công tại Bộ phận Một cửa",
+                date: "24/05/2026",
+                image: "images/banner2.jpg",
+                link: "tin-phu-1.html"
+            },
+            {
+                title: "Ra quân tổng vệ sinh môi trường, phòng chống dịch bệnh sốt xuất huyết mùa mưa",
+                date: "22/05/2026",
+                image: "images/banner1.jpg",
+                link: "tin-phu-2.html"
+            },
+            {
+                title: "Hội Liên hiệp Phụ nữ Xã trao tặng 50 suất học bổng cho học sinh nghèo vượt khó",
+                date: "20/05/2026",
+                image: "images/banner2.jpg",
+                link: "tin-phu-3.html"
+            },
+            {
+                title: "Cập nhật tiến độ dự án mở rộng Quốc lộ 50 đoạn qua địa bàn Xã Bình Hưng",
+                date: "18/05/2026",
+                image: "images/banner1.jpg",
+                link: "tin-phu-4.html"
+            },
+            {
+                title: "Bài viết mẫu mới thêm: Xã Bình Hưng tổ chức cuộc thi thiết kế cổng thông tin điện tử xuất sắc",
+                date: "28/05/2026",
+                image: "images/banner2.jpg",
+                link: "tin-phu-5.html" // Bạn cần tạo file này nếu muốn link hoạt động
+            }
+        ];
+
+        // HÀM TỰ ĐỘNG VẼ TIN TỨC RA MÀN HÌNH
+        function renderTinTuc() {
+            const container = document.getElementById('danh_sach_tin_tuc');
+            if (!container) return;
+            
+            container.innerHTML = tinTucData.map(tin => `
+                <a href="${tin.link}" class="list-item-hover group flex gap-4 items-center p-2 -mx-2 rounded-xl transition cursor-pointer">
+                    <div class="w-24 h-16 md:w-28 md:h-20 flex-shrink-0 rounded-lg overflow-hidden border border-slate-700/20 dark:border-slate-700/40">
+                        <img src="${tin.image}" alt="Hình bài viết" onerror="this.src='https://placehold.co/400x300?text=No+Image'" class="w-full h-full object-cover group-hover:scale-110 transition duration-300">
+                    </div>
+                    <div class="flex flex-col space-y-1.5">
+                        <h4 class="text-xs font-bold text-dynamic-title leading-snug group-hover:text-sky-500 transition line-clamp-2">
+                            ${tin.title}
+                        </h4>
+                        <span class="text-[9px] text-dynamic-label font-medium">${tin.date}</span>
+                    </div>
+                </a>
+            `).join('');
+        }
+
+        // =========================================================
+        // CÁC LOGIC KHÁC CỦA TRANG (SLIDER, THEME)
+        // =========================================================
+
+        // Logic vận hành Slider
         let currentSlide = 0;
         const slides = document.querySelectorAll('.slide');
 
@@ -291,7 +294,7 @@
 
         setInterval(() => { moveSlide(1); }, 5000);
 
-        // 2. Cấu hình Theme Header (Xanh / Đỏ)
+        // Cấu hình Theme Header (Xanh / Đỏ)
         window.switchSystemTheme = function(modeName) {
             const body = document.getElementById('body-context');
             const btnXanh = document.getElementById('btn-theme-xanh');
@@ -310,7 +313,7 @@
             }
         }
 
-        // 3. Engine hoán đổi giao diện Nền Trắng / Đen
+        // Engine hoán đổi giao diện Nền Trắng / Đen
         window.setTheme = function(themeName) {
             const body = document.getElementById('body-context');
             const btnLight = document.getElementById('btn-theme-light');
@@ -329,9 +332,10 @@
             }
         }
 
-        // Khởi tạo nền Trắng mặc định
+        // CHẠY HÀM KHI MỞ TRANG
         document.addEventListener("DOMContentLoaded", () => {
-            setTheme('light');
+            setTheme('light'); // Đặt nền trắng mặc định
+            renderTinTuc();    // Vẽ danh sách tin tức từ Javascript ra
         });
     </script>
 </body>
