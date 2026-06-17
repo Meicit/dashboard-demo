@@ -8,34 +8,50 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
     <style>
-        /* CSS MẶC ĐỊNH CHO NỀN TỐI (DARK MODE) */
+        /* ================= QUẢN LÝ MÀU NỀN & THEME ================= */
+        /* CSS MẶC ĐỊNH CHO NỀN TỐI (DARK MODE) - ĐÃ BỎ HÌNH NỀN */
         body.dark-theme {
-            background: linear-gradient(rgba(15, 23, 42, 0.85), rgba(15, 23, 42, 0.95)), url('../hinhnen.png');
-            background-size: cover; background-position: center; background-attachment: fixed;
+            background-color: #0f172a;
             color: #f8fafc;
         }
         body.dark-theme .glass-panel { background: rgba(30, 41, 59, 0.65); border-color: rgba(255, 255, 255, 0.1); }
         body.dark-theme .row-flat { background: rgba(255, 255, 255, 0.05); border-color: rgba(255, 255, 255, 0.08); color: #e2e8f0; }
         body.dark-theme .text-main-title { color: #ffffff; }
         body.dark-theme .insight-card { background: rgba(15, 23, 42, 0.4); border-color: rgba(255, 255, 255, 0.05); }
+        body.dark-theme .teal-wrapper { background-color: rgba(20, 184, 166, 0.05); border: 1px solid rgba(20, 184, 166, 0.2); box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.5); }
 
-        /* CSS CHUYỂN ĐỔI SANG NỀN SÁNG (LIGHT THEME) */
+        /* CSS CHUYỂN ĐỔI SANG NỀN SÁNG (LIGHT THEME) - ĐÃ BỎ HÌNH NỀN */
         body.light-theme {
-            background: linear-gradient(rgba(241, 245, 249, 0.85), rgba(241, 245, 249, 0.95)), url('../hinhnen.png');
-            background-size: cover; background-position: center; background-attachment: fixed;
+            background-color: #f8fafc;
             color: #0f172a;
         }
-        body.light-theme .glass-panel { background: rgba(255, 255, 255, 0.8); border-color: rgba(14, 165, 233, 0.2); box-shadow: 0 20px 40px -15px rgba(12, 74, 110, 0.15); }
-        body.light-theme .row-flat { background: #ffffff; border-color: rgba(14, 165, 233, 0.15); color: #1e293b; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.03); }
+        body.light-theme .glass-panel { background: rgba(255, 255, 255, 0.85); border-color: rgba(14, 165, 233, 0.2); box-shadow: 0 20px 40px -15px rgba(12, 74, 110, 0.1); }
+        body.light-theme .row-flat { background: #ffffff; border-color: rgba(14, 165, 233, 0.2); color: #1e293b; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); }
         body.light-theme .text-main-title { color: #0b4a8f; }
-        body.light-theme .insight-card { background: #f8fafc; border-color: rgba(14, 165, 233, 0.1); }
+        body.light-theme .insight-card { background: #f8fafc; border-color: rgba(14, 165, 233, 0.15); }
+        body.light-theme .teal-wrapper { background-color: rgba(20, 184, 166, 0.12); border: 1px solid rgba(20, 184, 166, 0.3); box-shadow: 0 20px 40px -15px rgba(20, 184, 166, 0.2); }
+        /* Tự động ghi đè màu chữ trên nền sáng */
         body.light-theme .text-slate-400 { color: #475569; }
         body.light-theme .text-slate-300 { color: #1e293b; }
+        body.light-theme .bg-slate-900 { background-color: #e2e8f0; border-color: #cbd5e1; color: #1e293b; }
 
         body { font-family: 'Montserrat', sans-serif; margin: 0; padding: 0; min-height: 100vh; display: flex; flex-direction: column; transition: background 0.3s, color 0.3s; }
-        .container-wrapper { max-width: 1550px; margin: 30px auto; padding: 0 24px; width: 100%; }
+        .container-wrapper { max-width: 1550px; margin: 0 auto 30px auto; padding: 0 24px; width: 100%; }
         .glass-panel { backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: 1px solid; border-radius: 24px; box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.5); transition: all 0.3s; }
         
+        /* Cấu hình khối xanh ngọc bích */
+        .teal-wrapper { backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-radius: 36px; padding: 24px; transition: all 0.4s ease; }
+        @media (min-width: 768px) { .teal-wrapper { padding: 36px; } }
+
+        /* HEADER DYNAMIC ĐỒNG BỘ HOME.HTML */
+        .main-header { background-size: 400% 400%; animation: gradientGIF 12s ease infinite; }
+        body.theme-xanh-ios .main-header { background: linear-gradient(-45deg, #0b4a8f, #05234a, #0d5cb3, #02142d); border-bottom: 2px solid #032b5c; box-shadow: 0 4px 15px rgba(11, 74, 143, 0.15); }
+        body.theme-do-hanhchinh .main-header { background: linear-gradient(-45deg, #dc2626, #7f1d1d, #ef4444, #450a0a); border-bottom: 2px solid #991b1b; box-shadow: 0 4px 15px rgba(220, 38, 38, 0.15); }
+        @keyframes gradientGIF { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+        .logo-main { animation: float 4s ease-in-out infinite; }
+        @keyframes float { 0%, 100% { transform: translateY(0); filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.2)); } 50% { transform: translateY(-3px); filter: drop-shadow(0 8px 12px rgba(0, 0, 0, 0.3)); } }
+
+        /* BẢNG CHỈ TIÊU */
         .grid-row { display: flex; align-items: center; width: 100%; padding: 14px 20px; position: relative; font-family: 'Inter', sans-serif; }
         .col-stt { width: 5%; text-align: center; }
         .col-criterion { width: 45%; text-align: left; padding-right: 15px; }
@@ -45,6 +61,8 @@
         .col-rate { width: 10%; text-align: right; }
 
         .header-row { background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); color: white; font-size: 11px; font-weight: 900; text-transform: uppercase; border-radius: 14px; margin-bottom: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.05); }
+        body.light-theme .header-row { background: linear-gradient(135deg, #0b4a8f 0%, #05234a 100%); border: none; box-shadow: 0 4px 15px rgba(11, 74, 143, 0.3); }
+
         .row-container { margin-bottom: 8px; font-family: 'Inter', sans-serif; }
         .row-flat { position: relative; border: 1px solid; border-radius: 14px; overflow: hidden; transition: all 0.25s cubic-bezier(0.165, 0.84, 0.44, 1); cursor: pointer; }
         .row-flat:hover { transform: translateY(-2px); border-color: #ef4444; box-shadow: 0 8px 16px -5px rgba(239, 68, 68, 0.3); }
@@ -53,111 +71,139 @@
         .btn-back:hover { transform: translateY(-2px); border-color: #ef4444; background: rgba(239, 68, 68, 0.1); }
         .custom-scrollbar::-webkit-scrollbar { width: 6px; }
         .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(148, 163, 184, 0.3); border-radius: 10px; }
+        
+        @media (max-width: 1024px) {
+            .header-layout { flex-direction: column !important; }
+            .theme-selector-vertical { position: relative !important; top: 0 !important; right: 0 !important; margin-top: 16px; flex-direction: row !important; space-x: 2; width: auto !important; }
+            .theme-selector-vertical button { margin-left: 4px; margin-right: 4px; }
+        }
     </style>
 </head>
-<body class="dark-theme custom-scrollbar" id="body-context">
+<body class="theme-xanh-ios light-theme custom-scrollbar" id="body-context">
 
-    <div class="container-wrapper space-y-6">
-        
-        <div class="flex flex-col sm:flex-row justify-between items-center gap-4">
-            <a href="../home.html" class="btn-back">⬅️ Quay lại Trang chủ</a>
+    <header class="main-header w-full py-6 px-6 md:px-12 select-none relative transition-all duration-300 mb-6">
+        <div class="max-w-[1550px] mx-auto flex flex-col items-center justify-center relative header-layout">
             
-            <div class="bg-slate-800/80 border border-slate-700 p-1 rounded-xl flex items-center shadow-md backdrop-blur">
-                <span class="text-[10px] font-black uppercase tracking-wider px-3 text-slate-400">Giao diện:</span>
-                <button onclick="setTheme('light')" id="btn-theme-light" class="flex items-center gap-1.5 text-[11px] font-bold uppercase px-3 py-1.5 rounded-lg transition text-slate-400 hover:text-white">
-                    幕 Nền trắng
-                </button>
-                <button onclick="setTheme('dark')" id="btn-theme-dark" class="flex items-center gap-1.5 text-[11px] font-bold uppercase px-3 py-1.5 rounded-lg transition bg-red-600 text-white shadow-sm">
-                    ⚫ Nền đen
-                </button>
-            </div>
-        </div>
-
-        <header class="glass-panel p-6 text-center">
-            <h1 class="text-xl md:text-2xl font-black uppercase tracking-wider bg-gradient-to-r from-white via-slate-300 to-red-400 bg-clip-text text-transparent text-main-title">
-                Chỉ tiêu Công tác Đảng hằng năm — Xã Bình Hưng
-            </h1>
-            <p class="text-slate-400 font-medium text-xs uppercase tracking-[0.2em] mt-1">
-                Hệ thống theo dõi tiến độ, phân tích số liệu trực quan phục vụ công tác xây dựng tổ chức Đảng vững mạnh
-            </p>
-        </header>
-
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div class="glass-panel p-5 border-l-4 border-red-600">
-                <p class="text-[10px] font-bold text-red-400 uppercase tracking-wider">Kết nạp Đảng viên mới (2026)</p>
-                <h3 id="card_ket_nap" class="text-2xl font-black mt-1">-- <span class="text-xs font-bold text-slate-400">/ Chỉ tiêu --</span></h3>
-            </div>
-            <div class="glass-panel p-5 border-l-4 border-amber-500">
-                <p class="text-[10px] font-bold text-amber-400 uppercase tracking-wider">Tổ chức Đảng đạt "4 tốt"</p>
-                <h3 id="card_bon_tot" class="text-2xl font-black mt-1">-- <span class="text-xs font-bold text-emerald-500">(--)</span></h3>
-            </div>
-            <div class="glass-panel p-5 border-l-4 border-sky-500">
-                <p class="text-[10px] font-bold text-sky-400 uppercase tracking-wider">Phân loại Hoàn thành tốt trở lên</p>
-                <h3 id="card_hoan_thanh" class="text-2xl font-black mt-1">-- <span class="text-xs font-bold text-emerald-400">(--)</span></h3>
-            </div>
-        </div>
-
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-            <div class="lg:col-span-7 glass-panel p-5">
-                <h2 class="text-xs font-black uppercase tracking-wider text-red-400 mb-3">📊 Đồ thị Đối chiếu Tiến độ hoàn thành Chỉ tiêu (%)</h2>
-                <div class="w-full relative h-[280px]">
-                    <canvas id="dangBarChart"></canvas>
+            <div class="flex flex-row items-center space-x-6 w-auto">
+                <div class="flex-shrink-0">
+                    <img src="logo.png" alt="Logo" class="logo-main w-20 h-auto" onerror="this.src='logo.png'">
+                </div>
+                <div class="flex flex-col items-start justify-center space-y-2 text-left">
+                    <p class="text-white font-black tracking-[0.12em] text-xl md:text-2xl lg:text-3xl uppercase leading-none m-0 p-0 drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)] font-['Montserrat']">
+                        IOC BINH HUNG
+                    </p>
+                    <h1 class="title-main text-sm md:text-base lg:text-lg font-bold uppercase tracking-[0.08em] text-white/90 leading-tight m-0 p-0 drop-shadow-[0_2px_4px_rgba(0,0,0,0.2)]">
+                        Cổng thông tin và điều hành xã Bình Hưng, Thành phố Hồ Chí Minh
+                    </h1>
                 </div>
             </div>
-            <div class="lg:col-span-5 glass-panel p-5 flex flex-col justify-between">
-                <h2 class="text-xs font-black uppercase tracking-wider text-sky-400 mb-3">🎯 Cơ cấu Phân loại Chất lượng Chi bộ trực thuộc</h2>
-                <div class="w-full relative h-[240px] flex justify-center">
-                    <canvas id="dangPieChart"></canvas>
+
+            <div class="theme-selector-vertical lg:absolute lg:top-0 lg:right-0 bg-white/10 backdrop-blur-md border border-white/20 p-1.5 rounded-xl flex flex-col space-y-1.5 w-[75px] z-20 shadow-inner">
+                <button onclick="switchSystemTheme('xanh')" id="btn-theme-xanh" class="w-full text-center text-[10px] font-extrabold uppercase py-1.5 rounded-lg transition-all duration-300 bg-blue-600 text-white shadow-md">🔵 Xanh</button>
+                <button onclick="switchSystemTheme('do')" id="btn-theme-do" class="w-full text-center text-[10px] font-extrabold uppercase py-1.5 rounded-lg transition-all duration-300 text-white/80 hover:text-white">🔴 Đỏ</button>
+            </div>
+            
+        </div>
+    </header>
+
+    <div class="container-wrapper">
+        
+        <div class="teal-wrapper space-y-6">
+            
+            <div class="flex flex-col sm:flex-row justify-between items-center gap-4">
+                <a href="../home.html" class="btn-back bg-white/50 backdrop-blur">⬅️ Quay lại Trang chủ</a>
+                
+                <div class="bg-slate-900/90 border border-slate-700 p-1 rounded-xl flex items-center shadow-md backdrop-blur">
+                    <button onclick="setTheme('light')" id="btn-theme-light" class="flex items-center gap-1.5 text-[11px] font-extrabold uppercase px-3 py-1.5 rounded-lg transition border border-transparent text-white">Sáng</button>
+                    <button onclick="setTheme('dark')" id="btn-theme-dark" class="flex items-center gap-1.5 text-[11px] font-extrabold uppercase px-3 py-1.5 rounded-lg transition border border-transparent text-white">Tối</button>
                 </div>
             </div>
-        </div>
 
-        <div class="glass-panel p-5">
-            <h2 class="text-xs font-black uppercase tracking-wider text-red-400 mb-4">📝 Bảng cơ sở dữ liệu chi tiết các Chỉ tiêu Đại hội</h2>
-            <div class="w-full overflow-x-auto custom-scrollbar">
-                <div class="min-w-[1000px]">
-                    <div class="grid-row header-row">
-                        <div class="col-stt">STT</div>
-                        <div class="col-criterion text-left uppercase">Tiêu chí đánh giá & Nhiệm vụ chính trị Đảng ủy</div>
-                        <div class="col-target">Chỉ tiêu Đại hội</div>
-                        <div class="col-current">Kết quả thực tế</div>
-                        <div class="col-progress">Tiến độ đồ thị</div>
-                        <div class="col-rate">Tỷ lệ đạt</div>
+            <header class="glass-panel p-6 text-center">
+                <h1 class="text-xl md:text-2xl font-black uppercase tracking-wider bg-gradient-to-r from-sky-700 via-blue-600 to-red-500 dark:from-white dark:via-slate-300 dark:to-red-400 bg-clip-text text-transparent text-main-title">
+                    Chỉ tiêu Công tác Đảng hằng năm — Xã Bình Hưng
+                </h1>
+                <p class="text-slate-400 font-medium text-xs uppercase tracking-[0.2em] mt-2">
+                    Hệ thống theo dõi tiến độ, phân tích số liệu trực quan phục vụ công tác xây dựng tổ chức Đảng vững mạnh
+                </p>
+            </header>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="glass-panel p-5 border-l-4 border-red-600">
+                    <p class="text-[10px] font-bold text-red-500 uppercase tracking-wider">Kết nạp Đảng viên mới (2026)</p>
+                    <h3 id="card_ket_nap" class="text-2xl font-black mt-1">-- <span class="text-xs font-bold text-slate-400">/ Chỉ tiêu --</span></h3>
+                </div>
+                <div class="glass-panel p-5 border-l-4 border-amber-500">
+                    <p class="text-[10px] font-bold text-amber-500 uppercase tracking-wider">Tổ chức Đảng đạt "4 tốt"</p>
+                    <h3 id="card_bon_tot" class="text-2xl font-black mt-1">-- <span class="text-xs font-bold text-emerald-500">(--)</span></h3>
+                </div>
+                <div class="glass-panel p-5 border-l-4 border-sky-500">
+                    <p class="text-[10px] font-bold text-sky-500 uppercase tracking-wider">Phân loại Hoàn thành tốt trở lên</p>
+                    <h3 id="card_hoan_thanh" class="text-2xl font-black mt-1">-- <span class="text-xs font-bold text-emerald-500">(--)</span></h3>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                <div class="lg:col-span-7 glass-panel p-5">
+                    <h2 class="text-xs font-black uppercase tracking-wider text-red-500 mb-3">📊 Đồ thị Đối chiếu Tiến độ hoàn thành Chỉ tiêu (%)</h2>
+                    <div class="w-full relative h-[280px]">
+                        <canvas id="dangBarChart"></canvas>
                     </div>
-                    <div id="cong-tac-dang-container" class="text-xs font-semibold">
-                        <div class="text-center py-8 text-slate-400 animate-pulse uppercase tracking-wider">⏳ Đang liên thông kho dữ liệu số bộ ban ngành Đảng ủy...</div>
+                </div>
+                <div class="lg:col-span-5 glass-panel p-5 flex flex-col justify-between">
+                    <h2 class="text-xs font-black uppercase tracking-wider text-sky-600 dark:text-sky-400 mb-3">🎯 Cơ cấu Phân loại Chất lượng Chi bộ trực thuộc</h2>
+                    <div class="w-full relative h-[240px] flex justify-center">
+                        <canvas id="dangPieChart"></canvas>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <div class="glass-panel p-6 border border-red-500/20 bg-gradient-to-r from-slate-900/40 to-red-950/10">
-            <h2 class="text-xs font-black uppercase tracking-wider text-amber-400 mb-3 flex items-center gap-2">
-                💡 Trung tâm phân tích dữ liệu & Khuyến nghị điều hành của Thường trực Đảng ủy
-            </h2>
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 font-['Inter'] text-xs leading-relaxed">
-                <div class="insight-card p-4 rounded-xl border space-y-1.5">
-                    <h3 class="font-extrabold text-emerald-400">🟢 ĐIỂM SÁNG BIỂU DƯƠNG</h3>
-                    <p class="text-slate-400">Chỉ tiêu xây dựng mô hình "Tổ chức Đảng 4 tốt" và tỷ lệ phân loại Chi bộ Hoàn thành tốt nhiệm vụ đều hoàn thành vượt mức kế hoạch đề ra (Đạt 102.6% và 100.6%).</p>
-                </div>
-                <div class="insight-card p-4 rounded-xl border space-y-1.5">
-                    <h3 class="font-extrabold text-red-400">🚨 CẢNH BÁO ĐIỂM NGHẼN</h3>
-                    <p class="text-slate-400">Công tác phát triển Đảng viên mới hiện là điểm nghẽn lớn nhất khi mới chỉ đạt 72% tiến độ Đại hội. Áp lực tạo nguồn quần chúng ưu tú tại địa bàn dân cư mới đang bị chững lại.</p>
-                </div>
-                <div class="insight-card p-4 rounded-xl border space-y-1.5">
-                    <h3 class="font-extrabold text-sky-400">🎯 QUYẾT ĐỊNH ĐIỀU HÀNH</h3>
-                    <p class="text-slate-400 font-bold text-sky-400 italic">Khuyến nghị Thường trực Thường vụ chỉ đạo:</p>
-                    <ul class="list-disc list-inside space-y-0.5 pl-1 text-slate-400">
-                        <li>Giao chỉ tiêu bổ sung khẩn cấp cho lực lượng dân quân, đoàn viên xuất sắc.</li>
-                        <li>Tăng cường thẩm tra lý lịch phối hợp tháo gỡ thủ tục.</li>
-                    </ul>
+            <div class="glass-panel p-5">
+                <h2 class="text-xs font-black uppercase tracking-wider text-red-500 mb-4">📝 Bảng cơ sở dữ liệu chi tiết các Chỉ tiêu Đại hội</h2>
+                <div class="w-full overflow-x-auto custom-scrollbar">
+                    <div class="min-w-[1000px]">
+                        <div class="grid-row header-row">
+                            <div class="col-stt">STT</div>
+                            <div class="col-criterion text-left uppercase">Tiêu chí đánh giá & Nhiệm vụ chính trị Đảng ủy</div>
+                            <div class="col-target">Chỉ tiêu Đại hội</div>
+                            <div class="col-current">Kết quả thực tế</div>
+                            <div class="col-progress">Tiến độ đồ thị</div>
+                            <div class="col-rate">Tỷ lệ đạt</div>
+                        </div>
+                        <div id="cong-tac-dang-container" class="text-xs font-semibold">
+                            <div class="text-center py-8 text-slate-400 animate-pulse uppercase tracking-wider">⏳ Đang liên thông kho dữ liệu số bộ ban ngành Đảng ủy...</div>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
 
-    </div>
+            <div class="glass-panel p-6 border border-red-500/20 bg-gradient-to-r from-slate-100 to-red-50 dark:from-slate-900/40 dark:to-red-950/10">
+                <h2 class="text-xs font-black uppercase tracking-wider text-amber-600 dark:text-amber-400 mb-3 flex items-center gap-2">
+                    💡 Trung tâm phân tích dữ liệu & Khuyến nghị điều hành của Thường trực Đảng ủy
+                </h2>
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 font-['Inter'] text-xs leading-relaxed">
+                    <div class="insight-card p-4 rounded-xl border space-y-1.5 bg-white/50 dark:bg-transparent">
+                        <h3 class="font-extrabold text-emerald-600 dark:text-emerald-400">🟢 ĐIỂM SÁNG BIỂU DƯƠNG</h3>
+                        <p class="text-slate-500 dark:text-slate-400">Chỉ tiêu xây dựng mô hình "Tổ chức Đảng 4 tốt" và tỷ lệ phân loại Chi bộ Hoàn thành tốt nhiệm vụ đều hoàn thành vượt mức kế hoạch đề ra (Đạt 102.6% và 100.6%).</p>
+                    </div>
+                    <div class="insight-card p-4 rounded-xl border space-y-1.5 bg-white/50 dark:bg-transparent">
+                        <h3 class="font-extrabold text-red-600 dark:text-red-400">🚨 CẢNH BÁO ĐIỂM NGHẼN</h3>
+                        <p class="text-slate-500 dark:text-slate-400">Công tác phát triển Đảng viên mới hiện là điểm nghẽn lớn nhất khi mới chỉ đạt 72% tiến độ Đại hội. Áp lực tạo nguồn quần chúng ưu tú tại địa bàn dân cư mới đang bị chững lại.</p>
+                    </div>
+                    <div class="insight-card p-4 rounded-xl border space-y-1.5 bg-white/50 dark:bg-transparent">
+                        <h3 class="font-extrabold text-sky-600 dark:text-sky-400">🎯 QUYẾT ĐỊNH ĐIỀU HÀNH</h3>
+                        <p class="text-slate-500 dark:text-slate-400 font-bold italic">Khuyến nghị Thường trực Thường vụ chỉ đạo:</p>
+                        <ul class="list-disc list-inside space-y-0.5 pl-1 text-slate-500 dark:text-slate-400">
+                            <li>Giao chỉ tiêu bổ sung khẩn cấp cho lực lượng dân quân, đoàn viên xuất sắc.</li>
+                            <li>Tăng cường thẩm tra lý lịch phối hợp tháo gỡ thủ tục.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
 
-    <footer class="w-full text-center py-6 text-slate-500 font-bold text-[10px] uppercase tracking-[0.3em] border-t border-slate-900 bg-slate-950/20 backdrop-blur-md mt-auto">
+        </div> </div>
+
+    <footer class="w-full text-center py-6 text-slate-500 font-bold text-[10px] uppercase tracking-[0.3em] border-t border-slate-200 dark:border-slate-900 bg-white/50 dark:bg-slate-950/20 backdrop-blur-md mt-auto">
         &copy; 2026 IOC Xã Bình Hưng — Hệ thống Quản trị chỉ số công tác Đảng ủy liên thông bảo mật
     </footer>
 
@@ -176,7 +222,7 @@
         let barChartInstance = null;
         let pieChartInstance = null;
         let cachedData = null;
-        let currentLabelColor = '#94a3b8';
+        let currentLabelColor = '#334155'; // Mặc định sáng
 
         // 🟢 ENGINE LẮNG NGHE DỮ LIỆU THỜI GIAN THỰC (REALTIME LISTENER)
         onValue(dangNodeRef, (snapshot) => {
@@ -221,7 +267,7 @@
                                 <div class="col-target font-semibold text-slate-400 text-center">${item.target_val} ${item.unit}</div>
                                 <div class="col-current font-extrabold text-center text-dynamic-title">${item.current_val} ${item.unit}</div>
                                 <div class="col-progress">
-                                    <div class="w-full bg-slate-800/40 h-2 rounded-full overflow-hidden border border-slate-700/50">
+                                    <div class="w-full bg-slate-200 dark:bg-slate-800/40 h-2 rounded-full overflow-hidden border border-slate-300 dark:border-slate-700/50">
                                         <div class="${item.color} h-full rounded-full shadow-sm" style="width: ${barWidth}%"></div>
                                     </div>
                                 </div>
@@ -249,7 +295,7 @@
             // Card 3: Hoàn thành tốt nhiệm vụ trở lên (Phần tử số 3)
             const ht = chiTieuList[3];
             const htDiff = (ht.current_val - ht.target_val).toFixed(1);
-            document.getElementById('card_hoan_thanh').innerHTML = `${ht.current_val}% <span class="text-xs font-bold text-emerald-400">(Vượt ${htDiff}%)</span>`;
+            document.getElementById('card_hoan_thanh').innerHTML = `${ht.current_val}% <span class="text-xs font-bold text-emerald-500">(Vượt ${htDiff}%)</span>`;
         }
 
         function renderChartsEngine(data, textColor) {
@@ -267,8 +313,8 @@
                 data: {
                     labels: ['Kết nạp mới', 'Tổ chức 4 tốt', 'Kiểm tra định kỳ', 'HT tốt nhiệm vụ', 'Học tập kế hoạch', 'Sinh hoạt chuyên đề'],
                     datasets: [
-                        { label: 'Chỉ tiêu đề ra', data: chartTargets, backgroundColor: 'rgba(148, 163, 184, 0.2)', borderColor: '#94a3b8', borderWidth: 1, borderRadius: 4 },
-                        { label: 'Kết quả thực tế', data: chartCurrents, backgroundColor: 'rgba(239, 68, 68, 0.8)', borderColor: '#ef4444', borderWidth: 1, borderRadius: 4 }
+                        { label: 'Chỉ tiêu đề ra', data: chartTargets, backgroundColor: 'rgba(148, 163, 184, 0.4)', borderColor: '#94a3b8', borderWidth: 1, borderRadius: 4 },
+                        { label: 'Kết quả thực tế', data: chartCurrents, backgroundColor: 'rgba(239, 68, 68, 0.9)', borderColor: '#ef4444', borderWidth: 1, borderRadius: 4 }
                     ]
                 },
                 options: {
@@ -276,7 +322,7 @@
                     plugins: { legend: { labels: { color: textColor, font: { weight: 'bold', size: 10 } } } },
                     scales: {
                         x: { grid: { display: false }, ticks: { color: textColor, font: { size: 9, weight: 'bold' } } },
-                        y: { grid: { color: 'rgba(148, 163, 184, 0.1)' }, ticks: { color: textColor, font: { size: 9 } } }
+                        y: { grid: { color: 'rgba(148, 163, 184, 0.2)' }, ticks: { color: textColor, font: { size: 9 } } }
                     }
                 }
             });
@@ -290,8 +336,9 @@
                     labels: ['HT Xuất sắc', 'HT Tốt', 'HT Nhiệm vụ', 'Không HT'],
                     datasets: [{ 
                         data: [pieData.xuat_sac, pieData.hoan_thanh_tot, pieData.hoan_thanh_nhiem_vu, pieData.khong_hoan_thanh], 
-                        backgroundColor: ['rgba(16, 185, 129, 0.8)', 'rgba(14, 165, 233, 0.8)', 'rgba(245, 158, 11, 0.8)', 'rgba(239, 68, 68, 0.8)'], 
-                        borderWidth: 1 
+                        backgroundColor: ['rgba(16, 185, 129, 0.9)', 'rgba(14, 165, 233, 0.9)', 'rgba(245, 158, 11, 0.9)', 'rgba(239, 68, 68, 0.9)'], 
+                        borderWidth: 1,
+                        borderColor: '#ffffff'
                     }]
                 },
                 options: {
@@ -301,7 +348,23 @@
             });
         }
 
-        // ĐIỀU HÀNH ENGINE THEME CHUYỂN ĐỔI CHỮ ĐỒ THỊ LINH HOẠT CHỐNG KHUYẾT TẬT ĐÈ MÀU
+        // ĐIỀU HÀNH ENGINE THEME (XANH ĐỎ Ở HEADER)
+        window.switchSystemTheme = function(modeName) {
+            const body = document.getElementById('body-context');
+            const btnXanh = document.getElementById('btn-theme-xanh');
+            const btnDo = document.getElementById('btn-theme-do');
+            if (modeName === 'do') {
+                body.classList.remove('theme-xanh-ios'); body.classList.add('theme-do-hanhchinh');
+                btnDo.className = "w-full text-center text-[10px] font-extrabold uppercase py-1.5 rounded-lg transition-all duration-300 bg-red-600 text-white shadow-md";
+                btnXanh.className = "w-full text-center text-[10px] font-extrabold uppercase py-1.5 rounded-lg transition-all duration-300 text-white/80 hover:text-white";
+            } else {
+                body.classList.remove('theme-do-hanhchinh'); body.classList.add('theme-xanh-ios');
+                btnXanh.className = "w-full text-center text-[10px] font-extrabold uppercase py-1.5 rounded-lg transition-all duration-300 bg-blue-600 text-white shadow-md";
+                btnDo.className = "w-full text-center text-[10px] font-extrabold uppercase py-1.5 rounded-lg transition-all duration-300 text-white/80 hover:text-white";
+            }
+        }
+
+        // ĐIỀU HÀNH ENGINE THEME (SÁNG TỐI Ở CONTENT) CHỐNG KHUYẾT TẬT ĐÈ MÀU
         window.setTheme = function(themeName) {
             const body = document.getElementById('body-context');
             const btnLight = document.getElementById('btn-theme-light');
@@ -310,15 +373,15 @@
             if(themeName === 'light') {
                 body.classList.remove('dark-theme');
                 body.classList.add('light-theme');
-                btnLight.className = "flex items-center gap-1.5 text-[11px] font-bold uppercase px-3 py-1.5 rounded-lg transition bg-white text-blue-900 shadow-sm border border-slate-200";
-                btnDark.className = "flex items-center gap-1.5 text-[11px] font-bold uppercase px-3 py-1.5 rounded-lg transition text-slate-500 hover:text-slate-800";
+                btnLight.className = "flex items-center gap-1.5 text-[11px] font-extrabold uppercase px-3 py-1.5 rounded-lg transition bg-blue-900 text-sky-200 shadow-md border border-blue-700";
+                btnDark.className = "flex items-center gap-1.5 text-[11px] font-extrabold uppercase px-3 py-1.5 rounded-lg transition border border-transparent text-slate-400 hover:text-blue-900";
                 
                 currentLabelColor = '#334155';
             } else {
                 body.classList.remove('light-theme');
                 body.classList.add('dark-theme');
-                btnDark.className = "flex items-center gap-1.5 text-[11px] font-bold uppercase px-3 py-1.5 rounded-lg transition bg-red-600 text-white shadow-sm";
-                btnLight.className = "flex items-center gap-1.5 text-[11px] font-bold uppercase px-3 py-1.5 rounded-lg transition text-slate-400 hover:text-white";
+                btnDark.className = "flex items-center gap-1.5 text-[11px] font-extrabold uppercase px-3 py-1.5 rounded-lg transition bg-sky-700 text-white shadow-md border border-sky-500";
+                btnLight.className = "flex items-center gap-1.5 text-[11px] font-extrabold uppercase px-3 py-1.5 rounded-lg transition border border-transparent text-slate-400 hover:text-sky-400";
                 
                 currentLabelColor = '#94a3b8';
             }
@@ -328,6 +391,11 @@
                 renderChartsEngine(cachedData, currentLabelColor);
             }
         }
+
+        // Khởi động trang với nền Sáng
+        document.addEventListener('DOMContentLoaded', () => {
+            setTheme('light');
+        });
     </script>
 </body>
 </html>
