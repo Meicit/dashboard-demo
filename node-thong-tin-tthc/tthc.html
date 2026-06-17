@@ -9,39 +9,86 @@
     
     <style>
         body { font-family: 'Inter', 'Be Vietnam Pro', sans-serif; margin: 0; padding: 0; min-height: 100vh; display: flex; flex-direction: column; transition: background 0.4s ease, color 0.4s ease; }
-        .main-header { background: linear-gradient(-45deg, #0b4a8f, #05234a, #0d5cb3, #02142d); background-size: 400% 400%; animation: gradientGIF 12s ease infinite; box-shadow: 0 4px 15px rgba(11, 74, 143, 0.15); border-bottom: 2px solid #032b5c; }
+        
+        /* ================= KỸ THUẬT NỀN ĐỘNG GRADIENT TẠI HEADER ================= */
+        body.theme-xanh-ios .main-header { background: linear-gradient(-45deg, #0b4a8f, #05234a, #0d5cb3, #02142d); background-size: 400% 400%; animation: gradientGIF 12s ease infinite; box-shadow: 0 4px 15px rgba(11, 74, 143, 0.15); border-bottom: 2px solid #032b5c; }
+        body.theme-do-hanhchinh .main-header { background: linear-gradient(-45deg, #dc2626, #7f1d1d, #ef4444, #450a0a); background-size: 400% 400%; animation: gradientGIF 12s ease infinite; box-shadow: 0 4px 15px rgba(220, 38, 38, 0.15); border-bottom: 2px solid #991b1b; }
         @keyframes gradientGIF { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
-        .menu-panel-wrapper { background-color: rgba(128, 255, 232, 0.45); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.6); border-radius: 40px; box-shadow: 0 20px 50px -10px rgba(12, 74, 110, 0.15); width: 100%; padding: 45px 35px; }
+        
+        /* LOGO ANIMATION CHUYỂN ĐỘNG NHẸ */
+        .logo-main { animation: float 4s ease-in-out infinite; }
+        @keyframes float { 0%, 100% { transform: translateY(0); filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.2)); } 50% { transform: translateY(-3px); filter: drop-shadow(0 8px 12px rgba(0, 0, 0, 0.3)); } }
+
+        /* KHỐI NỘI DUNG */
+        .menu-panel-wrapper { background-color: rgba(128, 255, 232, 0.45); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.6); border-radius: 40px; box-shadow: 0 20px 50px -10px rgba(12, 74, 110, 0.15); width: 100%; padding: 45px 35px; }
         .content-viewer-container { width: 100%; height: 750px; border-radius: 20px; overflow-y: auto; box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08); border: 1px solid rgba(255, 255, 255, 0.5); background: #ffffff; }
-        .tab-btn { background: white; border: 1px solid #e2e8f0; color: #334155; font-weight: 800; font-size: 0.75rem; text-transform: uppercase; padding: 12px 24px; border-radius: 12px; transition: all 0.2s; }
+        .tab-btn { background: white; border: 1px solid #e2e8f0; color: #334155; font-weight: 800; font-size: 0.75rem; text-transform: uppercase; padding: 12px 24px; border-radius: 12px; transition: all 0.2s; white-space: nowrap; }
         .tab-btn.active { background: #1e40af; color: white; border-color: #1e40af; }
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(14, 165, 233, 0.3); border-radius: 10px; }
+
+        @media (max-width: 1024px) {
+            .header-layout { flex-direction: column !important; }
+            .theme-selector-vertical { position: relative !important; top: 0 !important; right: 0 !important; margin-top: 16px; flex-direction: row !important; space-x: 2; width: auto !important; }
+            .theme-selector-vertical button { margin-left: 4px; margin-right: 4px; }
+        }
     </style>
 </head>
-<body class="bg-slate-50">
+<body class="theme-xanh-ios bg-slate-50 custom-scrollbar" id="dynamic-body">
 
-    <header class="main-header w-full py-6 px-6 md:px-12">
-        <div class="max-w-[1550px] mx-auto flex flex-row items-center space-x-6">
-            <img src="logo.png" alt="Logo" class="w-20 h-auto">
-            <div class="flex flex-col items-start space-y-1 text-white">
-                <p class="font-black tracking-[0.12em] text-xl md:text-3xl uppercase font-['Montserrat']">IOC BINH HUNG</p>
-                <h1 class="text-sm font-bold uppercase tracking-[0.08em] opacity-90">Cổng thông tin và điều hành xã Bình Hưng</h1>
+    <header class="main-header w-full py-6 px-6 md:px-12 select-none relative transition-all duration-300">
+        <div class="max-w-[1550px] mx-auto flex flex-col items-center justify-center relative header-layout">
+            
+            <div class="flex flex-row items-center space-x-6 w-auto">
+                <div class="flex-shrink-0">
+                    <img src="logo.png" alt="Logo" class="logo-main w-20 h-auto" onerror="this.src='logo.png'">
+                </div>
+                <div class="flex flex-col items-start justify-center space-y-2 text-left">
+                    <p class="text-white font-black tracking-[0.12em] text-xl md:text-2xl lg:text-3xl uppercase leading-none m-0 p-0 drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)] font-['Montserrat']">
+                        IOC BINH HUNG
+                    </p>
+                    <h1 class="title-main text-sm md:text-base lg:text-lg font-bold uppercase tracking-[0.08em] text-white/90 leading-tight m-0 p-0 drop-shadow-[0_2px_4px_rgba(0,0,0,0.2)]">
+                        Cổng thông tin và điều hành xã Bình Hưng, Thành phố Hồ Chí Minh
+                    </h1>
+                </div>
             </div>
+
+            <div class="theme-selector-vertical lg:absolute lg:top-0 lg:right-0 bg-white/10 backdrop-blur-md border border-white/20 p-1.5 rounded-xl flex flex-col space-y-1.5 w-[75px] z-20 shadow-inner">
+                <button onclick="switchSystemTheme('xanh')" id="btn-theme-xanh" class="w-full text-center text-[10px] font-extrabold uppercase py-1.5 rounded-lg transition-all duration-300 bg-blue-600 text-white shadow-md">🔵 Xanh</button>
+                <button onclick="switchSystemTheme('do')" id="btn-theme-do" class="w-full text-center text-[10px] font-extrabold uppercase py-1.5 rounded-lg transition-all duration-300 text-white/80 hover:text-white">🔴 Đỏ</button>
+            </div>
+            
         </div>
     </header>
 
-    <div class="max-w-[1550px] w-full mx-auto px-4 md:px-6 my-6">
+    <div class="max-w-[1550px] w-full mx-auto px-4 md:px-6 mt-6 mb-4">
+        <div class="py-4 md:py-5 px-8 text-center shadow-lg rounded-2xl bg-teal-500 border-b-4 border-teal-600">
+            <h2 class="font-['Montserrat'] text-xl md:text-3xl font-black text-white uppercase tracking-wider leading-tight">
+                THÔNG TIN LIÊN QUAN THỦ TỤC HÀNH CHÍNH
+            </h2>
+        </div>
+    </div>
+
+    <div class="max-w-[1550px] w-full mx-auto px-4 md:px-6 my-2 pb-12 flex flex-col flex-grow">
+        
+        <div class="flex flex-col sm:flex-row justify-start items-center gap-4 mb-4">
+            <a href="home.html" class="inline-flex items-center gap-2 bg-white hover:bg-slate-100 border border-slate-200 text-slate-700 px-5 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider shadow-sm transition-all duration-300 hover:-translate-y-0.5">
+                ⬅️ Quay lại Trang chủ
+            </a>
+        </div>
+
         <article class="menu-panel-wrapper flex flex-col space-y-6">
-            <h2 class="text-2xl font-black text-[#0b4a8f] uppercase">Tra cứu bộ mã QR Thủ tục hành chính</h2>
+            <h2 class="text-2xl font-black text-[#0b4a8f] uppercase border-b border-white/40 pb-4">Tra cứu bộ mã QR Thủ tục hành chính</h2>
             
-            <div class="flex flex-row gap-2 overflow-x-auto pb-2">
-                <button onclick="changeContent('search-tool', '', this)" class="tab-btn">🔍 Tra cứu Thủ tục hành chính công</button>
-                <button onclick="changeContent('pdf', 'danh-sach-tthc-2026-06-10-19-37.pdf', this)" class="tab-btn">📦 Danh mục Thủ tục hành chính</button>
-                <button onclick="changeContent('accordion-guide', '', this)" class="tab-btn">📖 Hướng dẫn TTHC</button>
+            <div class="flex flex-row gap-3 overflow-x-auto pb-2 custom-scrollbar">
+                <button onclick="changeContent('search-tool', '', this)" class="tab-btn shrink-0">🔍 Tra cứu Thủ tục hành chính công</button>
+                <button onclick="changeContent('pdf', 'danh-sach-tthc-2026-06-10-19-37.pdf', this)" class="tab-btn shrink-0">📦 Danh mục Thủ tục hành chính</button>
+                <button onclick="changeContent('accordion-guide', '', this)" class="tab-btn shrink-0">📖 Hướng dẫn TTHC</button>
             </div>
 
             <div id="dynamic-search-box" class="w-full max-w-2xl mx-auto bg-white p-4 rounded-2xl border border-slate-200 shadow-md hidden flex-row gap-3 items-center">
-                <input type="text" id="search_input" placeholder="Nhập tên thủ tục cần tìm..." class="w-full bg-slate-50 border rounded-xl px-4 py-3 text-sm">
-                <button onclick="executeUrlSearch()" class="bg-blue-800 text-white font-bold px-6 py-3 rounded-xl">Tìm</button>
+                <input type="text" id="search_input" placeholder="Nhập tên thủ tục cần tìm..." class="w-full bg-slate-50 border rounded-xl px-4 py-3 text-sm font-semibold outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition">
+                <button onclick="executeUrlSearch()" class="bg-blue-800 hover:bg-blue-900 text-white font-bold px-6 py-3 rounded-xl transition uppercase tracking-wide text-xs">Tìm kiếm</button>
             </div>
 
             <div id="viewer-viewport" class="content-viewer-container"></div>
@@ -49,14 +96,35 @@
         </article>
     </div>
 
+    <footer class="w-full text-center py-6 text-slate-400 font-medium text-[11px] uppercase tracking-widest border-t border-slate-200 bg-white shadow-sm mt-auto">
+        &copy; 2026 IOC BINH HƯNG — BẢN QUYỀN THUỘC UBND XÃ BÌNH HƯNG
+    </footer>
+
     <script>
+        // HÀM CHUYỂN ĐỔI THEME HEADER (XANH / ĐỎ)
+        window.switchSystemTheme = function(modeName) {
+            const body = document.getElementById('dynamic-body');
+            const btnXanh = document.getElementById('btn-theme-xanh');
+            const btnDo = document.getElementById('btn-theme-do');
+            if (modeName === 'do') {
+                body.classList.remove('theme-xanh-ios'); body.classList.add('theme-do-hanhchinh');
+                btnDo.className = "w-full text-center text-[10px] font-extrabold uppercase py-1.5 rounded-lg transition-all duration-300 bg-red-600 text-white shadow-md";
+                btnXanh.className = "w-full text-center text-[10px] font-extrabold uppercase py-1.5 rounded-lg transition-all duration-300 text-white/80 hover:text-white";
+            } else {
+                body.classList.remove('theme-do-hanhchinh'); body.classList.add('theme-xanh-ios');
+                btnXanh.className = "w-full text-center text-[10px] font-extrabold uppercase py-1.5 rounded-lg transition-all duration-300 bg-blue-600 text-white shadow-md";
+                btnDo.className = "w-full text-center text-[10px] font-extrabold uppercase py-1.5 rounded-lg transition-all duration-300 text-white/80 hover:text-white";
+            }
+        }
+
+        // HÀM ĐỔI TAB NỘI DUNG TTHC
         function changeContent(type, sourceUrl, buttonElement) {
             const viewport = document.getElementById('viewer-viewport');
             const searchBox = document.getElementById('dynamic-search-box');
             
             if (type === 'search-tool') {
                 searchBox.classList.remove('hidden'); searchBox.classList.add('flex');
-                viewport.innerHTML = `<div class="p-10 text-center font-bold">Vui lòng nhập từ khóa tìm kiếm.</div>`;
+                viewport.innerHTML = `<div class="p-10 text-center font-bold text-slate-500">Vui lòng nhập từ khóa tìm kiếm phía trên.</div>`;
             } else if (type === 'accordion-guide') {
                 searchBox.classList.add('hidden');
                 const guides = [
@@ -74,12 +142,12 @@
                 guides.forEach((title, index) => {
                     html += `
                         <div class="border border-slate-200 rounded-xl overflow-hidden bg-white">
-                            <button onclick="toggleAccordion(${index + 1})" class="w-full flex justify-between items-center px-5 py-4 font-bold text-xs uppercase text-slate-800 hover:bg-slate-50">
+                            <button onclick="toggleAccordion(${index + 1})" class="w-full flex justify-between items-center px-5 py-4 font-bold text-xs uppercase text-slate-800 hover:bg-slate-50 transition">
                                 ${index + 1}. ${title}
-                                <span id="arrow-${index + 1}">▼</span>
+                                <span id="arrow-${index + 1}" class="text-slate-400">▼</span>
                             </button>
-                            <div id="content-${index + 1}" class="hidden p-4 border-t bg-slate-50">
-                                <img src="icon/huongdan${index + 1}.png" alt="Hướng dẫn" class="w-full h-auto rounded-lg" onerror="this.src='https://placehold.co/800x400?text=Chua+co+hinh+anh'">
+                            <div id="content-${index + 1}" class="hidden p-4 border-t bg-slate-50 transition-all">
+                                <img src="icon/huongdan${index + 1}.png" alt="Hướng dẫn" class="w-full h-auto rounded-lg shadow-sm" onerror="this.src='https://placehold.co/800x400?text=Chua+co+hinh+anh'">
                             </div>
                         </div>`;
                 });
@@ -98,9 +166,14 @@
             const content = document.getElementById(`content-${id}`);
             const arrow = document.getElementById(`arrow-${id}`);
             const isHidden = content.classList.contains('hidden');
+            
             document.querySelectorAll('[id^="content-"]').forEach(el => el.classList.add('hidden'));
             document.querySelectorAll('[id^="arrow-"]').forEach(el => el.innerText = '▼');
-            if (isHidden) { content.classList.remove('hidden'); arrow.innerText = '▲'; }
+            
+            if (isHidden) { 
+                content.classList.remove('hidden'); 
+                arrow.innerText = '▲'; 
+            }
         };
 
         window.addEventListener('load', function() {
