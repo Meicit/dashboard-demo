@@ -12,13 +12,13 @@
             font-family: 'Inter', 'Be Vietnam Pro', sans-serif;
             margin: 0; padding: 0; min-height: 100vh;
             background-color: #f8fafc;
-            color: #0f172a;
+            color: #1e3a8a; /* Thay màu chữ tối bằng Xanh Navy thay vì màu đen */
             display: flex;
             flex-direction: column;
             transition: background 0.4s ease, color 0.4s ease;
         }
 
-        /* ================= KỸ THUẬT NỀN ĐỘNG GRADIENT TẠI HEADER ĐỒNG BỘ TRU-SO-HANH-CHINH.HTML ================= */
+        /* ================= KỸ THUẬT NỀN ĐỘNG GRADIENT TẠI HEADER ĐỒNG BỘ ================= */
         body.theme-xanh-ios .main-header {
             background: linear-gradient(-45deg, #0b4a8f, #05234a, #0d5cb3, #02142d);
             background-size: 400% 400%;
@@ -46,11 +46,11 @@
             animation: float 4s ease-in-out infinite;
         }
         @keyframes float {
-            0%, 100% { transform: translateY(0); filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.2)); }
-            50% { transform: translateY(-3px); filter: drop-shadow(0 8px 12px rgba(0, 0, 0, 0.3)); }
+            0%, 100% { transform: translateY(0); filter: drop-shadow(0 4px 6px rgba(12, 74, 110, 0.3)); }
+            50% { transform: translateY(-3px); filter: drop-shadow(0 8px 12px rgba(12, 74, 110, 0.4)); }
         }
 
-        /* KHỐI NỀN MÀU XANH NGỌC TRONG SUỐT - LUÔN CỐ ĐỊNH PHÍA DƯỚI */
+        /* KHỐI NỀN MÀU XANH NGỌC TRONG SUỐT BAO BỌC PHẦN DƯỚI */
         .menu-panel-wrapper {
             background-color: rgba(128, 255, 232, 0.45);
             backdrop-filter: blur(20px);
@@ -62,7 +62,7 @@
             width: 100%;
         }
 
-        /* GRID SYSTEM: ĐỊNH DẠNG 6 CỘT X 2 HÀNG CỐ ĐỊNH */
+        /* GRID SYSTEM: ĐỊNH DẠNG CỘT CỐ ĐỊNH */
         .grid-container {
             display: grid;
             grid-template-columns: repeat(6, 1fr); 
@@ -85,7 +85,7 @@
             cursor: pointer; 
             border: 1px solid rgba(255, 255, 255, 0.8);
             background-color: #ffffff;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04), inset 0 1px 2px rgba(255,255,255,0.8);
+            box-shadow: 0 2px 6px rgba(12, 74, 110, 0.04), inset 0 1px 2px rgba(255,255,255,0.8);
             transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
         
@@ -101,7 +101,7 @@
         .nav-card:hover { 
             transform: translateY(-4px); 
             border-color: rgba(11, 74, 143, 0.35); 
-            box-shadow: 0 12px 20px -8px rgba(12, 74, 110, 0.2), 0 1px 3px rgba(0,0,0,0.04);
+            box-shadow: 0 12px 20px -8px rgba(12, 74, 110, 0.2), 0 1px 3px rgba(12, 74, 110, 0.04);
         }
         
         .nav-card:hover::before {
@@ -141,14 +141,14 @@
         .modal-overlay.open { opacity: 1; pointer-events: auto; }
         .modal-card { 
             background: rgba(255, 255, 255, 0.9); border: 1px solid rgba(255, 255, 255, 0.6);
-            border-radius: 24px; width: 100%; max-width: 400px; padding: 36px; box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.1); 
+            border-radius: 24px; width: 100%; max-width: 400px; padding: 36px; box-shadow: 0 25px 50px -12px rgba(12, 74, 110, 0.1); 
             transform: scale(0.95) translateY(10px); transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); 
         }
         .modal-overlay.open .modal-card { transform: scale(1) translateY(0); }
 
         @media (max-width: 1400px) { .grid-container { grid-template-columns: repeat(3, 1fr); gap: 18px; } }
         
-        /* RESPONSIVE CHO KHỐI ĐIỀU HƯỚNG THEME TRÊN ĐIỆN THOẠI ĐỒNG BỘ TRU-SO-HANH-CHINH */
+        /* RESPONSIVE CHO KHỐI ĐIỀU HƯỚNG THEME TRÊN ĐIỆN THOẠI */
         @media (max-width: 1024px) {
             .header-layout { flex-direction: column !important; }
             .theme-selector-vertical { 
@@ -170,20 +170,17 @@
         <div class="max-w-[1550px] mx-auto flex flex-col items-center justify-center relative header-layout">
             
             <div class="flex flex-row items-center space-x-6 w-auto">
-                
                 <div class="flex-shrink-0">
                     <img src="logo.png" alt="Logo" class="logo-main w-20 h-auto">
                 </div>
-                
                 <div class="flex flex-col items-start justify-center space-y-2 text-left">
-                    <p class="text-white font-black tracking-[0.12em] text-xl md:text-2xl lg:text-3xl uppercase leading-none m-0 p-0 drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)] font-['Montserrat']">
+                    <p class="text-white font-black tracking-[0.12em] text-xl md:text-2xl lg:text-3xl uppercase leading-none m-0 p-0 drop-shadow-[0_2px_4px_rgba(12,74,110,0.5)] font-['Montserrat']">
                         IOC BINH HUNG
                     </p>
-                    <h1 class="title-main text-sm md:text-base lg:text-lg font-bold uppercase tracking-[0.08em] text-white/90 leading-tight m-0 p-0 drop-shadow-[0_2px_4px_rgba(0,0,0,0.2)]">
+                    <h1 class="title-main text-sm md:text-base lg:text-lg font-bold uppercase tracking-[0.08em] text-white/90 leading-tight m-0 p-0 drop-shadow-[0_2px_4px_rgba(12,74,110,0.4)]">
                         Cổng thông tin và điều hành xã Bình Hưng, Thành phố Hồ Chí Minh
                     </h1>
                 </div>
-                
             </div>
 
             <div class="theme-selector-vertical lg:absolute lg:top-0 lg:right-0 bg-white/10 backdrop-blur-md border border-white/20 p-1.5 rounded-xl flex flex-col space-y-1.5 w-[75px] z-20 shadow-inner">
@@ -279,73 +276,21 @@
             </a>
             </main>
 
-            <section class="w-full pt-6 border-t border-slate-200">
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                    
-                    <div class="bg-red-600/90 border border-red-500/30 rounded-2xl p-5 shadow-sm text-white flex flex-col justify-between transition-transform duration-300 hover:scale-[1.02]">
-                        <div>
-                            <h2 class="text-sm font-black uppercase tracking-wider pb-2 border-b border-white/20 mb-3 flex items-center gap-2">
-                                🏛️ Đảng ủy xã Bình Hưng
-                            </h2>
-                            <div class="space-y-2 text-[11px] md:text-xs font-medium">
-                                <p class="flex items-start gap-2"><span class="flex-shrink-0">📍</span> <span>A10/26A đường số 10, KDC Bình Hưng, Ấp 6, Xã Bình Hưng, TP. Hồ Chí Minh</span></p>
-                                <p class="flex items-center gap-2"><span class="flex-shrink-0">📞</span> <span>028.3981.0015</span></p>
-                                <p class="flex items-center gap-2"><span class="flex-shrink-0">📧</span> <span class="break-all">binhhung@tphcm.gov.vn</span></p>
-                            </div>
-                        </div>
-                        <div class="mt-4 pt-2 border-t border-white/10 text-[10px] text-red-100 font-semibold bg-black/10 px-2.5 py-1 rounded-lg">
-                            🕒 Sáng: 07:30 – 11:30 | Chiều: 13:00 – 17:00 (T2 - T6)<br>Sáng thứ Bảy: 07:30 – 11:30
+            <section class="w-full pt-6 border-t border-slate-400/20 flex justify-center">
+                <div class="w-full max-w-md bg-blue-700/90 border border-blue-600/30 rounded-2xl p-5 shadow-sm text-white flex flex-col justify-between transition-transform duration-300 hover:scale-[1.02]">
+                    <div>
+                        <h2 class="text-sm font-black uppercase tracking-wider pb-2 border-b border-white/20 mb-3 flex items-center gap-2">
+                            🏛️ UBND xã Bình Hưng
+                        </h2>
+                        <div class="space-y-2 text-[11px] md:text-xs font-medium">
+                            <p class="flex items-start gap-2"><span class="flex-shrink-0">📍</span> <span>A10/26A đường số 10, KDC Bình Hưng, Ấp 6, Xã Bình Hưng, TP. Hồ Chí Minh</span></p>
+                            <p class="flex items-center gap-2"><span class="flex-shrink-0">📞</span> <span>028.3981.0015</span></p>
+                            <p class="flex items-center gap-2"><span class="flex-shrink-0">📧</span> <span class="break-all">binhhung@tphcm.gov.vn</span></p>
                         </div>
                     </div>
-
-                    <div class="bg-sky-500/90 border border-sky-400/30 rounded-2xl p-5 shadow-sm text-white flex flex-col justify-between transition-transform duration-300 hover:scale-[1.02]">
-                        <div>
-                            <h2 class="text-sm font-black uppercase tracking-wider pb-2 border-b border-white/20 mb-3 flex items-center gap-2">
-                                🏛️ HĐND xã Bình Hưng
-                            </h2>
-                            <div class="space-y-2 text-[11px] md:text-xs font-medium">
-                                <p class="flex items-start gap-2"><span class="flex-shrink-0">📍</span> <span>A10/26A đường số 10, KDC Bình Hưng, Ấp 6, Xã Bình Hưng, TP. Hồ Chí Minh</span></p>
-                                <p class="flex items-center gap-2"><span class="flex-shrink-0">📞</span> <span>028.3981.0015</span></p>
-                                <p class="flex items-center gap-2"><span class="flex-shrink-0">📧</span> <span class="break-all">binhhung@tphcm.gov.vn</span></p>
-                            </div>
-                        </div>
-                        <div class="mt-4 pt-2 border-t border-white/10 text-[10px] text-sky-50 font-semibold bg-black/10 px-2.5 py-1 rounded-lg">
-                            🕒 Sáng: 07:30 – 11:30 | Chiều: 13:00 – 17:00 (T2 - T6)<br>Sáng thứ Bảy: 07:30 – 11:30
-                        </div>
+                    <div class="mt-4 pt-2 border-t border-white/10 text-[10px] text-blue-50 font-semibold bg-black/10 px-2.5 py-1 rounded-lg">
+                        🕒 Sáng: 07:30 – 11:30 | Chiều: 13:00 – 17:00 (T2 - T6)<br>Sáng thứ Bảy: 07:30 – 11:30
                     </div>
-
-                    <div class="bg-blue-700/90 border border-blue-600/30 rounded-2xl p-5 shadow-sm text-white flex flex-col justify-between transition-transform duration-300 hover:scale-[1.02]">
-                        <div>
-                            <h2 class="text-sm font-black uppercase tracking-wider pb-2 border-b border-white/20 mb-3 flex items-center gap-2">
-                                🏛️ UBND xã Bình Hưng
-                            </h2>
-                            <div class="space-y-2 text-[11px] md:text-xs font-medium">
-                                <p class="flex items-start gap-2"><span class="flex-shrink-0">📍</span> <span>A10/26A đường số 10, KDC Bình Hưng, Ấp 6, Xã Bình Hưng, TP. Hồ Chí Minh</span></p>
-                                <p class="flex items-center gap-2"><span class="flex-shrink-0">📞</span> <span>028.3981.0015</span></p>
-                                <p class="flex items-center gap-2"><span class="flex-shrink-0">📧</span> <span class="break-all">binhhung@tphcm.gov.vn</span></p>
-                            </div>
-                        </div>
-                        <div class="mt-4 pt-2 border-t border-white/10 text-[10px] text-blue-50 font-semibold bg-black/10 px-2.5 py-1 rounded-lg">
-                            🕒 Sáng: 07:30 – 11:30 | Chiều: 13:00 – 17:00 (T2 - T6)<br>Sáng thứ Bảy: 07:30 – 11:30
-                        </div>
-                    </div>
-
-                    <div class="bg-emerald-600/90 border border-emerald-500/30 rounded-2xl p-5 shadow-sm text-white flex flex-col justify-between transition-transform duration-300 hover:scale-[1.02]">
-                        <div>
-                            <h2 class="text-sm font-black uppercase tracking-wider pb-2 border-b border-white/20 mb-3 flex items-center gap-2">
-                                🏛️ Ủy ban MTTQ Việt Nam xã
-                            </h2>
-                            <div class="space-y-2 text-[11px] md:text-xs font-medium">
-                                <p class="flex items-start gap-2"><span class="flex-shrink-0">📍</span> <span>A10/26A đường số 10, KDC Bình Hưng, Ấp 6, Xã Bình Hưng, TP. Hồ Chí Minh</span></p>
-                                <p class="flex items-center gap-2"><span class="flex-shrink-0">📞</span> <span>028.3981.0015</span></p>
-                                <p class="flex items-center gap-2"><span class="flex-shrink-0">📧</span> <span class="break-all">binhhung@tphcm.gov.vn</span></p>
-                            </div>
-                        </div>
-                        <div class="mt-4 pt-2 border-t border-white/10 text-[10px] text-emerald-50 font-semibold bg-black/10 px-2.5 py-1 rounded-lg">
-                            🕒 Sáng: 07:30 – 11:30 | Chiều: 13:00 – 17:00 (T2 - T6)<br>Sáng thứ Bảy: 07:30 – 11:30
-                        </div>
-                    </div>
-
                 </div>
             </section>
             
@@ -407,7 +352,7 @@
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
 
-        // HÀM CHUYỂN ĐỔI THEME ĐỘNG HEADER ĐỒNG BỘ
+        // HÀM CHUYỂN ĐỔI THEME ĐỘNG HEADER ĐỒNG BỘ TRỞ LẠI
         window.switchSystemTheme = function(modeName) {
             const body = document.getElementById('dynamic-body');
             const btnXanh = document.getElementById('btn-theme-xanh');
@@ -436,10 +381,12 @@
                 document.getElementById('email').focus();
             }
         }
+        
         window.closeLoginModal = function() {
             document.getElementById('loginModal').classList.remove('open');
             document.getElementById('loginForm').reset();
         }
+        
         window.submitAuth = function(e) {
             e.preventDefault();
             const emailInp = document.getElementById('email').value.trim();
