@@ -89,9 +89,9 @@
         /* LOOKUP LINKS TỐI ƯU THEMES */
         .lookup-card { transition: all 0.3s; }
         body.light-theme .lookup-card { background: #ffffff; border-color: #e2e8f0; color: #1e3a8a; }
-        body.light-theme .lookup-card:hover { border-color: #0ea5e9; background: #f0f9ff; }
+        body.light-theme .lookup-card:hover { transform: translateY(-4px); box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1); }
         body.dark-theme .lookup-card { background: rgba(8, 47, 73, 0.6); border-color: rgba(56, 189, 248, 0.3); color: #e0f2fe; }
-        body.dark-theme .lookup-card:hover { border-color: #38bdf8; background: rgba(8, 47, 73, 0.9); }
+        body.dark-theme .lookup-card:hover { transform: translateY(-4px); border-color: #38bdf8; background: rgba(8, 47, 73, 0.9); box-shadow: 0 10px 25px -5px rgba(0,0,0,0.4); }
 
         /* SCROLLBAR */
         .custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
@@ -161,7 +161,6 @@
                 </div>
             </div>
             
-            <!-- MENU TABS: 2 TAB MỚI Ở ĐẦU -->
             <div class="flex flex-row gap-3 overflow-x-auto pb-2 custom-scrollbar">
                 <button onclick="changeContent('intro', '', this)" class="tab-btn shrink-0">🏛️ TT Phục vụ Hành chính công</button>
                 <button onclick="changeContent('qr-slider', '', this)" class="tab-btn shrink-0">📱 Mã QR TTHC</button>
@@ -170,7 +169,6 @@
                 <button onclick="changeContent('lookup-links', '', this)" class="tab-btn shrink-0">🔍 Tra cứu trực tuyến</button>
             </div>
 
-            <!-- KHUNG HIỂN THỊ NỘI DUNG -->
             <div id="viewer-viewport" class="content-viewer-container custom-scrollbar"></div>
             
             <p id="helper-text" class="text-center text-xs font-bold italic opacity-80 mt-2">💡 Hướng dẫn: Xem chi tiết phía trên hoặc bấm sang tab Tra cứu trực tuyến để thao tác.</p>
@@ -196,12 +194,11 @@
             const counterEl = document.getElementById('slide-counter');
             
             if (imgEl && counterEl) {
-                // Hiệu ứng Fade out nhẹ
                 imgEl.style.opacity = 0.2;
                 setTimeout(() => {
                     imgEl.src = `hinh-anh/ma_qr_tthc_${currentSlide}.jpg`;
                     imgEl.alt = `Mã QR TTHC ${currentSlide}`;
-                    counterEl.innerText = `Hình ${currentSlide} / ${totalSlides}`;
+                    counterEl.innerText = `HÌNH ${currentSlide} / ${totalSlides}`;
                     imgEl.style.opacity = 1;
                 }, 150);
             }
@@ -242,7 +239,7 @@
                 btnLight.className = "flex items-center gap-1.5 text-[11px] font-extrabold uppercase px-3 py-1.5 rounded-lg transition border border-transparent text-sky-400 hover:text-sky-300";
             }
 
-            // Gọi lại hàm đổi nội dung Tab hiện tại để cập nhật màu chữ bên trong khối Nội dung
+            // Cập nhật nội dung hiển thị
             const activeTabBtn = document.querySelector('.tab-btn.active');
             if(activeTabBtn) {
                 if(activeTabBtn.innerText.includes('TT Phục vụ Hành chính công')) changeContent('intro', '', activeTabBtn);
@@ -258,7 +255,6 @@
             const isDark = document.body.classList.contains('dark-theme');
             
             if (type === 'intro') {
-                // Tab 1: Giới thiệu TT Phục vụ Hành chính công
                 const textClass = isDark ? "text-sky-100" : "text-slate-700";
                 const titleClass = isDark ? "text-sky-400" : "text-[#0b4a8f]";
                 viewport.innerHTML = `
@@ -276,27 +272,22 @@
                 `;
 
             } else if (type === 'qr-slider') {
-                // Tab 2: Slider Mã QR
-                currentSlide = 1; // reset về hình 1 mỗi khi mở tab
+                currentSlide = 1; 
                 const titleClass = isDark ? "text-sky-400" : "text-[#0b4a8f]";
                 viewport.innerHTML = `
-                    <div class="w-full h-full flex flex-col items-center justify-start md:justify-center p-4 md:p-8 bg-slate-50/50 dark:bg-slate-900/30 relative">
+                    <div class="w-full h-full flex flex-col items-center justify-start md:justify-center p-4 md:p-8 relative">
                         <h3 class="text-lg md:text-xl font-black uppercase tracking-wide mb-6 md:mb-8 text-center ${titleClass}">Quét Mã QR - Tra cứu nhanh Thủ tục Hành chính</h3>
                         
                         <div class="relative w-full max-w-3xl flex items-center justify-center">
-                            <!-- Nút Trái -->
                             <button onclick="moveSlide(-1)" class="absolute -left-2 md:-left-12 z-10 w-10 h-10 md:w-12 md:h-12 bg-white dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-full shadow-md hover:bg-sky-50 dark:hover:bg-slate-600 flex items-center justify-center text-xl text-sky-600 dark:text-sky-300 font-bold transition-transform hover:scale-110">❮</button>
                             
-                            <!-- Khung Ảnh -->
                             <div class="overflow-hidden relative w-full aspect-[4/5] md:aspect-video rounded-2xl shadow-inner border-[6px] border-white dark:border-slate-700 flex items-center justify-center bg-slate-100 dark:bg-slate-800">
                                 <img id="qr-slide-img" src="hinh-anh/ma_qr_tthc_1.jpg" alt="Mã QR TTHC 1" class="w-full h-full object-contain transition-opacity duration-300" onerror="this.src='https://via.placeholder.com/1200x800.png?text=Hinh+Anh+Ma+QR+TTHC+1'">
                             </div>
                             
-                            <!-- Nút Phải -->
                             <button onclick="moveSlide(1)" class="absolute -right-2 md:-right-12 z-10 w-10 h-10 md:w-12 md:h-12 bg-white dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-full shadow-md hover:bg-sky-50 dark:hover:bg-slate-600 flex items-center justify-center text-xl text-sky-600 dark:text-sky-300 font-bold transition-transform hover:scale-110">❯</button>
                         </div>
 
-                        <!-- Đếm số -->
                         <div class="mt-8">
                             <span id="slide-counter" class="bg-blue-900/10 dark:bg-sky-500/20 text-blue-800 dark:text-sky-200 px-5 py-2 rounded-full text-sm font-bold border border-blue-200 dark:border-sky-500/30 shadow-sm tracking-wider">HÌNH 1 / 6</span>
                         </div>
@@ -337,47 +328,47 @@
 
             } else if (type === 'lookup-links') {
                 const subTextClass = isDark ? "text-sky-200" : "text-slate-500";
-                const arrowClass = isDark ? "text-sky-600" : "text-slate-300";
-
+                
                 viewport.innerHTML = `
-                    <div class="p-6 md:p-10 flex flex-col items-center justify-start h-full space-y-5 rounded-xl">
-                        <div class="text-center mb-6">
-                            <h3 class="text-xl font-black uppercase tracking-wide">Cổng Tra cứu Trực tuyến</h3>
-                            <div class="h-1 w-16 bg-sky-500 mx-auto mt-3 rounded-full"></div>
+                    <div class="p-6 md:p-10 flex flex-col items-center justify-start h-full rounded-xl">
+                        <div class="text-center mb-10">
+                            <h3 class="text-xl md:text-2xl font-black uppercase tracking-wide">Cổng Tra cứu Trực tuyến</h3>
+                            <div class="h-1.5 w-16 bg-sky-500 mx-auto mt-4 rounded-full"></div>
                         </div>
                         
-                        <a href="https://baohiemxahoi.gov.vn/tracuu/Pages/tra-cuu-thoi-han-su-dung-the-bhyt.aspx" target="_blank" class="w-full max-w-2xl lookup-card p-5 rounded-2xl flex items-center justify-between shadow-sm hover:shadow-md transition-all group border-2">
-                            <div class="flex items-center gap-5">
-                                <div class="w-12 h-12 bg-sky-100 text-sky-600 rounded-xl flex items-center justify-center text-2xl shadow-inner shrink-0">🏥</div>
-                                <div class="flex flex-col text-left">
-                                    <span class="font-black uppercase text-sm group-hover:text-sky-500 transition-colors">Tra cứu BHYT</span>
-                                    <span class="text-xs ${subTextClass} font-medium mt-1">Tra cứu thời hạn sử dụng thẻ Bảo hiểm Y tế</span>
-                                </div>
-                            </div>
-                            <span class="${arrowClass} group-hover:text-sky-500 font-black text-xl transition-transform group-hover:translate-x-1 shrink-0">➔</span>
-                        </a>
-                        
-                        <a href="https://baohiemxahoi.gov.vn/tracuu/Pages/tra-cuu-ho-gia-dinh.aspx" target="_blank" class="w-full max-w-2xl lookup-card p-5 rounded-2xl flex items-center justify-between shadow-sm hover:shadow-md transition-all group border-2">
-                            <div class="flex items-center gap-5">
-                                <div class="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-xl flex items-center justify-center text-2xl shadow-inner shrink-0">📘</div>
-                                <div class="flex flex-col text-left">
-                                    <span class="font-black uppercase text-sm group-hover:text-emerald-500 transition-colors">Tra cứu số sổ BHXH</span>
-                                    <span class="text-xs ${subTextClass} font-medium mt-1">Tra cứu mã số Bảo hiểm Xã hội cá nhân</span>
-                                </div>
-                            </div>
-                            <span class="${arrowClass} group-hover:text-emerald-500 font-black text-xl transition-transform group-hover:translate-x-1 shrink-0">➔</span>
-                        </a>
+                        <div class="w-full max-w-6xl grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+                            
+                            <!-- Box 1 -->
+                            <a href="https://baohiemxahoi.gov.vn/tracuu/Pages/tra-cuu-thoi-han-su-dung-the-bhyt.aspx" target="_blank" class="w-full lookup-card p-6 lg:p-8 rounded-2xl flex flex-col items-center text-center shadow-sm hover:shadow-xl transition-all duration-300 group border-2">
+                                <div class="w-16 h-16 bg-sky-100 text-sky-600 rounded-2xl flex items-center justify-center text-3xl shadow-inner mb-5 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3 shrink-0">🏥</div>
+                                <span class="font-black uppercase text-sm lg:text-base group-hover:text-sky-500 transition-colors mb-2">Tra cứu BHYT</span>
+                                <span class="text-xs lg:text-sm ${subTextClass} font-medium leading-relaxed mb-6 flex-grow">Tra cứu thời hạn sử dụng thẻ Bảo hiểm Y tế</span>
+                                <span class="inline-flex items-center justify-center bg-slate-100 dark:bg-slate-800 group-hover:bg-sky-500 text-slate-500 dark:text-sky-300 group-hover:text-white px-4 py-2 rounded-full text-xs font-bold transition-colors">
+                                    Truy cập ngay <span class="ml-1 transition-transform group-hover:translate-x-1">➔</span>
+                                </span>
+                            </a>
+                            
+                            <!-- Box 2 -->
+                            <a href="https://baohiemxahoi.gov.vn/tracuu/Pages/tra-cuu-ho-gia-dinh.aspx" target="_blank" class="w-full lookup-card p-6 lg:p-8 rounded-2xl flex flex-col items-center text-center shadow-sm hover:shadow-xl transition-all duration-300 group border-2">
+                                <div class="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-2xl flex items-center justify-center text-3xl shadow-inner mb-5 transition-transform duration-300 group-hover:scale-110 group-hover:-rotate-3 shrink-0">📘</div>
+                                <span class="font-black uppercase text-sm lg:text-base group-hover:text-emerald-500 transition-colors mb-2">Tra cứu số sổ BHXH</span>
+                                <span class="text-xs lg:text-sm ${subTextClass} font-medium leading-relaxed mb-6 flex-grow">Tra cứu mã số Bảo hiểm Xã hội cá nhân</span>
+                                <span class="inline-flex items-center justify-center bg-slate-100 dark:bg-slate-800 group-hover:bg-emerald-500 text-slate-500 dark:text-sky-300 group-hover:text-white px-4 py-2 rounded-full text-xs font-bold transition-colors">
+                                    Truy cập ngay <span class="ml-1 transition-transform group-hover:translate-x-1">➔</span>
+                                </span>
+                            </a>
 
-                        <a href="https://dichvucong.gov.vn" target="_blank" class="w-full max-w-2xl lookup-card p-5 rounded-2xl flex items-center justify-between shadow-sm hover:shadow-md transition-all group border-2">
-                            <div class="flex items-center gap-5">
-                                <div class="w-12 h-12 bg-amber-100 text-amber-600 rounded-xl flex items-center justify-center text-2xl shadow-inner shrink-0">🏛️</div>
-                                <div class="flex flex-col text-left">
-                                    <span class="font-black uppercase text-sm group-hover:text-amber-500 transition-colors">Tra cứu TTHC trên Cổng DVC Quốc gia</span>
-                                    <span class="text-xs ${subTextClass} font-medium mt-1">Kết nối trực tiếp Cổng Dịch vụ công Quốc gia</span>
-                                </div>
-                            </div>
-                            <span class="${arrowClass} group-hover:text-amber-500 font-black text-xl transition-transform group-hover:translate-x-1 shrink-0">➔</span>
-                        </a>
+                            <!-- Box 3 -->
+                            <a href="https://dichvucong.gov.vn" target="_blank" class="w-full lookup-card p-6 lg:p-8 rounded-2xl flex flex-col items-center text-center shadow-sm hover:shadow-xl transition-all duration-300 group border-2">
+                                <div class="w-16 h-16 bg-amber-100 text-amber-600 rounded-2xl flex items-center justify-center text-3xl shadow-inner mb-5 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3 shrink-0">🏛️</div>
+                                <span class="font-black uppercase text-sm lg:text-base group-hover:text-amber-500 transition-colors mb-2">Cổng DVC Quốc gia</span>
+                                <span class="text-xs lg:text-sm ${subTextClass} font-medium leading-relaxed mb-6 flex-grow">Kết nối trực tiếp Cổng Dịch vụ công Quốc gia</span>
+                                <span class="inline-flex items-center justify-center bg-slate-100 dark:bg-slate-800 group-hover:bg-amber-500 text-slate-500 dark:text-sky-300 group-hover:text-white px-4 py-2 rounded-full text-xs font-bold transition-colors">
+                                    Truy cập ngay <span class="ml-1 transition-transform group-hover:translate-x-1">➔</span>
+                                </span>
+                            </a>
+
+                        </div>
                     </div>
                 `;
             } else {
@@ -404,9 +395,9 @@
             }
         };
 
-        // KÍCH HOẠT KHI TẢI TRANG (Mặc định chọn tab Intro đầu tiên)
+        // KÍCH HOẠT KHI TẢI TRANG
         document.addEventListener('DOMContentLoaded', function() {
-            setTheme('light'); 
+            setTheme('light'); // Khởi tạo mặc định Sáng
             const firstTab = document.querySelector('.tab-btn');
             if (firstTab) firstTab.click();
         });
