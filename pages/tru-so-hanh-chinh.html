@@ -22,26 +22,39 @@
             color: #0f172a;
         }
         
-        /* THEME TỐI (KHÔNG DÙNG MÀU ĐEN - SỬ DỤNG DEEP NAVY) */
+        /* THEME TỐI (UNIFIED DARK MODE - KHÔNG CÒN XANH ĐỎ) */
         body.dark-theme {
             background-color: #082f49; 
             color: #e0f2fe;
         }
 
-        /* ================= KỸ THUẬT NỀN ĐỘNG GRADIENT TẠI HEADER (XANH / ĐỎ) ================= */
-        body.theme-xanh-ios .main-header {
+        /* ================= KỸ THUẬT NỀN ĐỘNG GRADIENT TẠI HEADER ================= */
+        /* Chỉ áp dụng Xanh/Đỏ khi ở Theme Sáng */
+        body.light-theme.theme-xanh-ios .main-header {
             background: linear-gradient(-45deg, #0b4a8f, #05234a, #0d5cb3, #02142d);
             background-size: 400% 400%; animation: gradientGIF 12s ease infinite;
             box-shadow: 0 4px 15px rgba(11, 74, 143, 0.15); border-bottom: 2px solid #032b5c;
         }
 
-        body.theme-do-hanhchinh .main-header {
+        body.light-theme.theme-do-hanhchinh .main-header {
             background: linear-gradient(-45deg, #dc2626, #7f1d1d, #ef4444, #450a0a);
             background-size: 400% 400%; animation: gradientGIF 12s ease infinite;
             box-shadow: 0 4px 15px rgba(220, 38, 38, 0.15); border-bottom: 2px solid #991b1b;
         }
 
+        /* Khi ở Theme Tối: Header chuyển sang màu Tối chuyên biệt (Deep Navy) */
+        body.dark-theme .main-header {
+            background: linear-gradient(-45deg, #020617, #0f172a, #082f49, #020617);
+            background-size: 400% 400%; animation: gradientGIF 12s ease infinite;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5); border-bottom: 2px solid #082f49;
+        }
+
         @keyframes gradientGIF { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+
+        /* ẨN NÚT CHỌN XANH/ĐỎ KHI Ở THEME TỐI ĐỂ ĐỒNG BỘ UX */
+        body.dark-theme .theme-selector-vertical {
+            display: none !important;
+        }
 
         /* LOGO ANIMATION */
         .logo-main { animation: float 4s ease-in-out infinite; }
@@ -50,29 +63,36 @@
             50% { transform: translateY(-3px); filter: drop-shadow(0 8px 12px rgba(0, 0, 0, 0.3)); }
         }
 
-        /* ================= KHỐI NỀN ĐỘNG BAO BỌC (XANH NGỌC HOẶC ĐỎ TƯƠI) ================= */
+        /* ================= KHỐI NỀN ĐỘNG BAO BỌC ================= */
         .menu-panel-wrapper {
             backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
             border: 1px solid rgba(255, 255, 255, 0.6); border-radius: 32px;
             width: 100%; transition: all 0.5s ease;
         }
-        body.dark-theme .menu-panel-wrapper { border-color: rgba(56, 189, 248, 0.2); }
 
-        body.theme-xanh-ios .menu-panel-wrapper {
+        /* Nền Xanh / Đỏ chỉ áp dụng cho Theme Sáng */
+        body.light-theme.theme-xanh-ios .menu-panel-wrapper {
             background-color: rgba(128, 255, 232, 0.45); box-shadow: 0 20px 50px -10px rgba(12, 74, 110, 0.15);
         }
-        body.theme-do-hanhchinh .menu-panel-wrapper {
+        body.light-theme.theme-do-hanhchinh .menu-panel-wrapper {
             background-color: rgba(220, 38, 38, 0.85); box-shadow: 0 20px 50px -10px rgba(185, 28, 28, 0.4); border-color: rgba(239, 68, 68, 1);
         }
 
-        /* ĐỒNG BỘ MÀU BANNER TIÊU ĐỀ */
-        .title-banner { transition: all 0.5s ease; }
-        body.theme-xanh-ios .title-banner { background-color: #0ea5e9; border-bottom-color: #0284c7; }
-        body.theme-do-hanhchinh .title-banner { background-color: #dc2626; border-bottom-color: #991b1b; }
-        
-        body.dark-theme .title-banner { background-color: rgba(15, 23, 42, 0.6); border-bottom-color: rgba(56, 189, 248, 0.5); backdrop-filter: blur(10px); }
+        /* Nền Tối chuyên dụng */
+        body.dark-theme .menu-panel-wrapper {
+            background-color: rgba(8, 47, 73, 0.6); 
+            box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.4); 
+            border-color: rgba(56, 189, 248, 0.2); 
+        }
 
-        /* ================= COMPONENT BÊN TRONG (PHẢN HỒI SÁNG/TỐI) ================= */
+        /* ================= ĐỒNG BỘ MÀU BANNER TIÊU ĐỀ ================= */
+        .title-banner { transition: all 0.5s ease; }
+        body.light-theme.theme-xanh-ios .title-banner { background-color: #0ea5e9; border-bottom-color: #0284c7; }
+        body.light-theme.theme-do-hanhchinh .title-banner { background-color: #dc2626; border-bottom-color: #991b1b; }
+        
+        body.dark-theme .title-banner { background-color: rgba(15, 23, 42, 0.7); border-bottom-color: rgba(56, 189, 248, 0.5); backdrop-filter: blur(10px); }
+
+        /* ================= COMPONENT BÊN TRONG ================= */
         .btn-back { display: inline-flex; align-items: center; gap: 8px; border: 1px solid; padding: 12px 24px; border-radius: 14px; font-weight: 800; font-size: 12px; text-transform: uppercase; transition: all 0.3s ease; }
         
         body.light-theme .btn-back { background: #ffffff; border-color: #e2e8f0; color: #334155; }
@@ -113,17 +133,15 @@
         body.dark-theme .tab-flat-item p { color: #7dd3fc; }
         body.dark-theme .tab-flat-item:hover { transform: translateY(-2px); border-color: #38bdf8; background-color: rgba(8, 47, 73, 0.9); }
 
-        /* Tab Active State (Giao thoa với Xanh/Đỏ) */
+        /* Tab Active State */
         .tab-flat-item.active { color: #ffffff !important; }
         .tab-flat-item.active h3 { color: #ffffff !important; }
         .tab-flat-item.active p { color: rgba(255, 255, 255, 0.9) !important; }
         .tab-flat-item.active .dynamic-phone { color: #fcd34d !important; } 
 
-        body.theme-xanh-ios.light-theme .tab-flat-item.active { border-color: #0b4a8f; background-color: #0b4a8f; box-shadow: 0 4px 12px rgba(11, 74, 143, 0.2); }
-        body.theme-do-hanhchinh.light-theme .tab-flat-item.active { border-color: #7f1d1d; background-color: #7f1d1d; box-shadow: 0 4px 12px rgba(127, 29, 29, 0.4); }
-        
-        body.theme-xanh-ios.dark-theme .tab-flat-item.active { border-color: #38bdf8; background-color: #0284c7; box-shadow: 0 4px 12px rgba(2, 132, 199, 0.4); }
-        body.theme-do-hanhchinh.dark-theme .tab-flat-item.active { border-color: #fca5a5; background-color: #b91c1c; box-shadow: 0 4px 12px rgba(185, 28, 28, 0.4); }
+        body.light-theme.theme-xanh-ios .tab-flat-item.active { border-color: #0b4a8f; background-color: #0b4a8f; box-shadow: 0 4px 12px rgba(11, 74, 143, 0.2); }
+        body.light-theme.theme-do-hanhchinh .tab-flat-item.active { border-color: #7f1d1d; background-color: #7f1d1d; box-shadow: 0 4px 12px rgba(127, 29, 29, 0.4); }
+        body.dark-theme .tab-flat-item.active { border-color: #38bdf8; background-color: #0284c7; box-shadow: 0 4px 12px rgba(2, 132, 199, 0.4); }
 
         /* NÚT ĐIỀU HƯỚNG MŨI TÊN */
         .scroll-btn {
@@ -132,6 +150,7 @@
             display: flex; align-items: center; justify-content: center;
             font-weight: bold; cursor: pointer; transition: all 0.2s;
         }
+        
         /* Sáng */
         body.light-theme .scroll-btn { background: rgba(255,255,255,0.9); border-color: #e2e8f0; color: #0ea5e9; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); }
         body.light-theme.theme-do-hanhchinh .scroll-btn { color: #dc2626; border-color: #fca5a5; }
@@ -139,12 +158,9 @@
         body.light-theme.theme-xanh-ios .scroll-btn:hover { background: #0ea5e9; border-color: #0ea5e9; }
         body.light-theme.theme-do-hanhchinh .scroll-btn:hover { background: #dc2626; border-color: #dc2626; }
         
-        /* Tối */
+        /* Tối (Hợp nhất) */
         body.dark-theme .scroll-btn { background: rgba(8, 47, 73, 0.8); border-color: rgba(56, 189, 248, 0.3); color: #38bdf8; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.3); }
-        body.dark-theme.theme-do-hanhchinh .scroll-btn { color: #fca5a5; border-color: rgba(248, 113, 113, 0.3); }
-        body.dark-theme .scroll-btn:hover { color: white; transform: translateY(-50%) scale(1.1); }
-        body.dark-theme.theme-xanh-ios .scroll-btn:hover { background: #0284c7; border-color: #38bdf8; }
-        body.dark-theme.theme-do-hanhchinh .scroll-btn:hover { background: #b91c1c; border-color: #f87171; }
+        body.dark-theme .scroll-btn:hover { color: white; transform: translateY(-50%) scale(1.1); background: #0284c7; border-color: #38bdf8; }
 
         .btn-left { left: -10px; }
         .btn-right { right: -10px; }
@@ -162,6 +178,7 @@
 </head>
 <body class="theme-xanh-ios light-theme custom-scrollbar" id="dynamic-body">
 
+    <!-- HEADER -->
     <header class="main-header w-full py-6 px-6 md:px-12 select-none relative transition-all duration-300">
         <div class="max-w-[1550px] mx-auto flex flex-col items-center justify-center relative header-layout">
             
@@ -180,6 +197,7 @@
                 </div>
             </div>
 
+            <!-- CHUYỂN ĐỔI THEME XANH / ĐỎ -->
             <div class="theme-selector-vertical lg:absolute lg:top-0 lg:right-0 bg-white/10 backdrop-blur-md border border-white/20 p-1.5 rounded-xl flex flex-col space-y-1.5 w-[75px] z-20 shadow-inner">
                 <button onclick="switchSystemTheme('xanh')" id="btn-theme-xanh" 
                     class="w-full text-center text-[10px] font-extrabold uppercase py-1.5 rounded-lg transition-all duration-300 bg-blue-600 text-white shadow-md">
@@ -207,6 +225,7 @@
         <div class="menu-panel-wrapper p-4 md:p-8 space-y-6">
             
             <div class="flex flex-col md:flex-row justify-between items-center gap-4 w-full">
+                <!-- CỤM NÚT ĐIỀU HƯỚNG BÊN TRÁI (QUAY LẠI & SÁNG/TỐI) -->
                 <div class="flex flex-wrap items-center gap-3 w-full md:w-auto shrink-0">
                     <a href="../home.html" class="btn-back">
                         ⬅️ Quay lại Trang chủ
@@ -218,21 +237,27 @@
                     </div>
                 </div>
 
+                <!-- THANH TÌM KIẾM BÊN PHẢI -->
                 <div class="relative w-full md:w-80 lg:w-96 shrink-0">
                     <span class="absolute left-3.5 top-2.5 text-base opacity-60">🔍</span>
                     <input type="text" id="search_input" placeholder="Tra cứu cơ quan..." class="w-full bg-white rounded-xl pl-10 pr-4 py-2.5 text-sm font-semibold border focus:outline-none focus:ring-4 focus:ring-blue-700/10 shadow-sm font-['Inter'] transition-all">
                 </div>
             </div>
 
+            <!-- KHỐI CHỨA CÁC THẺ (CÓ NÚT TRÁI/PHẢI) -->
             <div class="relative w-full flex items-center">
+                <!-- Nút cuộn trái -->
                 <button onclick="scrollList(-1)" class="scroll-btn btn-left hidden md:flex">❮</button>
                 
                 <div id="list_container" class="w-full flex flex-row gap-3 overflow-x-auto pb-3 pt-1 scrollbar-none snap-x touch-pan-x smooth-scroll">
-                    </div>
+                    <!-- Javascript sẽ đổ dữ liệu vào đây -->
+                </div>
                 
+                <!-- Nút cuộn phải -->
                 <button onclick="scrollList(1)" class="scroll-btn btn-right hidden md:flex">❯</button>
             </div>
 
+            <!-- KHUNG BẢN ĐỒ -->
             <div id="map_frame_container" class="w-full h-[400px] md:h-[550px] lg:h-[650px] rounded-2xl overflow-hidden border border-slate-200 shadow-lg bg-white relative transition-all duration-300">
                 <iframe id="map_frame" src="" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
             </div>
@@ -295,13 +320,13 @@
                     <p class="text-[10px] md:text-[11px] font-medium truncate flex items-center gap-1.5 mb-1">
                         <span class="opacity-70 flex-shrink-0">📍</span> ${item.address}
                     </p>
-                    <p class="text-[10px] md:text-[11px] font-bold truncate flex items-center gap-1.5 dynamic-phone" style="color: #0284c7;">
+                    <p class="text-[10px] md:text-[11px] font-bold truncate flex items-center gap-1.5 dynamic-phone">
                         <span class="opacity-70 flex-shrink-0">📞</span> ${item.phone || 'Đang cập nhật'}
                     </p>
                 </div>
             `).join('');
             
-            // Xử lý lại màu sắc icon điện thoại cho Dark theme sau khi render
+            // Cập nhật lại logic đổi màu cho icon phone
             applyDarkModeOverrides();
         }
 
@@ -380,7 +405,7 @@
             }
         }
 
-        // ĐIỀU CHUYỂN THEME SÁNG / TỐI (NỘI DUNG)
+        // ĐIỀU CHUYỂN THEME SÁNG / TỐI TỔNG THỂ
         window.setTheme = function(themeName) {
             const body = document.getElementById('dynamic-body');
             const btnLight = document.getElementById('btn-theme-light');
@@ -391,7 +416,7 @@
                 body.classList.add('light-theme');
                 
                 btnLight.className = "flex items-center gap-1.5 text-[11px] font-extrabold uppercase px-3 py-1.5 rounded-lg transition bg-white text-blue-900 shadow-sm border border-blue-200";
-                btnDark.className = "flex items-center gap-1.5 text-[11px] font-extrabold uppercase px-3 py-1.5 rounded-lg transition border border-transparent text-slate-500 hover:text-blue-900";
+                btnDark.className = "flex items-center gap-1.5 text-[11px] font-extrabold uppercase px-3 py-1.5 rounded-lg transition border border-transparent text-slate-500 hover:text-blue-900 dark:text-sky-200 dark:hover:text-white";
             } else {
                 body.classList.remove('light-theme');
                 body.classList.add('dark-theme');
