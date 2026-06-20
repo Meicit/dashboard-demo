@@ -58,15 +58,12 @@
         body.dark-theme .content-viewer-container { background: rgba(15, 23, 42, 0.6); border-color: rgba(56, 189, 248, 0.3); }
 
         /* TAB BUTTONS */
-        .tab-btn { border: 1px solid; font-weight: 800; font-size: 0.75rem; text-transform: uppercase; padding: 12px 24px; border-radius: 12px; transition: all 0.2s; white-space: nowrap; }
+        .tab-btn { border: 1px solid; font-weight: 800; font-size: 0.75rem; text-transform: uppercase; padding: 12px 24px; border-radius: 12px; transition: all 0.2s; white-space: nowrap; cursor: pointer; }
         body.light-theme .tab-btn { background: #ffffff; border-color: #e2e8f0; }
         body.light-theme.theme-xanh-ios .tab-btn { color: #1e3a8a; }
         body.light-theme.theme-xanh-ios .tab-btn.active { background: #1e40af; color: white; border-color: #1e40af; }
-        
-        /* Tab Button: Đỏ Cờ */
         body.light-theme.theme-do-hanhchinh .tab-btn { color: #da251d; border-color: #fca5a5; }
         body.light-theme.theme-do-hanhchinh .tab-btn.active { background: #da251d; color: white; border-color: #da251d; } 
-        
         body.dark-theme .tab-btn { background: rgba(8, 47, 73, 0.6); border-color: rgba(56, 189, 248, 0.3); color: #38bdf8; }
         body.dark-theme .tab-btn.active { background: #0284c7; color: white; border-color: #38bdf8; }
 
@@ -82,7 +79,7 @@
         /* SCROLLBAR */
         .custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
         .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(14, 165, 233, 0.4); border-radius: 10px; }
-
+        
         /* FOOTER */
         body.dark-theme footer { background-color: rgba(8, 47, 73, 0.6); border-color: rgba(56, 189, 248, 0.2); color: #38bdf8; backdrop-filter: blur(10px); }
 
@@ -113,6 +110,7 @@
                 </div>
             </div>
 
+            <!-- CHUYỂN ĐỔI THEME XANH / ĐỎ -->
             <div class="theme-selector-vertical lg:absolute lg:top-0 lg:right-0 bg-white/10 backdrop-blur-md border border-white/20 p-1.5 rounded-xl flex flex-col space-y-1.5 w-[75px] z-20 shadow-inner">
                 <button onclick="switchSystemTheme('xanh')" id="btn-theme-xanh" class="w-full text-center text-[10px] font-extrabold uppercase py-1.5 rounded-lg transition-all duration-300 bg-blue-600 text-white shadow-md">🔵 Xanh</button>
                 <button onclick="switchSystemTheme('do')" id="btn-theme-do" class="w-full text-center text-[10px] font-extrabold uppercase py-1.5 rounded-lg transition-all duration-300 text-white/80 hover:text-white">🔴 Đỏ</button>
@@ -134,6 +132,7 @@
         <article class="menu-panel-wrapper flex flex-col space-y-4">
             
             <div class="flex flex-col md:flex-row justify-between items-center gap-4 pb-3 border-b border-white/40">
+                <!-- CỤM NÚT ĐIỀU HƯỚNG BÊN TRÁI (QUAY LẠI & SÁNG/TỐI) -->
                 <div class="flex flex-wrap items-center gap-3 w-full md:w-auto shrink-0">
                     <a href="home.html" class="btn-back">
                         ⬅️ Quay lại Trang chủ
@@ -146,13 +145,15 @@
                 </div>
             </div>
 
+            <!-- MENU TABS CHỌN BẢN ĐỒ -->
             <div class="flex flex-row gap-3 overflow-x-auto pb-2 custom-scrollbar">
                 <button onclick="changeMap('ranh-ap', this)" class="tab-btn active shrink-0">🗺️ Ranh 39 ấp xã Bình Hưng</button>
-                <button onclick="changeMap('quy-hoach', this)" class="tab-btn shrink-0">🔍 Tra cứu thông tin quy hoạch</button>
+                <button onclick="window.open('https://thongtinquyhoach.hochiminhcity.gov.vn', '_blank')" class="tab-btn shrink-0 hover:bg-slate-50 dark:hover:bg-slate-700">🔍 Tra cứu thông tin quy hoạch ↗</button>
             </div>
             
+            <!-- KHUNG HIỂN THỊ BẢN ĐỒ -->
             <div class="content-viewer-container bg-slate-50 dark:bg-slate-800">
-                <iframe id="map-iframe" src="https://www.google.com/maps/d/embed?mid=1r3Pu1JREpzimi67036GbAuFPN23knQA&ehbc=2E312F" width="70%" height="70%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                <iframe id="map-iframe" src="https://www.google.com/maps/d/embed?mid=1r3Pu1JREpzimi67036GbAuFPN23knQA&ehbc=2E312F" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
             </div>
             
         </article>
@@ -160,23 +161,21 @@
     </div>
 
     <footer class="w-full text-center py-6 font-medium text-[11px] uppercase tracking-widest border-t bg-white shadow-sm mt-auto transition-all duration-300">
-        © 2026 IOC BINH HƯNG — BẢN QUYỀN THUỘC UBND XÃ BÌNH HƯNG
+        &copy; 2026 IOC BINH HƯNG — BẢN QUYỀN THUỘC UBND XÃ BÌNH HƯNG
     </footer>
 
     <script>
-        // HÀM CHUYỂN ĐỔI BẢN ĐỒ
+        // HÀM CHUYỂN ĐỔI BẢN ĐỒ (Bỏ tab quy hoạch vì đã mở thẻ mới)
         window.changeMap = function(type, buttonElement) {
             const iframe = document.getElementById('map-iframe');
             
             if (type === 'ranh-ap') {
                 iframe.src = "https://www.google.com/maps/d/embed?mid=1r3Pu1JREpzimi67036GbAuFPN23knQA&ehbc=2E312F";
-            } else if (type === 'quy-hoach') {
-                iframe.src = "https://thongtinquyhoach.hochiminhcity.gov.vn";
+                
+                // Chỉ đổi màu tab active nếu click vào nút hiển thị trên trang
+                document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+                buttonElement.classList.add('active');
             }
-
-            // Đổi màu tab đang được chọn
-            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-            buttonElement.classList.add('active');
         };
 
         // HÀM CHUYỂN ĐỔI THEME HEADER VÀ NỀN (XANH / ĐỎ TƯƠI)
@@ -196,7 +195,7 @@
             }
         }
 
-        // HÀM CHUYỂN ĐỔI THEME SÁNG / TỐI (Tương đồng với trang TTHC)
+        // HÀM CHUYỂN ĐỔI THEME SÁNG / TỐI
         window.setTheme = function(themeName) {
             const body = document.getElementById('dynamic-body');
             const btnLight = document.getElementById('btn-theme-light');
