@@ -62,7 +62,7 @@
         body.dark-theme .btn-back:hover { transform: translateY(-2px); border-color: #7dd3fc; background: rgba(8, 47, 73, 0.9); color: white;}
 
         /* ================= KHỐI NỘI DUNG GLASS PANEL ================= */
-        .glass-panel { backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: 1px solid; border-radius: 24px; transition: all 0.3s; }
+        .glass-panel { backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: 1px solid; border-radius: 24px; transition: all 0.3s; overflow: hidden; }
         
         body.light-theme .glass-panel { background: rgba(255, 255, 255, 0.95); border-color: rgba(14, 165, 233, 0.2); box-shadow: 0 10px 30px -10px rgba(12, 74, 110, 0.1); }
         body.light-theme.theme-do-hanhchinh .glass-panel { border-color: rgba(252, 165, 165, 0.6); }
@@ -91,24 +91,58 @@
         body.light-theme.theme-do-hanhchinh .list-item-hover:hover { background: rgba(218, 37, 29, 0.08); }
         body.dark-theme .list-item-hover:hover { background: rgba(56, 189, 248, 0.1); }
 
-        /* SLIDER HÌNH ẢNH */
-        .slider-container { position: relative; width: 100%; height: 380px; border-radius: 20px; overflow: hidden; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); border: 1px solid rgba(0,0,0,0.05); }
-        body.dark-theme .slider-container { border-color: rgba(56, 189, 248, 0.2); }
-        .slide { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; transition: opacity 0.6s ease-in-out; display: flex; align-items: center; justify-content: center; }
-        .slide.active { opacity: 1; position: relative; }
-        .slide img { width: 100%; height: 100%; object-fit: cover; }
-
-        .slider-btn { position: absolute; top: 50%; transform: translateY(-50%); border: 1px solid; width: 45px; height: 45px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: bold; cursor: pointer; z-index: 20; box-shadow: 0 4px 10px rgba(0,0,0,0.2); transition: all 0.2s; }
+        /* ================= HIỆU ỨNG MARQUEE CỔ ĐỘNG ================= */
+        .marquee-wrapper {
+            width: 100%;
+            overflow: hidden;
+            position: relative;
+            padding: 10px 0;
+            white-space: nowrap;
+        }
         
-        body.light-theme .slider-btn { background: rgba(255, 255, 255, 0.9); border-color: #e2e8f0; color: #0f172a; }
-        body.light-theme .slider-btn:hover { background: #0ea5e9; color: white; transform: translateY(-50%) scale(1.1); }
-        body.light-theme.theme-do-hanhchinh .slider-btn:hover { background: #da251d; }
+        .marquee-track {
+            display: inline-flex;
+            width: max-content;
+            /* Điều chỉnh thời gian cuộn ở đây (30s = chậm, 15s = nhanh) */
+            animation: scrollMarquee 40s linear infinite;
+        }
 
-        body.dark-theme .slider-btn { background: rgba(15, 23, 42, 0.8); border-color: rgba(255, 255, 255, 0.2); color: #38bdf8; }
-        body.dark-theme .slider-btn:hover { background: #0ea5e9; color: white; transform: translateY(-50%) scale(1.1); }
+        /* Khi người dùng rê chuột vào, khung cuộn sẽ tạm dừng để dễ xem */
+        .marquee-track:hover {
+            animation-play-state: paused;
+        }
+
+        .marquee-item {
+            display: inline-block;
+            width: 300px;
+            height: 200px;
+            margin-right: 16px;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            position: relative;
+        }
         
-        .btn-prev { left: 20px; }
-        .btn-next { right: 20px; }
+        @media (min-width: 768px) {
+            .marquee-item { width: 450px; height: 260px; margin-right: 24px; }
+        }
+
+        .marquee-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .marquee-item:hover img {
+            transform: scale(1.08);
+        }
+
+        /* Di chuyển từ phải (0) sang trái (-50%) vì chúng ta nhân đôi dữ liệu */
+        @keyframes scrollMarquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
 
         /* VIDEO CARDS */
         .video-card { border-radius: 20px; overflow: hidden; aspect-ratio: 16 / 9; border: 1px solid; transition: all 0.25s; }
@@ -152,6 +186,7 @@
                 </div>
             </div>
 
+            <!-- CHUYỂN ĐỔI THEME XANH / ĐỎ -->
             <div class="theme-selector-vertical lg:absolute lg:top-0 lg:right-0 bg-white/10 backdrop-blur-md border border-white/20 p-1.5 rounded-xl flex flex-col space-y-1.5 w-[75px] z-20 shadow-inner">
                 <button onclick="switchSystemTheme('xanh')" id="btn-theme-xanh" class="w-full text-center text-[10px] font-extrabold uppercase py-1.5 rounded-lg transition-all duration-300 bg-blue-600 text-white shadow-md">🔵 Xanh</button>
                 <button onclick="switchSystemTheme('do')" id="btn-theme-do" class="w-full text-center text-[10px] font-extrabold uppercase py-1.5 rounded-lg transition-all duration-300 text-white/80 hover:text-white">🔴 Đỏ</button>
@@ -173,21 +208,25 @@
         <article class="menu-panel-wrapper flex flex-col space-y-6">
             
             <div class="flex flex-row justify-between items-center gap-4 pb-3 border-b border-white/40 w-full">
+                <!-- NÚT QUAY LẠI (TRÁI) -->
                 <a href="../home.html" class="btn-back shrink-0">
                     ⬅️ Quay lại Trang chủ
                 </a>
                 
+                <!-- NÚT SÁNG/TỐI (PHẢI) -->
                 <div class="bg-blue-900/10 dark:bg-sky-500/10 border border-blue-200 dark:border-sky-500/20 p-1 rounded-xl flex items-center shadow-sm backdrop-blur shrink-0">
                     <button onclick="setTheme('light')" id="btn-theme-light" class="flex items-center gap-1.5 text-[11px] font-extrabold uppercase px-3 py-1.5 rounded-lg transition border border-transparent text-blue-900 shadow-sm bg-white">☀️ Sáng</button>
                     <button onclick="setTheme('dark')" id="btn-theme-dark" class="flex items-center gap-1.5 text-[11px] font-extrabold uppercase px-3 py-1.5 rounded-lg transition border border-transparent text-slate-500 hover:text-blue-900 dark:text-sky-200 dark:hover:text-white">🌙 Tối</button>
                 </div>
             </div>
 
+            <!-- KHỐI 1: BÀI VIẾT NỔI BẬT & TIN TỨC -->
             <div class="glass-panel p-5 md:p-6">
                 <h2 class="text-xs font-black uppercase tracking-wider text-dynamic-label border-l-4 border-sky-400 dark:border-sky-500 pl-3 mb-4">📰 Bài viết nổi bật / Tin tức tiêu điểm hành chính</h2>
                 
                 <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
                     
+                    <!-- BÀI ĐINH BÊN TRÁI -->
                     <div class="lg:col-span-6 xl:col-span-7 flex flex-col space-y-3 font-['Inter']">
                         <a href="chi-tiet-tin.html" class="block rounded-xl overflow-hidden shadow-md aspect-video border border-slate-200 dark:border-slate-700/40 relative group">
                             <img src="images/anh-tin-1.jpg" alt="Tin tức chính" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" onerror="this.src='https://placehold.co/800x450?text=News+Banner'">
@@ -210,11 +249,13 @@
                         </div>
                     </div>
                     
+                    <!-- DANH SÁCH TIN BÊN PHẢI -->
                     <div class="lg:col-span-6 xl:col-span-5 flex flex-col h-full font-['Inter']">
                         <h3 class="text-[11px] font-black uppercase text-dynamic-title border-b border-slate-300 dark:border-slate-600 pb-2 mb-4">Tin tức mới cập nhật</h3>
                         
                         <div id="danh_sach_tin_tuc" class="flex flex-col space-y-3">
-                            </div>
+                            <!-- Dữ liệu JS render vào đây -->
+                        </div>
                         
                         <div class="mt-auto pt-6 text-right">
                             <a href="danh-sach-tin.html" class="inline-flex items-center gap-1 text-[10px] font-black uppercase text-dynamic-label transition bg-sky-500/10 px-3 py-1.5 rounded-lg border border-sky-500/20 hover:border-sky-500">
@@ -225,21 +266,23 @@
                 </div>
             </div>
 
-            <div class="glass-panel p-5 md:p-6">
-                <h2 class="text-xs font-black uppercase tracking-wider text-dynamic-label border-l-4 border-sky-400 dark:border-sky-500 pl-3 mb-4">📸 Hình ảnh Hoạt động trực quan & Cổ động</h2>
-                <div class="slider-container">
-                    <button class="slider-btn btn-prev" onclick="moveSlide(-1)">❮</button>
-                    <button class="slider-btn btn-next" onclick="moveSlide(1)">❯</button>
-
-                    <div class="slide active"><img src="images/banner1.jpg" alt="Tuyên truyền 1" onerror="this.src='https://placehold.co/1200x400?text=Banner+Co+Dong+1'"></div>
-                    <div class="slide"><img src="images/banner2.jpg" alt="Tuyên truyền 2" onerror="this.src='https://placehold.co/1200x400?text=Banner+Co+Dong+2'"></div>
+            <!-- KHỐI 2: HÌNH ẢNH CỔ ĐỘNG (DẠNG MARQUEE CHẠY NGANG) -->
+            <div class="glass-panel p-5 md:p-6 pb-2">
+                <h2 class="text-xs font-black uppercase tracking-wider text-dynamic-label border-l-4 border-sky-400 dark:border-sky-500 pl-3 mb-2">📸 Hình ảnh Hoạt động trực quan & Cổ động</h2>
+                
+                <div class="marquee-wrapper">
+                    <!-- id="marquee-track" sẽ được chèn ảnh qua JS -->
+                    <div class="marquee-track" id="marquee-track"></div>
                 </div>
+                
             </div>
 
+            <!-- KHỐI 3: VIDEO TƯ LIỆU -->
             <div class="glass-panel p-5 md:p-6">
                 <h2 class="text-xs font-black uppercase tracking-wider text-dynamic-label border-l-4 border-sky-400 dark:border-sky-500 pl-3 mb-4">🎥 Video Tư liệu / Bản tin thời sự cơ sở</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div class="video-card">
+                        <!-- Đổi link youtube tại src="..." -->
                         <iframe width="100%" height="100%" src="https://www.youtube.com/embed/nptBIfy_3x4" title="Video tuyên truyền số 1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                     </div>
                     <div class="video-card">
@@ -293,7 +336,6 @@
             }
         ];
 
-        // HÀM TỰ ĐỘNG VẼ TIN TỨC RA MÀN HÌNH
         function renderTinTuc() {
             const container = document.getElementById('danh_sach_tin_tuc');
             if (!container) return;
@@ -314,30 +356,40 @@
         }
 
         // =========================================================
-        // CÁC LOGIC KHÁC CỦA TRANG (SLIDER, THEME)
+        // KHU VỰC QUẢN LÝ DỮ LIỆU MARQUEE (HÌNH ẢNH CỔ ĐỘNG)
         // =========================================================
+        /* Bổ sung các file ảnh bạn có trong thư mục images/co-dong/ vào mảng dưới đây */
+        const listAnhCoDong = [
+            "images/co-dong/co-dong-1.jpg",
+            "images/co-dong/co-dong-2.jpg",
+            "images/co-dong/co-dong-3.jpg",
+            "images/co-dong/co-dong-4.jpg",
+            "images/co-dong/co-dong-6.jpg",
+            "images/co-dong/co-dong-7.jpg",
+            "images/co-dong/co-dong-8.jpg",
+            "images/co-dong/co-dong-9.jpg",
+            "images/co-dong/co-dong-10.jpg"
+        ];
 
-        // Logic vận hành Slider
-        let currentSlide = 0;
-        const slides = document.querySelectorAll('.slide');
+        function renderMarquee() {
+            const track = document.getElementById('marquee-track');
+            if (!track || listAnhCoDong.length === 0) return;
 
-        function showSlide(index) {
-            if (index >= slides.length) currentSlide = 0;
-            else if (index < 0) currentSlide = slides.length - 1;
-            else currentSlide = index;
+            // Tạo các thẻ hình ảnh
+            const itemsHTML = listAnhCoDong.map(src => `
+                <div class="marquee-item">
+                    <img src="${src}" alt="Ảnh cổ động" onerror="this.src='https://placehold.co/800x500?text=Anh+Co+Dong'">
+                </div>
+            `).join('');
 
-            slides.forEach((slide, i) => {
-                if (i === currentSlide) slide.classList.add('active');
-                else slide.classList.remove('active');
-            });
+            // Nhân đôi danh sách (append 2 lần) để tạo thành vòng lặp vô tận (seamless loop)
+            // Khi thanh trượt chạy đến -50%, nó sẽ có dữ liệu y hệt phần đầu
+            track.innerHTML = itemsHTML + itemsHTML;
         }
 
-        window.moveSlide = function(direction) {
-            showSlide(currentSlide + direction);
-        }
-        setInterval(() => { moveSlide(1); }, 5000);
-
-        // HÀM CHUYỂN ĐỔI THEME HEADER VÀ NỀN (XANH / ĐỎ TƯƠI)
+        // =========================================================
+        // LOGIC THEME (SÁNG / TỐI - XANH / ĐỎ)
+        // =========================================================
         window.switchSystemTheme = function(modeName) {
             const body = document.getElementById('dynamic-body');
             const btnXanh = document.getElementById('btn-theme-xanh');
@@ -354,7 +406,6 @@
             }
         }
 
-        // HÀM CHUYỂN ĐỔI THEME SÁNG / TỐI KHÔNG DÙNG MÀU ĐEN
         window.setTheme = function(themeName) {
             const body = document.getElementById('dynamic-body');
             const btnLight = document.getElementById('btn-theme-light');
@@ -376,7 +427,8 @@
         // CHẠY HÀM KHI MỞ TRANG
         document.addEventListener("DOMContentLoaded", () => {
             setTheme('light'); // Đặt nền trắng mặc định
-            renderTinTuc();    // Vẽ danh sách tin tức từ Javascript ra
+            renderTinTuc();    // Vẽ danh sách tin tức
+            renderMarquee();   // Chèn danh sách ảnh cổ động và kích hoạt thanh trượt
         });
     </script>
 </body>
