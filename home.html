@@ -240,10 +240,11 @@
 
     <div class="max-w-[1550px] w-full mx-auto px-6 my-8">
         
+        <!-- Bỏ thuộc tính space-y-2 ở đây để có thể tùy chỉnh lề từng phần tử -->
         <div class="menu-panel-wrapper">
             
-            <!-- CÔNG TẮC ĐIỀU HƯỚNG SÁNG / TỐI -->
-            <div class="flex justify-end w-full">
+            <!-- CÔNG TẮC ĐIỀU HƯỚNG SÁNG / TỐI - Thêm class mb-6 để tạo khoảng cách với grid bên dưới -->
+            <div class="flex justify-end w-full mb-6">
                 <div class="bg-blue-900/10 dark:bg-sky-500/10 border border-blue-200 dark:border-sky-500/20 p-1 rounded-xl flex items-center shadow-sm backdrop-blur">
                     <button onclick="setTheme('light')" id="btn-theme-light" class="flex items-center gap-1.5 text-[11px] font-extrabold uppercase px-3 py-1.5 rounded-lg transition border border-transparent text-blue-900 bg-white shadow-sm">☀️ Sáng</button>
                     <button onclick="setTheme('dark')" id="btn-theme-dark" class="flex items-center gap-1.5 text-[11px] font-extrabold uppercase px-3 py-1.5 rounded-lg transition border border-transparent text-slate-500 hover:text-blue-900 dark:text-sky-200 dark:hover:text-white">🌙 Tối</button>
@@ -326,7 +327,8 @@
             </a>
             </main>
 
-            <section class="w-full pt-6 border-t border-white/40 flex justify-center">
+            <!-- Thêm mt-8 để đẩy phần liên hệ xuống cách xa khối nút điều hướng phía trên -->
+            <section class="w-full pt-6 mt-8 border-t border-white/40 flex justify-center">
                 
                 <!-- Áp dụng class .contact-section để thay đổi theo Theme -->
                 <div class="contact-section w-full max-w-5xl rounded-2xl p-6 shadow-md text-white transition-transform duration-300 hover:scale-[1.01]">
