@@ -164,7 +164,7 @@
         body.light-theme.theme-do-hanhchinh .contact-section { background-color: rgba(255, 255, 255, 0.15); }
         body.dark-theme .contact-section { background-color: rgba(255, 255, 255, 0.05); }
 
-        /* MODAL VÀ INPUT XÁC THỰC */
+        /* MODAL VÀ INPUT XÁC THỰC/CHỌN LỰA */
         .modal-overlay { 
             position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
             background: rgba(15, 23, 42, 0.4); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); 
@@ -184,7 +184,7 @@
         body.dark-theme .modal-subtitle { color: #7dd3fc; }
         body.dark-theme .modal-label { color: #bae6fd; }
         body.dark-theme .modal-input { background: rgba(8, 47, 73, 0.6); border-color: rgba(56, 189, 248, 0.3); color: #e0f2fe; }
-        body.dark-theme .modal-input:focus { border-color: #38bdf8; background: rgba(12, 74, 110, 0.8); }
+        body.dark-theme .modal-input:hover, body.dark-theme .modal-input:focus { border-color: #38bdf8; background: rgba(12, 74, 110, 0.8); }
         body.dark-theme .modal-btn-cancel { background: rgba(8, 47, 73, 0.6); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.3); }
         body.dark-theme .modal-btn-cancel:hover { background: rgba(12, 74, 110, 0.8); color: #e0f2fe; }
         .modal-overlay.open .modal-card { transform: scale(1) translateY(0); }
@@ -232,14 +232,8 @@
 
             <!-- CHUYỂN ĐỔI THEME XANH / ĐỎ -->
             <div class="theme-selector-vertical lg:absolute lg:top-0 lg:right-0 bg-white/10 backdrop-blur-md border border-white/20 p-1.5 rounded-xl flex flex-col space-y-1.5 w-[75px] z-20 shadow-inner">
-                <button onclick="switchSystemTheme('xanh')" id="btn-theme-xanh" 
-                    class="w-full text-center text-[10px] font-extrabold uppercase py-1.5 rounded-lg transition-all duration-300 bg-blue-600 text-white shadow-md">
-                    🔵 Xanh
-                </button>
-                <button onclick="switchSystemTheme('do')" id="btn-theme-do" 
-                    class="w-full text-center text-[10px] font-extrabold uppercase py-1.5 rounded-lg transition-all duration-300 text-white/80 hover:text-white">
-                    🔴 Đỏ
-                </button>
+                <button onclick="switchSystemTheme('xanh')" id="btn-theme-xanh" class="w-full text-center text-[10px] font-extrabold uppercase py-1.5 rounded-lg transition-all duration-300 bg-blue-600 text-white shadow-md">🔵 Xanh</button>
+                <button onclick="switchSystemTheme('do')" id="btn-theme-do" class="w-full text-center text-[10px] font-extrabold uppercase py-1.5 rounded-lg transition-all duration-300 text-white/80 hover:text-white">🔴 Đỏ</button>
             </div>
             
         </div>
@@ -249,11 +243,10 @@
         
         <div class="menu-panel-wrapper">
             
-            <!-- CÔNG TẮC ĐIỀU HƯỚNG SÁNG / TỐI - Cập nhật nền kính và viền trắng mờ để nổi bật trên nền gradient -->
+            <!-- CÔNG TẮC ĐIỀU HƯỚNG SÁNG / TỐI -->
             <div class="flex justify-end w-full mb-6">
                 <div class="bg-white/10 dark:bg-sky-500/10 border border-white/20 dark:border-sky-500/20 p-1 rounded-xl flex items-center shadow-sm backdrop-blur">
                     <button onclick="setTheme('light')" id="btn-theme-light" class="flex items-center gap-1.5 text-[11px] font-extrabold uppercase px-3 py-1.5 rounded-lg transition bg-white text-blue-900 shadow-sm border border-blue-200">☀️ Sáng</button>
-                    <!-- Chữ "Tối" lúc chưa chọn được chỉnh thành text-white/70 để dễ nhìn trên nền xanh đậm / đỏ đậm -->
                     <button onclick="setTheme('dark')" id="btn-theme-dark" class="flex items-center gap-1.5 text-[11px] font-extrabold uppercase px-3 py-1.5 rounded-lg transition border border-transparent text-white/70 hover:text-white dark:text-sky-200 dark:hover:text-white">🌙 Tối</button>
                 </div>
             </div>
@@ -320,7 +313,8 @@
                     </div>
                 </a>
 
-                <div onclick="alert('Trợ lý ảo AI hành chính công phục vụ nhân dân đang chạy thử nghiệm nội bộ.')" class="nav-card" style="background-image: url('icon/trolyao.png');">
+                <!-- CẬP NHẬT: GỌI HÀM openAIModal() thay vì alert() -->
+                <div onclick="openAIModal()" class="nav-card" style="background-image: url('icon/trolyao.png');">
                     <div class="text-overlay">
                         <h3>Trợ lý Ảo</h3>
                     </div>
@@ -333,7 +327,6 @@
             </a>
             </main>
 
-            <!-- Cập nhật class contact-section thành dạng kính mờ xuyên thấu màu sắc ở dưới -->
             <section class="w-full pt-6 mt-8 border-t border-white/20 flex justify-center">
                 
                 <div class="contact-section w-full max-w-5xl rounded-2xl p-6 shadow-lg text-white transition-transform duration-300 hover:scale-[1.01]">
@@ -407,6 +400,32 @@
         </div>
     </div>
 
+    <!-- MODAL CHỌN TRỢ LÝ ẢO AI -->
+    <div id="aiModal" class="modal-overlay">
+        <div class="modal-card">
+            <div class="text-center mb-6">
+                <div class="w-12 h-12 bg-sky-50 text-sky-600 rounded-full flex items-center justify-center mx-auto mb-3 text-2xl shadow-sm border border-sky-100 modal-icon">🤖</div>
+                <h2 class="text-lg font-bold text-slate-900 tracking-tight modal-title">Chọn Trợ lý ảo AI</h2>
+                <p class="text-[11px] text-slate-400 font-medium uppercase mt-1 tracking-wider modal-subtitle">Vui lòng chọn nền tảng bạn muốn sử dụng</p>
+            </div>
+            
+            <div class="flex flex-col space-y-3">
+                <button onclick="window.open('https://chat.openai.com', '_blank'); closeAIModal();" class="w-full flex items-center justify-center gap-3 bg-white border border-slate-200 rounded-xl px-4 py-3 text-sm font-bold text-slate-700 hover:border-emerald-500 hover:text-emerald-600 transition modal-input">
+                    <span class="text-xl">🟩</span> ChatGPT
+                </button>
+                <button onclick="window.open('https://gemini.google.com', '_blank'); closeAIModal();" class="w-full flex items-center justify-center gap-3 bg-white border border-slate-200 rounded-xl px-4 py-3 text-sm font-bold text-slate-700 hover:border-blue-500 hover:text-blue-600 transition modal-input">
+                    <span class="text-xl">✨</span> Gemini
+                </button>
+            </div>
+            
+            <div class="pt-5 mt-2">
+                <button type="button" onclick="closeAIModal()" class="modal-btn-cancel w-full bg-slate-100 text-slate-600 py-3 rounded-xl font-semibold text-xs uppercase tracking-wider transition hover:bg-slate-200">
+                    Đóng
+                </button>
+            </div>
+        </div>
+    </div>
+
     <!-- FOOTER -->
     <footer class="mt-auto text-center py-6 text-slate-400 font-medium text-[11px] uppercase tracking-widest border-t transition-all duration-300">
         &copy; IOC BINH HƯNG — BẢN QUYỀN THUỘC UBND XÃ BÌNH HƯNG
@@ -438,13 +457,11 @@
             const btnDo = document.getElementById('btn-theme-do');
 
             if (modeName === 'do') {
-                body.classList.remove('theme-xanh-ios');
-                body.classList.add('theme-do-hanhchinh');
+                body.classList.remove('theme-xanh-ios'); body.classList.add('theme-do-hanhchinh');
                 btnDo.className = "w-full text-center text-[10px] font-extrabold uppercase py-1.5 rounded-lg transition-all duration-300 bg-red-600 text-white shadow-md";
                 btnXanh.className = "w-full text-center text-[10px] font-extrabold uppercase py-1.5 rounded-lg transition-all duration-300 text-white/80 hover:text-white";
             } else {
-                body.classList.remove('theme-do-hanhchinh');
-                body.classList.add('theme-xanh-ios');
+                body.classList.remove('theme-do-hanhchinh'); body.classList.add('theme-xanh-ios');
                 btnXanh.className = "w-full text-center text-[10px] font-extrabold uppercase py-1.5 rounded-lg transition-all duration-300 bg-blue-600 text-white shadow-md";
                 btnDo.className = "w-full text-center text-[10px] font-extrabold uppercase py-1.5 rounded-lg transition-all duration-300 text-white/80 hover:text-white";
             }
@@ -460,20 +477,16 @@
                 body.classList.remove('dark-theme');
                 body.classList.add('light-theme');
                 btnLight.className = "flex items-center gap-1.5 text-[11px] font-extrabold uppercase px-3 py-1.5 rounded-lg transition bg-white text-blue-900 shadow-sm border border-blue-200";
-                
-                // Nút "Tối" lúc chưa chọn được làm mờ để dễ nhìn trên nền gradient sáng
                 btnDark.className = "flex items-center gap-1.5 text-[11px] font-extrabold uppercase px-3 py-1.5 rounded-lg transition border border-transparent text-white/70 hover:text-white dark:text-sky-200 dark:hover:text-white";
             } else {
                 body.classList.remove('light-theme');
                 body.classList.add('dark-theme');
                 btnDark.className = "flex items-center gap-1.5 text-[11px] font-extrabold uppercase px-3 py-1.5 rounded-lg transition bg-sky-600 text-white shadow-sm border border-sky-500";
-                
-                // Nút "Sáng" lúc chưa chọn được làm mờ
                 btnLight.className = "flex items-center gap-1.5 text-[11px] font-extrabold uppercase px-3 py-1.5 rounded-lg transition border border-transparent text-white/70 hover:text-white";
             }
         }
 
-        // Modal Controls
+        // Modal Đăng Nhập
         window.openLoginModal = function() {
             if (auth.currentUser) {
                 window.location.href = "dashboard.html";
@@ -482,7 +495,6 @@
                 document.getElementById('email').focus();
             }
         }
-        
         window.closeLoginModal = function() {
             document.getElementById('loginModal').classList.remove('open');
             document.getElementById('loginForm').reset();
@@ -503,6 +515,14 @@
                     document.getElementById('password').value = "";
                     document.getElementById('password').focus();
                 });
+        }
+
+        // Modal Chọn AI
+        window.openAIModal = function() {
+            document.getElementById('aiModal').classList.add('open');
+        }
+        window.closeAIModal = function() {
+            document.getElementById('aiModal').classList.remove('open');
         }
 
         // Khởi động trang với nền Sáng mặc định
