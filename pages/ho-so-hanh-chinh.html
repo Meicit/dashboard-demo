@@ -304,16 +304,35 @@
                     ]
                 },
                 options: {
-                    responsive: true, maintainAspectRatio: false,
+                    responsive: true, 
+                    maintainAspectRatio: false,
                     plugins: { 
-                        legend: { labels: { color: textColor, font: { weight: 'bold', size: 10 } } },
-                        datalabels: { color: textColor, anchor: 'end', align: 'top', font: { weight: 'bold', size: 11 }, formatter: Math.round }
+                        legend: { 
+                            labels: { color: textColor, font: { weight: 'bold', size: 10 } },
+                            padding: { bottom: 20 } // Đẩy chú thích cách xa đồ thị 20px
+                        },
+                        datalabels: { 
+                            color: textColor, 
+                            anchor: 'end', 
+                            align: 'top', 
+                            font: { weight: 'bold', size: 11 }, 
+                            formatter: Math.round,
+                            offset: 4 // Nhấc con số lên cách đỉnh cột 4px cho thoáng
+                        }
                     },
                     scales: {
-                        x: { grid: { display: false }, ticks: { color: textColor, font: { weight: 'bold', size: 10 } } },
-                        y: { grid: { color: gridColor }, ticks: { color: textColor, font: { size: 10 } } }
+                        x: { 
+                            grid: { display: false }, 
+                            ticks: { color: textColor, font: { weight: 'bold', size: 10 } } 
+                        },
+                        y: { 
+                            grid: { color: gridColor }, 
+                            ticks: { color: textColor, font: { size: 10 } },
+                            beginAtZero: true, // Ép trục Y luôn bắt đầu từ 0
+                            grace: '15%' // Tự động giãn thêm 15% không gian phía trên cột cao nhất
+                        }
                     },
-                    layout: { padding: { top: 20 } } 
+                    layout: { padding: { top: 10 } } 
                 }
             });
 
