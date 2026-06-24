@@ -102,20 +102,19 @@
         @media (max-width: 640px) { .flex-responsive { flex-direction: column; align-items: stretch; gap: 16px; } .controls-wrapper { flex-direction: row; justify-content: space-between; align-items: center; width: 100%; } }
     </style>
 </head>
-<body class="theme-xanh-ios light-theme custom-scrollbar" id="body-context">
+<body class="light-theme custom-scrollbar theme-xanh-ios" id="body-context">
 
     <div class="container-wrapper mt-8">
         
         <div class="teal-wrapper space-y-8">
             
-            <div class="flex flex-row justify-between items-center flex-responsive">
-                <a href="../dashboard.html" class="btn-back">⬅️ Quay lại</a>
+            <div class="flex flex-col sm:flex-row justify-between items-center gap-4 flex-responsive">
+                <a href="../dashboard.html" class="btn-back bg-white/50 backdrop-blur text-blue-900">⬅️ Quay lại Trang chủ</a>
                 
-                <!-- BẢNG ĐIỀU KHIỂN THEME -->
                 <div class="controls-wrapper">
                     <div class="control-panel">
-                        <button onclick="setTheme('light')" id="btn-theme-light" class="flex items-center gap-1.5 text-[11px] font-extrabold uppercase px-3 py-1.5 rounded-lg transition border border-transparent">Sáng</button>
-                        <button onclick="setTheme('dark')" id="btn-theme-dark" class="flex items-center gap-1.5 text-[11px] font-extrabold uppercase px-3 py-1.5 rounded-lg transition border border-transparent">Tối</button>
+                        <button onclick="setTheme('light')" id="btn-theme-light" class="flex items-center gap-1.5 text-[11px] font-extrabold uppercase px-3 py-1.5 rounded-lg transition border border-transparent text-white">Sáng</button>
+                        <button onclick="setTheme('dark')" id="btn-theme-dark" class="flex items-center gap-1.5 text-[11px] font-extrabold uppercase px-3 py-1.5 rounded-lg transition border border-transparent text-white">Tối</button>
                     </div>
 
                     <div class="control-panel control-theme-color">
@@ -342,30 +341,6 @@
                 </div>
             </div>
 
-            <div class="glass-panel p-6 border border-sky-500/20 bg-sky-50/50 dark:bg-transparent dark:border-slate-500/20">
-                <h2 class="text-xs font-black uppercase tracking-wider text-amber-600 dark:text-amber-400 mb-3 flex items-center gap-2">
-                    💡 Trung tâm phân tích dữ liệu & Khuyến nghị điều hành của Thường trực Đảng ủy
-                </h2>
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 font-['Inter'] text-xs leading-relaxed">
-                    <div class="insight-card p-4 rounded-xl border space-y-1.5 bg-white/50 dark:bg-transparent">
-                        <h3 class="font-extrabold text-emerald-600 dark:text-emerald-400">🟢 ĐIỂM SÁNG BIỂU DƯƠNG</h3>
-                        <p class="text-blue-800 dark:text-blue-200">Chỉ tiêu xây dựng mô hình "Tổ chức Đảng 4 tốt" và tỷ lệ phân loại Chi bộ Hoàn thành tốt nhiệm vụ đều hoàn thành vượt mức kế hoạch đề ra (Đạt 102.6% và 100.6%).</p>
-                    </div>
-                    <div class="insight-card p-4 rounded-xl border space-y-1.5 bg-white/50 dark:bg-transparent">
-                        <h3 class="font-extrabold text-red-600 dark:text-red-400">🚨 CẢNH BÁO ĐIỂM NGHẼN</h3>
-                        <p class="text-blue-800 dark:text-blue-200">Công tác phát triển Đảng viên mới hiện là điểm nghẽn lớn nhất khi mới chỉ đạt 72% tiến độ Đại hội. Áp lực tạo nguồn quần chúng ưu tú tại địa bàn dân cư mới đang bị chững lại.</p>
-                    </div>
-                    <div class="insight-card p-4 rounded-xl border space-y-1.5 bg-white/50 dark:bg-transparent">
-                        <h3 class="font-extrabold text-sky-600 dark:text-sky-400">🎯 QUYẾT ĐỊNH ĐIỀU HÀNH</h3>
-                        <p class="text-blue-800 dark:text-blue-200 font-bold italic">Khuyến nghị Thường trực Thường vụ chỉ đạo:</p>
-                        <ul class="list-disc list-inside space-y-0.5 pl-1 text-blue-800 dark:text-blue-200">
-                            <li>Giao chỉ tiêu bổ sung khẩn cấp cho lực lượng dân quân, đoàn viên xuất sắc.</li>
-                            <li>Tăng cường thẩm tra lý lịch phối hợp tháo gỡ thủ tục.</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
         </div> 
     </div>
 
@@ -549,7 +524,7 @@
                     
                     btnXanh.className = "flex items-center gap-1.5 text-[11px] font-extrabold uppercase px-3 py-1.5 rounded-lg transition text-white hover:text-white border border-transparent";
                     btnDo.className = "flex items-center gap-1.5 text-[11px] font-extrabold uppercase px-3 py-1.5 rounded-lg transition bg-white text-red-700 shadow-sm border border-transparent";
-                    currentLabelColor = '#ffffff'; 
+                    currentLabelColor = '#1e3a8a'; // Sửa lại: Dù nền ngoài có Đỏ thì nền web bên trong vẫn trắng, nên màu chữ vẫn phải tối
                 } else {
                     // Cấu hình nút cho Theme Xanh mặc định
                     btnDark.className = "flex items-center gap-1.5 text-[11px] font-extrabold uppercase px-3 py-1.5 rounded-lg transition text-blue-500 hover:text-blue-800 border border-transparent";
