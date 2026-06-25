@@ -81,8 +81,12 @@
             
             <div class="bg-blue-950/90 border border-blue-800 p-1 rounded-xl flex items-center shadow-md backdrop-blur">
                 <span class="text-[10px] font-black uppercase tracking-wider px-3 text-blue-300">Chế độ xem:</span>
-                <button onclick="setTheme('light')" id="btn-theme-light" class="flex items-center gap-1.5 text-[11px] font-extrabold uppercase px-3 py-1.5 rounded-lg transition border border-transparent text-white">☀️ Sáng</button>
-                <button onclick="setTheme('dark')" id="btn-theme-dark" class="flex items-center gap-1.5 text-[11px] font-extrabold uppercase px-3 py-1.5 rounded-lg transition border border-transparent text-white">🌙 Tối</button>
+                <button onclick="setTheme('light')" id="btn-theme-light" class="flex items-center gap-1.5 text-[11px] font-extrabold uppercase px-3 py-1.5 rounded-lg transition border border-transparent text-white">
+                    ☀️ Sáng
+                </button>
+                <button onclick="setTheme('dark')" id="btn-theme-dark" class="flex items-center gap-1.5 text-[11px] font-extrabold uppercase px-3 py-1.5 rounded-lg transition border border-transparent text-white">
+                    🌙 Tối
+                </button>
             </div>
         </div>
 
@@ -126,7 +130,7 @@
                     </div>
                 </div>
                 <div class="lg:col-span-5 glass-panel p-5 flex flex-col justify-between">
-                    <h2 class="text-xs font-black uppercase tracking-wider text-dynamic-title mb-3">🍕 Cơ cấu phân bổ dự án theo lĩnh vực</h2>
+                    <h2 class="text-xs font-black uppercase tracking-wider text-dynamic-title mb-3">🍕 Cơ cấu phân bổ dòng vốn theo lĩnh vực</h2>
                     <div class="chart-container flex justify-center">
                         <canvas id="investPieChart"></canvas>
                     </div>
@@ -275,7 +279,7 @@
                     labels: typeLabels,
                     datasets: [{
                         data: typeValues,
-                        backgroundColor: ['#3b82f6', '#10b981', '#f59e0b', '#8b5cf6', '#f43f5e'],
+                        backgroundColor: ['rgba(59, 130, 246, 0.85)', 'rgba(16, 185, 129, 0.85)', 'rgba(245, 158, 11, 0.85)', 'rgba(139, 92, 246, 0.85)'],
                         borderWidth: 2, borderColor: '#ffffff'
                     }]
                 },
@@ -296,8 +300,15 @@
             const d = snap.val();
             if (d && d.projects) {
                 cachedDataForTheme = d;
-                document.getElementById('card_tong_du_an').innerText = d.tong_du_an || 0;
-                document.getElementById('card_von_giai_doan').innerText = formatMoney(d.von_giai_doan || 0);
+
+                // THUẬT TOÁN TỰ ĐỘNG CỘNG DỒN TỔNG MỨC ĐẦU TƯ CỦA TẤT CẢ DỰ ÁN (TMĐT)
+                let totalTMDT = 0;
+                d.projects.forEach(p => { 
+                    totalTMDT += parseFloat(p.tmdt) || 0; 
+                });
+
+                document.getElementById('card_tong_du_an').innerText = d.tong_du_an || d.projects.length;
+                document.getElementById('card_von_giai_doan').innerText = formatMoney(d.von_giai_doan || totalTMDT);
                 document.getElementById('card_von_nam').innerText = formatMoney(d.von_nam || 0);
 
                 let totalCap = 0;
