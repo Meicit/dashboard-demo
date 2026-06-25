@@ -21,8 +21,8 @@
         body.dark-theme .text-dynamic-body { color: #bae6fd; }
         body.dark-theme .text-dynamic-label { color: #fcd34d; }
         body.dark-theme .glass-panel { background: rgba(12, 74, 110, 0.65); border-color: rgba(56, 189, 248, 0.2); box-shadow: 0 20px 40px -15px rgba(8, 47, 73, 0.4); }
-        body.dark-theme .card-target-item { background: rgba(8, 47, 73, 0.5); border-color: rgba(56, 189, 248, 0.15); }
-        body.dark-theme .btn-switcher-active { background: #0284c7; color: #e0f2fe; border-color: #38bdf8; }
+        body.dark-theme .bg-widget-card { background-color: rgba(15, 23, 42, 0.6); border-color: rgba(56, 189, 248, 0.2); }
+        body.dark-theme .bg-widget-inner { background-color: rgba(15, 23, 42, 0.8); border-color: rgba(56, 189, 248, 0.15); }
         body.dark-theme .kpi-box { background: linear-gradient(135deg, #0c4a6e 0%, #082f49 100%); border-color: #0284c7; }
         body.dark-theme .teal-wrapper { background-color: rgba(14, 165, 233, 0.08); border: 1px solid rgba(14, 165, 233, 0.3); box-shadow: 0 20px 40px -15px rgba(8, 47, 73, 0.6); }
         body.dark-theme .control-theme-color { display: none !important; }
@@ -33,8 +33,8 @@
         body.light-theme .text-dynamic-body { color: #1e40af; }
         body.light-theme .text-dynamic-label { color: #c2410c; }
         body.light-theme .glass-panel { background: rgba(255, 255, 255, 0.95); border-color: rgba(14, 165, 233, 0.2); box-shadow: 0 20px 40px -15px rgba(12, 74, 110, 0.15); }
-        body.light-theme .card-target-item { background: #ffffff; border-color: rgba(14, 165, 233, 0.2); box-shadow: 0 4px 12px rgba(12, 74, 110, 0.05); }
-        body.light-theme .btn-switcher-active { background: #1e3a8a; color: #eff6ff; border-color: #1e3a8a; box-shadow: 0 2px 8px rgba(30, 58, 138, 0.3); }
+        body.light-theme .bg-widget-card { background-color: #ffffff; border-color: rgba(14, 165, 233, 0.2); box-shadow: 0 4px 12px rgba(12, 74, 110, 0.05); }
+        body.light-theme .bg-widget-inner { background-color: #f0f9ff; border-color: rgba(14, 165, 233, 0.1); }
         body.light-theme .kpi-box { background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%); border-color: #1d4ed8; color: #ffffff; }
         body.light-theme .teal-wrapper { background-color: rgba(20, 184, 166, 0.1); border: 1px solid rgba(20, 184, 166, 0.3); box-shadow: 0 20px 40px -15px rgba(20, 184, 166, 0.25); }
 
@@ -52,11 +52,7 @@
         }
         body.light-theme.theme-do-hanhchinh .glass-panel { border-color: rgba(252, 165, 165, 0.8); }
 
-        /* MÀU CHỮ/VIỀN ĐỘNG CƠ BẢN */
-        .text-dyn-muted { transition: color 0.3s; }
-        body.dark-theme .text-dyn-muted { color: #7dd3fc; } 
-        body.light-theme .text-dyn-muted { color: #0284c7; }
-
+        /* LINE & BORDERS */
         .border-dynamic-line { border-color: rgba(14, 165, 233, 0.2); transition: border-color 0.3s; }
         body.dark-theme .border-dynamic-line { border-color: rgba(56, 189, 248, 0.3); }
 
@@ -85,9 +81,10 @@
 
         body { font-family: 'Montserrat', sans-serif; margin: 0; padding: 0; min-height: 100vh; display: flex; flex-direction: column; transition: background 0.3s, color 0.3s; }
         .container-wrapper { max-width: 1550px; margin: 30px auto; padding: 0 24px; width: 100%; }
+        .chart-container { position: relative; height: 320px; width: 100%; }
         
-        .card-target-item { border: 1px solid; transition: all 0.25s cubic-bezier(0.165, 0.84, 0.44, 1); }
-        .card-target-item:hover { transform: translateY(-3px); border-color: #2563eb; box-shadow: 0 10px 20px -5px rgba(37, 99, 235, 0.25); }
+        .bg-widget-card { transition: all 0.25s cubic-bezier(0.165, 0.84, 0.44, 1); }
+        .bg-widget-card:hover { transform: translateY(-3px); border-color: #2563eb !important; box-shadow: 0 10px 20px -5px rgba(37, 99, 235, 0.25); }
 
         @media (max-width: 1024px) { .controls-wrapper { flex-direction: column; align-items: flex-end; } }
         @media (max-width: 640px) { .flex-responsive { flex-direction: column; align-items: stretch; gap: 16px; } .controls-wrapper { flex-direction: row; justify-content: space-between; align-items: center; width: 100%; } }
@@ -131,22 +128,22 @@
             </header>
 
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-                <div class="lg:col-span-7 glass-panel p-5">
-                    <h2 class="text-xs font-black uppercase tracking-wider text-sky-600 dark:text-sky-300 mb-3">📊 Tỷ lệ hoàn thành trung bình theo Lĩnh vực (%)</h2>
-                    <div class="w-full relative h-[320px]">
+                <div class="lg:col-span-7 glass-panel p-5 flex flex-col">
+                    <h2 class="text-xs font-black uppercase tracking-wider text-dynamic-title mb-4">📊 Tỷ lệ hoàn thành trung bình theo Lĩnh vực (%)</h2>
+                    <div class="w-full relative h-[320px] flex-grow">
                         <canvas id="barChart"></canvas>
                     </div>
                 </div>
                 <div class="lg:col-span-5 glass-panel p-5 flex flex-col justify-between">
-                    <h2 class="text-xs font-black uppercase tracking-wider text-sky-600 dark:text-sky-300 mb-3">🎯 Cơ cấu phân bổ số lượng 30 Chỉ tiêu</h2>
-                    <div class="w-full relative h-[320px] flex justify-center">
+                    <h2 class="text-xs font-black uppercase tracking-wider text-dynamic-title mb-4">🎯 Cơ cấu phân bổ số lượng 30 Chỉ tiêu</h2>
+                    <div class="w-full relative h-[320px] flex justify-center flex-grow">
                         <canvas id="pieChart"></canvas>
                     </div>
                 </div>
             </div>
 
             <div id="target-container" class="space-y-6 pb-6">
-                <div class="text-center py-12 text-dynamic-body font-bold animate-pulse uppercase text-xs tracking-widest glass-panel p-6">
+                <div class="text-center py-12 font-bold animate-pulse uppercase text-xs tracking-widest glass-panel p-6 text-dynamic-body">
                     ⏳ Hệ thống đang tải và phân loại danh sách 30 chỉ tiêu từ Firebase Cloud...
                 </div>
             </div>
@@ -196,7 +193,7 @@
             renderChartsEngine(cleanedData, isLight ? '#1e3a8a' : '#e0f2fe');
         });
 
-        // TÍNH TOÁN % TỰ ĐỘNG THÔNG MINH - CHÍNH XÁC 2 CHỮ SỐ THẬP PHÂN
+        // HÀM TÍNH TOÁN % TỰ ĐỘNG THÔNG MINH - CHÍNH XÁC 2 CHỮ SỐ THẬP PHÂN
         function calculatePercentage(item) {
             let percent = 0;
             let thStr = String(item.th || "");
@@ -238,6 +235,7 @@
             Object.keys(nhomTen).forEach((key) => {
                 if (!groups[key]) return;
 
+                // MỖI NHÓM NẰM TRONG 1 KHỐI GLASS-PANEL RIÊNG BIỆT NHƯ YÊU CẦU
                 let groupHtml = `
                     <div class="glass-panel p-6 space-y-5 font-['Inter']">
                         <h2 class="text-sm md:text-base font-black text-dynamic-title flex items-center gap-3 border-b border-dynamic-line pb-3">
@@ -253,17 +251,18 @@
                     let statusClass = "bg-slate-100 text-slate-600 border-slate-300 dark:bg-slate-800 dark:text-slate-400 dark:border-slate-600";
                     let dgText = item.danh_gia || "Chưa đánh giá";
                     if (dgText.toLowerCase().includes('vượt')) {
-                        statusClass = "bg-emerald-100 text-emerald-700 border-emerald-300 dark:bg-emerald-900/50 dark:text-emerald-400 dark:border-emerald-800";
+                        statusClass = "bg-emerald-100 text-emerald-700 border-emerald-300 dark:bg-emerald-900/60 dark:text-emerald-400 dark:border-emerald-800";
                     } else if (dgText.toLowerCase().includes('đạt')) {
-                        statusClass = "bg-blue-100 text-blue-700 border-blue-300 dark:bg-blue-900/50 dark:text-blue-400 dark:border-blue-800";
+                        statusClass = "bg-blue-100 text-blue-700 border-blue-300 dark:bg-blue-900/60 dark:text-blue-400 dark:border-blue-800";
                     }
 
                     const hienPhuongHuong = item.phuong_huong && item.phuong_huong !== "-" 
                         ? `<span class="block text-[10.5px] text-dynamic-body font-medium mt-3 italic border-t border-dynamic-line pt-2 leading-relaxed opacity-90">📌 ${item.phuong_huong}</span>` 
                         : '';
 
+                    // THẺ DỮ LIỆU ĐỒNG BỘ VỚI BG-WIDGET-CARD
                     groupHtml += `
-                        <div class="card-target-item p-5 rounded-2xl flex flex-col justify-between bg-white dark:bg-slate-800/40">
+                        <div class="bg-widget-card border-2 p-5 rounded-3xl flex flex-col justify-between shadow-sm">
                             
                             <div class="flex justify-between items-start mb-3">
                                 <span class="text-[9px] font-black px-2.5 py-1 ${statusClass} border rounded uppercase tracking-wider">${dgText}</span>
@@ -272,14 +271,14 @@
                             
                             <h4 class="text-[13px] font-bold leading-snug text-dynamic-title mb-4 flex-grow">${item.ten}</h4>
                             
-                            <div class="grid grid-cols-1 gap-2 text-xs bg-black/5 dark:bg-white/5 p-3 rounded-xl border border-dynamic-line">
-                                <div>
-                                    <span class="block text-[9px] text-dynamic-label font-bold uppercase tracking-wider opacity-90">🎯 Kế hoạch</span>
-                                    <span class="font-extrabold text-dynamic-title mt-0.5 block">${item.kh} <small>${item.dvt || ''}</small></span>
+                            <div class="grid grid-cols-2 gap-3 border-t border-dynamic-line pt-4">
+                                <div class="bg-widget-inner rounded-xl p-3 text-center border shadow-sm">
+                                    <span class="block text-lg font-black text-indigo-700 dark:text-indigo-400 leading-none">${item.kh}</span>
+                                    <span class="block text-[9px] font-bold mt-1 opacity-70 uppercase tracking-wide text-dynamic-body">Kế hoạch ${item.dvt ? '('+item.dvt+')' : ''}</span>
                                 </div>
-                                <div class="mt-1">
-                                    <span class="block text-[9px] text-dynamic-label font-bold uppercase tracking-wider opacity-90">📈 Thực tế</span>
-                                    <span class="font-extrabold text-sky-600 dark:text-sky-400 mt-0.5 block leading-snug">${item.th || 'Chưa có số liệu'}</span>
+                                <div class="bg-widget-inner rounded-xl p-3 text-center border shadow-sm">
+                                    <span class="block text-lg font-black text-sky-600 dark:text-sky-400 leading-none">${item.th || '-'}</span>
+                                    <span class="block text-[9px] font-bold mt-1 opacity-70 uppercase tracking-wide text-dynamic-body">Thực tế ${item.dvt ? '('+item.dvt+')' : ''}</span>
                                 </div>
                             </div>
 
@@ -315,7 +314,6 @@
             const labelsShort = ['Kinh tế', 'Văn hóa - XH', 'Môi trường - ĐT', 'Cải cách HC', 'QP - AN'];
             const labelsLong = Object.values(nhomTen);
             
-            // Xử lý đồ thị cột 2 chữ số thập phân
             const barData = Object.keys(nhomTen).map(k => {
                 return groupStats[k].count > 0 ? parseFloat((groupStats[k].totalPercent / groupStats[k].count).toFixed(2)) : 0;
             });
@@ -325,7 +323,7 @@
             const avgTotal = (barData.reduce((a, b) => a + b, 0) / activeGroups).toFixed(2);
             document.getElementById('tong_tien_do').innerText = avgTotal + "%";
 
-            // 1. Dựng Bar Chart
+            // 1. Dựng Bar Chart (Hiển thị % trên cột)
             const ctxBar = document.getElementById('barChart').getContext('2d');
             barChart = new Chart(ctxBar, {
                 type: 'bar',
@@ -365,7 +363,7 @@
                 }
             });
 
-            // 2. Dựng Pie Chart
+            // 2. Dựng Pie Chart (Hiển thị số lượng chỉ tiêu trên bánh)
             const ctxPie = document.getElementById('pieChart').getContext('2d');
             pieChart = new Chart(ctxPie, {
                 type: 'doughnut',
