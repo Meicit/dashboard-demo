@@ -8,6 +8,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700;800&family=Montserrat:wght@400;600;700;800;900&display=swap" rel="stylesheet">
     
     <style>
+        /* ================= QUẢN LÝ MÀU NỀN TỔNG THỂ CỐ ĐỊNH ================= */
         body {
             font-family: 'Inter', 'Be Vietnam Pro', sans-serif;
             margin: 0; padding: 0; min-height: 100vh;
@@ -15,59 +16,63 @@
             transition: background-color 0.4s ease, color 0.4s ease;
         }
 
-        /* ================= KỸ THUẬT NỀN ĐỘNG GRADIENT (HEADER) ================= */
-        body.theme-xanh .main-header {
+        /* BODY SÁNG: Nền trắng xám nhạt */
+        body.light-theme { background-color: #f8fafc; color: #334155; }
+        
+        /* BODY TỐI: Nền xanh Navy thẳm (Không dùng Đen #000) */
+        body.dark-theme { background-color: #082f49; color: #bae6fd; }
+
+        /* ================= HEADER GRADIENT ================= */
+        /* Sáng + Xanh */
+        body.light-theme.theme-xanh .main-header {
             background: linear-gradient(-45deg, #0b4a8f, #05234a, #0d5cb3, #02142d);
             background-size: 400% 400%; animation: gradientGIF 12s ease infinite;
-            border-bottom: 2px solid #032b5c; box-shadow: 0 4px 15px rgba(11, 74, 143, 0.4);
+            border-bottom: 2px solid #032b5c; box-shadow: 0 4px 15px rgba(11, 74, 143, 0.3);
         }
         
-        /* CHUẨN ĐỎ CỜ (#da251d) CHO THEME HÀNH CHÍNH */
-        body.theme-do .main-header {
+        /* Sáng + Đỏ (Màu Đỏ Cờ) */
+        body.light-theme.theme-do .main-header {
             background: linear-gradient(-45deg, #da251d, #a81c15, #ff3b33, #7a120e);
             background-size: 400% 400%; animation: gradientGIF 12s ease infinite;
             border-bottom: 2px solid #a81c15; box-shadow: 0 4px 15px rgba(218, 37, 29, 0.4);
         }
+
+        /* Chế độ Tối (Chỉ có 1 nền Tối duy nhất) */
+        body.dark-theme .main-header {
+            background: linear-gradient(-45deg, #020617, #0f172a, #082f49, #020617);
+            background-size: 400% 400%; animation: gradientGIF 12s ease infinite;
+            border-bottom: 2px solid #082f49; box-shadow: 0 4px 15px rgba(8, 47, 73, 0.5);
+        }
+        
         @keyframes gradientGIF { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
 
-        /* ================= MA TRẬN 4 TRẠNG THÁI TỐI THƯỢNG (KHÔNG DÙNG ĐEN) ================= */
+        /* ẨN NÚT CHỌN THEME XANH/ĐỎ KHI Ở CHẾ ĐỘ TỐI */
+        body.dark-theme .theme-selector-vertical { display: none !important; }
+
+        /* ================= KHỐI NỘI DUNG KÍNH MỜ (GLASSMORPHISM) ================= */
         .menu-panel-wrapper {
             backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
             border: 1px solid; border-radius: 40px; width: 100%; transition: all 0.5s ease;
         }
         .theme-text { transition: color 0.5s ease; }
         .border-left-theme { transition: border-color 0.5s ease; }
-        .content-text { transition: color 0.5s ease; }
 
-        /* TRẠNG THÁI 1: XANH + SÁNG */
-        body.light-theme.theme-xanh { background-color: #f8fafc; color: #1e3a8a; }
-        body.light-theme.theme-xanh .content-text { color: #1e40af; }
-        body.light-theme.theme-xanh .menu-panel-wrapper { background: rgba(14, 165, 233, 0.05); border-color: rgba(14, 165, 233, 0.2); box-shadow: 0 20px 50px -10px rgba(11, 74, 143, 0.15); }
+        /* 1. SÁNG + XANH */
+        body.light-theme.theme-xanh .menu-panel-wrapper { background: rgba(14, 165, 233, 0.05); border-color: rgba(14, 165, 233, 0.2); box-shadow: 0 20px 50px -10px rgba(11, 74, 143, 0.1); }
         body.light-theme.theme-xanh .theme-text { color: #0b4a8f; }
         body.light-theme.theme-xanh .border-left-theme { border-left-color: #0b4a8f; }
 
-        /* TRẠNG THÁI 2: XANH + TỐI (NO SLATE/BLACK, DÙNG DEEP NAVY) */
-        body.dark-theme.theme-xanh { background-color: #082f49; color: #e0f2fe; }
-        body.dark-theme.theme-xanh .content-text { color: #bae6fd; }
-        body.dark-theme.theme-xanh .menu-panel-wrapper { background: rgba(12, 74, 110, 0.65); border-color: rgba(56, 189, 248, 0.2); box-shadow: 0 20px 50px -10px rgba(8, 47, 73, 0.6); }
-        body.dark-theme.theme-xanh .theme-text { color: #38bdf8; }
-        body.dark-theme.theme-xanh .border-left-theme { border-left-color: #38bdf8; }
-
-        /* TRẠNG THÁI 3: ĐỎ + SÁNG (SỬ DỤNG ĐỎ CỜ) */
-        body.light-theme.theme-do { background-color: #fff1f2; color: #881337; }
-        body.light-theme.theme-do .content-text { color: #9f1239; }
-        body.light-theme.theme-do .menu-panel-wrapper { background: rgba(218, 37, 29, 0.05); border-color: rgba(218, 37, 29, 0.2); box-shadow: 0 20px 50px -10px rgba(168, 28, 21, 0.15); }
+        /* 2. SÁNG + ĐỎ */
+        body.light-theme.theme-do .menu-panel-wrapper { background: rgba(218, 37, 29, 0.05); border-color: rgba(218, 37, 29, 0.2); box-shadow: 0 20px 50px -10px rgba(168, 28, 21, 0.1); }
         body.light-theme.theme-do .theme-text { color: #da251d; }
         body.light-theme.theme-do .border-left-theme { border-left-color: #da251d; }
 
-        /* TRẠNG THÁI 4: ĐỎ + TỐI (NO SLATE/BLACK, DÙNG DEEP RUBY) */
-        body.dark-theme.theme-do { background-color: #4c0519; color: #ffe4e6; }
-        body.dark-theme.theme-do .content-text { color: #fecdd3; }
-        body.dark-theme.theme-do .menu-panel-wrapper { background: rgba(136, 19, 55, 0.65); border-color: rgba(244, 63, 94, 0.2); box-shadow: 0 20px 50px -10px rgba(76, 5, 25, 0.6); }
-        body.dark-theme.theme-do .theme-text { color: #fb7185; }
-        body.dark-theme.theme-do .border-left-theme { border-left-color: #fb7185; }
+        /* 3. CHẾ ĐỘ TỐI ĐỒNG NHẤT (UNIFIED DARK MODE) */
+        body.dark-theme .menu-panel-wrapper { background: rgba(12, 74, 110, 0.5); border-color: rgba(56, 189, 248, 0.2); box-shadow: 0 20px 50px -10px rgba(2, 6, 23, 0.5); }
+        body.dark-theme .theme-text { color: #38bdf8; }
+        body.dark-theme .border-left-theme { border-left-color: #38bdf8; }
 
-        /* ================= BỘ ĐIỀU KHIỂN & NÚT BẤM (ĐỔ BÓNG CÓ SẮC ĐỘ) ================= */
+        /* ================= BỘ ĐIỀU KHIỂN & NÚT BẤM ================= */
         .btn-back-container { position: relative; display: inline-block; }
         .btn-back-interactive {
             display: inline-flex; align-items: center; gap: 8px;
@@ -80,53 +85,42 @@
         .theme-switcher-panel { padding: 4px; border-radius: 12px; display: flex; align-items: center; backdrop-filter: blur(10px); border: 1px solid; transition: all 0.3s; }
         .btn-view-mode { display: flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 800; text-transform: uppercase; padding: 6px 12px; border-radius: 8px; transition: all 0.3s; border: 1px solid transparent; }
 
-        /* Phối màu Nút & Control - XANH SÁNG */
-        body.light-theme.theme-xanh .btn-back-interactive { background: rgba(14, 165, 233, 0.1); color: #0b4a8f; border-color: rgba(14, 165, 233, 0.3); }
-        body.light-theme.theme-xanh .btn-back-container:hover .btn-back-interactive { border-color: #0b4a8f; color: #0b4a8f; box-shadow: 4px 4px 10px rgba(11, 74, 143, 0.2); }
-        body.light-theme.theme-xanh .theme-switcher-panel { background: rgba(14, 165, 233, 0.1); border-color: rgba(14, 165, 233, 0.2); }
-        body.light-theme.theme-xanh .btn-view-mode.active { background: #0b4a8f; color: #fff; box-shadow: 0 4px 6px rgba(11, 74, 143, 0.3); }
+        /* Nút Sáng Xanh */
+        body.light-theme.theme-xanh .btn-back-interactive { background: #ffffff; color: #0b4a8f; border-color: rgba(14, 165, 233, 0.3); }
+        body.light-theme.theme-xanh .btn-back-container:hover .btn-back-interactive { border-color: #0b4a8f; color: #0b4a8f; box-shadow: 4px 4px 10px rgba(11, 74, 143, 0.15); }
+        body.light-theme.theme-xanh .theme-switcher-panel { background: #ffffff; border-color: rgba(14, 165, 233, 0.2); }
+        body.light-theme.theme-xanh .btn-view-mode.active { background: #0b4a8f; color: #fff; box-shadow: 0 4px 6px rgba(11, 74, 143, 0.2); }
         body.light-theme.theme-xanh .btn-view-mode:not(.active) { color: #1e3a8a; }
 
-        /* Phối màu Nút & Control - XANH TỐI */
-        body.dark-theme.theme-xanh .btn-back-interactive { background: rgba(12, 74, 110, 0.5); color: #bae6fd; border-color: rgba(56, 189, 248, 0.3); }
-        body.dark-theme.theme-xanh .btn-back-container:hover .btn-back-interactive { border-color: #38bdf8; color: #38bdf8; box-shadow: 4px 4px 10px rgba(56, 189, 248, 0.3); }
-        body.dark-theme.theme-xanh .theme-switcher-panel { background: rgba(12, 74, 110, 0.5); border-color: rgba(56, 189, 248, 0.2); }
-        body.dark-theme.theme-xanh .btn-view-mode.active { background: #0ea5e9; color: #fff; box-shadow: 0 4px 6px rgba(14, 165, 233, 0.3); }
-        body.dark-theme.theme-xanh .btn-view-mode:not(.active) { color: #bae6fd; }
-
-        /* Phối màu Nút & Control - ĐỎ SÁNG (Chuẩn Đỏ Cờ) */
-        body.light-theme.theme-do .btn-back-interactive { background: rgba(218, 37, 29, 0.1); color: #da251d; border-color: rgba(218, 37, 29, 0.3); }
-        body.light-theme.theme-do .btn-back-container:hover .btn-back-interactive { border-color: #da251d; color: #da251d; box-shadow: 4px 4px 10px rgba(218, 37, 29, 0.25); }
-        body.light-theme.theme-do .theme-switcher-panel { background: rgba(218, 37, 29, 0.1); border-color: rgba(218, 37, 29, 0.2); }
-        body.light-theme.theme-do .btn-view-mode.active { background: #da251d; color: #fff; box-shadow: 0 4px 6px rgba(218, 37, 29, 0.3); }
+        /* Nút Sáng Đỏ */
+        body.light-theme.theme-do .btn-back-interactive { background: #ffffff; color: #da251d; border-color: rgba(218, 37, 29, 0.3); }
+        body.light-theme.theme-do .btn-back-container:hover .btn-back-interactive { border-color: #da251d; color: #da251d; box-shadow: 4px 4px 10px rgba(218, 37, 29, 0.15); }
+        body.light-theme.theme-do .theme-switcher-panel { background: #ffffff; border-color: rgba(218, 37, 29, 0.2); }
+        body.light-theme.theme-do .btn-view-mode.active { background: #da251d; color: #fff; box-shadow: 0 4px 6px rgba(218, 37, 29, 0.2); }
         body.light-theme.theme-do .btn-view-mode:not(.active) { color: #881337; }
 
-        /* Phối màu Nút & Control - ĐỎ TỐI */
-        body.dark-theme.theme-do .btn-back-interactive { background: rgba(136, 19, 55, 0.5); color: #fecdd3; border-color: rgba(244, 63, 94, 0.3); }
-        body.dark-theme.theme-do .btn-back-container:hover .btn-back-interactive { border-color: #fb7185; color: #fb7185; box-shadow: 4px 4px 10px rgba(244, 63, 94, 0.3); }
-        body.dark-theme.theme-do .theme-switcher-panel { background: rgba(136, 19, 55, 0.5); border-color: rgba(244, 63, 94, 0.2); }
-        body.dark-theme.theme-do .btn-view-mode.active { background: #f43f5e; color: #fff; box-shadow: 0 4px 6px rgba(244, 63, 94, 0.3); }
-        body.dark-theme.theme-do .btn-view-mode:not(.active) { color: #fecdd3; }
+        /* Nút Tối Đồng Nhất */
+        body.dark-theme .btn-back-interactive { background: rgba(12, 74, 110, 0.5); color: #bae6fd; border-color: rgba(56, 189, 248, 0.3); }
+        body.dark-theme .btn-back-container:hover .btn-back-interactive { border-color: #38bdf8; color: #38bdf8; box-shadow: 4px 4px 10px rgba(56, 189, 248, 0.2); }
+        body.dark-theme .theme-switcher-panel { background: rgba(12, 74, 110, 0.5); border-color: rgba(56, 189, 248, 0.2); }
+        body.dark-theme .btn-view-mode.active { background: #0ea5e9; color: #fff; box-shadow: 0 4px 6px rgba(14, 165, 233, 0.2); }
+        body.dark-theme .btn-view-mode:not(.active) { color: #bae6fd; }
 
         /* ================= FOOTER TỰ ĐỘNG THAY ĐỔI MÀU ================= */
         .footer-main { text-align: center; padding: 24px; font-weight: 700; font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; border-top: 1px solid; backdrop-filter: blur(10px); transition: all 0.3s; margin-top: auto; }
         body.light-theme.theme-xanh .footer-main { background: rgba(255,255,255,0.5); border-top-color: rgba(14, 165, 233, 0.2); color: #1e3a8a; }
-        body.dark-theme.theme-xanh .footer-main { background: rgba(8, 47, 73, 0.5); border-top-color: rgba(56, 189, 248, 0.2); color: #7dd3fc; }
         body.light-theme.theme-do .footer-main { background: rgba(255,255,255,0.5); border-top-color: rgba(218, 37, 29, 0.2); color: #a81c15; }
-        body.dark-theme.theme-do .footer-main { background: rgba(76, 5, 25, 0.5); border-top-color: rgba(244, 63, 94, 0.2); color: #fda4af; }
+        body.dark-theme .footer-main { background: rgba(8, 47, 73, 0.5); border-top-color: rgba(56, 189, 248, 0.2); color: #7dd3fc; }
 
         /* ================= LOGO ANIMATION (BÓNG ĐỔ THEO MÀU THEME) ================= */
         body.theme-xanh .logo-main { animation: float-xanh 4s ease-in-out infinite; }
-        @keyframes float-xanh {
-            0%, 100% { transform: translateY(0); filter: drop-shadow(0 4px 6px rgba(8, 47, 73, 0.4)); }
-            50% { transform: translateY(-3px); filter: drop-shadow(0 8px 12px rgba(8, 47, 73, 0.6)); }
-        }
+        @keyframes float-xanh { 0%, 100% { transform: translateY(0); filter: drop-shadow(0 4px 6px rgba(8, 47, 73, 0.4)); } 50% { transform: translateY(-3px); filter: drop-shadow(0 8px 12px rgba(8, 47, 73, 0.6)); } }
         
         body.theme-do .logo-main { animation: float-do 4s ease-in-out infinite; }
-        @keyframes float-do {
-            0%, 100% { transform: translateY(0); filter: drop-shadow(0 4px 6px rgba(76, 5, 25, 0.4)); }
-            50% { transform: translateY(-3px); filter: drop-shadow(0 8px 12px rgba(76, 5, 25, 0.6)); }
-        }
+        @keyframes float-do { 0%, 100% { transform: translateY(0); filter: drop-shadow(0 4px 6px rgba(76, 5, 25, 0.4)); } 50% { transform: translateY(-3px); filter: drop-shadow(0 8px 12px rgba(76, 5, 25, 0.6)); } }
+        
+        body.dark-theme .logo-main { animation: float-dark 4s ease-in-out infinite; }
+        @keyframes float-dark { 0%, 100% { transform: translateY(0); filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.5)); } 50% { transform: translateY(-3px); filter: drop-shadow(0 8px 12px rgba(0, 0, 0, 0.7)); } }
 
         .custom-scrollbar::-webkit-scrollbar { width: 6px; }
         .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(148, 163, 184, 0.4); border-radius: 10px; }
@@ -158,7 +152,7 @@
                 </div>
             </div>
 
-            <!-- Nút chọn Theme XANH/ĐỎ -->
+            <!-- Nút chọn Theme XANH/ĐỎ (Sẽ tự động ẩn khi bật Dark Mode) -->
             <div class="theme-selector-vertical lg:absolute lg:top-0 lg:right-0 bg-white/10 backdrop-blur-md border border-white/20 p-1.5 rounded-xl flex flex-col space-y-1.5 w-[75px] z-20 shadow-inner">
                 <button onclick="switchSystemTheme('xanh')" id="btn-theme-xanh" class="w-full text-center text-[10px] font-extrabold uppercase py-1.5 rounded-lg transition-all duration-300 bg-blue-600 text-white shadow-md border border-blue-500/50">
                     🔵 Xanh
@@ -173,14 +167,14 @@
 
     <div class="max-w-[1550px] w-full mx-auto px-4 md:px-6 my-6 flex flex-col items-start">
         
-        <!-- BỘ ĐIỀU KHIỂN TOP (Nút Quay lại + Chế độ Sáng/Tối) -->
+        <!-- BỘ ĐIỀU KHIỂN TOP -->
         <div class="flex flex-col sm:flex-row justify-between items-center gap-4 mb-6 w-full">
             <div class="btn-back-container m-0">
                 <a href="index.html" class="btn-back-interactive">⬅️ Quay lại Trang chủ</a>
             </div>
             
             <div class="theme-switcher-panel">
-                <span class="text-[10px] font-black uppercase tracking-wider px-3 content-text opacity-70">Chế độ xem:</span>
+                <span class="text-[10px] font-black uppercase tracking-wider px-3 opacity-70" style="color: inherit;">Chế độ xem:</span>
                 <button onclick="setTheme('light')" id="btn-theme-light" class="btn-view-mode active">☀️ Sáng</button>
                 <button onclick="setTheme('dark')" id="btn-theme-dark" class="btn-view-mode">🌙 Tối</button>
             </div>
@@ -198,7 +192,7 @@
                 <h2 class="theme-text text-lg md:text-xl lg:text-2xl font-black uppercase tracking-wide border-l-4 border-left-theme pl-4">
                     Quá trình hình thành xã Bình Hưng
                 </h2>
-                <p class="content-text text-sm md:text-base lg:text-lg font-bold leading-relaxed md:leading-loose text-justify">
+                <p class="text-sm md:text-base lg:text-lg font-bold leading-relaxed md:leading-loose text-justify">
                     Trải qua quá trình khai phá và hình thành vùng đất Nam Bộ, Bình Hưng - Phong Phú là vùng đất giàu truyền thống đoàn kết, cần cù lao động và năng động trong phát triển kinh tế. Được bồi đắp bởi hệ thống sông ngòi, kênh rạch tự nhiên cùng vị trí cửa ngõ kết nối khu Nam Thành phố Hồ Chí Minh, nơi đây đã từng bước chuyển mình từ vùng sản xuất nông nghiệp truyền thống trở thành khu vực đô thị hóa năng động của thành phố.<br><br>
                     Thực hiện chủ trương của Đảng và Nhà nước về sắp xếp đơn vị hành chính các cấp nhằm tinh gọn bộ máy, nâng cao hiệu lực, hiệu quả quản lý nhà nước, ngày 16 tháng 6 năm 2025, Ủy ban Thường vụ Quốc hội đã ban hành Nghị quyết số 1685/NQ-UBTVQH15 về việc sắp xếp các đơn vị hành chính cấp xã của Thành phố Hồ Chí Minh năm 2025.<br><br>
                     Theo Nghị quyết, từ ngày 01 tháng 7 năm 2025, xã Bình Hưng chính thức được thành lập trên cơ sở sáp nhập toàn bộ diện tích tự nhiên và quy mô dân số của xã Bình Hưng, xã Phong Phú (huyện Bình Chánh cũ) và một phần diện tích tự nhiên, dân số của phường 7 (Quận 8 cũ).<br><br>
@@ -212,7 +206,7 @@
                 <h2 class="theme-text text-lg md:text-xl lg:text-2xl font-black uppercase tracking-wide border-l-4 border-left-theme pl-4">
                     Đặc điểm tình hình
                 </h2>
-                <p class="content-text text-sm md:text-base lg:text-lg font-bold leading-relaxed md:leading-loose text-justify">
+                <p class="text-sm md:text-base lg:text-lg font-bold leading-relaxed md:leading-loose text-justify">
                     Xã Bình Hưng nằm ở cửa ngõ Tây Nam Thành phố Hồ Chí Minh, giữ vai trò kết nối giữa khu vực trung tâm thành phố với các địa phương phía Nam. Địa phương có vị trí địa lý thuận lợi khi tiếp giáp nhiều phường, xã của Thành phố Hồ Chí Minh và sở hữu hệ thống giao thông đối ngoại quan trọng như đường Nguyễn Văn Linh, đường Văn Tiến Dũng, Quốc lộ 50, Quốc lộ 50 song hành cùng tuyến sông Cần Giuộc và mạng lưới sông, rạch kết nối liên vùng.<br><br>
                     Những năm qua, cơ cấu kinh tế của địa phương chuyển dịch mạnh theo hướng thương mại - dịch vụ, công nghiệp - xây dựng và nông nghiệp đô thị. Trên địa bàn hiện có hơn 8.348 doanh nghiệp và gần 3.166 hộ kinh doanh đang hoạt động. Hệ thống thương mại phát triển với 2 trung tâm thương mại, 3 siêu thị tổng hợp, 8 siêu thị chuyên doanh, 62 cửa hàng tiện lợi cùng nhiều cơ sở dịch vụ, đáp ứng nhu cầu ngày càng cao của người dân.<br><br>
                     Cùng với tốc độ đô thị hóa nhanh, Bình Hưng vẫn duy trì hiệu quả mô hình nông nghiệp đô thị với các sản phẩm có giá trị kinh tế cao như hoa lan, cây kiểng, cá kiểng, thủy sản, rau nhút và bồn bồn. Địa phương hiện có 2 sản phẩm OCOP: “Bộ khay gỗ nguyên khối tối giản” và sản phẩm Khô cá vồ đém một nắng Minh Hiếu được công nhận theo chương trình mỗi xã một sản phẩm.<br><br>
@@ -226,7 +220,7 @@
                 <h2 class="theme-text text-lg md:text-xl lg:text-2xl font-black uppercase tracking-wide border-l-4 border-left-theme pl-4">
                     Động lực phát triển trong tương lai
                 </h2>
-                <p class="content-text text-sm md:text-base lg:text-lg font-bold leading-relaxed md:leading-loose text-justify">
+                <p class="text-sm md:text-base lg:text-lg font-bold leading-relaxed md:leading-loose text-justify">
                     Bước vào nhiệm kỳ 2025 - 2030, xã Bình Hưng đứng trước nhiều thời cơ và vận hội mới. Vị trí địa lý chiến lược, hệ thống giao thông ngày càng hoàn thiện, tốc độ đô thị hóa cao cùng tiềm năng phát triển thương mại - dịch vụ là những lợi thế quan trọng để địa phương bứt phá trong giai đoạn tới.<br><br>
                     Chủ đề Đại hội Đảng bộ xã Bình Hưng nhiệm kỳ 2025 - 2030 xác định: “Xây dựng Đảng bộ và hệ thống chính trị trong sạch, vững mạnh toàn diện; tự tin bước vào kỷ nguyên vươn mình của dân tộc; giữ vững quốc phòng - an ninh; quyết tâm phát triển kinh tế - xã hội xã Bình Hưng nhanh và bền vững, chất lượng sống cao”.<br><br>
                     Đây là kim chỉ nam cho toàn Đảng bộ, chính quyền và Nhân dân xã trong quá trình xây dựng địa phương phát triển toàn diện, lấy người dân làm trung tâm, nâng cao chất lượng sống và xây dựng môi trường đô thị văn minh, hiện đại.<br><br>
