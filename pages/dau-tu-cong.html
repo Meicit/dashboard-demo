@@ -15,33 +15,21 @@
         .shadow-lg { box-shadow: 0 10px 15px -3px rgba(8, 47, 73, 0.15), 0 4px 6px -4px rgba(8, 47, 73, 0.1); }
 
         /* ================= QUẢN LÝ MÀU NỀN & THEME ================= */
-        /* CSS CHO NỀN TỐI (DARK THEME) - KHÔNG DÙNG MÀU ĐEN/XÁM */
-        body.dark-theme {
-            background-color: #082f49; /* Xanh Navy sâu */
-            color: #e0f2fe;
-        }
+        body.dark-theme { background-color: #082f49; color: #e0f2fe; }
         body.dark-theme .text-dynamic-title { color: #38bdf8; }
         body.dark-theme .text-dynamic-body { color: #bae6fd; }
         body.dark-theme .text-dynamic-label { color: #fcd34d; }
         body.dark-theme .glass-panel { background: rgba(12, 74, 110, 0.65); border-color: rgba(56, 189, 248, 0.2); }
-        body.dark-theme .card-target-item { background: rgba(8, 47, 73, 0.5); border-color: rgba(56, 189, 248, 0.15); }
         body.dark-theme .insight-card { background: rgba(12, 74, 110, 0.4); border-color: rgba(56, 189, 248, 0.1); }
-        body.dark-theme .btn-switcher-active { background: #0284c7; color: #e0f2fe; border-color: #38bdf8; }
         body.dark-theme .kpi-box { background: linear-gradient(135deg, #0c4a6e 0%, #082f49 100%); border-color: #0284c7; }
         body.dark-theme .teal-wrapper { background-color: rgba(20, 184, 166, 0.05); border: 1px solid rgba(20, 184, 166, 0.2); box-shadow: 0 20px 40px -15px rgba(8, 47, 73, 0.6); }
 
-        /* CSS CHO NỀN SÁNG (LIGHT THEME) - KHÔNG DÙNG MÀU ĐEN/XÁM */
-        body.light-theme {
-            background-color: #f8fafc; /* Trắng xám cực nhẹ */
-            color: #1e3a8a; /* Xanh đậm thuần */
-        }
+        body.light-theme { background-color: #f8fafc; color: #1e3a8a; }
         body.light-theme .text-dynamic-title { color: #1e3a8a; } 
         body.light-theme .text-dynamic-body { color: #1e40af; }
         body.light-theme .text-dynamic-label { color: #c2410c; }
         body.light-theme .glass-panel { background: rgba(255, 255, 255, 0.95); border-color: rgba(14, 165, 233, 0.2); box-shadow: 0 20px 40px -15px rgba(12, 74, 110, 0.15); }
-        body.light-theme .card-target-item { background: #f0f9ff; border-color: rgba(14, 165, 233, 0.2); box-shadow: 0 4px 12px rgba(12, 74, 110, 0.05); }
         body.light-theme .insight-card { background: #e0f2fe; border-color: rgba(14, 165, 233, 0.15); }
-        body.light-theme .btn-switcher-active { background: #1e3a8a; color: #eff6ff; border-color: #1e3a8a; box-shadow: 0 2px 8px rgba(30, 58, 138, 0.3); }
         body.light-theme .kpi-box { background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%); border-color: #1d4ed8; color: #ffffff; }
         body.light-theme .teal-wrapper { background-color: rgba(20, 184, 166, 0.1); border: 1px solid rgba(20, 184, 166, 0.3); box-shadow: 0 20px 40px -15px rgba(20, 184, 166, 0.25); }
 
@@ -56,12 +44,12 @@
         /* BẢNG CHỈ TIÊU */
         .grid-row { display: flex; align-items: center; width: 100%; padding: 14px 20px; position: relative; font-family: 'Inter', sans-serif; }
         .col-stt { width: 5%; text-align: center; }
-        .col-name { width: 32%; padding-left: 10px; }
-        .col-type { width: 12%; text-align: center; }
-        .col-cap { width: 12%; text-align: right; }
-        .col-invest { width: 12%; text-align: right; }
+        .col-name { width: 30%; padding-left: 10px; }
+        .col-type { width: 15%; text-align: center; }
+        .col-cap { width: 10%; text-align: right; }
+        .col-invest { width: 10%; text-align: right; }
         .col-progress { width: 15%; padding: 0 10px; }
-        .col-status { width: 12%; text-align: center; }
+        .col-status { width: 15%; text-align: right; }
 
         .header-row { 
             background: linear-gradient(135deg, #1e3a8a 0%, #0c4a6e 100%);
@@ -93,12 +81,8 @@
             
             <div class="bg-blue-950/90 border border-blue-800 p-1 rounded-xl flex items-center shadow-md backdrop-blur">
                 <span class="text-[10px] font-black uppercase tracking-wider px-3 text-blue-300">Chế độ xem:</span>
-                <button onclick="setTheme('light')" id="btn-theme-light" class="flex items-center gap-1.5 text-[11px] font-extrabold uppercase px-3 py-1.5 rounded-lg transition border border-transparent text-white">
-                    ☀️ Sáng
-                </button>
-                <button onclick="setTheme('dark')" id="btn-theme-dark" class="flex items-center gap-1.5 text-[11px] font-extrabold uppercase px-3 py-1.5 rounded-lg transition border border-transparent text-white">
-                    🌙 Tối
-                </button>
+                <button onclick="setTheme('light')" id="btn-theme-light" class="flex items-center gap-1.5 text-[11px] font-extrabold uppercase px-3 py-1.5 rounded-lg transition border border-transparent text-white">☀️ Sáng</button>
+                <button onclick="setTheme('dark')" id="btn-theme-dark" class="flex items-center gap-1.5 text-[11px] font-extrabold uppercase px-3 py-1.5 rounded-lg transition border border-transparent text-white">🌙 Tối</button>
             </div>
         </div>
 
@@ -125,11 +109,11 @@
                     <h3 id="card_tong_du_an" class="text-2xl font-black text-dynamic-title mt-1">0</h3>
                 </div>
                 <div class="glass-panel p-5 border-l-4 border-indigo-500">
-                    <p class="text-[10px] font-bold text-indigo-500 dark:text-indigo-400 uppercase tracking-wider">Tổng ngân sách giai đoạn</p>
+                    <p class="text-[10px] font-bold text-indigo-500 dark:text-indigo-400 uppercase tracking-wider">Tổng ngân sách giai đoạn (Tr.Đ)</p>
                     <h3 id="card_von_giai_doan" class="text-2xl font-black text-dynamic-title mt-1">0</h3>
                 </div>
                 <div class="glass-panel p-5 border-l-4 border-blue-500">
-                    <p class="text-[10px] font-bold text-blue-500 dark:text-blue-400 uppercase tracking-wider">Kế hoạch giao vốn năm 2026</p>
+                    <p class="text-[10px] font-bold text-blue-500 dark:text-blue-400 uppercase tracking-wider">Kế hoạch giao vốn năm 2026 (Tr.Đ)</p>
                     <h3 id="card_von_nam" class="text-2xl font-black text-dynamic-title mt-1">0</h3>
                 </div>
             </div>
@@ -142,7 +126,7 @@
                     </div>
                 </div>
                 <div class="lg:col-span-5 glass-panel p-5 flex flex-col justify-between">
-                    <h2 class="text-xs font-black uppercase tracking-wider text-dynamic-title mb-3">🍕 Cơ cấu phân bổ dòng vốn theo lĩnh vực</h2>
+                    <h2 class="text-xs font-black uppercase tracking-wider text-dynamic-title mb-3">🍕 Cơ cấu phân bổ dự án theo lĩnh vực</h2>
                     <div class="chart-container flex justify-center">
                         <canvas id="investPieChart"></canvas>
                     </div>
@@ -155,16 +139,16 @@
                     <div class="min-w-[1100px]">
                         <div class="grid-row header-row">
                             <div class="col-stt">STT</div>
-                            <div class="col-name text-left uppercase">Tên dự án / công trình trọng điểm</div>
+                            <div class="col-name text-left uppercase">Tên dự án / Thông tin phê duyệt</div>
                             <div class="col-type">Lĩnh vực</div>
-                            <div class="col-cap">Tổng vốn</div>
+                            <div class="col-cap">Kế hoạch Vốn</div>
                             <div class="col-invest text-sky-200">Đã giải ngân</div>
                             <div class="col-progress">Tiến độ đồ thị</div>
-                            <div class="col-status">Trạng thái</div>
+                            <div class="col-status">Trạng thái (Ghi chú)</div>
                         </div>
 
                         <div id="project-list-container" class="text-xs font-semibold">
-                            <p class="p-4 italic text-blue-500 dark:text-blue-300">Hệ thống đang kết nối dữ liệu hành chính từ Firebase...</p>
+                            <p class="p-4 italic text-blue-500 dark:text-blue-300 animate-pulse">Hệ thống đang đồng bộ dữ liệu từ Firebase Cloud...</p>
                         </div>
                     </div>
                 </div>
@@ -192,7 +176,8 @@
                 </div>
             </div>
 
-        </div> </div>
+        </div> 
+    </div>
 
     <footer class="w-full text-center py-6 text-dynamic-body font-bold text-[10px] uppercase tracking-[0.3em] border-t border-blue-200 dark:border-blue-900 bg-white/50 dark:bg-blue-950/40 backdrop-blur-md mt-auto">
         &copy; 2026 IOC Xã Bình Hưng — Hệ thống Điều hành Giải ngân Đầu tư công Liên thông
@@ -202,7 +187,6 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
-        // Đăng ký Plugin DataLabels để vẽ số trực tiếp lên Chart.js
         Chart.register(ChartDataLabels);
 
         const firebaseConfig = { databaseURL: "https://dashboard-demo-ce0da-default-rtdb.asia-southeast1.firebasedatabase.app" };
@@ -213,36 +197,44 @@
         let barChartInstance = null;
         let pieChartInstance = null;
         let cachedDataForTheme = null;
-        let currentTextColor = '#1e3a8a'; // Xanh đậm mặc định cho nền Sáng
+        let currentTextColor = '#1e3a8a'; 
 
-        const parseVNNumber = (str) => {
-            if (!str) return 0;
-            const cleanStr = String(str).replace(/\./g, '').replace(',', '.');
-            return parseFloat(cleanStr) || 0;
+        // Hàm Tự động Phân loại Lĩnh vực dựa trên tên dự án
+        function classifyProject(name) {
+            let lowerName = name.toLowerCase();
+            if (lowerName.includes('trường mầm non') || lowerName.includes('trường thcs') || lowerName.includes('trường tiểu học')) return 'Giáo dục';
+            if (lowerName.includes('đường') || lowerName.includes('hẻm') || lowerName.includes('đê') || lowerName.includes('cầu')) return 'Hạ tầng Giao thông';
+            if (lowerName.includes('cống') || lowerName.includes('ngập') || lowerName.includes('nạo vét') || lowerName.includes('rạch')) return 'Thoát nước & Chống ngập';
+            if (lowerName.includes('truyền thanh') || lowerName.includes('ủy ban') || lowerName.includes('đảng ủy') || lowerName.includes('văn phòng ấp')) return 'Trụ sở Hành chính';
+            return 'Văn hóa & Khác';
+        }
+
+        // Định dạng tiền tệ
+        const formatMoney = (val) => {
+            return new Intl.NumberFormat('vi-VN').format(val);
         };
 
-        // Hàm dựng hệ thống đồ thị đồng bộ
         function drawCharts(projects, textColor) {
             if(barChartInstance) barChartInstance.destroy();
             if(pieChartInstance) pieChartInstance.destroy();
 
-            const projectNames = projects.map(p => p.name.length > 20 ? p.name.substring(0, 18) + '...' : p.name);
+            const projectNames = projects.map(p => p.ten_cong_trinh.length > 20 ? p.ten_cong_trinh.substring(0, 18) + '...' : p.ten_cong_trinh);
             const projectRates = projects.map(p => {
-                const cap = parseVNNumber(p.capital);
-                const inv = parseVNNumber(p.invested);
+                const cap = parseFloat(p.von_giao_nam) || 0;
+                const inv = parseFloat(p.giai_ngan) || 0;
                 return cap > 0 ? parseFloat(((inv / cap) * 100).toFixed(1)) : 0;
             });
 
             const typeStats = {};
             projects.forEach(p => {
-                const cap = parseVNNumber(p.capital);
-                typeStats[p.type] = (typeStats[p.type] || 0) + 1; // Count projects per type
+                let type = classifyProject(p.ten_cong_trinh);
+                typeStats[type] = (typeStats[type] || 0) + 1; 
             });
 
             const typeLabels = Object.keys(typeStats);
             const typeValues = Object.values(typeStats);
 
-            // 1. Bar Chart (Cột) hiển thị Tỷ lệ Giải ngân (%)
+            // Bar Chart
             const ctxBar = document.getElementById('investBarChart').getContext('2d');
             barChartInstance = new Chart(ctxBar, {
                 type: 'bar',
@@ -261,24 +253,21 @@
                     responsive: true, maintainAspectRatio: false,
                     plugins: { 
                         legend: { display: false },
-                        // DataLabels in %
                         datalabels: {
-                            color: textColor,
-                            anchor: 'end',
-                            align: 'top',
+                            color: textColor, anchor: 'end', align: 'top',
                             font: { weight: 'bold', size: 9 },
                             formatter: (value) => value + '%'
                         }
                     },
                     scales: {
                         x: { grid: { display: false }, ticks: { color: textColor, font: { size: 9, weight: 'bold' } } },
-                        y: { max: 115, grid: { color: 'rgba(14, 165, 233, 0.15)' }, ticks: { color: textColor, font: { size: 9 } } }
+                        y: { max: 120, grid: { color: 'rgba(14, 165, 233, 0.15)' }, ticks: { color: textColor, font: { size: 9 } } }
                     },
                     layout: { padding: { top: 20 } }
                 }
             });
 
-            // 2. Pie Chart (Tròn) hiển thị số lượng dự án theo lĩnh vực
+            // Pie Chart
             const ctxPie = document.getElementById('investPieChart').getContext('2d');
             pieChartInstance = new Chart(ctxPie, {
                 type: 'pie',
@@ -286,20 +275,16 @@
                     labels: typeLabels,
                     datasets: [{
                         data: typeValues,
-                        backgroundColor: ['rgba(59, 130, 246, 0.85)', 'rgba(16, 185, 129, 0.85)', 'rgba(245, 158, 11, 0.85)', 'rgba(139, 92, 246, 0.85)'],
-                        borderWidth: 2,
-                        borderColor: '#ffffff'
+                        backgroundColor: ['#3b82f6', '#10b981', '#f59e0b', '#8b5cf6', '#f43f5e'],
+                        borderWidth: 2, borderColor: '#ffffff'
                     }]
                 },
                 options: {
-                    responsive: true, maintainAspectRatio: false,
-                    layout: { padding: 10 },
+                    responsive: true, maintainAspectRatio: false, layout: { padding: 10 },
                     plugins: { 
                         legend: { position: 'right', labels: { color: textColor, font: { weight: 'bold', size: 9 } } },
-                        // DataLabels in số lượng dự án
                         datalabels: {
-                            color: '#ffffff',
-                            font: { weight: 'bold', size: 12 },
+                            color: '#ffffff', font: { weight: 'bold', size: 12 },
                             formatter: (value) => value + ' Dự án'
                         }
                     }
@@ -307,60 +292,73 @@
             });
         }
 
-        // Lắng nghe dữ liệu
         onValue(dtcRef, (snap) => {
             const d = snap.val();
             if (d && d.projects) {
                 cachedDataForTheme = d;
                 document.getElementById('card_tong_du_an').innerText = d.tong_du_an || 0;
-                document.getElementById('card_von_giai_doan').innerText = d.von_giai_doan || 0;
-                document.getElementById('card_von_nam').innerText = d.von_nam || 0;
+                document.getElementById('card_von_giai_doan').innerText = formatMoney(d.von_giai_doan || 0);
+                document.getElementById('card_von_nam').innerText = formatMoney(d.von_nam || 0);
 
-                let overallRate = 0;
-                if(d.von_nam) {
-                    const totalCapStr = d.von_nam.replace(' Tỷ', '');
-                    let totalInvested = 0;
-                    d.projects.forEach(p => { totalInvested += parseVNNumber(p.invested); });
-                    const capNum = parseVNNumber(totalCapStr);
-                    if(capNum > 0) overallRate = ((totalInvested / capNum) * 100).toFixed(1);
-                }
-                document.getElementById('tong_tien_do').innerText = overallRate + "%";
-
+                let totalCap = 0;
+                let totalInv = 0;
+                
                 const container = document.getElementById('project-list-container');
                 container.innerHTML = d.projects.map((p, i) => {
-                    const totalCap = parseVNNumber(p.capital);
-                    const invested = parseVNNumber(p.invested || 0);
-                    const percentage = totalCap > 0 ? ((invested / totalCap) * 100).toFixed(1) : 0;
+                    const cap = parseFloat(p.von_giao_nam) || 0;
+                    const inv = parseFloat(p.giai_ngan) || 0;
+                    const percentage = cap > 0 ? ((inv / cap) * 100).toFixed(1) : 0;
+                    
+                    totalCap += cap;
+                    totalInv += inv;
+                    
+                    let autoType = classifyProject(p.ten_cong_trinh);
+
+                    // Hiển thị trạng thái (Có ghi chú -> Cảnh báo, Không -> Tốt)
+                    let statusColor = p.ghi_chu ? "text-amber-500" : "text-emerald-500";
+                    let statusText = p.ghi_chu || "Đang thi công đúng tiến độ";
 
                     return `
                         <div class="row-container">
                             <div class="row-3d hover:bg-sky-50 dark:hover:bg-sky-900/30">
-                                <div class="grid-row">
-                                    <div class="col-stt text-blue-600 dark:text-blue-300 font-black">${i+1}</div>
-                                    <div class="col-name font-bold truncate text-dynamic-title">${p.name}</div>
-                                    <div class="col-type">
-                                        <span class="bg-blue-500/10 px-2.5 py-0.5 rounded-md text-[10px] border border-blue-500/30 text-dynamic-label font-bold">${p.type}</span>
-                                    </div>
-                                    <div class="col-cap text-dynamic-body font-mono font-bold">${p.capital}</div>
-                                    <div class="col-invest text-sky-600 dark:text-sky-400 font-mono font-bold">${p.invested || '0'}</div>
-                                    <div class="col-progress">
-                                        <div class="w-full bg-blue-100 dark:bg-blue-900/40 h-2 rounded-full overflow-hidden border border-blue-200 dark:border-blue-800/50">
-                                            <div class="bg-gradient-to-r from-sky-400 to-blue-600 h-full rounded-full shadow-sm" style="width: ${percentage}%"></div>
+                                <div class="grid-row items-center">
+                                    <div class="col-stt text-blue-600 dark:text-blue-300 font-black">${p.stt || i+1}</div>
+                                    <div class="col-name flex flex-col justify-center">
+                                        <span class="font-bold text-dynamic-title leading-snug">${p.ten_cong_trinh}</span>
+                                        <div class="flex items-center gap-2 mt-1 opacity-70 text-[9px] font-bold uppercase tracking-wider text-dynamic-body">
+                                            <span>Mã DA: ${p.ma_du_an}</span>
+                                            <span>|</span>
+                                            <span>QĐ: ${p.so_quyet_dinh.split(' ')[0]}</span>
                                         </div>
                                     </div>
-                                    <div class="col-status text-[10px] text-orange-500 font-black uppercase italic">${p.status}</div>
+                                    <div class="col-type">
+                                        <span class="bg-blue-500/10 px-2.5 py-1 rounded-md text-[10px] border border-blue-500/30 text-dynamic-label font-bold text-center block w-max mx-auto">${autoType}</span>
+                                    </div>
+                                    <div class="col-cap text-dynamic-body font-mono font-bold">${formatMoney(cap)}</div>
+                                    <div class="col-invest text-sky-600 dark:text-sky-400 font-mono font-black">${formatMoney(inv)}</div>
+                                    <div class="col-progress">
+                                        <div class="w-full bg-blue-100 dark:bg-blue-900/40 h-2 rounded-full overflow-hidden border border-blue-200 dark:border-blue-800/50 relative">
+                                            <div class="bg-gradient-to-r from-sky-400 to-blue-600 h-full rounded-full shadow-sm" style="width: ${percentage}%"></div>
+                                        </div>
+                                        <span class="block text-right mt-1 text-[9px] font-bold text-dynamic-title">${percentage}%</span>
+                                    </div>
+                                    <div class="col-status text-[10px] ${statusColor} font-bold italic leading-tight pl-3">
+                                        ${statusText}
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     `;
                 }).join('');
 
-                const isLight = document.getElementById('body-context').classList.contains('light-theme');
-                drawCharts(d.projects, isLight ? '#1e3a8a' : '#e0f2fe');
+                // Calculate overall rate based on real data
+                let overallRate = totalCap > 0 ? ((totalInv / totalCap) * 100).toFixed(1) : 0;
+                document.getElementById('tong_tien_do').innerText = overallRate + "%";
+
+                drawCharts(d.projects, currentTextColor);
             }
         });
 
-        // Hàm xử lý hoán đổi giao diện hai luồng Sáng/Tối
         window.setTheme = function(themeName) {
             const body = document.getElementById('body-context');
             const btnLight = document.getElementById('btn-theme-light');
@@ -369,28 +367,20 @@
             if(themeName === 'light') {
                 body.classList.remove('dark-theme');
                 body.classList.add('light-theme');
-                
                 btnLight.className = "flex items-center gap-1.5 text-[11px] font-extrabold uppercase px-3 py-1.5 rounded-lg transition bg-blue-900 text-sky-200 shadow-md border border-blue-700";
                 btnDark.className = "flex items-center gap-1.5 text-[11px] font-extrabold uppercase px-3 py-1.5 rounded-lg transition border border-transparent text-blue-900 hover:text-blue-700";
-                
                 currentTextColor = '#1e3a8a';
-                if (cachedDataForTheme) drawCharts(cachedDataForTheme.projects, currentTextColor);
             } else {
                 body.classList.remove('light-theme');
                 body.classList.add('dark-theme');
-                
-                btnDark.className = "flex items-center gap-1.5 text-[11px] font-extrabold uppercase px-3 py-1.5 rounded-lg transition btn-switcher-active shadow-md";
+                btnDark.className = "flex items-center gap-1.5 text-[11px] font-extrabold uppercase px-3 py-1.5 rounded-lg transition bg-sky-600 text-white shadow-md border border-sky-400";
                 btnLight.className = "flex items-center gap-1.5 text-[11px] font-extrabold uppercase px-3 py-1.5 rounded-lg transition border border-transparent text-sky-400 hover:text-sky-300";
-                
                 currentTextColor = '#e0f2fe';
-                if (cachedDataForTheme) drawCharts(cachedDataForTheme.projects, currentTextColor);
             }
+            if (cachedDataForTheme) drawCharts(cachedDataForTheme.projects, currentTextColor);
         }
 
-        // KHỞI CHẠY MẶC ĐỊNH LÀ NỀN SÁNG
-        document.addEventListener('DOMContentLoaded', () => {
-            setTheme('light');
-        });
+        document.addEventListener('DOMContentLoaded', () => { setTheme('light'); });
     </script>
 </body>
 </html>
