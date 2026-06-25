@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trung tâm Giám sát Ngân sách Số — Xã Bình Hưng</title>
+    <title>Trung tâm Giám sát Ngân sách — Xã Bình Hưng</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
@@ -12,14 +12,17 @@
         body { font-family: 'Montserrat', sans-serif; background-color: #f8fafc; color: #1e3a8a; transition: all 0.3s; }
         .glass-panel { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(16px); border: 1px solid rgba(14, 165, 233, 0.2); border-radius: 24px; box-shadow: 0 10px 25px -5px rgba(12, 74, 110, 0.1); }
         .teal-wrapper { background-color: rgba(14, 165, 233, 0.08); border: 1px solid rgba(14, 165, 233, 0.3); border-radius: 36px; padding: 24px; }
+        
         .grid-table-layout { display: flex; align-items: center; width: 100%; padding: 12px 16px; font-family: 'Inter', sans-serif; }
         .w-idx { width: 8%; text-align: center; }
         .w-name { width: 42%; text-align: left; }
         .w-plan { width: 25%; text-align: right; }
         .w-rate { width: 25%; text-align: right; }
-        .header-row { background: linear-gradient(135deg, #0b4a8f 0%, #1e40af 100%); color: white; font-size: 10px; font-weight: 900; text-transform: uppercase; border-radius: 12px; }
+        
+        .header-row { background: linear-gradient(135deg, #0b4a8f 0%, #1e40af 100%); color: white; font-size: 10px; font-weight: 900; text-transform: uppercase; border-radius: 12px; margin-bottom: 8px; }
         .table-row-item { border: 1px solid #e2e8f0; border-radius: 12px; margin-bottom: 6px; transition: 0.2s; }
         .table-row-item:hover { transform: translateX(4px); border-color: #3b82f6; }
+        
         .chart-container { position: relative; height: 260px; width: 100%; }
         .btn-back { display: inline-flex; align-items: center; gap: 8px; background: rgba(14, 165, 233, 0.1); border: 1px solid rgba(14, 165, 233, 0.3); padding: 12px 24px; border-radius: 14px; font-weight: 800; font-size: 12px; text-transform: uppercase; }
     </style>
@@ -33,25 +36,25 @@
             <div class="space-y-6">
                 <div class="glass-panel p-6">
                     <h1 class="text-lg font-black uppercase text-blue-900">Tình hình Thu Ngân Sách</h1>
-                    <div id="thu-kpi" class="mt-4 p-4 bg-blue-600 text-white rounded-2xl font-black text-xl">Đang tải dữ liệu...</div>
+                    <div id="thu-kpi" class="mt-4 p-4 bg-blue-600 text-white rounded-2xl font-black text-xl">Đang tải...</div>
                 </div>
                 <div class="glass-panel p-5">
                     <h2 class="text-[11px] font-black uppercase mb-3">🍕 Cơ cấu nguồn thu</h2>
                     <div class="chart-container"><canvas id="thuChart"></canvas></div>
                 </div>
-                <div id="thu-table" class="glass-panel p-5"></div>
+                <div id="thu-table" class="glass-panel p-5 overflow-x-auto"></div>
             </div>
 
             <div class="space-y-6">
                 <div class="glass-panel p-6">
                     <h1 class="text-lg font-black uppercase text-rose-700">Tình hình Chi Ngân Sách</h1>
-                    <div id="chi-kpi" class="mt-4 p-4 bg-rose-600 text-white rounded-2xl font-black text-xl">Đang tải dữ liệu...</div>
+                    <div id="chi-kpi" class="mt-4 p-4 bg-rose-600 text-white rounded-2xl font-black text-xl">Đang tải...</div>
                 </div>
                 <div class="glass-panel p-5">
                     <h2 class="text-[11px] font-black uppercase mb-3">🍕 Cơ cấu phân bổ chi</h2>
-                    <div class="chart-container"><canvas id="chiChart"></canvas>
+                    <div class="chart-container"><canvas id="chiChart"></canvas></div>
                 </div>
-                <div id="chi-table" class="glass-panel p-5"></div>
+                <div id="chi-table" class="glass-panel p-5 overflow-x-auto"></div>
             </div>
         </div>
     </div>
@@ -64,56 +67,51 @@
         const db = getDatabase(initializeApp({ databaseURL: "https://dashboard-demo-ce0da-default-rtdb.asia-southeast1.firebasedatabase.app" }));
         const formatMoney = (val) => new Intl.NumberFormat('vi-VN').format(val || 0);
 
-        // Render Bảng (Đệ quy cho mục con)
-        function renderRecursiveTable(data, containerId) {
+        // Render bảng phẳng (không đệ quy)
+        function renderFlatTable(data, containerId, title) {
             const container = document.getElementById(containerId);
-            let html = `<div class="header-row grid-table-layout">
+            let html = `<h2 class="text-[11px] font-black uppercase mb-3">${title}</h2>
+                        <div class="header-row grid-table-layout">
                             <div class="w-idx">STT</div><div class="w-name">Nội dung</div>
                             <div class="w-plan">Dự toán</div><div class="w-rate">Thực hiện</div>
                         </div>`;
             
-            function walk(items, level = 0) {
-                items.forEach(item => {
-                    const plan = item.du_toan?.thu_nsdp || item.du_toan || 0;
-                    const exec = item.thuc_hien?.thu_nsdp || item.thuc_hien || 0;
-                    html += `<div class="table-row-item grid-table-layout text-[11px]" style="padding-left: ${16 + level*15}px">
-                                <div class="w-idx">${item.stt || ''}</div>
-                                <div class="w-name font-bold">${item.noi_dung}</div>
-                                <div class="w-plan">${formatMoney(plan)}</div>
-                                <div class="w-rate font-bold text-emerald-600">${formatMoney(exec)}</div>
-                             </div>`;
-                    if (item.danh_muc_con) walk(item.danh_muc_con, level + 1);
-                });
-            }
-            walk(data);
+            data.forEach(item => {
+                const padding = (item.level || 0) * 15;
+                html += `<div class="table-row-item grid-table-layout text-[11px]" style="padding-left: ${16 + padding}px">
+                            <div class="w-idx font-black">${item.stt || ''}</div>
+                            <div class="w-name font-bold">${item.noi_dung}</div>
+                            <div class="w-plan">${formatMoney(item.du_toan)}</div>
+                            <div class="w-rate font-bold text-emerald-600">${formatMoney(item.thuc_hien)}</div>
+                         </div>`;
+            });
             container.innerHTML = html;
         }
 
-        // Vẽ biểu đồ tròn
+        // Vẽ biểu đồ
         function renderPie(id, labels, data, colors) {
             new Chart(document.getElementById(id).getContext('2d'), {
                 type: 'doughnut',
                 data: { labels, datasets: [{ data, backgroundColor: colors, borderWidth: 2, borderColor: '#ffffff' }] },
-                options: { maintainAspectRatio: false, cutout: '65%', plugins: { legend: { position: 'right' }, datalabels: { color: '#fff', formatter: (v, ctx) => ((v*100/ctx.dataset.data.reduce((a,b)=>a+b)).toFixed(0)) + '%' } } }
+                options: { maintainAspectRatio: false, cutout: '65%', plugins: { legend: { position: 'right' }, datalabels: { color: '#000', formatter: (v, ctx) => ((v*100/ctx.dataset.data.reduce((a,b)=>a+b)).toFixed(0)) + '%' } } }
             });
         }
 
-        onValue(ref(db, 'dashboard_binhhung/thu_ngan_sach'), (snap) => {
+        // Load Dữ liệu Thu
+        onValue(ref(db, 'dashboard_binhhung/thu_ngan_sach_flat'), (snap) => {
             const data = snap.val();
-            const tong = data.chi_tiet_ngan_sach[0];
-            document.getElementById('thu-kpi').innerHTML = `Tổng Thu: <span class="text-2xl">${(tong.thuc_hien.thu_nsdp/1000).toFixed(2)} tỷ</span>`;
-            renderRecursiveTable(data.chi_tiet_ngan_sach, 'thu-table');
-            renderPie('thuChart', ['Thu nội địa', 'BS cấp trên', 'Chuyển nguồn', 'Kết dư'], 
-                      [1,1,1,1].map((_,i) => [tong.danh_muc_con[i].thuc_hien.thu_nsdp]), 
-                      ['#3b82f6', '#10b981', '#a855f7', '#f59e0b']);
+            renderFlatTable(data, 'thu-table', '📋 Chi tiết các khoản thu');
+            // Giả định tổng thu là phần tử đầu tiên
+            document.getElementById('thu-kpi').innerText = `Tổng Thu: ${(data[0].thuc_hien/1000).toFixed(2)} tỷ`;
+            renderPie('thuChart', ['Nội địa', 'Bổ sung', 'Chuyển nguồn', 'Kết dư'], data.slice(1,5).map(i => i.thuc_hien), ['#3b82f6', '#10b981', '#a855f7', '#f59e0b']);
         });
 
-        onValue(ref(db, 'dashboard_binhhung/chi_ngan_sach'), (snap) => {
+        // Load Dữ liệu Chi
+        onValue(ref(db, 'dashboard_binhhung/chi_ngan_sach_flat'), (snap) => {
             const data = snap.val();
-            const tong = data.chi_tiet_ngan_sach[0];
-            document.getElementById('chi-kpi').innerHTML = `Tổng Chi: <span class="text-2xl">${(tong.thuc_hien/1000).toFixed(2)} tỷ</span>`;
-            renderRecursiveTable(data.chi_tiet_ngan_sach, 'chi-table');
-            renderPie('chiChart', ['Đầu tư', 'Thường xuyên', 'Dự phòng'], [1,1,1].map((_,i) => [tong.danh_muc_con[i].thuc_hien]), ['#f43f5e', '#f59e0b', '#64748b']);
+            renderFlatTable(data, 'chi-table', '📋 Chi tiết phân bổ chi');
+            document.getElementById('chi-kpi').innerText = `Tổng Chi: ${(data[0].thuc_hien/1000).toFixed(2)} tỷ`;
+            renderPie('chiChart', ['Đầu tư', 'Thường xuyên', 'Dự phòng'], data.slice(1,4).map(i => i.thuc_hien), ['#f43f5e', '#f59e0b', '#64748b']);
         });
     </script>
 </body>
