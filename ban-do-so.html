@@ -8,112 +8,173 @@
     <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700;800&family=Montserrat:wght@800;900&display=swap" rel="stylesheet">
     
     <style>
-        /* ================= QUẢN LÝ MÀU NỀN & THEME TỔNG THỂ ================= */
-        body { font-family: 'Inter', 'Be Vietnam Pro', sans-serif; margin: 0; padding: 0; min-height: 100vh; display: flex; flex-direction: column; transition: background 0.4s ease, color 0.4s ease; }
-        
-        /* THEME SÁNG (MẶC ĐỊNH) */
-        body.light-theme { background-color: #f8fafc; color: #1e3a8a; }
-        
-        /* THEME TỐI (UNIFIED DARK MODE - KHÔNG DÙNG MÀU ĐEN) */
-        body.dark-theme { background-color: #082f49; color: #e0f2fe; }
+        /* ================= QUẢN LÝ MÀU NỀN TỔNG THỂ CỐ ĐỊNH ================= */
+        body {
+            font-family: 'Inter', 'Be Vietnam Pro', sans-serif;
+            margin: 0; padding: 0; min-height: 100vh;
+            display: flex; flex-direction: column;
+            transition: background-color 0.4s ease, color 0.4s ease;
+        }
 
-        /* ================= HEADER GRADIENT (SÁNG/TỐI/XANH/ĐỎ) ================= */
-        body.light-theme.theme-xanh-ios .main-header { background: linear-gradient(-45deg, #0b4a8f, #05234a, #0d5cb3, #02142d); background-size: 400% 400%; animation: gradientGIF 12s ease infinite; box-shadow: 0 4px 15px rgba(11, 74, 143, 0.15); border-bottom: 2px solid #032b5c; }
-        
-        /* Chuyển sang dải gradient Đỏ Cờ chuẩn (#da251d) rực rỡ */
-        body.light-theme.theme-do-hanhchinh .main-header { background: linear-gradient(-45deg, #da251d, #a81c15, #ff3b33, #7a120e); background-size: 400% 400%; animation: gradientGIF 12s ease infinite; box-shadow: 0 4px 15px rgba(218, 37, 29, 0.3); border-bottom: 2px solid #a81c15; }
-        
-        /* Theme Tối chuyên dụng */
-        body.dark-theme .main-header { background: linear-gradient(-45deg, #020617, #0f172a, #082f49, #020617); background-size: 400% 400%; animation: gradientGIF 12s ease infinite; box-shadow: 0 4px 15px rgba(8, 47, 73, 0.5); border-bottom: 2px solid #082f49; }
+        body.light-theme { background-color: #f8fafc; color: #334155; }
+        body.dark-theme { background-color: #082f49; color: #bae6fd; }
 
+        /* ================= HEADER GRADIENT ================= */
+        body.light-theme.theme-xanh .main-header {
+            background: linear-gradient(-45deg, #0b4a8f, #05234a, #0d5cb3, #02142d);
+            background-size: 400% 400%; animation: gradientGIF 12s ease infinite;
+            border-bottom: 2px solid #032b5c; box-shadow: 0 4px 15px rgba(11, 74, 143, 0.3);
+        }
+        body.light-theme.theme-do .main-header {
+            background: linear-gradient(-45deg, #da251d, #a81c15, #ff3b33, #7a120e);
+            background-size: 400% 400%; animation: gradientGIF 12s ease infinite;
+            border-bottom: 2px solid #a81c15; box-shadow: 0 4px 15px rgba(218, 37, 29, 0.4);
+        }
+        body.dark-theme .main-header {
+            background: linear-gradient(-45deg, #020617, #0f172a, #082f49, #020617);
+            background-size: 400% 400%; animation: gradientGIF 12s ease infinite;
+            border-bottom: 2px solid #082f49; box-shadow: 0 4px 15px rgba(8, 47, 73, 0.5);
+        }
         @keyframes gradientGIF { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
 
-        /* ẨN NÚT CHỌN XANH/ĐỎ KHI Ở THEME TỐI */
         body.dark-theme .theme-selector-vertical { display: none !important; }
 
-        /* LOGO ANIMATION */
-        .logo-main { animation: float 4s ease-in-out infinite; }
-        @keyframes float { 0%, 100% { transform: translateY(0); filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.2)); } 50% { transform: translateY(-3px); filter: drop-shadow(0 8px 12px rgba(0, 0, 0, 0.3)); } }
-
-        /* ================= KHỐI NỀN ĐỘNG BAO BỌC CHÍNH ================= */
-        .menu-panel-wrapper { 
-            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); 
-            border: 1px solid rgba(255, 255, 255, 0.6); border-radius: 32px; 
-            width: 100%; padding: 24px 32px 32px 32px; transition: all 0.5s ease; 
+        /* ================= KHỐI NỘI DUNG KÍNH MỜ ================= */
+        .menu-panel-wrapper {
+            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            border: 1px solid; border-radius: 40px; width: 100%; transition: all 0.5s ease; padding: 24px 32px 32px 32px;
         }
-        
-        body.light-theme.theme-xanh-ios .menu-panel-wrapper { background-color: rgba(128, 255, 232, 0.45); box-shadow: 0 20px 50px -10px rgba(12, 74, 110, 0.15); }
-        body.light-theme.theme-do-hanhchinh .menu-panel-wrapper { background-color: rgba(218, 37, 29, 0.95); box-shadow: 0 20px 50px -10px rgba(168, 28, 21, 0.4); border-color: rgba(255, 255, 255, 0.8); }
-        body.dark-theme .menu-panel-wrapper { background-color: rgba(8, 47, 73, 0.6); box-shadow: 0 20px 50px -10px rgba(8, 47, 73, 0.4); border-color: rgba(56, 189, 248, 0.2); }
 
-        /* ĐỒNG BỘ MÀU BANNER TIÊU ĐỀ */
+        body.light-theme.theme-xanh .menu-panel-wrapper { background: rgba(14, 165, 233, 0.05); border-color: rgba(14, 165, 233, 0.2); box-shadow: 0 20px 50px -10px rgba(11, 74, 143, 0.1); }
+        body.light-theme.theme-do .menu-panel-wrapper { background: rgba(218, 37, 29, 0.08); border-color: rgba(218, 37, 29, 0.3); box-shadow: 0 20px 50px -10px rgba(218, 37, 29, 0.15); }
+        body.dark-theme .menu-panel-wrapper { background: rgba(12, 74, 110, 0.5); border-color: rgba(56, 189, 248, 0.2); box-shadow: 0 20px 50px -10px rgba(2, 6, 23, 0.5); }
+
+        /* ================= BANNER TIÊU ĐỀ ================= */
         .title-banner { transition: all 0.5s ease; }
-        body.light-theme.theme-xanh-ios .title-banner { background-color: #14b8a6; border-bottom-color: #0d9488; color: white; }
-        body.light-theme.theme-do-hanhchinh .title-banner { background-color: #da251d; border-bottom-color: #a81c15; color: white; }
+        body.light-theme.theme-xanh .title-banner { background-color: #0b4a8f; border-bottom-color: #05234a; color: white; }
+        body.light-theme.theme-do .title-banner { background-color: #da251d; border-bottom-color: #a81c15; color: white; }
         body.dark-theme .title-banner { background-color: rgba(15, 23, 42, 0.7); border-bottom-color: rgba(56, 189, 248, 0.5); color: #38bdf8; backdrop-filter: blur(10px); }
 
-        /* KHUNG HIỂN THỊ NỘI DUNG (BẢN ĐỒ) */
-        .content-viewer-container { width: 100%; height: 650px; border-radius: 20px; overflow: hidden; box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08); border: 1px solid; transition: all 0.3s; position: relative; }
-        body.light-theme .content-viewer-container { background: #ffffff; border-color: rgba(14, 165, 233, 0.2); }
+        /* ================= KHUNG HIỂN THỊ BẢN ĐỒ ================= */
+        .content-viewer-container { width: 100%; height: 700px; border-radius: 20px; overflow: hidden; box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08); border: 1px solid; transition: all 0.3s; position: relative; }
+        body.light-theme.theme-xanh .content-viewer-container { background: #ffffff; border-color: rgba(14, 165, 233, 0.2); }
+        body.light-theme.theme-do .content-viewer-container { background: #ffffff; border-color: rgba(218, 37, 29, 0.2); }
         body.dark-theme .content-viewer-container { background: rgba(15, 23, 42, 0.6); border-color: rgba(56, 189, 248, 0.3); }
 
-        /* TAB BUTTONS */
+        /* ================= NÚT CHUYỂN BẢN ĐỒ (TABS) ================= */
         .tab-btn { border: 1px solid; font-weight: 800; font-size: 0.75rem; text-transform: uppercase; padding: 12px 24px; border-radius: 12px; transition: all 0.2s; white-space: nowrap; cursor: pointer; }
-        body.light-theme .tab-btn { background: #ffffff; border-color: #e2e8f0; }
-        body.light-theme.theme-xanh-ios .tab-btn { color: #1e3a8a; }
-        body.light-theme.theme-xanh-ios .tab-btn.active { background: #1e40af; color: white; border-color: #1e40af; }
-        body.light-theme.theme-do-hanhchinh .tab-btn { color: #da251d; border-color: #fca5a5; }
-        body.light-theme.theme-do-hanhchinh .tab-btn.active { background: #da251d; color: white; border-color: #da251d; } 
-        body.dark-theme .tab-btn { background: rgba(8, 47, 73, 0.6); border-color: rgba(56, 189, 248, 0.3); color: #38bdf8; }
-        body.dark-theme .tab-btn.active { background: #0284c7; color: white; border-color: #38bdf8; }
-
-        /* NÚT QUAY LẠI */
-        .btn-back { display: inline-flex; align-items: center; gap: 8px; border: 1px solid; padding: 10px 20px; border-radius: 12px; font-weight: 800; font-size: 12px; text-transform: uppercase; transition: all 0.3s ease; background: #ffffff; border-color: #e2e8f0; }
-        body.light-theme.theme-xanh-ios .btn-back { color: #1e3a8a; }
-        body.light-theme.theme-xanh-ios .btn-back:hover { transform: translateY(-2px); border-color: #0ea5e9; color: #0ea5e9; }
-        body.light-theme.theme-do-hanhchinh .btn-back { color: #da251d; border-color: #fca5a5; }
-        body.light-theme.theme-do-hanhchinh .btn-back:hover { transform: translateY(-2px); border-color: #da251d; color: #da251d; }
-        body.dark-theme .btn-back { background: rgba(8, 47, 73, 0.6); border-color: rgba(56, 189, 248, 0.3); color: #38bdf8; }
-        body.dark-theme .btn-back:hover { transform: translateY(-2px); border-color: #7dd3fc; background: rgba(8, 47, 73, 0.9); color: white;}
-
-        /* SCROLLBAR */
-        .custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
-        .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(14, 165, 233, 0.4); border-radius: 10px; }
         
-        /* FOOTER */
-        body.dark-theme footer { background-color: rgba(8, 47, 73, 0.6); border-color: rgba(56, 189, 248, 0.2); color: #38bdf8; backdrop-filter: blur(10px); }
+        body.light-theme.theme-xanh .tab-btn { background: #ffffff; border-color: #e2e8f0; color: #1e3a8a; }
+        body.light-theme.theme-xanh .tab-btn.active { background: #0b4a8f; color: white; border-color: #0b4a8f; }
+        body.light-theme.theme-do .tab-btn { background: #ffffff; border-color: #fca5a5; color: #da251d; }
+        body.light-theme.theme-do .tab-btn.active { background: #da251d; color: white; border-color: #da251d; }
+        body.dark-theme .tab-btn { background: rgba(8, 47, 73, 0.6); border-color: rgba(56, 189, 248, 0.3); color: #38bdf8; }
+        body.dark-theme .tab-btn.active { background: #0ea5e9; color: white; border-color: #38bdf8; }
 
-        @media (max-width: 1024px) {
-            .header-layout { flex-direction: column !important; }
-            .theme-selector-vertical { position: relative !important; top: 0 !important; right: 0 !important; margin-top: 16px; flex-direction: row !important; space-x: 2; width: auto !important; }
-            .theme-selector-vertical button { margin-left: 4px; margin-right: 4px; }
-            .menu-panel-wrapper { padding: 20px 20px 24px; }
+        /* ================= DROPDOWN MENU TÙY CHỈNH ================= */
+        .dropdown-menu {
+            position: absolute; top: 110%; left: 0; z-index: 50; min-width: 380px;
+            border-radius: 12px; padding: 8px 0; border: 1px solid;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(20px); transition: all 0.2s ease-in-out;
+            transform-origin: top left; transform: scale(0.95); opacity: 0; pointer-events: none;
         }
+        .dropdown-wrapper.open .dropdown-menu { transform: scale(1); opacity: 1; pointer-events: auto; }
+
+        .dropdown-item {
+            display: block; width: 100%; text-align: left; padding: 10px 20px;
+            font-size: 0.8rem; font-weight: 700; transition: all 0.2s; cursor: pointer;
+        }
+
+        body.light-theme.theme-xanh .dropdown-menu { background: rgba(255, 255, 255, 0.95); border-color: rgba(14, 165, 233, 0.2); }
+        body.light-theme.theme-xanh .dropdown-item { color: #1e3a8a; border-bottom: 1px solid #f1f5f9; }
+        body.light-theme.theme-xanh .dropdown-item:hover { background: #f0f9ff; color: #0ea5e9; padding-left: 24px; }
+        
+        body.light-theme.theme-do .dropdown-menu { background: rgba(255, 255, 255, 0.95); border-color: rgba(218, 37, 29, 0.2); }
+        body.light-theme.theme-do .dropdown-item { color: #9f1239; border-bottom: 1px solid #fff1f2; }
+        body.light-theme.theme-do .dropdown-item:hover { background: #fff1f2; color: #da251d; padding-left: 24px; }
+
+        body.dark-theme .dropdown-menu { background: rgba(15, 23, 42, 0.95); border-color: rgba(56, 189, 248, 0.3); }
+        body.dark-theme .dropdown-item { color: #bae6fd; border-bottom: 1px solid rgba(56, 189, 248, 0.1); }
+        body.dark-theme .dropdown-item:hover { background: rgba(12, 74, 110, 0.8); color: #fff; padding-left: 24px; }
+
+        /* ================= BỘ ĐIỀU KHIỂN & NÚT BẤM ================= */
+        .btn-back-container { position: relative; display: inline-block; }
+        .btn-back-interactive {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 10px 20px; border-radius: 12px; font-weight: 800; font-size: 12px;
+            text-transform: uppercase; letter-spacing: 0.05em; border: 1px solid;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); backdrop-filter: blur(10px);
+        }
+        .btn-back-container:hover .btn-back-interactive { transform: translate(-4px, -4px); }
+
+        .theme-switcher-panel { padding: 4px; border-radius: 12px; display: flex; align-items: center; backdrop-filter: blur(10px); border: 1px solid; transition: all 0.3s; }
+        .btn-view-mode { display: flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 800; text-transform: uppercase; padding: 6px 12px; border-radius: 8px; transition: all 0.3s; border: 1px solid transparent; }
+
+        body.light-theme.theme-xanh .btn-back-interactive { background: #ffffff; color: #0b4a8f; border-color: rgba(14, 165, 233, 0.3); }
+        body.light-theme.theme-xanh .btn-back-container:hover .btn-back-interactive { border-color: #0b4a8f; color: #0b4a8f; box-shadow: 4px 4px 10px rgba(11, 74, 143, 0.15); }
+        body.light-theme.theme-xanh .theme-switcher-panel { background: #ffffff; border-color: rgba(14, 165, 233, 0.2); }
+        body.light-theme.theme-xanh .btn-view-mode.active { background: #0b4a8f; color: #fff; box-shadow: 0 4px 6px rgba(11, 74, 143, 0.2); }
+        body.light-theme.theme-xanh .btn-view-mode:not(.active) { color: #1e3a8a; }
+
+        body.light-theme.theme-do .btn-back-interactive { background: #ffffff; color: #da251d; border-color: rgba(218, 37, 29, 0.3); }
+        body.light-theme.theme-do .btn-back-container:hover .btn-back-interactive { border-color: #da251d; color: #da251d; box-shadow: 4px 4px 10px rgba(218, 37, 29, 0.15); }
+        body.light-theme.theme-do .theme-switcher-panel { background: #ffffff; border-color: rgba(218, 37, 29, 0.2); }
+        body.light-theme.theme-do .btn-view-mode.active { background: #da251d; color: #fff; box-shadow: 0 4px 6px rgba(218, 37, 29, 0.25); }
+        body.light-theme.theme-do .btn-view-mode:not(.active) { color: #881337; }
+
+        body.dark-theme .btn-back-interactive { background: rgba(12, 74, 110, 0.5); color: #bae6fd; border-color: rgba(56, 189, 248, 0.3); }
+        body.dark-theme .btn-back-container:hover .btn-back-interactive { border-color: #38bdf8; color: #38bdf8; box-shadow: 4px 4px 10px rgba(56, 189, 248, 0.2); }
+        body.dark-theme .theme-switcher-panel { background: rgba(12, 74, 110, 0.5); border-color: rgba(56, 189, 248, 0.2); }
+        body.dark-theme .btn-view-mode.active { background: #0ea5e9; color: #fff; box-shadow: 0 4px 6px rgba(14, 165, 233, 0.2); }
+        body.dark-theme .btn-view-mode:not(.active) { color: #bae6fd; }
+
+        /* ================= FOOTER ================= */
+        .footer-main { text-align: center; padding: 24px; font-weight: 700; font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; border-top: 1px solid; backdrop-filter: blur(10px); transition: all 0.3s; margin-top: auto; }
+        body.light-theme.theme-xanh .footer-main { background: rgba(255,255,255,0.5); border-top-color: rgba(14, 165, 233, 0.2); color: #1e3a8a; }
+        body.light-theme.theme-do .footer-main { background: rgba(255,255,255,0.5); border-top-color: rgba(218, 37, 29, 0.2); color: #da251d; }
+        body.dark-theme .footer-main { background: rgba(8, 47, 73, 0.5); border-top-color: rgba(56, 189, 248, 0.2); color: #7dd3fc; }
+
+        /* LOGO ANIMATION */
+        body.theme-xanh .logo-main { animation: float-xanh 4s ease-in-out infinite; }
+        @keyframes float-xanh { 0%, 100% { transform: translateY(0); filter: drop-shadow(0 4px 6px rgba(8, 47, 73, 0.4)); } 50% { transform: translateY(-3px); filter: drop-shadow(0 8px 12px rgba(8, 47, 73, 0.6)); } }
+        body.theme-do .logo-main { animation: float-do 4s ease-in-out infinite; }
+        @keyframes float-do { 0%, 100% { transform: translateY(0); filter: drop-shadow(0 4px 6px rgba(218, 37, 29, 0.4)); } 50% { transform: translateY(-3px); filter: drop-shadow(0 8px 12px rgba(218, 37, 29, 0.6)); } }
+        body.dark-theme .logo-main { animation: float-dark 4s ease-in-out infinite; }
+        @keyframes float-dark { 0%, 100% { transform: translateY(0); filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.5)); } 50% { transform: translateY(-3px); filter: drop-shadow(0 8px 12px rgba(0, 0, 0, 0.7)); } }
+
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(148, 163, 184, 0.4); border-radius: 10px; }
     </style>
 </head>
-<body class="theme-xanh-ios light-theme custom-scrollbar" id="dynamic-body">
+<body class="light-theme theme-xanh custom-scrollbar" id="dynamic-body">
 
+    <!-- HEADER -->
     <header class="main-header w-full py-6 px-6 md:px-12 select-none relative transition-all duration-300">
-        <div class="max-w-[1550px] mx-auto flex flex-col items-center justify-center relative header-layout">
+        <div class="max-w-[1550px] mx-auto flex flex-col md:flex-row items-center justify-between relative header-layout">
             
-            <div class="flex flex-row items-center space-x-6 w-auto">
+            <div class="flex flex-row items-center space-x-6 w-full md:w-auto">
                 <div class="flex-shrink-0">
                     <img src="logo.png" alt="Logo" class="logo-main w-20 h-auto" onerror="this.src='logo.png'">
                 </div>
                 <div class="flex flex-col items-start justify-center space-y-2 text-left">
-                    <p class="text-white font-black tracking-[0.12em] text-xl md:text-2xl lg:text-3xl uppercase leading-none m-0 p-0 drop-shadow-[0_2px_4px_rgba(12,74,110,0.5)] font-['Montserrat']">
+                    <p class="text-white font-black tracking-[0.12em] text-xl md:text-2xl lg:text-3xl uppercase leading-none m-0 p-0 drop-shadow-[0_2px_4px_rgba(2,6,23,0.5)] font-['Montserrat']">
                         IOC BINH HUNG
                     </p>
-                    <h1 class="title-main text-sm md:text-base lg:text-lg font-bold uppercase tracking-[0.08em] text-white/90 leading-tight m-0 p-0 drop-shadow-[0_2px_4px_rgba(12,74,110,0.4)]">
+                    <h1 class="title-main text-sm md:text-base lg:text-lg font-bold uppercase tracking-[0.08em] text-white/90 leading-tight m-0 p-0 drop-shadow-[0_2px_4px_rgba(2,6,23,0.4)]">
                         Cổng thông tin và điều hành xã Bình Hưng, Thành phố Hồ Chí Minh
                     </h1>
                 </div>
             </div>
 
-            <!-- CHUYỂN ĐỔI THEME XANH / ĐỎ -->
-            <div class="theme-selector-vertical lg:absolute lg:top-0 lg:right-0 bg-white/10 backdrop-blur-md border border-white/20 p-1.5 rounded-xl flex flex-col space-y-1.5 w-[75px] z-20 shadow-inner">
-                <button onclick="switchSystemTheme('xanh')" id="btn-theme-xanh" class="w-full text-center text-[10px] font-extrabold uppercase py-1.5 rounded-lg transition-all duration-300 bg-blue-600 text-white shadow-md">🔵 Xanh</button>
-                <button onclick="switchSystemTheme('do')" id="btn-theme-do" class="w-full text-center text-[10px] font-extrabold uppercase py-1.5 rounded-lg transition-all duration-300 text-white/80 hover:text-white">🔴 Đỏ</button>
+            <!-- Nút chọn Theme XANH/ĐỎ -->
+            <div class="theme-selector-vertical lg:absolute lg:top-0 lg:right-0 bg-white/10 backdrop-blur-md border border-white/20 p-1.5 rounded-xl flex flex-row lg:flex-col space-x-2 lg:space-x-0 lg:space-y-1.5 w-auto lg:w-[75px] z-20 shadow-inner mt-4 lg:mt-0">
+                <button onclick="switchSystemTheme('xanh')" id="btn-theme-xanh" class="w-full text-center text-[10px] font-extrabold uppercase px-4 lg:px-0 py-1.5 rounded-lg transition-all duration-300 bg-blue-600 text-white shadow-md border border-blue-500/50">
+                    🔵 Xanh
+                </button>
+                <button onclick="switchSystemTheme('do')" id="btn-theme-do" class="w-full text-center text-[10px] font-extrabold uppercase px-4 lg:px-0 py-1.5 rounded-lg transition-all duration-300 text-white/80 hover:text-white border border-transparent">
+                    🔴 Đỏ
+                </button>
             </div>
             
         </div>
@@ -131,93 +192,165 @@
 
         <article class="menu-panel-wrapper flex flex-col space-y-4">
             
-            <div class="flex flex-col md:flex-row justify-between items-center gap-4 pb-3 border-b border-white/40">
-                <!-- CỤM NÚT ĐIỀU HƯỚNG BÊN TRÁI (QUAY LẠI & SÁNG/TỐI) -->
+            <div class="flex flex-col md:flex-row justify-between items-center gap-4 pb-4 border-b border-opacity-30 border-current">
+                <!-- NÚT QUAY LẠI & SÁNG/TỐI -->
                 <div class="flex flex-wrap items-center gap-3 w-full md:w-auto shrink-0">
-                    <a href="index.html" class="btn-back">
-                        ⬅️ Quay lại Trang chủ
-                    </a>
+                    <div class="btn-back-container m-0">
+                        <a href="index.html" class="btn-back-interactive">⬅️ Quay lại</a>
+                    </div>
                     
-                    <div class="bg-blue-900/10 dark:bg-sky-500/10 border border-blue-200 dark:border-sky-500/20 p-1 rounded-xl flex items-center shadow-sm backdrop-blur">
-                        <button onclick="setTheme('light')" id="btn-theme-light" class="flex items-center gap-1.5 text-[11px] font-extrabold uppercase px-3 py-1.5 rounded-lg transition border border-transparent text-blue-900 shadow-sm bg-white">☀️ Sáng</button>
-                        <button onclick="setTheme('dark')" id="btn-theme-dark" class="flex items-center gap-1.5 text-[11px] font-extrabold uppercase px-3 py-1.5 rounded-lg transition border border-transparent text-slate-500 hover:text-blue-900 dark:text-sky-200 dark:hover:text-white">🌙 Tối</button>
+                    <div class="theme-switcher-panel">
+                        <span class="text-[10px] font-black uppercase tracking-wider px-3 opacity-70" style="color: inherit;">Giao diện:</span>
+                        <button onclick="setTheme('light')" id="btn-theme-light" class="btn-view-mode active">☀️ Sáng</button>
+                        <button onclick="setTheme('dark')" id="btn-theme-dark" class="btn-view-mode">🌙 Tối</button>
                     </div>
                 </div>
             </div>
 
-            <!-- MENU TABS CHỌN BẢN ĐỒ -->
-            <div class="flex flex-row gap-3 overflow-x-auto pb-2 custom-scrollbar">
+            <!-- TABS MENU -->
+            <div class="flex flex-row gap-3 overflow-x-visible pb-2 custom-scrollbar items-center">
                 <button onclick="changeMap('ranh-ap', this)" class="tab-btn active shrink-0">🗺️ Ranh 39 ấp xã Bình Hưng</button>
-                <button onclick="window.open('https://thongtinquyhoach.hochiminhcity.gov.vn', '_blank')" class="tab-btn shrink-0 hover:bg-slate-50 dark:hover:bg-slate-700">🔍 Tra cứu thông tin quy hoạch ↗</button>
+                <button onclick="window.open('https://thongtinquyhoach.hochiminhcity.gov.vn', '_blank')" class="tab-btn shrink-0 opacity-80 hover:opacity-100">🔍 Tra cứu thông tin quy hoạch ↗</button>
+                
+                <!-- DROPDOWN BẢN ĐỒ QUY HOẠCH (SHARECAD API) -->
+                <div class="relative dropdown-wrapper shrink-0" id="dwg-dropdown">
+                    <button onclick="toggleDropdown()" class="tab-btn w-full flex items-center justify-between gap-2 border-dashed">
+                        <span>📐 Bản đồ Quy hoạch (DWG)</span>
+                        <span class="text-[10px]">▼</span>
+                    </button>
+                    <!-- Danh sách file DWG -->
+                    <div class="dropdown-menu">
+                        <button onclick="loadDWGMap('04. QH TMB SDD (1)')" class="dropdown-item">1. 04. QH TMB SDD (1)</button>
+                        <button onclick="loadDWGMap('04. QH TMB SDD')" class="dropdown-item">2. 04. QH TMB SDD</button>
+                        <button onclick="loadDWGMap('4. NSG SU DUNG DAT (03-2012)')" class="dropdown-item">3. 4. NSG SU DUNG DAT (03-2012)</button>
+                        <button onclick="loadDWGMap('BVDHKG')" class="dropdown-item">4. BVDHKG</button>
+                        <button onclick="loadDWGMap('QH 03 SDD - 2000 BAC PHONG PHU ngay 06-08-2013')" class="dropdown-item">5. QH 03 SDD - 2000 BAC PHONG PHU</button>
+                        <button onclick="loadDWGMap('QHCT DOC TRUC QL50')" class="dropdown-item">6. QHCT DOC TRUC QL50</button>
+                        <button onclick="loadDWGMap('QHSDDCHORAY')" class="dropdown-item">7. QHSDDCHORAY</button>
+                        <button onclick="loadDWGMap('tong mat bang toan khu-01-2-2010')" class="dropdown-item">8. Tong mat bang toan khu-01-2-2010</button>
+                    </div>
+                </div>
             </div>
             
             <!-- KHUNG HIỂN THỊ BẢN ĐỒ -->
-            <div class="content-viewer-container bg-slate-50 dark:bg-slate-800">
-                <iframe id="map-iframe" src="https://www.google.com/maps/d/embed?mid=1r3Pu1JREpzimi67036GbAuFPN23knQA&ehbc=2E312F" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            <div class="content-viewer-container flex flex-col items-center justify-center relative bg-slate-100 dark:bg-slate-900">
+                <!-- KHUNG CẢNH BÁO TỪ SHARECAD -->
+                <div id="dwg-alert" class="hidden absolute top-4 left-1/2 -translate-x-1/2 w-11/12 md:w-3/4 p-4 rounded-xl bg-amber-100 border border-amber-400 text-amber-800 shadow-lg z-10 text-center font-medium text-sm transition-opacity duration-500">
+                    <!-- Message sẽ được render qua JS -->
+                </div>
+                
+                <iframe id="map-iframe" src="https://www.google.com/maps/d/embed?mid=1r3Pu1JREpzimi67036GbAuFPN23knQA&ehbc=2E312F" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
             </div>
             
         </article>
         
     </div>
 
-    <footer class="w-full text-center py-6 font-medium text-[11px] uppercase tracking-widest border-t bg-white shadow-sm mt-auto transition-all duration-300">
+    <footer class="footer-main">
         &copy; 2026 IOC BINH HƯNG — BẢN QUYỀN THUỘC UBND XÃ BÌNH HƯNG
     </footer>
 
     <script>
-        // HÀM CHUYỂN ĐỔI BẢN ĐỒ (Bỏ tab quy hoạch vì đã mở thẻ mới)
+        // MỞ/ĐÓNG MENU DROPDOWN
+        function toggleDropdown() {
+            const dropdown = document.getElementById('dwg-dropdown');
+            dropdown.classList.toggle('open');
+        }
+
+        // Bấm ra ngoài vùng menu thì đóng lại
+        document.addEventListener('click', function(event) {
+            const dropdown = document.getElementById('dwg-dropdown');
+            if (!dropdown.contains(event.target)) {
+                dropdown.classList.remove('open');
+            }
+        });
+
+        // HÀM CHUYỂN ĐỔI BẢN ĐỒ RANH ẤP (GOOGLE MAPS)
         window.changeMap = function(type, buttonElement) {
             const iframe = document.getElementById('map-iframe');
+            document.getElementById('dwg-alert').classList.add('hidden'); 
             
             if (type === 'ranh-ap') {
                 iframe.src = "https://www.google.com/maps/d/embed?mid=1r3Pu1JREpzimi67036GbAuFPN23knQA&ehbc=2E312F";
                 
-                // Chỉ đổi màu tab active nếu click vào nút hiển thị trên trang
                 document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
                 buttonElement.classList.add('active');
             }
         };
 
-        // HÀM CHUYỂN ĐỔI THEME HEADER VÀ NỀN (XANH / ĐỎ TƯƠI)
+        // HÀM TẢI BẢN ĐỒ DWG THÔNG QUA API SHARECAD
+        window.loadDWGMap = function(fileName) {
+            const iframe = document.getElementById('map-iframe');
+            const alertBox = document.getElementById('dwg-alert');
+            
+            // Lấy URL hiện tại của thư mục (Ví dụ: https://ten-cua-ban.github.io/thu-muc/)
+            const baseUrl = window.location.href.substring(0, window.location.href.lastIndexOf('/') + 1);
+            
+            // Tạo đường dẫn tuyệt đối trỏ tới file DWG
+            // GIẢ ĐỊNH: Các file DWG được lưu trong thư mục "du-lieu-quy-hoach" ngang hàng với file html
+            const fileUrl = baseUrl + "du-lieu-quy-hoach/" + fileName + ".dwg";
+            
+            // Tạo URL gọi iframe của ShareCAD
+            const shareCadUrl = `https://sharecad.org/cadframe/load?url=${encodeURIComponent(fileUrl)}`;
+            
+            // Nhúng iframe
+            iframe.src = shareCadUrl;
+            
+            // Xử lý cảnh báo nếu người dùng đang test bằng Localhost (ShareCAD không đọc được file nội bộ)
+            const hostname = window.location.hostname;
+            if(hostname === "localhost" || hostname === "127.0.0.1" || window.location.protocol === "file:") {
+                alertBox.innerHTML = `⚠️ <strong class="font-black">Lưu ý Localhost:</strong> Trình xem ShareCAD yêu cầu file .dwg phải ở trên máy chủ công khai (Public URL). Vì bạn đang chạy code offline, màn hình dưới có thể báo lỗi hoặc trắng trơn. Hãy upload lên GitHub Pages để tính năng này hoạt động bình thường!`;
+                alertBox.classList.remove('hidden');
+            } else {
+                alertBox.innerHTML = `⏳ Đang kết nối tới máy chủ ShareCAD để tải và kết xuất bản đồ <strong>${fileName}.dwg</strong>. Vui lòng đợi trong giây lát...`;
+                alertBox.classList.remove('hidden');
+                
+                // Tự động mờ thông báo sau 8 giây
+                setTimeout(() => { 
+                    alertBox.classList.add('hidden'); 
+                }, 8000);
+            }
+            
+            // Thay đổi giao diện nút
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelector('#dwg-dropdown > button').classList.add('active');
+            document.querySelector('#dwg-dropdown > button span:first-child').innerText = `📐 ${fileName}`;
+            
+            // Đóng menu thả xuống
+            document.getElementById('dwg-dropdown').classList.remove('open');
+        }
+
+        // LOGIC CHUYỂN ĐỔI THEME (XANH / ĐỎ)
         window.switchSystemTheme = function(modeName) {
             const body = document.getElementById('dynamic-body');
             const btnXanh = document.getElementById('btn-theme-xanh');
             const btnDo = document.getElementById('btn-theme-do');
 
             if (modeName === 'do') {
-                body.classList.remove('theme-xanh-ios'); body.classList.add('theme-do-hanhchinh');
-                btnDo.className = "w-full text-center text-[10px] font-extrabold uppercase py-1.5 rounded-lg transition-all duration-300 bg-red-600 text-white shadow-md";
-                btnXanh.className = "w-full text-center text-[10px] font-extrabold uppercase py-1.5 rounded-lg transition-all duration-300 text-white/80 hover:text-white";
+                body.classList.remove('theme-xanh'); body.classList.add('theme-do');
+                btnDo.className = "w-full text-center text-[10px] font-extrabold uppercase px-4 lg:px-0 py-1.5 rounded-lg transition-all duration-300 bg-[#da251d] text-white shadow-md border border-[#a81c15]";
+                btnXanh.className = "w-full text-center text-[10px] font-extrabold uppercase px-4 lg:px-0 py-1.5 rounded-lg transition-all duration-300 text-white/80 hover:text-white border border-transparent";
             } else {
-                body.classList.remove('theme-do-hanhchinh'); body.classList.add('theme-xanh-ios');
-                btnXanh.className = "w-full text-center text-[10px] font-extrabold uppercase py-1.5 rounded-lg transition-all duration-300 bg-blue-600 text-white shadow-md";
-                btnDo.className = "w-full text-center text-[10px] font-extrabold uppercase py-1.5 rounded-lg transition-all duration-300 text-white/80 hover:text-white";
+                body.classList.remove('theme-do'); body.classList.add('theme-xanh');
+                btnXanh.className = "w-full text-center text-[10px] font-extrabold uppercase px-4 lg:px-0 py-1.5 rounded-lg transition-all duration-300 bg-blue-600 text-white shadow-md border border-blue-500/50";
+                btnDo.className = "w-full text-center text-[10px] font-extrabold uppercase px-4 lg:px-0 py-1.5 rounded-lg transition-all duration-300 text-white/80 hover:text-white border border-transparent";
             }
         }
 
-        // HÀM CHUYỂN ĐỔI THEME SÁNG / TỐI
+        // LOGIC CHUYỂN ĐỔI CHẾ ĐỘ (SÁNG / TỐI)
         window.setTheme = function(themeName) {
             const body = document.getElementById('dynamic-body');
             const btnLight = document.getElementById('btn-theme-light');
             const btnDark = document.getElementById('btn-theme-dark');
 
             if(themeName === 'light') {
-                body.classList.remove('dark-theme');
-                body.classList.add('light-theme');
-                btnLight.className = "flex items-center gap-1.5 text-[11px] font-extrabold uppercase px-3 py-1.5 rounded-lg transition bg-white text-blue-900 shadow-sm border border-blue-200";
-                btnDark.className = "flex items-center gap-1.5 text-[11px] font-extrabold uppercase px-3 py-1.5 rounded-lg transition border border-transparent text-slate-500 hover:text-blue-900 dark:text-sky-200 dark:hover:text-white";
+                body.classList.remove('dark-theme'); body.classList.add('light-theme');
+                btnLight.classList.add('active'); btnDark.classList.remove('active');
             } else {
-                body.classList.remove('light-theme');
-                body.classList.add('dark-theme');
-                btnDark.className = "flex items-center gap-1.5 text-[11px] font-extrabold uppercase px-3 py-1.5 rounded-lg transition bg-sky-600 text-white shadow-sm border border-sky-500";
-                btnLight.className = "flex items-center gap-1.5 text-[11px] font-extrabold uppercase px-3 py-1.5 rounded-lg transition border border-transparent text-sky-400 hover:text-sky-300";
+                body.classList.remove('light-theme'); body.classList.add('dark-theme');
+                btnDark.classList.add('active'); btnLight.classList.remove('active');
             }
         }
-
-        // KÍCH HOẠT KHI TẢI TRANG
-        document.addEventListener('DOMContentLoaded', function() {
-            setTheme('light'); 
-        });
     </script>
 </body>
 </html>
