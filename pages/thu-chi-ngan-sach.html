@@ -19,20 +19,16 @@
         body.light-theme { background-color: #f8fafc; color: #1e293b; }
         body.light-theme .glass-panel { background: rgba(255, 255, 255, 0.95); border-color: rgba(0, 0, 0, 0.05); box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.1); }
 
-        /* TAB THU (BLUE/TEAL) */
-        .wrapper-thu { background-color: rgba(14, 165, 233, 0.05); border: 1px solid rgba(14, 165, 233, 0.2); }
-        body.dark-theme .wrapper-thu { background-color: rgba(14, 165, 233, 0.05); border-color: rgba(14, 165, 233, 0.2); }
-        
-        /* TAB CHI (ROSE/RED) */
-        .wrapper-chi { background-color: rgba(225, 29, 72, 0.05); border: 1px solid rgba(225, 29, 72, 0.2); }
-        body.dark-theme .wrapper-chi { background-color: rgba(225, 29, 72, 0.05); border-color: rgba(225, 29, 72, 0.2); }
+        /* ĐỒNG BỘ MÀU TABS & WRAPPERS (BLUE/TEAL) */
+        .wrapper-main { background-color: rgba(14, 165, 233, 0.05); border: 1px solid rgba(14, 165, 233, 0.2); }
+        body.dark-theme .wrapper-main { background-color: rgba(14, 165, 233, 0.05); border-color: rgba(14, 165, 233, 0.2); }
 
         .container-wrapper { max-width: 1550px; margin: 30px auto; padding: 0 24px; width: 100%; }
         .glass-panel { backdrop-filter: blur(16px); border: 1px solid; border-radius: 24px; transition: all 0.3s; }
         .primary-wrapper { backdrop-filter: blur(20px); border-radius: 36px; padding: 24px; transition: all 0.4s ease; }
         @media (min-width: 768px) { .primary-wrapper { padding: 36px; } }
 
-        /* BẢNG CHUNG */
+        /* BẢNG CHUNG CHO CẢ THU VÀ CHI */
         .grid-table-layout { display: flex; align-items: center; width: 100%; padding: 12px 16px; font-family: 'Inter', sans-serif; }
         .w-idx { width: 8%; text-align: center; }
         .w-name { width: 42%; text-align: left; }
@@ -40,19 +36,11 @@
         .w-exec { width: 20%; text-align: right; }
         .w-rate { width: 10%; text-align: right; }
         
-        /* BẢNG THU */
-        .header-row-thu { background: linear-gradient(135deg, #0b4a8f 0%, #1e40af 100%); color: white; font-size: 11px; font-weight: 900; text-transform: uppercase; border-radius: 12px; margin-bottom: 8px; }
-        .table-row-thu { border: 1px solid #e2e8f0; border-radius: 12px; margin-bottom: 6px; transition: 0.2s; background: rgba(255, 255, 255, 0.5); }
-        body.dark-theme .header-row-thu { background: linear-gradient(135deg, #1e3a8a 0%, #0c4a6e 100%); border: 1px solid rgba(255,255,255,0.05); }
-        body.dark-theme .table-row-thu { border-color: rgba(56, 189, 248, 0.15); background: rgba(8, 47, 73, 0.5); }
-        .table-row-thu:hover { transform: translateX(4px); border-color: #3b82f6; }
-
-        /* BẢNG CHI */
-        .header-row-chi { background: linear-gradient(135deg, #be123c 0%, #881337 100%); color: white; font-size: 11px; font-weight: 900; text-transform: uppercase; border-radius: 12px; margin-bottom: 8px; }
-        .table-row-chi { border: 1px solid #e2e8f0; border-radius: 12px; margin-bottom: 6px; transition: 0.2s; background: rgba(255, 255, 255, 0.5); }
-        body.dark-theme .header-row-chi { border: 1px solid rgba(255,255,255,0.05); }
-        body.dark-theme .table-row-chi { border-color: rgba(244, 63, 94, 0.15); background: rgba(136, 19, 55, 0.3); }
-        .table-row-chi:hover { transform: translateX(4px); border-color: #f43f5e; }
+        .header-row-main { background: linear-gradient(135deg, #0b4a8f 0%, #1e40af 100%); color: white; font-size: 11px; font-weight: 900; text-transform: uppercase; border-radius: 12px; margin-bottom: 8px; }
+        .table-row-main { border: 1px solid #e2e8f0; border-radius: 12px; margin-bottom: 6px; transition: 0.2s; background: rgba(255, 255, 255, 0.5); }
+        body.dark-theme .header-row-main { background: linear-gradient(135deg, #1e3a8a 0%, #0c4a6e 100%); border: 1px solid rgba(255,255,255,0.05); }
+        body.dark-theme .table-row-main { border-color: rgba(56, 189, 248, 0.15); background: rgba(8, 47, 73, 0.5); }
+        .table-row-main:hover { transform: translateX(4px); border-color: #3b82f6; }
 
         .btn-back { display: inline-flex; align-items: center; gap: 8px; background: rgba(148, 163, 184, 0.1); border: 1px solid rgba(148, 163, 184, 0.3); padding: 12px 24px; border-radius: 14px; font-weight: 800; font-size: 12px; text-transform: uppercase; transition: all 0.3s ease;}
         .btn-back:hover { transform: translateY(-2px); border-color: #94a3b8; }
@@ -65,8 +53,7 @@
         .tab-btn { padding: 14px 28px; border-radius: 16px; font-weight: 900; font-size: 13px; text-transform: uppercase; transition: all 0.3s ease; border: 2px solid transparent; letter-spacing: 0.05em;}
         .tab-btn:hover { transform: translateY(-2px); }
         
-        .tab-active-thu { background: linear-gradient(135deg, #0ea5e9 0%, #2563eb 100%); color: white; box-shadow: 0 10px 20px -5px rgba(37, 99, 235, 0.4); border-color: #3b82f6; }
-        .tab-active-chi { background: linear-gradient(135deg, #f43f5e 0%, #e11d48 100%); color: white; box-shadow: 0 10px 20px -5px rgba(225, 29, 72, 0.4); border-color: #f43f5e; }
+        .tab-active { background: linear-gradient(135deg, #0ea5e9 0%, #2563eb 100%); color: white; box-shadow: 0 10px 20px -5px rgba(37, 99, 235, 0.4); border-color: #3b82f6; }
         .tab-inactive { background: rgba(148, 163, 184, 0.1); color: #64748b; border-color: rgba(148, 163, 184, 0.2); }
         body.dark-theme .tab-inactive { color: #94a3b8; }
     </style>
@@ -75,7 +62,6 @@
 
     <div class="container-wrapper space-y-6 flex-grow">
         
-        <!-- HEADER TOP -->
         <div class="flex flex-col sm:flex-row justify-between items-center gap-4">
             <a href="home.html" class="btn-back text-slate-800 dark:text-slate-200">⬅️ Quay lại Trang chủ</a>
             
@@ -86,14 +72,12 @@
             </div>
         </div>
 
-        <!-- TABS NAV -->
         <div class="flex flex-wrap justify-center gap-4 mb-4">
-            <button onclick="switchTab('thu')" id="btn-tab-thu" class="tab-btn tab-active-thu">💰 Thu Ngân Sách</button>
+            <button onclick="switchTab('thu')" id="btn-tab-thu" class="tab-btn tab-active">💰 Thu Ngân Sách</button>
             <button onclick="switchTab('chi')" id="btn-tab-chi" class="tab-btn tab-inactive">💸 Chi Ngân Sách</button>
         </div>
 
-        <!-- ============================== MÀN HÌNH THU ============================== -->
-        <div id="tab-thu" class="tab-content primary-wrapper wrapper-thu space-y-6">
+        <div id="tab-thu" class="tab-content primary-wrapper wrapper-main space-y-6">
             <header class="glass-panel p-6">
                 <div class="flex flex-col md:flex-row justify-between items-center gap-6 mb-6">
                     <div class="text-center md:text-left">
@@ -137,7 +121,7 @@
                 <h2 class="text-sm font-black uppercase tracking-wider text-blue-900 dark:text-sky-400 mb-5">📋 Bảng kê chi tiết Thu Ngân Sách Nhà Nước</h2>
                 <div class="w-full overflow-x-auto custom-scrollbar">
                     <div class="min-w-[850px]">
-                        <div class="header-row-thu grid-table-layout">
+                        <div class="header-row-main grid-table-layout">
                             <div class="w-idx">STT</div><div class="w-name">Nội dung khoản thu</div>
                             <div class="w-plan">Dự toán (Tr.đ)</div><div class="w-exec">Thực hiện (Tr.đ)</div><div class="w-rate">Tỷ lệ (%)</div>
                         </div>
@@ -149,52 +133,51 @@
             </div>
         </div>
 
-        <!-- ============================== MÀN HÌNH CHI ============================== -->
-        <div id="tab-chi" class="tab-content primary-wrapper wrapper-chi space-y-6 hidden">
+        <div id="tab-chi" class="tab-content primary-wrapper wrapper-main space-y-6 hidden">
             <header class="glass-panel p-6">
                 <div class="flex flex-col md:flex-row justify-between items-center gap-6 mb-6">
                     <div class="text-center md:text-left">
-                        <h1 class="text-2xl md:text-3xl font-black uppercase tracking-wider text-rose-800 dark:text-rose-400">
+                        <h1 class="text-2xl md:text-3xl font-black uppercase tracking-wider text-blue-900 dark:text-sky-400">
                             Phân bổ Chi Ngân Sách
                         </h1>
-                        <p class="font-bold text-xs uppercase tracking-[0.15em] mt-2 opacity-80 text-rose-700 dark:text-rose-200">
+                        <p class="font-bold text-xs uppercase tracking-[0.15em] mt-2 opacity-80 text-blue-800 dark:text-sky-200">
                             UBND Xã Bình Hưng — Tình hình Chi NSNN Năm 2026
                         </p>
                     </div>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div class="p-5 border-l-4 border-rose-500 bg-rose-500/5 dark:bg-rose-900/20 rounded-r-2xl">
-                        <p class="text-[11px] font-black text-rose-600 dark:text-rose-300 uppercase tracking-wider">Tổng Kế Hoạch (Dự Toán)</p>
-                        <h3 id="kpi_chi_du_toan" class="text-3xl font-black text-rose-900 dark:text-rose-100 mt-2">0</h3>
+                    <div class="p-5 border-l-4 border-sky-500 bg-sky-500/5 dark:bg-sky-900/20 rounded-r-2xl">
+                        <p class="text-[11px] font-black text-sky-600 dark:text-sky-300 uppercase tracking-wider">Tổng Kế Hoạch (Dự Toán)</p>
+                        <h3 id="kpi_chi_du_toan" class="text-3xl font-black text-blue-900 dark:text-sky-100 mt-2">0</h3>
                     </div>
-                    <div class="p-5 border-l-4 border-orange-500 bg-orange-500/5 dark:bg-orange-900/20 rounded-r-2xl">
-                        <p class="text-[11px] font-black text-orange-600 dark:text-orange-400 uppercase tracking-wider">Tổng Đã Chi (Thực Hiện)</p>
-                        <h3 id="kpi_chi_thuc_hien" class="text-3xl font-black text-rose-900 dark:text-rose-100 mt-2">0</h3>
+                    <div class="p-5 border-l-4 border-emerald-500 bg-emerald-500/5 dark:bg-emerald-900/20 rounded-r-2xl">
+                        <p class="text-[11px] font-black text-emerald-600 dark:text-emerald-400 uppercase tracking-wider">Tổng Đã Chi (Thực Hiện)</p>
+                        <h3 id="kpi_chi_thuc_hien" class="text-3xl font-black text-blue-900 dark:text-sky-100 mt-2">0</h3>
                     </div>
-                    <div class="p-5 border-l-4 border-red-600 bg-red-600/5 dark:bg-red-900/20 rounded-r-2xl flex flex-col justify-center">
-                        <p class="text-[11px] font-black text-red-600 dark:text-red-300 uppercase tracking-wider">Tỷ Lệ Giải Ngân (%)</p>
-                        <h3 id="kpi_chi_ty_le" class="text-4xl font-black text-red-700 dark:text-red-400 mt-2">0%</h3>
+                    <div class="p-5 border-l-4 border-blue-600 bg-blue-600/5 dark:bg-blue-900/20 rounded-r-2xl flex flex-col justify-center">
+                        <p class="text-[11px] font-black text-blue-600 dark:text-blue-300 uppercase tracking-wider">Tỷ Lệ Giải Ngân (%)</p>
+                        <h3 id="kpi_chi_ty_le" class="text-4xl font-black text-blue-700 dark:text-blue-400 mt-2">0%</h3>
                     </div>
                 </div>
             </header>
 
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
                 <div class="lg:col-span-5 glass-panel p-5">
-                    <h2 class="text-xs font-black uppercase tracking-wider text-rose-800 dark:text-rose-400 mb-4">🍕 Cơ cấu phân bổ nguồn Chi (Triệu đồng)</h2>
+                    <h2 class="text-xs font-black uppercase tracking-wider text-blue-900 dark:text-sky-400 mb-4">🍕 Cơ cấu phân bổ nguồn Chi (Triệu đồng)</h2>
                     <div class="chart-container"><canvas id="chiPieChart"></canvas></div>
                 </div>
                 <div class="lg:col-span-7 glass-panel p-5">
-                    <h2 class="text-xs font-black uppercase tracking-wider text-rose-800 dark:text-rose-400 mb-4">📊 Tỷ lệ giải ngân Chi Thường Xuyên (%)</h2>
+                    <h2 class="text-xs font-black uppercase tracking-wider text-blue-900 dark:text-sky-400 mb-4">📊 Tỷ lệ giải ngân Chi Thường Xuyên (%)</h2>
                     <div class="chart-container"><canvas id="chiBarChart"></canvas></div>
                 </div>
             </div>
 
             <div class="glass-panel p-6">
-                <h2 class="text-sm font-black uppercase tracking-wider text-rose-800 dark:text-rose-400 mb-5">📋 Bảng kê chi tiết Phân bổ Chi Ngân Sách</h2>
+                <h2 class="text-sm font-black uppercase tracking-wider text-blue-900 dark:text-sky-400 mb-5">📋 Bảng kê chi tiết Phân bổ Chi Ngân Sách</h2>
                 <div class="w-full overflow-x-auto custom-scrollbar">
                     <div class="min-w-[850px]">
-                        <div class="header-row-chi grid-table-layout">
+                        <div class="header-row-main grid-table-layout">
                             <div class="w-idx">STT</div><div class="w-name">Nội dung nhiệm vụ chi</div>
                             <div class="w-plan">Dự toán (Tr.đ)</div><div class="w-exec">Thực hiện (Tr.đ)</div><div class="w-rate">Tỷ lệ (%)</div>
                         </div>
@@ -228,7 +211,7 @@
         const formatMoney = (val) => new Intl.NumberFormat('vi-VN').format(val || 0);
         const calcRate = (plan, exec) => plan > 0 ? ((exec / plan) * 100).toFixed(1) : (exec > 0 ? 100 : 0);
 
-        // HÀM CHUYỂN TAB
+        // HÀM CHUYỂN TAB ĐỒNG BỘ MÀU
         window.switchTab = function(tab) {
             document.getElementById('tab-thu').classList.add('hidden');
             document.getElementById('tab-chi').classList.add('hidden');
@@ -237,15 +220,15 @@
 
             if(tab === 'thu') {
                 document.getElementById('tab-thu').classList.remove('hidden');
-                document.getElementById('btn-tab-thu').className = 'tab-btn tab-active-thu';
+                document.getElementById('btn-tab-thu').className = 'tab-btn tab-active';
             } else {
                 document.getElementById('tab-chi').classList.remove('hidden');
-                document.getElementById('btn-tab-chi').className = 'tab-btn tab-active-chi';
+                document.getElementById('btn-tab-chi').className = 'tab-btn tab-active';
             }
         }
 
-        // HÀM RENDER BẢNG DỮ LIỆU CHUNG
-        function renderTable(data, containerId, isChi = false) {
+        // HÀM RENDER BẢNG DỮ LIỆU (DÙNG CHUNG CHO CẢ THU & CHI)
+        function renderTable(data, containerId) {
             const container = document.getElementById(containerId);
             let html = '';
             
@@ -255,20 +238,20 @@
                 const padding = item.level * 20;
                 const rate = calcRate(item.du_toan, item.thuc_hien);
 
-                let rowStyle = isChi ? "table-row-chi grid-table-layout text-[12px]" : "table-row-thu grid-table-layout text-[12px]";
+                let rowStyle = "table-row-main grid-table-layout text-[12px]";
                 let nameStyle = "font-medium";
                 
                 if (isRoot) {
-                    rowStyle += isChi ? " bg-rose-100 dark:bg-rose-900/40 border-rose-300 dark:border-rose-700" : " bg-blue-100 dark:bg-blue-900/40 border-blue-300 dark:border-blue-700";
-                    nameStyle = isChi ? "font-black text-[13px] text-rose-800 dark:text-rose-300 uppercase" : "font-black text-[13px] text-blue-800 dark:text-blue-300 uppercase";
+                    rowStyle += " bg-blue-100 dark:bg-blue-900/40 border-blue-300 dark:border-blue-700";
+                    nameStyle = "font-black text-[13px] text-blue-800 dark:text-blue-300 uppercase";
                 } else if (isParent) {
-                    rowStyle += isChi ? " bg-pink-50 dark:bg-pink-900/20" : " bg-sky-50 dark:bg-sky-900/20";
-                    nameStyle = isChi ? "font-extrabold text-[12px] text-pink-800 dark:text-pink-300 uppercase" : "font-extrabold text-[12px] text-sky-800 dark:text-sky-300 uppercase";
+                    rowStyle += " bg-sky-50 dark:bg-sky-900/20";
+                    nameStyle = "font-extrabold text-[12px] text-sky-800 dark:text-sky-300 uppercase";
                 }
 
-                const sttColor = isChi ? "text-rose-600 dark:text-rose-400" : "text-sky-600 dark:text-sky-400";
-                const execColor = isChi ? "text-orange-600 dark:text-orange-400" : "text-emerald-600 dark:text-emerald-400";
-                const rateColor = isChi ? "text-rose-600 dark:text-rose-400" : "text-sky-600 dark:text-sky-400";
+                const sttColor = "text-sky-600 dark:text-sky-400";
+                const execColor = "text-emerald-600 dark:text-emerald-400";
+                const rateColor = "text-sky-600 dark:text-sky-400";
 
                 html += `
                     <div class="${rowStyle}" style="padding-left: ${16 + padding}px">
@@ -351,7 +334,7 @@
                 document.getElementById('kpi_thu_thuc_hien').innerText = formatMoney(rootItem.thuc_hien);
                 document.getElementById('kpi_thu_ty_le').innerText = calcRate(rootItem.du_toan, rootItem.thuc_hien) + '%';
             }
-            renderTable(data, 'thu-table-body', false);
+            renderTable(data, 'thu-table-body');
 
             const level1Items = data.filter(i => i.level === 1);
             thuPieChartInstance = renderPieChart(thuPieChartInstance, 'thuPieChart', level1Items.map(i => i.noi_dung), level1Items.map(i => i.thuc_hien), ['#3b82f6', '#10b981', '#a855f7', '#f59e0b']);
@@ -370,15 +353,15 @@
                 document.getElementById('kpi_chi_thuc_hien').innerText = formatMoney(rootItem.thuc_hien);
                 document.getElementById('kpi_chi_ty_le').innerText = calcRate(rootItem.du_toan, rootItem.thuc_hien) + '%';
             }
-            renderTable(data, 'chi-table-body', true);
+            renderTable(data, 'chi-table-body');
 
             const level2Items = data.filter(i => i.level === 2);
-            chiPieChartInstance = renderPieChart(chiPieChartInstance, 'chiPieChart', level2Items.map(i => i.noi_dung), level2Items.map(i => i.thuc_hien), ['#f43f5e', '#f59e0b', '#64748b']);
+            chiPieChartInstance = renderPieChart(chiPieChartInstance, 'chiPieChart', level2Items.map(i => i.noi_dung), level2Items.map(i => i.thuc_hien), ['#0ea5e9', '#3b82f6', '#6366f1']);
 
             const level3Items = data.filter(i => i.level === 3 && i.du_toan > 0).sort((a,b) => b.du_toan - a.du_toan);
             const l3Labels = level3Items.map(i => i.noi_dung.length > 15 ? i.noi_dung.substring(0,15) + '...' : i.noi_dung);
             const l3Rates = level3Items.map(i => calcRate(i.du_toan, i.thuc_hien));
-            chiBarChartInstance = renderBarChart(chiBarChartInstance, 'chiBarChart', l3Labels, l3Rates, 'rgba(244, 63, 94, 0.85)', '#e11d48');
+            chiBarChartInstance = renderBarChart(chiBarChartInstance, 'chiBarChart', l3Labels, l3Rates, 'rgba(56, 189, 248, 0.85)', '#0284c7');
         }
 
         // Khởi tạo listeners
