@@ -11,124 +11,98 @@
         body {
             font-family: 'Inter', 'Be Vietnam Pro', sans-serif;
             margin: 0; padding: 0; min-height: 100vh;
-            background-color: #f8fafc;
-            color: #0f172a;
-            display: flex;
-            flex-direction: column;
-            transition: background 0.4s ease, color 0.4s ease;
+            display: flex; flex-direction: column;
+            transition: background-color 0.4s ease, color 0.4s ease;
         }
 
-        /* ================= KỸ THUẬT NỀN ĐỘNG GRADIENT TẠI HEADER ================= */
-        body.theme-xanh-ios .main-header {
+        /* ================= BASE LIGHT/DARK MẶC ĐỊNH ================= */
+        body.light-theme { background-color: #f8fafc; color: #0f172a; }
+        body.dark-theme { background-color: #0f172a; color: #f8fafc; }
+        
+        body.light-theme .content-text { color: #334155; }
+        body.dark-theme .content-text { color: #cbd5e1; }
+
+        /* ================= KỸ THUẬT NỀN ĐỘNG GRADIENT (HEADER) ================= */
+        body.theme-xanh .main-header {
             background: linear-gradient(-45deg, #0b4a8f, #05234a, #0d5cb3, #02142d);
-            background-size: 400% 400%;
-            animation: gradientGIF 12s ease infinite;
-            box-shadow: 0 4px 15px rgba(11, 74, 143, 0.15);
-            border-bottom: 2px solid #032b5c;
+            background-size: 400% 400%; animation: gradientGIF 12s ease infinite;
+            border-bottom: 2px solid #032b5c; box-shadow: 0 4px 15px rgba(11, 74, 143, 0.15);
         }
-
-        body.theme-do-hanhchinh .main-header {
+        body.theme-do .main-header {
             background: linear-gradient(-45deg, #dc2626, #7f1d1d, #ef4444, #450a0a);
-            background-size: 400% 400%;
-            animation: gradientGIF 12s ease infinite;
-            box-shadow: 0 4px 15px rgba(220, 38, 38, 0.15);
-            border-bottom: 2px solid #991b1b;
+            background-size: 400% 400%; animation: gradientGIF 12s ease infinite;
+            border-bottom: 2px solid #991b1b; box-shadow: 0 4px 15px rgba(220, 38, 38, 0.15);
         }
+        @keyframes gradientGIF { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
 
-        @keyframes gradientGIF {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        /* ================= KHỐI NỘI DUNG HIỂN THỊ ĐỘNG THEO THEME ================= */
+        /* ================= MA TRẬN 4 TRẠNG THÁI (MÀU CHỮ, KÍNH MỜ, ĐƯỜNG VIỀN) ================= */
         .menu-panel-wrapper {
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.6);
-            border-radius: 40px;
-            width: 100%;
-            transition: all 0.5s ease; /* Chuyển màu mượt mà */
+            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            border: 1px solid; border-radius: 40px; width: 100%; transition: all 0.5s ease;
         }
+        .theme-text { transition: color 0.5s ease; }
+        .border-left-theme { transition: border-color 0.5s ease; }
 
-        .theme-text {
-            transition: color 0.5s ease; /* Chuyển màu chữ tiêu đề mượt mà */
-        }
+        /* 1. XANH + SÁNG */
+        body.light-theme.theme-xanh .menu-panel-wrapper { background: rgba(14, 165, 233, 0.05); border-color: rgba(14, 165, 233, 0.2); box-shadow: 0 20px 50px -10px rgba(11, 74, 143, 0.1); }
+        body.light-theme.theme-xanh .theme-text { color: #0b4a8f; }
+        body.light-theme.theme-xanh .border-left-theme { border-left-color: #0b4a8f; }
 
-        /* Khi ở Theme XANH */
-        body.theme-xanh-ios .menu-panel-wrapper {
-            background-color: rgba(128, 255, 232, 0.45); /* Màu xanh ngọc nguyên bản */
-            box-shadow: 0 20px 50px -10px rgba(12, 74, 110, 0.15);
-        }
-        body.theme-xanh-ios .theme-text {
-            color: #0b4a8f; /* Chữ tiêu đề xanh đậm */
-        }
+        /* 2. XANH + TỐI */
+        body.dark-theme.theme-xanh .menu-panel-wrapper { background: rgba(14, 165, 233, 0.05); border-color: rgba(56, 189, 248, 0.2); box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.5); }
+        body.dark-theme.theme-xanh .theme-text { color: #38bdf8; }
+        body.dark-theme.theme-xanh .border-left-theme { border-left-color: #38bdf8; }
 
-        /* Khi ở Theme ĐỎ */
-        body.theme-do-hanhchinh .menu-panel-wrapper {
-            background-color: rgba(254, 202, 202, 0.5); /* Màu đỏ nhạt / hồng phấn */
-            box-shadow: 0 20px 50px -10px rgba(153, 27, 27, 0.15); /* Bóng đổ chuyển sang tone đỏ */
-        }
-        body.theme-do-hanhchinh .theme-text {
-            color: #991b1b; /* Chữ tiêu đề chuyển sang đỏ sậm */
-        }
+        /* 3. ĐỎ + SÁNG */
+        body.light-theme.theme-do .menu-panel-wrapper { background: rgba(225, 29, 72, 0.05); border-color: rgba(225, 29, 72, 0.2); box-shadow: 0 20px 50px -10px rgba(153, 27, 27, 0.1); }
+        body.light-theme.theme-do .theme-text { color: #be123c; }
+        body.light-theme.theme-do .border-left-theme { border-left-color: #be123c; }
 
-        /* LOGO ANIMATION CHUYỂN ĐỘNG NHẸ */
-        .logo-main {
-            animation: float 4s ease-in-out infinite;
+        /* 4. ĐỎ + TỐI */
+        body.dark-theme.theme-do .menu-panel-wrapper { background: rgba(225, 29, 72, 0.05); border-color: rgba(244, 63, 94, 0.2); box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.5); }
+        body.dark-theme.theme-do .theme-text { color: #fb7185; }
+        body.dark-theme.theme-do .border-left-theme { border-left-color: #fb7185; }
+
+        /* ================= HIỆU ỨNG NÚT QUAY LẠI ================= */
+        .btn-back-container { position: relative; display: inline-block; }
+        .btn-back-interactive {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 8px 16px; border-radius: 12px; font-weight: 700; font-size: 12px;
+            text-transform: uppercase; letter-spacing: 0.05em; border: 1px solid;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); backdrop-filter: blur(10px);
         }
+        
+        body.light-theme .btn-back-interactive { background: rgba(255,255,255,0.8); color: #334155; border-color: #cbd5e1; }
+        body.dark-theme .btn-back-interactive { background: rgba(30,41,59,0.5); color: #cbd5e1; border-color: #475569; }
+
+        /* Hover Nút Xanh */
+        body.theme-xanh .btn-back-container:hover .btn-back-interactive { transform: translate(-4px, -4px); }
+        body.light-theme.theme-xanh .btn-back-container:hover .btn-back-interactive { border-color: #0b4a8f; color: #0b4a8f; box-shadow: 4px 4px 10px rgba(11, 74, 143, 0.15); }
+        body.dark-theme.theme-xanh .btn-back-container:hover .btn-back-interactive { border-color: #38bdf8; color: #38bdf8; box-shadow: 4px 4px 10px rgba(56, 189, 248, 0.15); }
+
+        /* Hover Nút Đỏ */
+        body.theme-do .btn-back-container:hover .btn-back-interactive { transform: translate(-4px, -4px); }
+        body.light-theme.theme-do .btn-back-container:hover .btn-back-interactive { border-color: #be123c; color: #be123c; box-shadow: 4px 4px 10px rgba(153, 27, 27, 0.15); }
+        body.dark-theme.theme-do .btn-back-container:hover .btn-back-interactive { border-color: #fb7185; color: #fb7185; box-shadow: 4px 4px 10px rgba(244, 63, 94, 0.15); }
+
+        /* LOGO ANIMATION */
+        .logo-main { animation: float 4s ease-in-out infinite; }
         @keyframes float {
             0%, 100% { transform: translateY(0); filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.2)); }
             50% { transform: translateY(-3px); filter: drop-shadow(0 8px 12px rgba(0, 0, 0, 0.3)); }
         }
 
-        /* ================= HIỆU ỨNG DI CHUYỂN MƯỢT MÀ CỦA NÚT QUAY LẠI ================= */
-        .btn-back-container {
-            position: relative;
-            display: inline-block;
-            margin-bottom: 24px;
-        }
-
-        .btn-back-interactive {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: #ffffff;
-            border: 1px solid #e2e8f0;
-            color: #334155;
-            padding: 8px 16px;
-            border-radius: 12px;
-            font-weight: 700;
-            font-size: 12px;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        /* Nút quay lại: Rê chuột đổi màu theo Theme */
-        body.theme-xanh-ios .btn-back-container:hover .btn-back-interactive {
-            transform: translate(-6px, -4px);
-            border-color: #0b4a8f; color: #0b4a8f;
-            box-shadow: 6px 6px 12px rgba(11, 74, 143, 0.15);
-        }
-        body.theme-do-hanhchinh .btn-back-container:hover .btn-back-interactive {
-            transform: translate(-6px, -4px);
-            border-color: #991b1b; color: #991b1b;
-            box-shadow: 6px 6px 12px rgba(153, 27, 27, 0.15);
-        }
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(148, 163, 184, 0.4); border-radius: 10px; }
 
         @media (max-width: 1024px) {
             .header-layout { flex-direction: column !important; }
-            .theme-selector-vertical { 
-                position: relative !important; top: 0 !important; right: 0 !important; 
-                margin-top: 16px; flex-direction: row !important; space-x: 2; width: auto !important;
-            }
-            .theme-selector-vertical button { margin-left: 4px; margin-right: 4px; }
+            .theme-selector-vertical { position: relative !important; top: 0 !important; right: 0 !important; margin-top: 16px; flex-direction: row !important; width: auto !important; }
+            .theme-selector-vertical button { margin: 0 4px; }
         }
     </style>
 </head>
-<body class="theme-xanh-ios custom-scrollbar" id="dynamic-body">
+<body class="light-theme theme-xanh custom-scrollbar" id="dynamic-body">
 
     <header class="main-header w-full py-6 px-6 md:px-12 select-none relative transition-all duration-300">
         <div class="max-w-[1550px] mx-auto flex flex-col items-center justify-center relative header-layout">
@@ -148,12 +122,10 @@
             </div>
 
             <div class="theme-selector-vertical lg:absolute lg:top-0 lg:right-0 bg-white/10 backdrop-blur-md border border-white/20 p-1.5 rounded-xl flex flex-col space-y-1.5 w-[75px] z-20 shadow-inner">
-                <button onclick="switchSystemTheme('xanh')" id="btn-theme-xanh" 
-                    class="w-full text-center text-[10px] font-extrabold uppercase py-1.5 rounded-lg transition-all duration-300 bg-blue-600 text-white shadow-md">
+                <button onclick="switchSystemTheme('xanh')" id="btn-theme-xanh" class="w-full text-center text-[10px] font-extrabold uppercase py-1.5 rounded-lg transition-all duration-300 bg-blue-600 text-white shadow-md">
                     🔵 Xanh
                 </button>
-                <button onclick="switchSystemTheme('do')" id="btn-theme-do" 
-                    class="w-full text-center text-[10px] font-extrabold uppercase py-1.5 rounded-lg transition-all duration-300 text-white/80 hover:text-white">
+                <button onclick="switchSystemTheme('do')" id="btn-theme-do" class="w-full text-center text-[10px] font-extrabold uppercase py-1.5 rounded-lg transition-all duration-300 text-white/80 hover:text-white">
                     🔴 Đỏ
                 </button>
             </div>
@@ -163,25 +135,31 @@
 
     <div class="max-w-[1550px] w-full mx-auto px-4 md:px-6 my-6 flex flex-col items-start">
         
-        <div class="btn-back-container">
-            <a href="home.html" class="btn-back-interactive">
-                ⬅️ Quay lại Trang chủ
-            </a>
+        <div class="flex flex-col sm:flex-row justify-between items-center gap-4 mb-6 w-full">
+            <div class="btn-back-container m-0">
+                <a href="index.html" class="btn-back-interactive">⬅️ Quay lại Trang chủ</a>
+            </div>
+            
+            <div class="bg-slate-200/50 dark:bg-slate-800/80 border border-slate-300 dark:border-slate-700 p-1 rounded-xl flex items-center shadow-md backdrop-blur">
+                <span class="text-[10px] font-black uppercase tracking-wider px-3 text-slate-500 dark:text-slate-400">Chế độ xem:</span>
+                <button onclick="setTheme('light')" id="btn-theme-light" class="flex items-center gap-1.5 text-[11px] font-extrabold uppercase px-3 py-1.5 rounded-lg transition border border-transparent text-white bg-slate-700 shadow-sm">☀️ Sáng</button>
+                <button onclick="setTheme('dark')" id="btn-theme-dark" class="flex items-center gap-1.5 text-[11px] font-extrabold uppercase px-3 py-1.5 rounded-lg transition border border-transparent text-slate-500 hover:text-slate-600">🌙 Tối</button>
+            </div>
         </div>
 
         <article class="menu-panel-wrapper p-6 md:p-12 lg:p-16 space-y-12">
             
-            <div class="text-center md:text-left border-b border-slate-900/10 pb-6">
+            <div class="text-center md:text-left border-b border-slate-400/20 pb-6">
                 <h1 class="theme-text text-2xl md:text-3xl lg:text-4xl font-black uppercase tracking-wide font-['Montserrat'] drop-shadow-sm">
                     Giới thiệu chung về xã Bình Hưng
                 </h1>
             </div>
             
             <div class="space-y-4">
-                <h2 class="theme-text text-lg md:text-xl lg:text-2xl font-black uppercase tracking-wide border-l-4 border-red-500 pl-4">
+                <h2 class="theme-text text-lg md:text-xl lg:text-2xl font-black uppercase tracking-wide border-l-4 border-left-theme pl-4">
                     Quá trình hình thành xã Bình Hưng
                 </h2>
-                <p class="text-sm md:text-base lg:text-lg font-bold text-slate-900 leading-relaxed md:leading-loose text-justify">
+                <p class="content-text text-sm md:text-base lg:text-lg font-bold leading-relaxed md:leading-loose text-justify">
                     Trải qua quá trình khai phá và hình thành vùng đất Nam Bộ, Bình Hưng - Phong Phú là vùng đất giàu truyền thống đoàn kết, cần cù lao động và năng động trong phát triển kinh tế. Được bồi đắp bởi hệ thống sông ngòi, kênh rạch tự nhiên cùng vị trí cửa ngõ kết nối khu Nam Thành phố Hồ Chí Minh, nơi đây đã từng bước chuyển mình từ vùng sản xuất nông nghiệp truyền thống trở thành khu vực đô thị hóa năng động của thành phố.<br><br>
                     Thực hiện chủ trương của Đảng và Nhà nước về sắp xếp đơn vị hành chính các cấp nhằm tinh gọn bộ máy, nâng cao hiệu lực, hiệu quả quản lý nhà nước, ngày 16 tháng 6 năm 2025, Ủy ban Thường vụ Quốc hội đã ban hành Nghị quyết số 1685/NQ-UBTVQH15 về việc sắp xếp các đơn vị hành chính cấp xã của Thành phố Hồ Chí Minh năm 2025.<br><br>
                     Theo Nghị quyết, từ ngày 01 tháng 7 năm 2025, xã Bình Hưng chính thức được thành lập trên cơ sở sáp nhập toàn bộ diện tích tự nhiên và quy mô dân số của xã Bình Hưng, xã Phong Phú (huyện Bình Chánh cũ) và một phần diện tích tự nhiên, dân số của phường 7 (Quận 8 cũ).<br><br>
@@ -192,10 +170,10 @@
             </div>
 
             <div class="space-y-4">
-                <h2 class="theme-text text-lg md:text-xl lg:text-2xl font-black uppercase tracking-wide border-l-4 border-red-500 pl-4">
+                <h2 class="theme-text text-lg md:text-xl lg:text-2xl font-black uppercase tracking-wide border-l-4 border-left-theme pl-4">
                     Đặc điểm tình hình
                 </h2>
-                <p class="text-sm md:text-base lg:text-lg font-bold text-slate-900 leading-relaxed md:leading-loose text-justify">
+                <p class="content-text text-sm md:text-base lg:text-lg font-bold leading-relaxed md:leading-loose text-justify">
                     Xã Bình Hưng nằm ở cửa ngõ Tây Nam Thành phố Hồ Chí Minh, giữ vai trò kết nối giữa khu vực trung tâm thành phố với các địa phương phía Nam. Địa phương có vị trí địa lý thuận lợi khi tiếp giáp nhiều phường, xã của Thành phố Hồ Chí Minh và sở hữu hệ thống giao thông đối ngoại quan trọng như đường Nguyễn Văn Linh, đường Văn Tiến Dũng, Quốc lộ 50, Quốc lộ 50 song hành cùng tuyến sông Cần Giuộc và mạng lưới sông, rạch kết nối liên vùng.<br><br>
                     Những năm qua, cơ cấu kinh tế của địa phương chuyển dịch mạnh theo hướng thương mại - dịch vụ, công nghiệp - xây dựng và nông nghiệp đô thị. Trên địa bàn hiện có hơn 8.348 doanh nghiệp và gần 3.166 hộ kinh doanh đang hoạt động. Hệ thống thương mại phát triển với 2 trung tâm thương mại, 3 siêu thị tổng hợp, 8 siêu thị chuyên doanh, 62 cửa hàng tiện lợi cùng nhiều cơ sở dịch vụ, đáp ứng nhu cầu ngày càng cao của người dân.<br><br>
                     Cùng với tốc độ đô thị hóa nhanh, Bình Hưng vẫn duy trì hiệu quả mô hình nông nghiệp đô thị với các sản phẩm có giá trị kinh tế cao như hoa lan, cây kiểng, cá kiểng, thủy sản, rau nhút và bồn bồn. Địa phương hiện có 2 sản phẩm OCOP: “Bộ khay gỗ nguyên khối tối giản” và sản phẩm Khô cá vồ đém một nắng Minh Hiếu được công nhận theo chương trình mỗi xã một sản phẩm.<br><br>
@@ -206,12 +184,12 @@
             </div>
 
             <div class="space-y-4">
-                <h2 class="theme-text text-lg md:text-xl lg:text-2xl font-black uppercase tracking-wide border-l-4 border-red-500 pl-4">
+                <h2 class="theme-text text-lg md:text-xl lg:text-2xl font-black uppercase tracking-wide border-l-4 border-left-theme pl-4">
                     Động lực phát triển trong tương lai
                 </h2>
-                <p class="text-sm md:text-base lg:text-lg font-bold text-slate-900 leading-relaxed md:leading-loose text-justify">
+                <p class="content-text text-sm md:text-base lg:text-lg font-bold leading-relaxed md:leading-loose text-justify">
                     Bước vào nhiệm kỳ 2025 - 2030, xã Bình Hưng đứng trước nhiều thời cơ và vận hội mới. Vị trí địa lý chiến lược, hệ thống giao thông ngày càng hoàn thiện, tốc độ đô thị hóa cao cùng tiềm năng phát triển thương mại - dịch vụ là những lợi thế quan trọng để địa phương bứt phá trong giai đoạn tới.<br><br>
-                    Chủ đề Đại hội Đảng bộ xã Bình Hưng nhiệm kỳ 2025 - 2030 xác định: “Xây dựng Đảng bộ và hệ thống chính trị trong sạch, vững mạnh toàn diện; tự tin bước vào kỷ nguyên vươn mình của dân tộc; giữ vững quốc phòng - an ninh; quyết tâm phát triển kinh tế - xã hội xã Bình Hưng nhanh và bền vững, chất lượng sống cao”.<br><br>
+                    Chủ đề Đại hội Đảng bộ xã Bình Hưng nhiệm kỳ 2025 - 2030 xác định: “Xây dựng Đảng bộ và hệ thống chính trị trong sạch, vững mạnh toàn diện; tự tự tin bước vào kỷ nguyên vươn mình của dân tộc; giữ vững quốc phòng - an ninh; quyết tâm phát triển kinh tế - xã hội xã Bình Hưng nhanh và bền vững, chất lượng sống cao”.<br><br>
                     Đây là kim chỉ nam cho toàn Đảng bộ, chính quyền và Nhân dân xã trong quá trình xây dựng địa phương phát triển toàn diện, lấy người dân làm trung tâm, nâng cao chất lượng sống và xây dựng môi trường đô thị văn minh, hiện đại.<br><br>
                     Trong thời gian tới, xã tiếp tục tập trung đầu tư hạ tầng kỹ thuật, phát triển thương mại - dịch vụ, đẩy mạnh chuyển đổi số, cải cách hành chính, nâng cao chất lượng nguồn nhân lực và hiệu quả quản lý nhà nước. Đồng thời, chú trọng phát triển hài hòa giữa kinh tế với văn hóa, xã hội, bảo vệ môi trường và bảo đảm quốc phòng - an ninh.<br><br>
                     Với những kết quả đã đạt được cùng các điều kiện thuận lợi hiện có, Bình Hưng đang từng bước hoàn thiện các tiêu chí đô thị, hướng tới mục tiêu trở thành phường Bình Hưng trong năm 2026 theo định hướng phát triển đô thị của Thành phố Hồ Chí Minh.<br><br>
@@ -222,28 +200,46 @@
         </article>
     </div>
 
-    <footer class="mt-auto text-center py-6 text-slate-400 font-medium text-[11px] uppercase tracking-widest border-t border-slate-200 bg-white shadow-sm">
+    <footer class="mt-auto text-center py-6 content-text font-bold text-[11px] uppercase tracking-widest border-t border-slate-200 dark:border-slate-800 bg-white/50 dark:bg-slate-900/50 backdrop-blur-md">
         &copy; 2026 IOC Bình Hưng — Smart Government Solution
     </footer>
 
     <script>
+        // LOGIC CHUYỂN ĐỔI THEME (XANH / ĐỎ)
         window.switchSystemTheme = function(modeName) {
             const body = document.getElementById('dynamic-body');
             const btnXanh = document.getElementById('btn-theme-xanh');
             const btnDo = document.getElementById('btn-theme-do');
 
             if (modeName === 'do') {
-                body.classList.remove('theme-xanh-ios');
-                body.classList.add('theme-do-hanhchinh');
-                
+                body.classList.remove('theme-xanh');
+                body.classList.add('theme-do');
                 btnDo.className = "w-full text-center text-[10px] font-extrabold uppercase py-1.5 rounded-lg transition-all duration-300 bg-red-600 text-white shadow-md";
                 btnXanh.className = "w-full text-center text-[10px] font-extrabold uppercase py-1.5 rounded-lg transition-all duration-300 text-white/80 hover:text-white";
             } else {
-                body.classList.remove('theme-do-hanhchinh');
-                body.classList.add('theme-xanh-ios');
-                
+                body.classList.remove('theme-do');
+                body.classList.add('theme-xanh');
                 btnXanh.className = "w-full text-center text-[10px] font-extrabold uppercase py-1.5 rounded-lg transition-all duration-300 bg-blue-600 text-white shadow-md";
                 btnDo.className = "w-full text-center text-[10px] font-extrabold uppercase py-1.5 rounded-lg transition-all duration-300 text-white/80 hover:text-white";
+            }
+        }
+
+        // LOGIC CHUYỂN ĐỔI CHẾ ĐỘ (SÁNG / TỐI)
+        window.setTheme = function(themeName) {
+            const body = document.getElementById('dynamic-body');
+            const btnLight = document.getElementById('btn-theme-light');
+            const btnDark = document.getElementById('btn-theme-dark');
+
+            if(themeName === 'light') {
+                body.classList.remove('dark-theme');
+                body.classList.add('light-theme');
+                btnLight.className = "flex items-center gap-1.5 text-[11px] font-extrabold uppercase px-3 py-1.5 rounded-lg transition border border-transparent text-white bg-slate-700 shadow-sm";
+                btnDark.className = "flex items-center gap-1.5 text-[11px] font-extrabold uppercase px-3 py-1.5 rounded-lg transition border border-transparent text-slate-500 hover:text-slate-600";
+            } else {
+                body.classList.remove('light-theme');
+                body.classList.add('dark-theme');
+                btnDark.className = "flex items-center gap-1.5 text-[11px] font-extrabold uppercase px-3 py-1.5 rounded-lg transition border border-transparent text-white bg-slate-600 shadow-sm";
+                btnLight.className = "flex items-center gap-1.5 text-[11px] font-extrabold uppercase px-3 py-1.5 rounded-lg transition border border-transparent text-slate-400 hover:text-slate-300";
             }
         }
     </script>
