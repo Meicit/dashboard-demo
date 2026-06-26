@@ -72,6 +72,18 @@
         body.dark-theme .btn-view-mode.active { background: #0ea5e9; color: #fff; }
         body.dark-theme .btn-view-mode:not(.active) { color: #bae6fd; }
 
+        /* NÚT "THEO DÕI PHẢN ÁNH" MỚI THÊM */
+        .btn-action-primary { display: inline-flex; align-items: center; gap: 8px; padding: 12px 24px; border-radius: 14px; font-weight: 800; font-size: 13px; text-transform: uppercase; letter-spacing: 0.05em; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); border: 1px solid transparent; }
+        
+        body.light-theme.theme-xanh .btn-action-primary { background: linear-gradient(135deg, #0284c7, #0b4a8f); color: #fff; box-shadow: 0 4px 15px rgba(11, 74, 143, 0.2); }
+        body.light-theme.theme-xanh .btn-action-primary:hover { transform: translateY(-3px); box-shadow: 0 8px 25px rgba(11, 74, 143, 0.35); }
+        
+        body.light-theme.theme-do .btn-action-primary { background: linear-gradient(135deg, #ef4444, #da251d); color: #fff; box-shadow: 0 4px 15px rgba(218, 37, 29, 0.2); }
+        body.light-theme.theme-do .btn-action-primary:hover { transform: translateY(-3px); box-shadow: 0 8px 25px rgba(218, 37, 29, 0.35); }
+        
+        body.dark-theme .btn-action-primary { background: linear-gradient(135deg, #0ea5e9, #0284c7); color: #fff; border-color: rgba(56, 189, 248, 0.4); box-shadow: 0 4px 15px rgba(2, 132, 199, 0.4); }
+        body.dark-theme .btn-action-primary:hover { transform: translateY(-3px); border-color: #7dd3fc; box-shadow: 0 8px 25px rgba(2, 132, 199, 0.6); }
+
         .custom-scrollbar::-webkit-scrollbar { width: 6px; }
         .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(148, 163, 184, 0.4); border-radius: 10px; }
     </style>
@@ -196,56 +208,43 @@
                 </div>
             </div>
 
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <div class="glass-card bg-white p-8 relative overflow-hidden">
-                    <h3 class="text-xs font-black text-blue-900 dark:text-sky-300 uppercase tracking-widest mb-6 flex items-center gap-2">
-                        <span class="w-2 h-4 bg-blue-600 dark:bg-sky-400 rounded-full"></span> Lĩnh vực trọng tâm
-                    </h3>
-                    <div class="space-y-6">
-                        <div class="flex items-start gap-4">
-                            <div class="bg-blue-100 dark:bg-sky-900/50 text-blue-600 dark:text-sky-300 p-3 rounded-2xl font-black">01</div>
-                            <div><h4 class="text-sm font-bold text-slate-800">Bồi thường, hỗ trợ tái định cư</h4></div>
-                        </div>
-                        <div class="flex items-start gap-4">
-                            <div class="bg-blue-100 dark:bg-sky-900/50 text-blue-600 dark:text-sky-300 p-3 rounded-2xl font-black">02</div>
-                            <div><h4 class="text-sm font-bold text-slate-800">Cấp giấy chứng nhận (GCN)</h4></div>
-                        </div>
-                        <div class="flex items-start gap-4">
-                            <div class="bg-blue-100 dark:bg-sky-900/50 text-blue-600 dark:text-sky-300 p-3 rounded-2xl font-black">03</div>
-                            <div><h4 class="text-sm font-bold text-slate-800">Xác định nguồn gốc đất</h4></div>
-                        </div>
+            <div class="glass-card bg-white p-8 relative overflow-hidden">
+                <h3 class="text-xs font-black text-blue-900 dark:text-sky-300 uppercase tracking-widest mb-6 flex items-center gap-2">
+                    <span class="w-2 h-4 bg-blue-600 dark:bg-sky-400 rounded-full"></span> Lĩnh vực trọng tâm
+                </h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="flex items-start gap-4">
+                        <div class="bg-blue-100 dark:bg-sky-900/50 text-blue-600 dark:text-sky-300 p-3 rounded-2xl font-black shrink-0">01</div>
+                        <div><h4 class="text-sm font-bold text-slate-800 dark:text-slate-200 mt-2">Bồi thường, hỗ trợ tái định cư</h4></div>
                     </div>
-                </div>
-
-                <div class="glass-card bg-slate-900 dark:bg-slate-800/80 p-8 relative overflow-hidden !border-slate-700">
-                    <h3 class="text-xs font-black text-blue-400 uppercase tracking-widest mb-6">Đánh giá & Phương hướng</h3>
-                    <div class="space-y-6">
-                        <div class="bg-white/5 p-4 rounded-2xl border border-white/10">
-                            <span class="text-[10px] font-bold text-orange-400 uppercase tracking-tighter">Ghi chú hạn chế:</span>
-                            <p id="display_han_che" class="text-xs text-slate-300 leading-relaxed mt-1 opacity-90">Đang tải...</p>
-                        </div>
-                        <div class="bg-emerald-500/10 p-4 rounded-2xl border border-emerald-500/20">
-                            <span class="text-[10px] font-bold text-emerald-400 uppercase tracking-tighter">Giải pháp trọng tâm:</span>
-                            <ul class="text-xs text-emerald-100 mt-2 space-y-1 opacity-90 list-disc ml-4 font-medium">
-                                <li>Giải quyết dứt điểm tồn đọng.</li>
-                                <li>Tăng cường tuyên truyền pháp luật đất đai.</li>
-                            </ul>
-                        </div>
+                    <div class="flex items-start gap-4">
+                        <div class="bg-blue-100 dark:bg-sky-900/50 text-blue-600 dark:text-sky-300 p-3 rounded-2xl font-black shrink-0">02</div>
+                        <div><h4 class="text-sm font-bold text-slate-800 dark:text-slate-200 mt-2">Cấp giấy chứng nhận (GCN)</h4></div>
+                    </div>
+                    <div class="flex items-start gap-4">
+                        <div class="bg-blue-100 dark:bg-sky-900/50 text-blue-600 dark:text-sky-300 p-3 rounded-2xl font-black shrink-0">03</div>
+                        <div><h4 class="text-sm font-bold text-slate-800 dark:text-slate-200 mt-2">Xác định nguồn gốc đất</h4></div>
                     </div>
                 </div>
             </div>
 
             <div class="pt-6 border-t border-slate-300/50 dark:border-slate-700">
-                <h2 class="theme-text text-xl md:text-2xl font-black uppercase tracking-wide font-['Montserrat'] mb-6">
-                    TỔNG HỢP TÌNH HÌNH PHẢN ÁNH 1022
-                </h2>
+                <div class="flex flex-col md:flex-row justify-between items-center mb-6 gap-4">
+                    <h2 class="theme-text text-xl md:text-2xl font-black uppercase tracking-wide font-['Montserrat']">
+                        TỔNG HỢP TÌNH HÌNH PHẢN ÁNH 1022
+                    </h2>
+                    
+                    <a href="phan-anh/theo-doi-phan-anh.html" class="btn-action-primary">
+                        <span>📊</span> Xem chi tiết Phản ánh
+                    </a>
+                </div>
                 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div class="glass-card bg-white p-8 space-y-6 flex flex-col justify-center">
                         <h3 class="font-bold border-b border-slate-200 dark:border-slate-700 pb-2 uppercase text-slate-400 text-xs tracking-widest">Số liệu tổng hợp 1022</h3>
                         <div class="flex justify-between items-center bg-slate-50 p-6 rounded-2xl border border-slate-100 dark:border-slate-700/50 text-slate-700">
-                            <span class="font-black text-xs uppercase">TỔNG TIN</span>
-                            <b id="p_tong" class="text-4xl font-black">0</b>
+                            <span class="font-black text-xs uppercase dark:text-slate-200">TỔNG TIN</span>
+                            <b id="p_tong" class="text-4xl font-black dark:text-white">0</b>
                         </div>
                         <div class="flex justify-between items-center bg-blue-50 dark:bg-sky-900/30 p-6 rounded-2xl border border-blue-100 dark:border-sky-800 text-blue-700 dark:text-sky-400">
                             <span class="font-black text-xs uppercase">ĐÃ XỬ LÝ XONG</span>
@@ -262,7 +261,7 @@
                 </div>
             </div>
 
-        </article>
+        </div>
     </div>
 
     <footer class="w-full text-center py-6 font-bold text-[10px] uppercase tracking-widest border-t border-slate-200 dark:border-slate-800 bg-white/50 dark:bg-slate-900/50 backdrop-blur-md mt-auto text-slate-400">
@@ -287,7 +286,6 @@
             const d = snap.val();
             if(!d) return;
 
-            // 1. Cập nhật Đơn thư
             const tongDon = (d.ky_truoc || 0) + (d.moi_phat_sinh || 0);
             document.getElementById('display_tong_don').innerText = tongDon;
             document.getElementById('display_ky_truoc').innerText = d.ky_truoc || 0;
@@ -295,23 +293,18 @@
             document.getElementById('display_du_dieu_kien').innerText = d.du_dieu_kien || 0;
             document.getElementById('display_da_giai_quyet').innerText = d.da_giai_quyet || 0;
 
-            // 2. Cập nhật Tiếp dân
             document.getElementById('display_luot_tiep').innerText = d.luot_tiep || 0;
             document.getElementById('display_tong_nguoi').innerText = (d.tong_nguoi || 0) + " người";
             document.getElementById('display_lanh_dao_tong').innerText = ((d.ct_tiep || 0) + (d.pct_tiep || 0)) + " lượt";
             document.getElementById('display_ct').innerText = d.ct_tiep || 0;
             document.getElementById('display_pct').innerText = d.pct_tiep || 0;
 
-            // 3. Cập nhật Kết quả thi hành
             const daTH = d.da_thi_hanh || 0;
             const tongQD = d.tong_qd || 1;
             const percent = ((daTH / tongQD) * 100).toFixed(1);
             document.getElementById('display_thi_hanh_ti_le').innerText = `${daTH}/${tongQD}`;
             document.getElementById('display_percent_text').innerText = percent + "%";
             document.getElementById('display_percent_bar').style.width = percent + "%";
-
-            // 4. Ghi chú hạn chế
-            document.getElementById('display_han_che').innerText = d.han_che || "Không có hạn chế ghi nhận.";
         });
 
         // Lấy dữ liệu 1022
@@ -335,9 +328,9 @@
             
             document.getElementById('fields_list').innerHTML = fs.map(f => `
                 <div class="space-y-1.5">
-                    <div class="flex justify-between text-[11px] font-black uppercase tracking-tight text-slate-600">
+                    <div class="flex justify-between text-[11px] font-black uppercase tracking-tight text-slate-600 dark:text-slate-300">
                         <span>${f.l}</span>
-                        <span class="${f.c.replace('bg-', 'text-')}">${f.v||0}</span>
+                        <span class="${f.c.replace('bg-', 'text-').replace('400','500')}">${f.v||0}</span>
                     </div>
                     <div class="h-2.5 bg-slate-100 dark:bg-slate-700 rounded-full overflow-hidden shadow-inner">
                         <div class="${f.c} h-full transition-all duration-1000 ease-out" style="width:${p.tong>0?(f.v/p.tong*100):0}%"></div>
