@@ -112,7 +112,6 @@
 </head>
 <body class="theme-xanh-ios light-theme custom-scrollbar" id="dynamic-body">
 
-    <!-- HEADER ĐỒNG BỘ CHỨA IOC BINH HUNG -->
     <header class="main-header w-full py-6 px-6 md:px-12 select-none relative transition-all duration-300">
         <div class="max-w-[1550px] mx-auto flex flex-col items-center justify-center relative header-layout">
             <div class="flex flex-row items-center space-x-6 w-auto">
@@ -129,7 +128,6 @@
                 </div>
             </div>
 
-            <!-- CHUYỂN ĐỔI THEME XANH / ĐỎ -->
             <div class="theme-selector-vertical lg:absolute lg:top-0 lg:right-0 bg-white/10 backdrop-blur-md border border-white/20 p-1.5 rounded-xl flex flex-col space-y-1.5 w-[75px] z-20 shadow-inner">
                 <button onclick="switchSystemTheme('xanh')" id="btn-theme-xanh" class="w-full text-center text-[10px] font-extrabold uppercase py-1.5 rounded-lg transition-all duration-300 bg-blue-600 text-white shadow-md">🔵 Xanh</button>
                 <button onclick="switchSystemTheme('do')" id="btn-theme-do" class="w-full text-center text-[10px] font-extrabold uppercase py-1.5 rounded-lg transition-all duration-300 text-white/80 hover:text-white">🔴 Đỏ</button>
@@ -170,7 +168,6 @@
                 <button onclick="changeContent('lookup-links', '', this)" class="tab-btn shrink-0">🌐 Cổng DVC Trực tuyến</button>
             </div>
 
-            <!-- CONTAINER HIỂN THỊ NỘI DUNG TỪ JAVASCRIPT -->
             <div id="viewer-viewport" class="content-viewer-container custom-scrollbar"></div>
             
             <p id="helper-text" class="text-center text-xs font-bold italic opacity-80 mt-2">💡 Hướng dẫn: Xem chi tiết phía trên hoặc bấm các tab chức năng để thao tác.</p>
@@ -189,21 +186,14 @@
 
         async function loadTTHCData() {
             try {
-                // Tải file JSON từ cùng thư mục
                 const response = await fetch('danh_sach_tthc.json');
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
+                if (!response.ok) { throw new Error(`HTTP error! status: ${response.status}`); }
                 dataTTHC = await response.json();
                 
-                // Nạp vào Hash Map để tìm kiếm O(1)
                 dataTTHC.forEach(item => tthcHashMap.set(item["Mã số"], item));
                 
-                // Nếu người dùng đang mở tab Tra cứu thì render kết quả ngay lập tức
                 const resultsContainer = document.getElementById('searchResults');
-                if (resultsContainer) {
-                    executeSearch();
-                }
+                if (resultsContainer) { executeSearch(); }
             } catch (error) {
                 console.error("Lỗi khi tải file danh_sach_tthc.json:", error);
                 const resultsContainer = document.getElementById('searchResults');
@@ -213,12 +203,10 @@
             }
         }
 
-        // HÀM LOẠI BỎ DẤU TIẾNG VIỆT
         function removeAccents(str) {
             return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
         }
 
-        // HÀM XỬ LÝ TÌM KIẾM THEO TỪ KHÓA LIỀN MẠCH (EXACT PHRASE MATCH)
         window.executeSearch = function() {
             const query = document.getElementById('searchInput').value.trim();
             const resultsContainer = document.getElementById('searchResults');
@@ -227,39 +215,31 @@
             const cardClass = isDark ? 'bg-slate-800 border-slate-700 text-sky-100 shadow-md' : 'bg-white border-slate-200 text-slate-700 shadow-sm';
             const codeClass = isDark ? 'bg-sky-900/60 text-sky-300' : 'bg-sky-100/70 text-sky-700';
 
-            // Nếu dữ liệu chưa tải xong hoặc rỗng
             if(dataTTHC.length === 0) {
                 resultsContainer.innerHTML = `<p class="text-center text-sky-500 font-bold mt-10 animate-pulse">⏳ Đang nạp dữ liệu Hệ thống...</p>`;
                 return;
             }
 
-            // Nếu không có từ khóa: Hiển thị tối đa 100 kết quả đầu tiên
             if (!query) {
                 renderResults(dataTTHC.slice(0, 100), resultsContainer, cardClass, codeClass); 
                 return;
             }
 
-            // 1. O(1) Tìm kiếm Băm (Hash) nếu người dùng nhập chính xác tuyệt đối Mã số
             if (tthcHashMap.has(query)) {
                 renderResults([tthcHashMap.get(query)], resultsContainer, cardClass, codeClass);
                 return;
             }
 
-            // 2. Tìm kiếm chính xác theo cụm từ (Exact phrase search - không phân biệt dấu)
             const normalizedQuery = removeAccents(query);
             const exactResults = dataTTHC.filter(item => {
                 const normalizedContent = removeAccents(item["Nội dung"]);
                 const normalizedCode = removeAccents(item["Mã số"]);
-                
-                // Kiểm tra xem cụm từ khóa có nằm liền mạch trong nội dung hoặc mã số không
                 return normalizedContent.includes(normalizedQuery) || normalizedCode.includes(normalizedQuery);
             });
 
-            // Giới hạn kết quả hiển thị tránh đơ trang nếu từ khóa quá chung chung
             renderResults(exactResults.slice(0, 100), resultsContainer, cardClass, codeClass, exactResults.length);
         }
 
-        // HÀM HIỂN THỊ KẾT QUẢ TÌM KIẾM CÓ CHỨC NĂNG SAO CHÉP
         function renderResults(data, container, cardClass, codeClass, totalFound = null) {
             if (data.length === 0) {
                 container.innerHTML = `<p class="text-center text-red-500 font-bold mt-10">Không tìm thấy kết quả phù hợp cho từ khóa của bạn.</p>`;
@@ -288,7 +268,6 @@
             `).join('');
         }
 
-        // HÀM COPY MÃ SỐ VÀO CLIPBOARD
         window.copyToClipboard = function(text, buttonElement) {
             navigator.clipboard.writeText(text).then(() => {
                 const originalHTML = buttonElement.innerHTML;
@@ -305,7 +284,6 @@
             });
         };
 
-        // TRÌNH QUẢN LÝ SLIDER ẢNH QR
         let currentSlide = 1;
         const totalSlides = 6;
         
@@ -328,7 +306,6 @@
             }
         };
 
-        // HÀM CHUYỂN ĐỔI THEME HEADER VÀ NỀN (XANH / ĐỎ TƯƠI)
         window.switchSystemTheme = function(modeName) {
             const body = document.getElementById('dynamic-body');
             const btnXanh = document.getElementById('btn-theme-xanh');
@@ -345,7 +322,6 @@
             }
         }
 
-        // HÀM CHUYỂN ĐỔI THEME SÁNG / TỐI KHÔNG DÙNG MÀU ĐEN
         window.setTheme = function(themeName) {
             const body = document.getElementById('dynamic-body');
             const btnLight = document.getElementById('btn-theme-light');
@@ -373,7 +349,7 @@
             }
         }
 
-        // HÀM ĐỔI TAB NỘI DUNG TTHC CÓ THÍCH ỨNG THEME
+        // ĐÃ CẬP NHẬT NỘI DUNG GIỚI THIỆU TTHC MỚI TẠI ĐÂY
         function changeContent(type, sourceUrl, buttonElement) {
             const viewport = document.getElementById('viewer-viewport');
             const isDark = document.body.classList.contains('dark-theme');
@@ -390,9 +366,14 @@
                             <div class="h-1.5 w-24 ${lineClass} mx-auto mt-4 rounded-full"></div>
                         </div>
                         <div class="max-w-4xl text-sm md:text-base leading-relaxed md:leading-loose text-justify font-medium ${textClass} space-y-5">
-                            <p>Trung tâm Phục vụ Hành chính công xã Bình Hưng được thành lập với mục tiêu đổi mới phương thức phục vụ nhân dân, lấy người dân và doanh nghiệp làm trung tâm. Trung tâm là đầu mối tập trung để tiếp nhận, hướng dẫn, giải quyết và trả kết quả giải quyết thủ tục hành chính, đảm bảo sự nhanh chóng, minh bạch và hiệu quả.</p>
-                            <p>Chúng tôi ứng dụng mạnh mẽ công nghệ thông tin, chuyển đổi số và liên thông dữ liệu nhằm cắt giảm thời gian chờ đợi, nâng cao tính công khai trong hoạt động của bộ máy hành chính nhà nước. Người dân có thể dễ dàng tra cứu, theo dõi tiến độ hồ sơ ngay trên các thiết bị di động.</p>
-                            <p>Với phương châm <span class="font-black ${isRedTheme ? "text-[#da251d]" : "text-sky-600 dark:text-sky-400"}">"Chuyên nghiệp - Tận tâm - Chính xác - Đúng hẹn"</span>, đội ngũ cán bộ, công chức của Trung tâm luôn sẵn sàng hỗ trợ, tư vấn và cam kết mang đến sự hài lòng cao nhất cho mọi tổ chức và công dân đến giao dịch.</p>
+                            <p>Trung tâm phục vụ hành chính công xã Bình Hưng được thành lập theo Quyết định số 08/QĐ-UBND ngày 01 tháng 7 năm 2025; Quyết định số 200/QĐ-UBND ngày 17 tháng 7 năm 2025 về ban hành quy định về chức năng, nhiệm vụ, quyền hạn và tổ chức của Trung tâm Phục vụ hành chính công xã Bình Hưng và Quy chế tổ chức và hoạt động theo Quyết định số 201/QĐ-UBND ngày 17 tháng 7 năm 2025 của Ủy ban nhân dân xã Bình Hưng.</p>
+                            <p>Theo đó, Trung tâm có nhiệm vụ, quyền hạn chung như sau:</p>
+                            <ul class="list-disc pl-6 space-y-3">
+                                <li>Công khai kịp thời, đầy đủ bằng phương tiện điện tử hoặc văn bản danh mục, nội dung thủ tục hành chính thuộc thẩm quyền giải quyết và được thực hiện tại Bộ phận Một cửa theo quy định của pháp luật về kiểm soát thủ tục hành chính và quy định pháp luật có liên quan; đồng thời hỗ trợ tổ chức, cá nhân gặp khó khăn trong việc tiếp cận thông tin công khai trên phương tiện điện tử.</li>
+                                <li>Hướng dẫn, tiếp nhận, kiểm tra tính hợp lệ, đầy đủ của hồ sơ theo quy định; số hóa, chuyển hồ sơ đến cơ quan có thẩm quyền để giải quyết thủ tục hành chính; trả kết quả giải quyết thủ tục hành chính cho tổ chức, cá nhân theo quy định của pháp luật; thu phí, lệ phí, các nghĩa vụ tài chính (nếu có) theo quy định; từ chối tiếp nhận đối với hồ sơ đã được hướng dẫn nhưng chưa thực hiện đúng quy định.</li>
+                                <li>Phối hợp với các cơ quan, đơn vị liên quan để giải quyết, trả kết quả giải quyết cho tổ chức, cá nhân đối với trường hợp thủ tục hành chính yêu cầu giải quyết ngay trong ngày hoặc các thủ tục hành chính được giao hoặc ủy quyền cho cán bộ, công chức, viên chức tại Bộ phận Một cửa giải quyết; hỗ trợ tổ chức, cá nhân thực hiện dịch vụ công trực tuyến; đề nghị các cơ quan có thẩm quyền giải quyết và cơ quan, đơn vị có liên quan cung cấp thông tin, tài liệu phục vụ cho công tác tiếp nhận, giải quyết thủ tục hành chính;...</li>
+                            </ul>
+                            <p>Hiện Trung tâm phục vụ hành chính công xã Bình Hưng có 08 biên chế gồm 01 Giám đốc và 07 chuyên viên. Trung tâm phục vụ hành chính công xã Bình Hưng đạt yêu cầu về cơ sở vật chất, trang thiết bị và hạ tầng kỹ thuật phục vụ người dân, tổ chức đến thực hiện thủ tục hành chính tại Trung tâm. Theo đó đã bố trí 01 máy gọi số tự động, 01 bộ máy vi tính, 02 màn hình 32 inch cài đặt phần mềm Kios tra cứu thủ tục hành chính, thực hiện dịch vụ công trực tuyến, đánh giá mức độ hài lòng, tra cứu thông tin quy hoạch cho người dân đến liên hệ thực hiện các thủ tục hành chính.</p>
                         </div>
                     </div>
                 `;
@@ -441,7 +422,6 @@
                             </button>
                         </div>
 
-                        <!-- KHỐI THÔNG BÁO NỔI BẬT -->
                         <div class="w-full max-w-4xl mb-6 p-4 rounded-xl border border-amber-300 bg-amber-50 dark:bg-amber-900/20 dark:border-amber-700/50 flex items-start gap-3 shadow-sm">
                             <span class="text-xl shrink-0 mt-0.5">💡</span>
                             <p class="text-sm font-semibold text-amber-800 dark:text-amber-200 leading-relaxed text-justify md:text-left">
@@ -450,12 +430,10 @@
                         </div>
                         
                         <div id="searchResults" class="w-full max-w-4xl flex-1 overflow-y-auto space-y-3 custom-scrollbar pr-2 pb-4">
-                            <!-- Kết quả sẽ render tại đây -->
                         </div>
                     </div>
                 `;
                 
-                // Khởi chạy ngay hiển thị kết quả mặc định
                 setTimeout(executeSearch, 50);
 
             } else if (type === 'accordion-guide') {
@@ -534,12 +512,10 @@
                 viewport.innerHTML = `<object data="${sourceUrl}" type="application/pdf" width="100%" height="100%"></object>`;
             }
 
-            // Đổi màu tab đang được chọn
             document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
             buttonElement.classList.add('active');
         }
 
-        // HÀM MỞ/ĐÓNG ACCORDION HƯỚNG DẪN
         window.toggleAccordion = function(id) {
             const content = document.getElementById(`content-${id}`);
             const arrow = document.getElementById(`arrow-${id}`);
@@ -554,10 +530,9 @@
             }
         };
 
-        // KÍCH HOẠT KHI TẢI TRANG
         document.addEventListener('DOMContentLoaded', function() {
             setTheme('light'); 
-            loadTTHCData(); // Kích hoạt tải dữ liệu ngay từ đầu
+            loadTTHCData();
             const firstTab = document.querySelector('.tab-btn');
             if (firstTab) firstTab.click();
         });
