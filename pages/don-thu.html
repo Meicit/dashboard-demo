@@ -14,14 +14,6 @@
         body.light-theme { background-color: #f8fafc; color: #334155; }
         body.dark-theme { background-color: #082f49; color: #bae6fd; }
 
-        /* ================= HEADER GRADIENT ================= */
-        body.light-theme.theme-xanh .main-header { background: linear-gradient(-45deg, #0b4a8f, #05234a, #0d5cb3, #02142d); background-size: 400% 400%; animation: gradientGIF 12s ease infinite; border-bottom: 2px solid #032b5c; box-shadow: 0 4px 15px rgba(11, 74, 143, 0.3); }
-        body.light-theme.theme-do .main-header { background: linear-gradient(-45deg, #da251d, #a81c15, #ff3b33, #7a120e); background-size: 400% 400%; animation: gradientGIF 12s ease infinite; border-bottom: 2px solid #a81c15; box-shadow: 0 4px 15px rgba(218, 37, 29, 0.4); }
-        body.dark-theme .main-header { background: linear-gradient(-45deg, #020617, #0f172a, #082f49, #020617); background-size: 400% 400%; animation: gradientGIF 12s ease infinite; border-bottom: 2px solid #082f49; box-shadow: 0 4px 15px rgba(8, 47, 73, 0.5); }
-        @keyframes gradientGIF { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
-
-        body.dark-theme .theme-selector-vertical { display: none !important; }
-
         /* ================= KHỐI NỘI DUNG KÍNH MỜ (GLASSMORPHISM) ================= */
         .menu-panel-wrapper { backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid; border-radius: 40px; width: 100%; transition: all 0.5s ease; padding: 32px; }
         .theme-text { transition: color 0.5s ease; }
@@ -72,7 +64,7 @@
         body.dark-theme .btn-view-mode.active { background: #0ea5e9; color: #fff; }
         body.dark-theme .btn-view-mode:not(.active) { color: #bae6fd; }
 
-        /* NÚT "THEO DÕI PHẢN ÁNH" MỚI THÊM */
+        /* NÚT "THEO DÕI PHẢN ÁNH" */
         .btn-action-primary { display: inline-flex; align-items: center; gap: 8px; padding: 12px 24px; border-radius: 14px; font-weight: 800; font-size: 13px; text-transform: uppercase; letter-spacing: 0.05em; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); border: 1px solid transparent; }
         
         body.light-theme.theme-xanh .btn-action-primary { background: linear-gradient(135deg, #0284c7, #0b4a8f); color: #fff; box-shadow: 0 4px 15px rgba(11, 74, 143, 0.2); }
@@ -90,33 +82,26 @@
 </head>
 <body class="light-theme theme-xanh custom-scrollbar" id="dynamic-body">
 
-    <header class="main-header w-full py-6 px-6 md:px-12 select-none relative transition-all duration-300">
-        <div class="max-w-[1550px] mx-auto flex flex-col md:flex-row items-center justify-between relative header-layout">
-            <div class="flex flex-row items-center space-x-6 w-full md:w-auto">
-                <div class="flex-shrink-0">
-                    <img src="logo.png" alt="Logo" class="w-20 h-auto filter drop-shadow-md" onerror="this.src='https://placehold.co/80x80?text=Logo'">
-                </div>
-             </div>
-
-            <div class="theme-selector-vertical lg:absolute lg:top-0 lg:right-0 bg-white/10 backdrop-blur-md border border-white/20 p-1.5 rounded-xl flex flex-col space-y-1.5 w-[75px] z-20 shadow-inner mt-4 lg:mt-0">
-                <button onclick="switchSystemTheme('xanh')" id="btn-theme-xanh" class="w-full text-center text-[10px] font-extrabold uppercase py-1.5 rounded-lg transition-all duration-300 bg-blue-600 text-white shadow-md border border-blue-500/50">
-                    🔵 Xanh
-                </button>
-                <button onclick="switchSystemTheme('do')" id="btn-theme-do" class="w-full text-center text-[10px] font-extrabold uppercase py-1.5 rounded-lg transition-all duration-300 text-white/80 hover:text-white border border-transparent">
-                    🔴 Đỏ
-                </button>
-            </div>
-        </div>
-    </header>
-
-    <div class="max-w-[1550px] w-full mx-auto px-4 md:px-6 my-6 flex flex-col items-start flex-grow">
+    <div class="max-w-[1550px] w-full mx-auto px-4 md:px-6 my-8 flex flex-col items-start flex-grow">
         
+        <!-- BỘ ĐIỀU KHIỂN TOP (GỘP CẢ XANH/ĐỎ VÀ SÁNG/TỐI) -->
         <div class="flex flex-col sm:flex-row justify-between items-center gap-4 mb-6 w-full">
             <a href="index.html" class="btn-back-interactive">⬅️ Quay lại Trang chủ</a>
-            <div class="theme-switcher-panel">
-                <span class="text-[10px] font-black uppercase tracking-wider px-3 opacity-70">Chế độ xem:</span>
-                <button onclick="setTheme('light')" id="btn-theme-light" class="btn-view-mode active">☀️ Sáng</button>
-                <button onclick="setTheme('dark')" id="btn-theme-dark" class="btn-view-mode">🌙 Tối</button>
+            
+            <div class="flex items-center gap-4">
+                <!-- Chuyển đổi Xanh/Đỏ -->
+                <div class="theme-switcher-panel">
+                    <span class="text-[10px] font-black uppercase tracking-wider px-3 opacity-70">Giao diện:</span>
+                    <button onclick="switchSystemTheme('xanh')" id="btn-theme-xanh" class="btn-view-mode active">🔵 Xanh</button>
+                    <button onclick="switchSystemTheme('do')" id="btn-theme-do" class="btn-view-mode">🔴 Đỏ</button>
+                </div>
+
+                <!-- Chuyển đổi Sáng/Tối -->
+                <div class="theme-switcher-panel">
+                    <span class="text-[10px] font-black uppercase tracking-wider px-3 opacity-70">Chế độ xem:</span>
+                    <button onclick="setTheme('light')" id="btn-theme-light" class="btn-view-mode active">☀️ Sáng</button>
+                    <button onclick="setTheme('dark')" id="btn-theme-dark" class="btn-view-mode">🌙 Tối</button>
+                </div>
             </div>
         </div>
 
@@ -125,7 +110,9 @@
                 QUẢN LÝ ĐƠN THƯ & PHẢN ÁNH 1022
             </h1>
 
+            <!-- ================= PHẦN 1: ĐƠN THƯ & TIẾP CÔNG DÂN ================= -->
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- Đơn thư -->
                 <div class="glass-card p-6 flex flex-col justify-between border-t-4 border-t-blue-500">
                     <div>
                         <h3 class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-4">Tình hình đơn thư</h3>
@@ -154,6 +141,7 @@
                     </div>
                 </div>
 
+                <!-- Tiếp công dân -->
                 <div class="glass-card p-6 flex flex-col justify-between border-t-4 border-t-purple-500">
                     <div>
                         <h3 class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-4">Tiếp công dân</h3>
@@ -179,6 +167,7 @@
                     </div>
                 </div>
 
+                <!-- Kết quả thi hành -->
                 <div class="glass-card p-6 flex flex-col justify-between border-t-4 border-t-emerald-500">
                     <div>
                         <h3 class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-4">Kết quả thi hành</h3>
@@ -200,6 +189,7 @@
                 </div>
             </div>
 
+            <!-- ================= PHẦN 2: LĨNH VỰC TRỌNG TÂM ================= -->
             <div class="glass-card bg-white p-8 relative overflow-hidden">
                 <h3 class="text-xs font-black text-blue-900 dark:text-sky-300 uppercase tracking-widest mb-6 flex items-center gap-2">
                     <span class="w-2 h-4 bg-blue-600 dark:bg-sky-400 rounded-full"></span> Lĩnh vực trọng tâm
@@ -220,12 +210,14 @@
                 </div>
             </div>
 
+            <!-- ================= PHẦN 3: PHẢN ÁNH 1022 & NÚT THEO DÕI ================= -->
             <div class="pt-6 border-t border-slate-300/50 dark:border-slate-700">
                 <div class="flex flex-col md:flex-row justify-between items-center mb-6 gap-4">
                     <h2 class="theme-text text-xl md:text-2xl font-black uppercase tracking-wide font-['Montserrat']">
                         TỔNG HỢP TÌNH HÌNH PHẢN ÁNH 1022
                     </h2>
                     
+                    <!-- NÚT THEO DÕI PHẢN ÁNH ĐƯỢC THÊM VÀO ĐÂY -->
                     <a href="phan-anh/theo-doi-phan-anh.html" class="btn-action-primary">
                         <span>📊</span> Xem chi tiết Phản ánh
                     </a>
@@ -247,6 +239,7 @@
                     <div class="glass-card bg-white p-8">
                         <h3 class="font-bold border-b border-slate-200 dark:border-slate-700 pb-4 mb-4 uppercase text-slate-400 text-xs tracking-widest">Phân bổ lĩnh vực phản ánh</h3>
                         <div id="fields_list" class="space-y-4">
+                            <!-- Dữ liệu JS 1022 sẽ điền vào đây -->
                             <p class="text-xs text-slate-400 italic">Đang tải biểu đồ...</p>
                         </div>
                     </div>
@@ -330,6 +323,15 @@
                 </div>
             `).join('');
         });
+
+        // LẮNG NGHE LỆNH CHUYỂN THEME TỪ DASHBOARD CHA
+        window.addEventListener('message', function(event) {
+            if (event.data === 'theme-do') {
+                switchSystemTheme('do');
+            } else if (event.data === 'theme-xanh') {
+                switchSystemTheme('xanh');
+            }
+        });
     </script>
 
     <script>
@@ -341,12 +343,20 @@
 
             if (modeName === 'do') {
                 body.classList.remove('theme-xanh'); body.classList.add('theme-do');
-                btnDo.className = "w-full text-center text-[10px] font-extrabold uppercase py-1.5 rounded-lg transition-all duration-300 bg-[#da251d] text-white shadow-md border border-[#a81c15]";
-                btnXanh.className = "w-full text-center text-[10px] font-extrabold uppercase py-1.5 rounded-lg transition-all duration-300 text-white/80 hover:text-white border border-transparent";
+                if(btnDo) {
+                    btnDo.className = "btn-view-mode active";
+                    btnDo.innerHTML = "🔴 Đỏ";
+                    btnXanh.className = "btn-view-mode";
+                    btnXanh.innerHTML = "🔵 Xanh";
+                }
             } else {
                 body.classList.remove('theme-do'); body.classList.add('theme-xanh');
-                btnXanh.className = "w-full text-center text-[10px] font-extrabold uppercase py-1.5 rounded-lg transition-all duration-300 bg-blue-600 text-white shadow-md border border-blue-500/50";
-                btnDo.className = "w-full text-center text-[10px] font-extrabold uppercase py-1.5 rounded-lg transition-all duration-300 text-white/80 hover:text-white border border-transparent";
+                if(btnXanh) {
+                    btnXanh.className = "btn-view-mode active";
+                    btnXanh.innerHTML = "🔵 Xanh";
+                    btnDo.className = "btn-view-mode";
+                    btnDo.innerHTML = "🔴 Đỏ";
+                }
             }
         }
 
