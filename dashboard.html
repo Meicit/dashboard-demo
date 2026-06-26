@@ -43,7 +43,7 @@
         .nav-item:hover { color: white; background: rgba(255, 255, 255, 0.15); transform: translateY(-2px); }
         .nav-item.active { color: white !important; font-weight: 800; background: linear-gradient(145deg, #0ea5e9, #0284c7); border: 1px solid rgba(255, 255, 255, 0.4); box-shadow: 0 4px 15px rgba(14, 165, 233, 0.4); transform: translateY(-3px) scale(1.05); }
         .nav-item.locked { opacity: 0.3; cursor: not-allowed; filter: grayscale(1); pointer-events: none; background: transparent; }
-        .main-wrapper { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+        .main-wrapper { flex: 1; display: flex; flex-direction: column; overflow: hidden; position: relative; }
         iframe { flex: 1; width: 100%; border: none; background-color: #f1f5f9; }
         #btn-unlock { cursor: pointer !important; transition: all 0.3s ease; background: rgba(255, 255, 255, 0.15); color: white; font-weight: 700; border: 1px solid rgba(255, 255, 255, 0.3); }
         #btn-unlock:hover { background: #ef4444; color: white; border-color: transparent; transform: scale(1.02); }
@@ -69,9 +69,35 @@
             box-shadow: 0 4px 15px rgba(239, 68, 68, 0.5); 
             border: 1px solid rgba(255, 255, 255, 0.5);
         }
+
+        /* ================= HIỆU ỨNG ROBOT CHATBOT MISA ONEAI ================= */
+        .chatbot-mascot {
+            position: fixed; bottom: 25px; z-index: 999; width: 95px; cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        @media (min-width: 768px) { .chatbot-mascot { width: 115px; bottom: 35px; } }
+
+        .chatbot-bin { left: 25px; animation: floatBot 4s ease-in-out infinite; }
+        .chatbot-hun { right: 25px; animation: floatBot 3.5s ease-in-out infinite alternate; }
+
+        .chatbot-mascot:hover { transform: scale(1.15) translateY(-5px); animation-play-state: paused; }
+        .chatbot-mascot img { width: 100%; height: auto; filter: drop-shadow(0 10px 15px rgba(8, 47, 73, 0.4)); }
+        body.theme-do-hanhchinh .chatbot-mascot img { filter: drop-shadow(0 10px 15px rgba(76, 5, 25, 0.4)); }
+
+        /* Bong bóng chat (Speech Bubble) */
+        .chat-bubble {
+            position: absolute; top: -45px; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px);
+            padding: 8px 16px; border-radius: 20px; font-size: 12px; font-weight: 800; white-space: nowrap;
+            opacity: 0; transform: translateY(10px); transition: all 0.3s ease; pointer-events: none; box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+        }
+        .chatbot-bin .chat-bubble { left: 0; border-bottom-left-radius: 4px; color: #0284c7; border: 1px solid #bae6fd; }
+        .chatbot-hun .chat-bubble { right: 0; border-bottom-right-radius: 4px; color: #da251d; border: 1px solid #fca5a5; }
+        .chatbot-mascot:hover .chat-bubble { opacity: 1; transform: translateY(0); }
+
+        @keyframes floatBot { 0% { transform: translateY(0px); } 50% { transform: translateY(-12px); } 100% { transform: translateY(0px); } }
     </style>
 </head>
-<body>
+<body class="light-theme">
     <header class="navbar">
         <div class="nav-top">
             <div class="flex items-center gap-4">
@@ -92,32 +118,61 @@
         </div>
         <nav class="nav-bottom" id="main-nav">
             <a href="pages/tong-quan.html" target="main-frame" class="nav-item active" onclick="handleNavClick(this)">🏠 Thông tin chung</a>
-            <a href="pages/cong-tac-dang.html" target="main-frame" class="nav-item locked" data-lock="true" onclick="handleNavClick(this)">🚩 Công tác Đảng</a>
-            <a href="pages/ho-so-hanh-chinh.html" target="main-frame" class="nav-item locked" data-lock="true" onclick="handleNavClick(this)">📋 Hồ sơ hành chính</a>
-            <a href="pages/chi-tieu.html" target="main-frame" class="nav-item locked" data-lock="true" onclick="handleNavClick(this)">📈 Chỉ tiêu KT-XH</a>
-            <a href="pages/dau-tu-cong.html" target="main-frame" class="nav-item locked" data-lock="true" onclick="handleNavClick(this)">🏗️ Đầu tư công</a>
-            <a href="pages/thu-chi-ngan-sach.html" target="main-frame" class="nav-item locked" data-lock="true" onclick="handleNavClick(this)">💰 Thu - Chi ngân sách</a>
-            <a href="pages/van-hoa-xa-hoi.html" target="main-frame" class="nav-item locked" data-lock="true" onclick="handleNavClick(this)">🏛️ Văn hóa - Xã hội</a>
-            <a href="pages/an-ninh-trat-tu.html" target="main-frame" class="nav-item locked" data-lock="true" onclick="handleNavClick(this)">🛡️ An ninh trật tự</a>
-            <a href="pages/don-thu.html" target="main-frame" class="nav-item locked" data-lock="true" onclick="handleNavClick(this)">📂 Đơn thư</a>
-            <a href="pages/1022.html" target="main-frame" class="nav-item locked" data-lock="true" onclick="handleNavClick(this)">📞 Phản ánh 1022</a>
-            <a href="pages/van-ban-chi-dao.html" target="main-frame" class="nav-item locked" data-lock="true" onclick="handleNavClick(this)">⚖️ Văn bản chỉ đạo</a>
+            <a href="pages/cong-tac-dang.html" target="main-frame" class="nav-item" onclick="handleNavClick(this)">🚩 Công tác Đảng</a>
+            <a href="pages/ho-so-hanh-chinh.html" target="main-frame" class="nav-item" onclick="handleNavClick(this)">📋 Hồ sơ hành chính</a>
+            <a href="pages/chi-tieu.html" target="main-frame" class="nav-item" onclick="handleNavClick(this)">📈 Chỉ tiêu KT-XH</a>
+            <a href="pages/dau-tu-cong.html" target="main-frame" class="nav-item" onclick="handleNavClick(this)">🏗️ Đầu tư công</a>
+            <a href="pages/thu-chi-ngan-sach.html" target="main-frame" class="nav-item" onclick="handleNavClick(this)">💰 Thu - Chi ngân sách</a>
+            <a href="pages/van-hoa-xa-hoi.html" target="main-frame" class="nav-item" onclick="handleNavClick(this)">🏛️ Văn hóa - Xã hội</a>
+            <a href="pages/an-ninh-trat-tu.html" target="main-frame" class="nav-item" onclick="handleNavClick(this)">🛡️ An ninh trật tự</a>
+            <a href="pages/don-thu.html" target="main-frame" class="nav-item" onclick="handleNavClick(this)">📂 Đơn thư</a>
+            <a href="pages/1022.html" target="main-frame" class="nav-item" onclick="handleNavClick(this)">📞 Phản ánh 1022</a>
+            <a href="pages/van-ban-chi-dao.html" target="main-frame" class="nav-item" onclick="handleNavClick(this)">⚖️ Văn bản chỉ đạo</a>
+            
+            <button onclick="openOneAIChat()" class="nav-item" style="background: rgba(14, 165, 233, 0.15); border-color: rgba(14, 165, 233, 0.4);">🤖 Trợ lý Ảo (OneAI)</button>
         </nav>
     </header>
+    
     <main class="main-wrapper">
         <iframe name="main-frame" src="pages/tong-quan.html"></iframe>
     </main>
+
+    <div class="chatbot-mascot chatbot-bin" onclick="openOneAIChat()">
+        <div class="chat-bubble">👋 Trợ lý BIN xin chào!</div>
+        <img src="binBH.png" alt="Trợ lý BIN" onerror="this.src='https://placehold.co/125x125?text=BIN'">
+    </div>
+
+    <div class="chatbot-mascot chatbot-hun" onclick="openOneAIChat()">
+        <div class="chat-bubble">✨ Trợ lý HUN hỗ trợ bạn!</div>
+        <img src="hunBH.png" alt="Trợ lý HUN" onerror="this.src='https://placehold.co/125x125?text=HUN'">
+    </div>
+
     <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            const lockedItems = document.querySelectorAll('.nav-item.locked');
-            lockedItems.forEach(el => {
-                el.classList.remove('locked'); el.style.pointerEvents = "auto"; el.style.opacity = "1"; el.style.filter = "none";
-            });
-        });
-        function handleNavClick(el) {
-            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active')); el.classList.add('active');
+        // Đường dẫn tới dịch vụ Trợ lý trí tuệ nhân tạo MISA OneAI công vụ của bạn
+        const ONEAI_URL = "https://iofficeapp.misa.vn/oneai/chat?sid=s4/EDD6Z94L%2Bn9uMMoAzrHwTFAPeBgV4GxXrz8kRjZWOa8QYU8GtwvpvZ2OYS//8gw%2Bs3JTB/tjYXhKRRCBdWV2GuIR8ejB64pJicU3nhRCLTfa5H6OrHzBPpWlKoauaafnZh4EskgozVqGYL7eEWYxNaKpIgCLZSdgBIzk/TiPNH0jgpm3AExXG3zuui%2BoqnjpZ8hHhneaLuROftFKx3Gr/S3IGy7sIorcp6/1s0jXGgKI8bux4TDmoc0Hc16c1ZTyduwmW8XClszrVSW7A32Pwd9gMAxKoQFS2Jd2FSBvbs%2Bjd3cdVb8bPtrL3mUEbFySNXxjiekqxP%2BilGMwd4hrOXTAFuUiGhXfsjzRTJ1FFUswegoUyH6WhZw4rRo26USRbjA5PQT/XQfyqMg6xJeZZCSjbzboUtNKkyDSTL06MME4J2jFTVT%2BluNRfi8R3CgM/L6hRnQW9/kvD%2BTBgOHGDQBvjj6gpgnC0QxzGBiook5KU/fuY9iobP3h0rmThBIZmisz9PFo2IzDHjebi9A==&lid=vi&tcode=n4qiufaz73vt&env=IOffice";
+
+        // Hàm mở hộp thoại chat MISA OneAI trong tab mới
+        window.openOneAIChat = function() {
+            window.open(ONEAI_URL, '_blank');
         }
+
+        function handleNavClick(el) {
+            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active')); 
+            el.classList.add('active');
+        }
+
+        // Đồng bộ trạng thái thời gian thực
         document.getElementById('current-time').innerText = new Date().toLocaleDateString('vi-VN', { day: '2-digit', month: '2-digit', year: 'numeric' });
+
+        // LẮNG NGHE TÍN HIỆU THAY ĐỔI THEME (XANH / ĐỎ) TỪ TRANG CON TRONG IFRAME TRUYỀN RA
+        window.addEventListener('message', function(event) {
+            const body = document.body;
+            if (event.data === 'theme-do') {
+                body.classList.add('theme-do-hanhchinh');
+            } else if (event.data === 'theme-xanh') {
+                body.classList.remove('theme-do-hanhchinh');
+            }
+        });
     </script>
 </body>
 </html>
