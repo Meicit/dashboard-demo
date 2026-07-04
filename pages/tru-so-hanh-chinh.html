@@ -16,20 +16,10 @@
             transition: background 0.4s ease, color 0.4s ease;
         }
 
-        /* THEME SÁNG (MẶC ĐỊNH) */
-        body.light-theme {
-            background-color: #f8fafc; 
-            color: #0f172a;
-        }
-        
-        /* THEME TỐI (UNIFIED DARK MODE - KHÔNG CÒN XANH ĐỎ) */
-        body.dark-theme {
-            background-color: #082f49; 
-            color: #e0f2fe;
-        }
+        body.light-theme { background-color: #f8fafc; color: #0f172a; }
+        body.dark-theme { background-color: #082f49; color: #e0f2fe; }
 
         /* ================= KỸ THUẬT NỀN ĐỘNG GRADIENT TẠI HEADER ================= */
-        /* Chỉ áp dụng Xanh/Đỏ khi ở Theme Sáng */
         body.light-theme.theme-xanh-ios .main-header {
             background: linear-gradient(-45deg, #0b4a8f, #05234a, #0d5cb3, #02142d);
             background-size: 400% 400%; animation: gradientGIF 12s ease infinite;
@@ -42,7 +32,6 @@
             box-shadow: 0 4px 15px rgba(220, 38, 38, 0.15); border-bottom: 2px solid #991b1b;
         }
 
-        /* Khi ở Theme Tối: Header chuyển sang màu Tối chuyên biệt (Deep Navy) */
         body.dark-theme .main-header {
             background: linear-gradient(-45deg, #020617, #0f172a, #082f49, #020617);
             background-size: 400% 400%; animation: gradientGIF 12s ease infinite;
@@ -51,12 +40,8 @@
 
         @keyframes gradientGIF { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
 
-        /* ẨN NÚT CHỌN XANH/ĐỎ KHI Ở THEME TỐI ĐỂ ĐỒNG BỘ UX */
-        body.dark-theme .theme-selector-vertical {
-            display: none !important;
-        }
+        body.dark-theme .theme-selector-vertical { display: none !important; }
 
-        /* LOGO ANIMATION */
         .logo-main { animation: float 4s ease-in-out infinite; }
         @keyframes float {
             0%, 100% { transform: translateY(0); filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.2)); }
@@ -70,34 +55,26 @@
             width: 100%; transition: all 0.5s ease;
         }
 
-        /* Nền Xanh / Đỏ chỉ áp dụng cho Theme Sáng */
         body.light-theme.theme-xanh-ios .menu-panel-wrapper {
             background-color: rgba(128, 255, 232, 0.45); box-shadow: 0 20px 50px -10px rgba(12, 74, 110, 0.15);
         }
         body.light-theme.theme-do-hanhchinh .menu-panel-wrapper {
             background-color: rgba(220, 38, 38, 0.85); box-shadow: 0 20px 50px -10px rgba(185, 28, 28, 0.4); border-color: rgba(239, 68, 68, 1);
         }
-
-        /* Nền Tối chuyên dụng */
         body.dark-theme .menu-panel-wrapper {
-            background-color: rgba(8, 47, 73, 0.6); 
-            box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.4); 
-            border-color: rgba(56, 189, 248, 0.2); 
+            background-color: rgba(8, 47, 73, 0.6); box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.4); border-color: rgba(56, 189, 248, 0.2); 
         }
 
         /* ================= ĐỒNG BỘ MÀU BANNER TIÊU ĐỀ ================= */
         .title-banner { transition: all 0.5s ease; }
         body.light-theme.theme-xanh-ios .title-banner { background-color: #0ea5e9; border-bottom-color: #0284c7; }
         body.light-theme.theme-do-hanhchinh .title-banner { background-color: #dc2626; border-bottom-color: #991b1b; }
-        
         body.dark-theme .title-banner { background-color: rgba(15, 23, 42, 0.7); border-bottom-color: rgba(56, 189, 248, 0.5); backdrop-filter: blur(10px); }
 
-        /* ================= COMPONENT BÊN TRONG ================= */
+        /* ================= NÚT QUAY LẠI ================= */
         .btn-back { display: inline-flex; align-items: center; gap: 8px; border: 1px solid; padding: 12px 24px; border-radius: 14px; font-weight: 800; font-size: 12px; text-transform: uppercase; transition: all 0.3s ease; }
-        
         body.light-theme .btn-back { background: #ffffff; border-color: #e2e8f0; color: #334155; }
         body.light-theme .btn-back:hover { transform: translateY(-2px); border-color: #0ea5e9; color: #0ea5e9; }
-        
         body.dark-theme .btn-back { background: rgba(8, 47, 73, 0.6); border-color: rgba(56, 189, 248, 0.3); color: #38bdf8; }
         body.dark-theme .btn-back:hover { transform: translateY(-2px); border-color: #7dd3fc; background: rgba(8, 47, 73, 0.9); }
 
@@ -107,86 +84,39 @@
         body.dark-theme #search_input::placeholder { color: rgba(56, 189, 248, 0.5); }
         body.dark-theme #search_input:focus { border-color: #38bdf8; background-color: rgba(8, 47, 73, 0.9); }
 
-        /* Khung iframe bản đồ */
-        body.dark-theme #map_frame_container { border-color: rgba(56, 189, 248, 0.3); box-shadow: 0 10px 25px rgba(0,0,0,0.5); }
-
         /* Footer */
         body.dark-theme footer { background-color: rgba(8, 47, 73, 0.6); border-color: rgba(56, 189, 248, 0.2); color: #38bdf8; backdrop-filter: blur(10px); }
 
-        /* Ẩn thanh cuộn của menu ngang */
-        .scrollbar-none::-webkit-scrollbar { display: none; }
-        .scrollbar-none { -ms-overflow-style: none; scrollbar-width: none; }
-        .smooth-scroll { scroll-behavior: smooth; }
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(14, 165, 233, 0.4); border-radius: 10px; }
 
-        /* MENU TABS ĐỊA ĐIỂM NGANG PHẲNG */
+        /* DANH SÁCH THẺ ĐỊA ĐIỂM (DỌC TRÁI) */
         .tab-flat-item { border: 1px solid; transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
-        
-        /* Light Theme Tabs */
         body.light-theme .tab-flat-item { background: #ffffff; border-color: rgba(14, 165, 233, 0.15); }
         body.light-theme .tab-flat-item h3 { color: #0f172a; }
         body.light-theme .tab-flat-item p { color: #64748b; }
-        body.light-theme .tab-flat-item:hover { transform: translateY(-2px); border-color: #0ea5e9; background-color: rgba(255, 255, 255, 0.95); }
+        body.light-theme .tab-flat-item:hover { transform: translateX(4px); border-color: #0ea5e9; box-shadow: 0 4px 15px rgba(14, 165, 233, 0.1); }
         
-        /* Dark Theme Tabs */
         body.dark-theme .tab-flat-item { background: rgba(8, 47, 73, 0.6); border-color: rgba(56, 189, 248, 0.2); }
         body.dark-theme .tab-flat-item h3 { color: #e0f2fe; }
         body.dark-theme .tab-flat-item p { color: #7dd3fc; }
-        body.dark-theme .tab-flat-item:hover { transform: translateY(-2px); border-color: #38bdf8; background-color: rgba(8, 47, 73, 0.9); }
-
-        /* Tab Active State */
-        .tab-flat-item.active { color: #ffffff !important; }
-        .tab-flat-item.active h3 { color: #ffffff !important; }
-        .tab-flat-item.active p { color: rgba(255, 255, 255, 0.9) !important; }
-        .tab-flat-item.active .dynamic-phone { color: #fcd34d !important; } 
-
-        body.light-theme.theme-xanh-ios .tab-flat-item.active { border-color: #0b4a8f; background-color: #0b4a8f; box-shadow: 0 4px 12px rgba(11, 74, 143, 0.2); }
-        body.light-theme.theme-do-hanhchinh .tab-flat-item.active { border-color: #7f1d1d; background-color: #7f1d1d; box-shadow: 0 4px 12px rgba(127, 29, 29, 0.4); }
-        body.dark-theme .tab-flat-item.active { border-color: #38bdf8; background-color: #0284c7; box-shadow: 0 4px 12px rgba(2, 132, 199, 0.4); }
-
-        /* NÚT ĐIỀU HƯỚNG MŨI TÊN */
-        .scroll-btn {
-            position: absolute; top: 50%; transform: translateY(-50%); z-index: 10;
-            width: 36px; height: 36px; border: 1px solid; border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            font-weight: bold; cursor: pointer; transition: all 0.2s;
-        }
-        
-        /* Sáng */
-        body.light-theme .scroll-btn { background: rgba(255,255,255,0.9); border-color: #e2e8f0; color: #0ea5e9; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); }
-        body.light-theme.theme-do-hanhchinh .scroll-btn { color: #dc2626; border-color: #fca5a5; }
-        body.light-theme .scroll-btn:hover { color: white; transform: translateY(-50%) scale(1.1); }
-        body.light-theme.theme-xanh-ios .scroll-btn:hover { background: #0ea5e9; border-color: #0ea5e9; }
-        body.light-theme.theme-do-hanhchinh .scroll-btn:hover { background: #dc2626; border-color: #dc2626; }
-        
-        /* Tối (Hợp nhất) */
-        body.dark-theme .scroll-btn { background: rgba(8, 47, 73, 0.8); border-color: rgba(56, 189, 248, 0.3); color: #38bdf8; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.3); }
-        body.dark-theme .scroll-btn:hover { color: white; transform: translateY(-50%) scale(1.1); background: #0284c7; border-color: #38bdf8; }
-
-        .btn-left { left: -10px; }
-        .btn-right { right: -10px; }
+        body.dark-theme .tab-flat-item:hover { transform: translateX(4px); border-color: #38bdf8; background-color: rgba(12, 74, 110, 0.8); }
 
         @media (max-width: 1024px) {
             .header-layout { flex-direction: column !important; }
-            .theme-selector-vertical { 
-                position: relative !important; top: 0 !important; right: 0 !important; 
-                margin-top: 16px; flex-direction: row !important; space-x: 2; width: auto !important;
-            }
+            .theme-selector-vertical { position: relative !important; top: 0 !important; right: 0 !important; margin-top: 16px; flex-direction: row !important; space-x: 2; width: auto !important; }
             .theme-selector-vertical button { margin-left: 4px; margin-right: 4px; }
-            .scroll-btn { display: none; }
         }
     </style>
 </head>
 <body class="theme-xanh-ios light-theme custom-scrollbar" id="dynamic-body">
 
-    <!-- HEADER -->
     <header class="main-header w-full py-6 px-6 md:px-12 select-none relative transition-all duration-300">
         <div class="max-w-[1550px] mx-auto flex flex-col items-center justify-center relative header-layout">
-            
             <div class="flex flex-row items-center space-x-6 w-auto">
                 <div class="flex-shrink-0">
-                    <img src="logo.png" alt="Logo" class="logo-main w-20 h-auto">
+                    <img src="logo.png" alt="Logo" class="logo-main w-20 h-auto" onerror="this.src='logo.png'">
                 </div>
-                
                 <div class="flex flex-col items-start justify-center space-y-2 text-left">
                     <p class="text-white font-black tracking-[0.12em] text-xl md:text-2xl lg:text-3xl uppercase leading-none m-0 p-0 drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)] font-['Montserrat']">
                         IOC BINH HUNG
@@ -197,18 +127,14 @@
                 </div>
             </div>
 
-            <!-- CHUYỂN ĐỔI THEME XANH / ĐỎ -->
             <div class="theme-selector-vertical lg:absolute lg:top-0 lg:right-0 bg-white/10 backdrop-blur-md border border-white/20 p-1.5 rounded-xl flex flex-col space-y-1.5 w-[75px] z-20 shadow-inner">
-                <button onclick="switchSystemTheme('xanh')" id="btn-theme-xanh" 
-                    class="w-full text-center text-[10px] font-extrabold uppercase py-1.5 rounded-lg transition-all duration-300 bg-blue-600 text-white shadow-md">
+                <button onclick="switchSystemTheme('xanh')" id="btn-theme-xanh" class="w-full text-center text-[10px] font-extrabold uppercase py-1.5 rounded-lg transition-all duration-300 bg-blue-600 text-white shadow-md">
                     🔵 Xanh
                 </button>
-                <button onclick="switchSystemTheme('do')" id="btn-theme-do" 
-                    class="w-full text-center text-[10px] font-extrabold uppercase py-1.5 rounded-lg transition-all duration-300 text-white/80 hover:text-white">
+                <button onclick="switchSystemTheme('do')" id="btn-theme-do" class="w-full text-center text-[10px] font-extrabold uppercase py-1.5 rounded-lg transition-all duration-300 text-white/80 hover:text-white border border-transparent">
                     🔴 Đỏ
                 </button>
             </div>
-            
         </div>
     </header>
 
@@ -220,16 +146,13 @@
         </div>
     </div>
 
-    <div class="max-w-[1550px] w-full mx-auto px-4 md:px-6 my-6 flex flex-col items-start space-y-4">
+    <div class="max-w-[1550px] w-full mx-auto px-4 md:px-6 my-6 flex flex-col items-start flex-grow">
         
-        <div class="menu-panel-wrapper p-4 md:p-8 space-y-6">
+        <div class="menu-panel-wrapper p-6 md:p-10 space-y-8">
             
-            <div class="flex flex-col md:flex-row justify-between items-center gap-4 w-full">
-                <!-- CỤM NÚT ĐIỀU HƯỚNG BÊN TRÁI (QUAY LẠI & SÁNG/TỐI) -->
+            <div class="flex flex-col md:flex-row justify-between items-center gap-6 w-full">
                 <div class="flex flex-wrap items-center gap-3 w-full md:w-auto shrink-0">
-                    <a href="../index.html" class="btn-back">
-                        ⬅️ Quay lại Trang chủ
-                    </a>
+                    <a href="index.html" class="btn-back">⬅️ Quay lại Trang chủ</a>
                     
                     <div class="bg-blue-900/10 dark:bg-sky-500/10 border border-blue-200 dark:border-sky-500/20 p-1 rounded-xl flex items-center shadow-sm backdrop-blur">
                         <button onclick="setTheme('light')" id="btn-theme-light" class="flex items-center gap-1.5 text-[11px] font-extrabold uppercase px-3 py-1.5 rounded-lg transition border border-transparent text-blue-900">☀️ Sáng</button>
@@ -237,29 +160,15 @@
                     </div>
                 </div>
 
-                <!-- THANH TÌM KIẾM BÊN PHẢI -->
                 <div class="relative w-full md:w-80 lg:w-96 shrink-0">
                     <span class="absolute left-3.5 top-2.5 text-base opacity-60">🔍</span>
-                    <input type="text" id="search_input" placeholder="Tra cứu cơ quan..." class="w-full bg-white rounded-xl pl-10 pr-4 py-2.5 text-sm font-semibold border focus:outline-none focus:ring-4 focus:ring-blue-700/10 shadow-sm font-['Inter'] transition-all">
+                    <input type="text" id="search_input" placeholder="Tra cứu cơ quan..." class="w-full bg-white rounded-xl pl-10 pr-4 py-2.5 text-sm font-semibold border focus:outline-none focus:ring-4 focus:ring-blue-700/10 shadow-sm transition-all">
                 </div>
             </div>
 
-            <!-- KHỐI CHỨA CÁC THẺ (CÓ NÚT TRÁI/PHẢI) -->
-            <div class="relative w-full flex items-center">
-                <!-- Nút cuộn trái -->
-                <button onclick="scrollList(-1)" class="scroll-btn btn-left hidden md:flex">❮</button>
-                
-                <div id="list_container" class="w-full flex flex-row gap-3 overflow-x-auto pb-3 pt-1 scrollbar-none snap-x touch-pan-x smooth-scroll">
-                    <!-- Javascript sẽ đổ dữ liệu vào đây -->
-                </div>
-                
-                <!-- Nút cuộn phải -->
-                <button onclick="scrollList(1)" class="scroll-btn btn-right hidden md:flex">❯</button>
-            </div>
-
-            <!-- KHUNG BẢN ĐỒ -->
-            <div id="map_frame_container" class="w-full h-[400px] md:h-[550px] lg:h-[650px] rounded-2xl overflow-hidden border border-slate-200 shadow-lg bg-white relative transition-all duration-300">
-                <iframe id="map_frame" src="" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            <div class="w-full flex justify-start">
+                <div id="list_container" class="w-full md:w-2/3 lg:w-1/2 xl:w-2/5 flex flex-col gap-4">
+                    </div>
             </div>
             
         </div>
@@ -272,103 +181,49 @@
     <script>
         let localDataStore = [];
 
-        // ĐỒNG BỘ KHO DỮ LIỆU ĐẦY ĐỦ
         const fallbackData = [
-            {
-                "id": 1, "name": "Đảng ủy xã Bình Hưng", "address": "A10/26A, đường số 10, KDC Bình Hưng, ấp 6, xã Bình Hưng, thành phố Hồ Chí Minh", "phone": "Đang cập nhật", "map_embed": "https://maps.google.com/maps?q=A10/26A%20%C4%91%C6%B0%E1%BB%9Dng%20s%E1%BB%91%2010%20KDC%20B%C3%ACnh%20H%C6%B0ng&t=&z=15&ie=UTF8&iwloc=&output=embed"
-            },
-            {
-                "id": 2, "name": "Hội đồng nhân dân xã Bình Hưng", "address": "A10/26A, đường số 10, KDC Bình Hưng, ấp 6, xã Bình Hưng, thành phố Hồ Chí Minh", "phone": "Đang cập nhật", "map_embed": "https://maps.google.com/maps?q=A10/26A%20%C4%91%C6%B0%E1%BB%9Dng%20s%E1%BB%91%2010%20KDC%20B%C3%ACnh%20H%C6%B0ng&t=&z=15&ie=UTF8&iwloc=&output=embed"
-            },
-            {
-                "id": 3, "name": "Ủy ban nhân dân xã Bình Hưng", "address": "A10/26A, đường số 10, KDC Bình Hưng, ấp 6, xã Bình Hưng, thành phố Hồ Chí Minh", "phone": "028 3981 0015", "map_embed": "https://maps.google.com/maps?q=A10/26A%20%C4%91%C6%B0%E1%BB%9Dng%20s%E1%BB%91%2010%20KDC%20B%C3%ACnh%20H%C6%B0ng&t=&z=15&ie=UTF8&iwloc=&output=embed"
-            },
-            {
-                "id": 4, "name": "Ủy ban MTTQ Việt Nam xã Bình Hưng", "address": "A10/26A, đường số 10, KDC Bình Hưng, ấp 6, xã Bình Hưng, thành phố Hồ Chí Minh", "phone": "Đang cập nhật", "map_embed": "https://maps.google.com/maps?q=A10/26A%20%C4%91%C6%B0%E1%BB%9Dng%20s%E1%BB%91%2010%20KDC%20B%C3%ACnh%20H%C6%B0ng&t=&z=15&ie=UTF8&iwloc=&output=embed"
-            },
-            {
-                "id": 5, "name": "Công an xã Bình Hưng", "address": "517 Quốc lộ 50, xã Bình Hưng, Thành phố Hồ Chí Minh", "phone": "028 3758 2121", "map_embed": "https://maps.google.com/maps?q=517%20Qu%E1%BB%91c%20l%E1%BB%99%2050%20B%C3%ACnh%20H%C6%B0ng&t=&z=15&ie=UTF8&iwloc=&output=embed"
-            },
-            {
-                "id": 6, "name": "Ban chỉ huy Quân sự xã Bình Hưng", "address": "đường số 9, khu dân cư Phong Phú 4 ấp 57, xã Bình Hưng, Thành phố Hồ Chí Minh", "phone": "028 6685 7131", "map_embed": "https://maps.google.com/maps?q=Khu%20d%C3%A2n%20c%C6%B0%20Phong%20Ph%C3%BA%204%20B%C3%ACnh%20Ch%C3%A1nh&t=&z=15&ie=UTF8&iwloc=&output=embed"
-            },
-            {
-                "id": 7, "name": "Trạm Y tế xã Bình Hưng", "address": "Số 71A Đường số 1 Khu dân cư Bình Hưng, ấp 5, xã Bình Hưng, Thành phố Hồ Chí Minh", "phone": "028 3758 1063", "map_embed": "https://maps.google.com/maps?q=Tr%E1%BB%A1m%20Y%20t%E1%BA%BF%20x%C3%A3%20B%C3%ACnh%20H%C6%B0ng&t=&z=15&ie=UTF8&iwloc=&output=embed"
-            },
-            {
-                "id": 8, "name": "Trung tâm Cung ứng dịch vụ công xã Bình Hưng", "address": "Đường số 19, Khu dân cư Phong Phú 4, ấp 57, xã Bình Hưng, Thành phố Hồ Chí Minh", "phone": "Đang cập nhật", "map_embed": "https://maps.google.com/maps?q=%C4%90%C6%B0%E1%BB%9Dng%20s%E1%BB%91%2019%20KDC%20Phong%20Ph%C3%BA%204&t=&z=15&ie=UTF8&iwloc=&output=embed"
-            },
-            {
-                "id": 9, "name": "Ban Quản lý dự án đầu tư xây dựng xã Bình Hưng", "address": "920 đường Văn Tiến Dũng, xã Bình Hưng, Thành phố Hồ Chí Minh", "phone": "Đang cập nhật", "map_embed": "https://maps.google.com/maps?q=920%20%C4%91%C6%B0%E1%BB%9Dng%20V%C4%83n%20Ti%E1%BA%BFn%20D%C5%A9ng%20B%C3%ACnh%20H%C6%B0ng&t=&z=15&ie=UTF8&iwloc=&output=embed"
-            }
+            { "id": 1, "name": "Đảng ủy xã Bình Hưng", "address": "A10/26A, đường số 10, KDC Bình Hưng, ấp 6, xã Bình Hưng, thành phố Hồ Chí Minh", "phone": "Đang cập nhật" },
+            { "id": 2, "name": "Hội đồng nhân dân xã Bình Hưng", "address": "A10/26A, đường số 10, KDC Bình Hưng, ấp 6, xã Bình Hưng, thành phố Hồ Chí Minh", "phone": "Đang cập nhật" },
+            { "id": 3, "name": "Ủy ban nhân dân xã Bình Hưng", "address": "A10/26A, đường số 10, KDC Bình Hưng, ấp 6, xã Bình Hưng, thành phố Hồ Chí Minh", "phone": "028 3981 0015" },
+            { "id": 4, "name": "Ủy ban MTTQ Việt Nam xã Bình Hưng", "address": "A10/26A, đường số 10, KDC Bình Hưng, ấp 6, xã Bình Hưng, thành phố Hồ Chí Minh", "phone": "Đang cập nhật" },
+            { "id": 5, "name": "Công an xã Bình Hưng", "address": "517 Quốc lộ 50, xã Bình Hưng, Thành phố Hồ Chí Minh", "phone": "028 3758 2121" },
+            { "id": 6, "name": "Ban chỉ huy Quân sự xã Bình Hưng", "address": "đường số 9, khu dân cư Phong Phú 4 ấp 57, xã Bình Hưng, Thành phố Hồ Chí Minh", "phone": "028 6685 7131" },
+            { "id": 7, "name": "Trạm Y tế xã Bình Hưng", "address": "Số 71A Đường số 1 Khu dân cư Bình Hưng, ấp 5, xã Bình Hưng, Thành phố Hồ Chí Minh", "phone": "028 3758 1063" },
+            { "id": 8, "name": "Trung tâm Cung ứng dịch vụ công xã Bình Hưng", "address": "Đường số 19, Khu dân cư Phong Phú 4, ấp 57, xã Bình Hưng, Thành phố Hồ Chí Minh", "phone": "Đang cập nhật" },
+            { "id": 9, "name": "Ban Quản lý dự án đầu tư xây dựng xã Bình Hưng", "address": "920 đường Văn Tiến Dũng, xã Bình Hưng, Thành phố Hồ Chí Minh", "phone": "Đang cập nhật" }
         ];
 
-        // HÀM HIỂN THỊ DANH SÁCH THẺ NGANG
-        function renderHorizontalMenu(dataArray) {
+        // HIỂN THỊ DANH SÁCH DỌC
+        function renderVerticalMenu(dataArray) {
             const container = document.getElementById('list_container');
             if (dataArray.length === 0) {
-                container.innerHTML = `<p class="p-4 w-full text-center text-slate-500 dark:text-sky-300 font-bold text-xs">❌ Không tìm thấy kết quả phù hợp!</p>`;
+                container.innerHTML = `<p class="p-4 w-full text-slate-500 dark:text-sky-300 font-bold text-sm">❌ Không tìm thấy kết quả phù hợp!</p>`;
                 return;
             }
 
             container.innerHTML = dataArray.map(item => `
-                <div id="card_item_${item.id}" onclick="switchMapLocation('${item.map_embed}', ${item.id})" 
-                     class="tab-flat-item flex-shrink-0 snap-start px-5 py-4 rounded-2xl cursor-pointer flex flex-col justify-center min-w-[260px] md:min-w-[300px] max-w-[340px] shadow-sm">
-                    <div class="flex items-center gap-2 mb-1.5">
-                        <h3 class="text-xs md:text-sm font-black truncate tracking-tight">${item.name}</h3>
-                    </div>
-                    <p class="text-[10px] md:text-[11px] font-medium truncate flex items-center gap-1.5 mb-1">
-                        <span class="opacity-70 flex-shrink-0">📍</span> ${item.address}
+                <div id="card_item_${item.id}" class="tab-flat-item px-6 py-5 rounded-2xl flex flex-col justify-center shadow-sm w-full">
+                    <h3 class="text-sm md:text-base font-black tracking-tight mb-2">${item.name}</h3>
+                    <p class="text-[11px] md:text-xs font-medium flex items-start gap-2 mb-2 leading-relaxed">
+                        <span class="opacity-70 flex-shrink-0 mt-0.5">📍</span> 
+                        <span>${item.address}</span>
                     </p>
-                    <p class="text-[10px] md:text-[11px] font-bold truncate flex items-center gap-1.5 dynamic-phone">
-                        <span class="opacity-70 flex-shrink-0">📞</span> ${item.phone || 'Đang cập nhật'}
+                    <p class="text-[11px] md:text-xs font-bold flex items-center gap-2 dynamic-phone">
+                        <span class="opacity-70 flex-shrink-0">📞</span> 
+                        <span>${item.phone}</span>
                     </p>
                 </div>
             `).join('');
             
-            // Cập nhật lại logic đổi màu cho icon phone
             applyDarkModeOverrides();
         }
 
         function applyDarkModeOverrides() {
             if(document.body.classList.contains('dark-theme')) {
-                document.querySelectorAll('.dynamic-phone').forEach(el => {
-                    if(!el.parentElement.classList.contains('active')) {
-                        el.style.color = '#38bdf8'; // Sky 400
-                    } else {
-                        el.style.color = '#fcd34d'; // Amber 300
-                    }
-                });
+                document.querySelectorAll('.dynamic-phone').forEach(el => el.style.color = '#38bdf8'); // Sky 400
             } else {
-                document.querySelectorAll('.dynamic-phone').forEach(el => {
-                    if(!el.parentElement.classList.contains('active')) {
-                        el.style.color = '#0284c7'; // Sky 600
-                    } else {
-                        el.style.color = '#fcd34d'; // Amber 300
-                    }
-                });
+                document.querySelectorAll('.dynamic-phone').forEach(el => el.style.color = '#0284c7'); // Sky 600
             }
-        }
-
-        // HÀM CUỘN THANH MENU
-        window.scrollList = function(direction) {
-            const container = document.getElementById('list_container');
-            const scrollAmount = 312; 
-            container.scrollBy({ left: direction * scrollAmount, behavior: 'smooth' });
-        }
-
-        // ĐIỀU HƯỚNG BẢN ĐỒ VÀ KÍCH HOẠT TAB
-        window.switchMapLocation = function(embedUrl, id) {
-            const mapFrame = document.getElementById('map_frame');
-            mapFrame.setAttribute('src', embedUrl);
-            
-            document.querySelectorAll('.tab-flat-item').forEach(el => el.classList.remove('active'));
-            const activeTab = document.getElementById(`card_item_${id}`);
-            if(activeTab) {
-                activeTab.classList.add('active');
-                activeTab.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
-            }
-            applyDarkModeOverrides();
         }
 
         // TÌM KIẾM
@@ -379,62 +234,48 @@
                 item.address.toLowerCase().includes(keyword) ||
                 (item.phone && item.phone.toLowerCase().includes(keyword))
             );
-            renderHorizontalMenu(filteredData);
-            
-            if(filteredData.length > 0) {
-                switchMapLocation(filteredData[0].map_embed, filteredData[0].id);
-            }
+            renderVerticalMenu(filteredData);
         });
 
-        // CHUYỂN ĐỔI THEME HEADER XANH / ĐỎ ĐỒNG BỘ
+        // ĐỒNG BỘ THEME XANH / ĐỎ
         window.switchSystemTheme = function(modeName) {
             const body = document.getElementById('dynamic-body');
             const btnXanh = document.getElementById('btn-theme-xanh');
             const btnDo = document.getElementById('btn-theme-do');
 
             if (modeName === 'do') {
-                body.classList.remove('theme-xanh-ios');
-                body.classList.add('theme-do-hanhchinh');
+                body.classList.remove('theme-xanh-ios'); body.classList.add('theme-do-hanhchinh');
                 btnDo.className = "w-full text-center text-[10px] font-extrabold uppercase py-1.5 rounded-lg transition-all duration-300 bg-red-600 text-white shadow-md";
-                btnXanh.className = "w-full text-center text-[10px] font-extrabold uppercase py-1.5 rounded-lg transition-all duration-300 text-white/80 hover:text-white";
+                btnXanh.className = "w-full text-center text-[10px] font-extrabold uppercase py-1.5 rounded-lg transition-all duration-300 text-white/80 hover:text-white border border-transparent";
             } else {
-                body.classList.remove('theme-do-hanhchinh');
-                body.classList.add('theme-xanh-ios');
+                body.classList.remove('theme-do-hanhchinh'); body.classList.add('theme-xanh-ios');
                 btnXanh.className = "w-full text-center text-[10px] font-extrabold uppercase py-1.5 rounded-lg transition-all duration-300 bg-blue-600 text-white shadow-md";
-                btnDo.className = "w-full text-center text-[10px] font-extrabold uppercase py-1.5 rounded-lg transition-all duration-300 text-white/80 hover:text-white";
+                btnDo.className = "w-full text-center text-[10px] font-extrabold uppercase py-1.5 rounded-lg transition-all duration-300 text-white/80 hover:text-white border border-transparent";
             }
         }
 
-        // ĐIỀU CHUYỂN THEME SÁNG / TỐI TỔNG THỂ
+        // ĐIỀU CHUYỂN THEME SÁNG / TỐI
         window.setTheme = function(themeName) {
             const body = document.getElementById('dynamic-body');
             const btnLight = document.getElementById('btn-theme-light');
             const btnDark = document.getElementById('btn-theme-dark');
 
             if(themeName === 'light') {
-                body.classList.remove('dark-theme');
-                body.classList.add('light-theme');
-                
+                body.classList.remove('dark-theme'); body.classList.add('light-theme');
                 btnLight.className = "flex items-center gap-1.5 text-[11px] font-extrabold uppercase px-3 py-1.5 rounded-lg transition bg-white text-blue-900 shadow-sm border border-blue-200";
-                btnDark.className = "flex items-center gap-1.5 text-[11px] font-extrabold uppercase px-3 py-1.5 rounded-lg transition border border-transparent text-slate-500 hover:text-blue-900 dark:text-sky-200 dark:hover:text-white";
+                btnDark.className = "flex items-center gap-1.5 text-[11px] font-extrabold uppercase px-3 py-1.5 rounded-lg transition border border-transparent text-slate-500 hover:text-blue-900";
             } else {
-                body.classList.remove('light-theme');
-                body.classList.add('dark-theme');
-                
+                body.classList.remove('light-theme'); body.classList.add('dark-theme');
                 btnDark.className = "flex items-center gap-1.5 text-[11px] font-extrabold uppercase px-3 py-1.5 rounded-lg transition bg-sky-600 text-white shadow-sm border border-sky-500";
                 btnLight.className = "flex items-center gap-1.5 text-[11px] font-extrabold uppercase px-3 py-1.5 rounded-lg transition border border-transparent text-sky-400 hover:text-sky-300";
             }
             applyDarkModeOverrides();
         }
 
-        // KHỞI CHẠY KHI MỞ TRANG (MẶC ĐỊNH SÁNG)
         document.addEventListener("DOMContentLoaded", () => {
             setTheme('light');
             localDataStore = fallbackData;
-            renderHorizontalMenu(localDataStore);
-            if(localDataStore.length > 0) {
-                switchMapLocation(localDataStore[0].map_embed, localDataStore[0].id);
-            }
+            renderVerticalMenu(localDataStore);
         });
     </script>
 </body>
