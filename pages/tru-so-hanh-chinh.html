@@ -78,7 +78,7 @@
         body.dark-theme .theme-text { color: #38bdf8; }
 
         /* ================= NÚT QUAY LẠI ================= */
-        .btn-back { display: inline-flex; align-items: center; gap: 8px; border: 1px solid; padding: 12px 24px; border-radius: 14px; font-weight: 800; font-size: 12px; text-transform: uppercase; transition: all 0.3s ease; }
+        .btn-back { display: inline-flex; align-items: center; justify-content: center; gap: 8px; border: 1px solid; padding: 10px 20px; border-radius: 12px; font-weight: 800; font-size: 12px; text-transform: uppercase; transition: all 0.3s ease; white-space: nowrap; }
         body.light-theme .btn-back { background: #ffffff; border-color: #e2e8f0; color: #334155; }
         body.light-theme .btn-back:hover { transform: translateY(-2px); border-color: #0ea5e9; color: #0ea5e9; }
         body.dark-theme .btn-back { background: rgba(8, 47, 73, 0.6); border-color: rgba(56, 189, 248, 0.3); color: #38bdf8; }
@@ -167,36 +167,42 @@
     <div class="max-w-[1550px] w-full mx-auto px-4 md:px-6 my-6 flex flex-col items-start flex-grow">
         <div class="menu-panel-wrapper p-6 md:p-10 space-y-8">
             
-            <div class="flex flex-col md:flex-row justify-between items-center gap-6 w-full">
-                <div class="flex flex-wrap items-center gap-3 w-full md:w-auto shrink-0">
-                    <a href="../index" class="btn-back">⬅️ Quay lại Dashboard</a>
-                    
-                    <div class="bg-blue-900/10 dark:bg-sky-500/10 border border-blue-200 dark:border-sky-500/20 p-1 rounded-xl flex items-center shadow-sm backdrop-blur">
-                        <button onclick="setTheme('light')" id="btn-theme-light" class="flex items-center gap-1.5 text-[11px] font-extrabold uppercase px-3 py-1.5 rounded-lg transition border border-transparent text-blue-900">☀️ Sáng</button>
-                        <button onclick="setTheme('dark')" id="btn-theme-dark" class="flex items-center gap-1.5 text-[11px] font-extrabold uppercase px-3 py-1.5 rounded-lg transition border border-transparent text-slate-500 hover:text-blue-900 dark:text-sky-200 dark:hover:text-white">🌙 Tối</button>
+            <div class="flex flex-col md:flex-row items-center justify-between gap-4 w-full">
+                
+                <div class="w-full md:w-1/4 flex justify-start shrink-0">
+                    <a href="dashboard.html" class="btn-back">⬅️ Quay lại Dashboard</a>
+                </div>
+
+                <div class="w-full md:flex-1 flex justify-center shrink-0">
+                    <div class="relative w-full max-w-lg">
+                        <span class="absolute left-4 top-2.5 text-base opacity-60">🔍</span>
+                        <input type="text" id="search_input" placeholder="Nhập tên cơ quan, trường học, địa chỉ..." class="w-full bg-white rounded-xl pl-11 pr-4 py-2.5 text-sm font-semibold border focus:outline-none focus:ring-4 focus:ring-blue-700/10 shadow-sm transition-all text-center">
                     </div>
                 </div>
 
-                <div class="relative w-full md:w-80 lg:w-96 shrink-0">
-                    <span class="absolute left-3.5 top-2.5 text-base opacity-60">🔍</span>
-                    <input type="text" id="search_input" placeholder="Tra cứu cơ quan, trường học..." class="w-full bg-white rounded-xl pl-10 pr-4 py-2.5 text-sm font-semibold border focus:outline-none focus:ring-4 focus:ring-blue-700/10 shadow-sm transition-all">
+                <div class="w-full md:w-1/4 flex justify-end shrink-0">
+                    <div class="bg-blue-900/10 dark:bg-sky-500/10 border border-blue-200 dark:border-sky-500/20 p-1 rounded-xl flex items-center shadow-sm backdrop-blur">
+                        <button onclick="setTheme('light')" id="btn-theme-light" class="flex items-center gap-1.5 text-[11px] font-extrabold uppercase px-4 py-2 rounded-lg transition border border-transparent text-blue-900">☀️ Sáng</button>
+                        <button onclick="setTheme('dark')" id="btn-theme-dark" class="flex items-center gap-1.5 text-[11px] font-extrabold uppercase px-4 py-2 rounded-lg transition border border-transparent text-slate-500 hover:text-blue-900 dark:text-sky-200 dark:hover:text-white">🌙 Tối</button>
+                    </div>
                 </div>
+                
             </div>
 
-            <div class="w-full grid grid-cols-1 lg:grid-cols-2 gap-8">
-                <div class="flex flex-col gap-4">
+            <div class="w-full grid grid-cols-1 lg:grid-cols-3 gap-8 pt-4">
+                <div class="flex flex-col gap-4 lg:col-span-1">
                     <h3 class="theme-text text-lg md:text-xl font-black uppercase mb-2 flex items-center gap-2">
-                        <span class="text-2xl">🏛️</span> Khối Cơ quan Hành chính
+                        <span class="text-2xl">🏛️</span> Cơ quan Hành chính
                     </h3>
                     <div id="list_container_hq" class="w-full flex flex-col gap-4">
                         </div>
                 </div>
 
-                <div class="flex flex-col gap-4">
+                <div class="flex flex-col gap-4 lg:col-span-2">
                     <h3 class="theme-text text-lg md:text-xl font-black uppercase mb-2 flex items-center gap-2">
                         <span class="text-2xl">🏫</span> Khối Cơ sở Giáo dục
                     </h3>
-                    <div id="list_container_school" class="w-full flex flex-col gap-4">
+                    <div id="list_container_school" class="w-full grid grid-cols-1 md:grid-cols-2 gap-4">
                         </div>
                 </div>
             </div>
@@ -209,7 +215,7 @@
     </footer>
 
     <script>
-        // DỮ LIỆU HÀNH CHÍNH (Đã tự động đính kèm URL Google Maps tìm kiếm)
+        // DỮ LIỆU HÀNH CHÍNH
         const hqData = [
             { "id": 1, "name": "Đảng ủy xã Bình Hưng", "address": "A10/26A, đường số 10, KDC Bình Hưng, ấp 6, xã Bình Hưng, TP.HCM", "phone": "Đang cập nhật", "map_link": "https://www.google.com/maps/search/?api=1&query=Đảng+ủy+xã+Bình+Hưng+Bình+Chánh" },
             { "id": 2, "name": "Hội đồng nhân dân xã Bình Hưng", "address": "A10/26A, đường số 10, KDC Bình Hưng, ấp 6, xã Bình Hưng, TP.HCM", "phone": "Đang cập nhật", "map_link": "https://www.google.com/maps/search/?api=1&query=UBND+xã+Bình+Hưng" },
@@ -222,7 +228,7 @@
             { "id": 9, "name": "Ban Quản lý dự án đầu tư xây dựng xã Bình Hưng", "address": "920 đường Văn Tiến Dũng, xã Bình Hưng, TP.HCM", "phone": "Đang cập nhật", "map_link": "https://www.google.com/maps/search/?api=1&query=920+Văn+Tiến+Dũng+Bình+Hưng" }
         ];
 
-        // DỮ LIỆU GIÁO DỤC (TỪ JSON)
+        // DỮ LIỆU GIÁO DỤC
         const schoolData = [
             {"STT":1,"ĐƠN VỊ":"TRƯỜNG MN BÌNH HƯNG","ĐỊA CHỈ":"Số 1, đường 5C, KDC Trung Sơn, ấp 48, xã Bình Hưng, TP. HCM","SỐ ĐIỆN THOẠI LIÊN LẠC":"02835357744","đường đi":"https://www.google.com/maps/search/?api=1&query=Trường+mầm+non+Bình+Hưng"},
             {"STT":2,"ĐƠN VỊ":"TRƯỜNG MN THỦY TIÊN","ĐỊA CHỈ":"Số 2, đường số 8B, Khu dân cư Dương Hồng, ấp 19, xã Bình Hưng, Thành phố Hồ Chí Minh","SỐ ĐIỆN THOẠI LIÊN LẠC":"02837581072","đường đi":"https://www.google.com/maps/search/?api=1&query=Trường+mầm+non+Thủy+Tiên+Bình+Chánh"},
@@ -243,7 +249,7 @@
             {"STT":17,"ĐƠN VỊ":"TRUNG TÂM HỖ TRỢ PHÁT TRIỂN GIÁO DỤC HÒA NHẬP","ĐỊA CHỈ":"304 Trịnh Quang Nghị, ấp 61, Xã Bình Hưng, TP.HCM","SỐ ĐIỆN THOẠI LIÊN LẠC":"028 6670 1699","đường đi":"https://www.google.com/maps/search/?api=1&query=Trung+Tâm+Hỗ+Trợ+Phát+Triển+Giáo+Dục+Hòa+Nhập+Bình+Chánh"}
         ];
 
-        // HÀM HIỂN THỊ DANH SÁCH (CÓ NÚT MAP)
+        // HÀM RENDER DỮ LIỆU
         function renderList(dataArray, containerId, isSchool = false) {
             const container = document.getElementById(containerId);
             if (dataArray.length === 0) {
@@ -255,33 +261,33 @@
                 let name = isSchool ? item["ĐƠN VỊ"] : item.name;
                 let address = isSchool ? item["ĐỊA CHỈ"] : item.address;
                 let phone = isSchool ? item["SỐ ĐIỆN THOẠI LIÊN LẠC"] : item.phone;
-                
-                // Khử URL ảo nếu có và dùng link xịn đã cấu hình
                 let mapLink = isSchool ? item["đường đi"] : item.map_link;
 
                 let mapButton = mapLink ? `
                     <a href="${mapLink}" target="_blank" rel="noopener noreferrer" class="btn-map">
-                        🗺️ Mở Google Maps
+                        🗺️ Xem trên Google Maps
                     </a>` : '';
 
                 return `
-                <div class="tab-flat-item px-6 py-5 rounded-2xl flex flex-col justify-center shadow-sm w-full">
-                    <h3 class="text-sm md:text-base font-black tracking-tight mb-2 uppercase">${name}</h3>
-                    <p class="text-[11px] md:text-xs font-medium flex items-start gap-2 mb-2 leading-relaxed">
-                        <span class="opacity-70 flex-shrink-0 mt-0.5">📍</span> 
-                        <span>${address}</span>
-                    </p>
-                    <p class="text-[11px] md:text-xs font-bold flex items-center gap-2 dynamic-phone">
-                        <span class="opacity-70 flex-shrink-0">📞</span> 
-                        <span>${phone || 'Đang cập nhật'}</span>
-                    </p>
+                <div class="tab-flat-item px-6 py-5 rounded-2xl flex flex-col justify-between shadow-sm w-full h-full">
+                    <div>
+                        <h3 class="text-sm md:text-base font-black tracking-tight mb-2 uppercase">${name}</h3>
+                        <p class="text-[11px] md:text-xs font-medium flex items-start gap-2 mb-2 leading-relaxed">
+                            <span class="opacity-70 flex-shrink-0 mt-0.5">📍</span> 
+                            <span>${address}</span>
+                        </p>
+                        <p class="text-[11px] md:text-xs font-bold flex items-center gap-2 dynamic-phone">
+                            <span class="opacity-70 flex-shrink-0">📞</span> 
+                            <span>${phone || 'Đang cập nhật'}</span>
+                        </p>
+                    </div>
                     ${mapButton}
                 </div>
                 `;
             }).join('');
         }
 
-        // ÁP DỤNG ĐỔI MÀU ICON THEO THEME TỐI SÁNG
+        // ĐỔI MÀU ICON THEO THEME SÁNG TỐI
         function applyDarkModeOverrides() {
             if(document.body.classList.contains('dark-theme')) {
                 document.querySelectorAll('.dynamic-phone').forEach(el => el.style.color = '#38bdf8');
@@ -290,18 +296,16 @@
             }
         }
 
-        // TÌM KIẾM THEO THỜI GIAN THỰC CHO CẢ 2 DANH SÁCH
+        // TÌM KIẾM CHUNG 2 DANH SÁCH
         document.getElementById('search_input').addEventListener('input', function(e) {
             const keyword = e.target.value.toLowerCase().trim();
             
-            // Lọc dữ liệu Hành chính
             const filteredHQ = hqData.filter(item => 
                 item.name.toLowerCase().includes(keyword) || 
                 item.address.toLowerCase().includes(keyword) ||
                 (item.phone && item.phone.toLowerCase().includes(keyword))
             );
             
-            // Lọc dữ liệu Trường học
             const filteredSchools = schoolData.filter(item => 
                 item["ĐƠN VỊ"].toLowerCase().includes(keyword) || 
                 item["ĐỊA CHỈ"].toLowerCase().includes(keyword) ||
@@ -313,7 +317,7 @@
             applyDarkModeOverrides();
         });
 
-        // ĐỒNG BỘ THEME XANH / ĐỎ
+        // CHUYỂN ĐỔI THEME HỆ THỐNG
         window.switchSystemTheme = function(modeName) {
             const body = document.getElementById('dynamic-body');
             const btnXanh = document.getElementById('btn-theme-xanh');
@@ -330,7 +334,7 @@
             }
         }
 
-        // ĐIỀU CHUYỂN THEME SÁNG / TỐI
+        // TẮT / BẬT ĐÈN
         window.setTheme = function(themeName) {
             const body = document.getElementById('dynamic-body');
             const btnLight = document.getElementById('btn-theme-light');
@@ -338,17 +342,17 @@
 
             if(themeName === 'light') {
                 body.classList.remove('dark-theme'); body.classList.add('light-theme');
-                btnLight.className = "flex items-center gap-1.5 text-[11px] font-extrabold uppercase px-3 py-1.5 rounded-lg transition bg-white text-blue-900 shadow-sm border border-blue-200";
-                btnDark.className = "flex items-center gap-1.5 text-[11px] font-extrabold uppercase px-3 py-1.5 rounded-lg transition border border-transparent text-slate-500 hover:text-blue-900 dark:text-sky-200 dark:hover:text-white";
+                btnLight.className = "flex items-center gap-1.5 text-[11px] font-extrabold uppercase px-4 py-2 rounded-lg transition bg-white text-blue-900 shadow-sm border border-blue-200";
+                btnDark.className = "flex items-center gap-1.5 text-[11px] font-extrabold uppercase px-4 py-2 rounded-lg transition border border-transparent text-slate-500 hover:text-blue-900 dark:text-sky-200 dark:hover:text-white";
             } else {
                 body.classList.remove('light-theme'); body.classList.add('dark-theme');
-                btnDark.className = "flex items-center gap-1.5 text-[11px] font-extrabold uppercase px-3 py-1.5 rounded-lg transition bg-sky-600 text-white shadow-sm border border-sky-500";
-                btnLight.className = "flex items-center gap-1.5 text-[11px] font-extrabold uppercase px-3 py-1.5 rounded-lg transition border border-transparent text-sky-400 hover:text-sky-300";
+                btnDark.className = "flex items-center gap-1.5 text-[11px] font-extrabold uppercase px-4 py-2 rounded-lg transition bg-sky-600 text-white shadow-sm border border-sky-500";
+                btnLight.className = "flex items-center gap-1.5 text-[11px] font-extrabold uppercase px-4 py-2 rounded-lg transition border border-transparent text-sky-400 hover:text-sky-300";
             }
             applyDarkModeOverrides();
         }
 
-        // KHỞI CHẠY KHI MỞ TRANG
+        // INIT
         document.addEventListener("DOMContentLoaded", () => {
             setTheme('light');
             renderList(hqData, 'list_container_hq', false);
