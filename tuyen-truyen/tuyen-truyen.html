@@ -44,22 +44,20 @@
             transition: all 0.5s ease; 
         }
         
-        /* ĐÃ ĐỔI: Sử dụng tone xanh dương nhạt kính mờ đồng bộ với header thay vì màu xanh ngọc bạc hà */
-        body.light-theme.theme-xanh-ios .menu-panel-wrapper { background-color: rgba(11, 74, 143, 0.12); box-shadow: 0 20px 50px -10px rgba(11, 74, 143, 0.15); border-color: rgba(255, 255, 255, 0.8); }
+        /* Đã đổi background xanh ngọc sang background xanh đồng bộ header */
+        body.light-theme.theme-xanh-ios .menu-panel-wrapper { background-color: rgba(11, 74, 143, 0.12); box-shadow: 0 20px 50px -10px rgba(12, 74, 110, 0.15); }
         body.light-theme.theme-do-hanhchinh .menu-panel-wrapper { background-color: rgba(218, 37, 29, 0.95); box-shadow: 0 20px 50px -10px rgba(168, 28, 21, 0.4); border-color: rgba(255, 255, 255, 0.8); }
         body.dark-theme .menu-panel-wrapper { background-color: rgba(8, 47, 73, 0.6); box-shadow: 0 20px 50px -10px rgba(8, 47, 73, 0.4); border-color: rgba(56, 189, 248, 0.2); }
 
         /* ĐỒNG BỘ MÀU BANNER TIÊU ĐỀ */
         .title-banner { transition: all 0.5s ease; }
-        /* ĐÃ ĐỔI: Sử dụng mã màu Xanh dương chuẩn (#0b4a8f) của header thay vì màu xanh ngọc (#14b8a6) */
-        body.light-theme.theme-xanh-ios .title-banner { background-color: #0b4a8f; border-bottom-color: #05234a; color: white; }
+        body.light-theme.theme-xanh-ios .title-banner { background-color: #0d5cb3; border-bottom-color: #0b4a8f; color: white; }
         body.light-theme.theme-do-hanhchinh .title-banner { background-color: #da251d; border-bottom-color: #a81c15; color: white; }
         body.dark-theme .title-banner { background-color: rgba(15, 23, 42, 0.7); border-bottom-color: rgba(56, 189, 248, 0.5); color: #38bdf8; backdrop-filter: blur(10px); }
 
         /* NÚT QUAY LẠI */
         .btn-back { display: inline-flex; align-items: center; gap: 8px; border: 1px solid; padding: 10px 20px; border-radius: 12px; font-weight: 800; font-size: 12px; text-transform: uppercase; transition: all 0.3s ease; background: #ffffff; border-color: #e2e8f0; }
         body.light-theme.theme-xanh-ios .btn-back { color: #1e3a8a; }
-        /* ĐÃ ĐỔI: Hover chuyển sang xanh dương #0d5cb3 */
         body.light-theme.theme-xanh-ios .btn-back:hover { transform: translateY(-2px); border-color: #0d5cb3; color: #0d5cb3; }
         body.light-theme.theme-do-hanhchinh .btn-back { color: #da251d; border-color: #fca5a5; }
         body.light-theme.theme-do-hanhchinh .btn-back:hover { transform: translateY(-2px); border-color: #da251d; color: #da251d; }
@@ -69,8 +67,7 @@
         /* ================= KHỐI NỘI DUNG GLASS PANEL ================= */
         .glass-panel { backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: 1px solid; border-radius: 24px; transition: all 0.3s; overflow: hidden; }
         
-        /* ĐÃ ĐỔI: Viền và bóng kính sử dụng tone xanh dương của header */
-        body.light-theme .glass-panel { background: rgba(255, 255, 255, 0.95); border-color: rgba(11, 74, 143, 0.25); box-shadow: 0 10px 30px -10px rgba(11, 74, 143, 0.1); }
+        body.light-theme .glass-panel { background: rgba(255, 255, 255, 0.95); border-color: rgba(11, 74, 143, 0.2); box-shadow: 0 10px 30px -10px rgba(12, 74, 110, 0.1); }
         body.light-theme.theme-do-hanhchinh .glass-panel { border-color: rgba(252, 165, 165, 0.6); }
         body.dark-theme .glass-panel { background: rgba(15, 23, 42, 0.6); border-color: rgba(56, 189, 248, 0.3); }
 
@@ -81,8 +78,7 @@
 
         body.light-theme.theme-xanh-ios .text-dynamic-title { color: #0f172a; }
         body.light-theme.theme-xanh-ios .text-dynamic-body { color: #475569; }
-        /* ĐÃ ĐỔI: Nhãn chuyển sang màu xanh dương chuẩn #0b4a8f */
-        body.light-theme.theme-xanh-ios .text-dynamic-label { color: #0b4a8f; }
+        body.light-theme.theme-xanh-ios .text-dynamic-label { color: #0b4a8f; } /* Chuyển màu nhãn động */
         
         body.light-theme.theme-do-hanhchinh .text-dynamic-title { color: #7f1d1d; }
         body.light-theme.theme-do-hanhchinh .text-dynamic-body { color: #991b1b; }
@@ -144,16 +140,15 @@
 
         /* VIDEO CARDS */
         .video-card { border-radius: 20px; overflow: hidden; aspect-ratio: 16 / 9; border: 1px solid; transition: all 0.25s; }
-        /* ĐÃ ĐỔI: Viền video đồng bộ màu xanh dương header */
-        body.light-theme .video-card { border-color: rgba(11, 74, 143, 0.25); }
+        body.light-theme .video-card { border-color: rgba(11, 74, 143, 0.2); }
         body.light-theme.theme-do-hanhchinh .video-card { border-color: rgba(252, 165, 165, 0.8); }
         body.dark-theme .video-card { border-color: rgba(56, 189, 248, 0.3); }
         .video-card:hover { transform: translateY(-2px); box-shadow: 0 10px 20px -5px rgba(0,0,0,0.2); }
         body.light-theme.theme-do-hanhchinh .video-card:hover { border-color: #da251d; }
 
-        /* SCROLLBAR - ĐÃ ĐỔI màu thanh cuộn sang tone xanh dương header */
+        /* SCROLLBAR */
         .custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
-        .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(13, 92, 179, 0.5); border-radius: 10px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(11, 74, 143, 0.4); border-radius: 10px; }
         
         /* FOOTER */
         body.dark-theme footer { background-color: rgba(8, 47, 73, 0.6); border-color: rgba(56, 189, 248, 0.2); color: #38bdf8; backdrop-filter: blur(10px); }
@@ -221,8 +216,8 @@
 
             <!-- KHỐI 1: BÀI VIẾT NỔI BẬT & TIN TỨC -->
             <div class="glass-panel p-5 md:p-6">
-                <!-- ĐÃ ĐỔI: border-l-[#0d5cb3] thay vì border-sky-400 -->
-                <h2 class="text-xs font-black uppercase tracking-wider text-dynamic-label border-l-4 border-[#0d5cb3] dark:border-sky-500 pl-3 mb-4">📰 Bài viết nổi bật / Tin tức tiêu điểm hành chính</h2>
+                <!-- Đổi viền sang border-[#0b4a8f] cho theme xanh đồng bộ -->
+                <h2 class="text-xs font-black uppercase tracking-wider text-dynamic-label border-l-4 border-[#0b4a8f] dark:border-sky-500 pl-3 mb-4">📰 Bài viết nổi bật / Tin tức tiêu điểm hành chính</h2>
                 
                 <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
                     
@@ -230,7 +225,7 @@
                     <div class="lg:col-span-6 xl:col-span-7 flex flex-col space-y-3 font-['Inter']">
                         <a href="chi-tiet-tin.html" class="block rounded-xl overflow-hidden shadow-md aspect-video border border-slate-200 dark:border-slate-700/40 relative group bg-slate-100 dark:bg-slate-800">
                             <img src="images/anh-tin-1.jpg" alt="Tin tức chính" class="w-full h-full object-contain group-hover:scale-105 transition duration-500" onerror="this.src='https://placehold.co/800x450?text=News+Banner'">
-                            <span class="absolute top-3 left-3 z-10 text-[10px] font-black bg-[#0b4a8f]/90 backdrop-blur text-white px-3 py-1 rounded-full uppercase shadow-md border border-white/20">Tiêu điểm</span>
+                            <span class="absolute top-3 left-3 z-10 text-[10px] font-black bg-blue-600/90 backdrop-blur text-white px-3 py-1 rounded-full uppercase shadow-md border border-white/20">Tiêu điểm</span>
                         </a>
                         
                         <div class="flex flex-col space-y-2 mt-2">
@@ -264,8 +259,8 @@
 
             <!-- KHỐI 2: VIDEO TƯ LIỆU -->
             <div class="glass-panel p-5 md:p-6">
-                <!-- ĐÃ ĐỔI: border-l-[#0d5cb3] thay vì border-sky-400 -->
-                <h2 class="text-xs font-black uppercase tracking-wider text-dynamic-label border-l-4 border-[#0d5cb3] dark:border-sky-500 pl-3 mb-4">🎥 Video Tư liệu / Bản tin thời sự cơ sở</h2>
+                <!-- Đổi viền sang border-[#0b4a8f] cho theme xanh đồng bộ -->
+                <h2 class="text-xs font-black uppercase tracking-wider text-dynamic-label border-l-4 border-[#0b4a8f] dark:border-sky-500 pl-3 mb-4">🎥 Video Tư liệu / Bản tin thời sự cơ sở</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div class="video-card bg-black">
                         <iframe src="https://www.facebook.com/plugins/video.php?height=314&href=https%3A%2F%2Fwww.facebook.com%2Freel%2F1798753044439628%2F&show_text=false&width=560&t=0" width="100%" height="100%" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
@@ -278,8 +273,8 @@
 
             <!-- KHỐI 3: HÌNH ẢNH CỔ ĐỘNG -->
             <div class="glass-panel p-5 md:p-6 pb-2">
-                <!-- ĐÃ ĐỔI: border-l-[#0d5cb3] thay vì border-sky-400 -->
-                <h2 class="text-xs font-black uppercase tracking-wider text-dynamic-label border-l-4 border-[#0d5cb3] dark:border-sky-500 pl-3 mb-2">📸 Hình ảnh Hoạt động trực quan & Cổ động</h2>
+                <!-- Đổi viền sang border-[#0b4a8f] cho theme xanh đồng bộ -->
+                <h2 class="text-xs font-black uppercase tracking-wider text-dynamic-label border-l-4 border-[#0b4a8f] dark:border-sky-500 pl-3 mb-2">📸 Hình ảnh Hoạt động trực quan & Cổ động</h2>
                 
                 <div class="marquee-wrapper">
                     <div class="marquee-track" id="marquee-track"></div>
