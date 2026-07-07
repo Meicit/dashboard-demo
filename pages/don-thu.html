@@ -84,19 +84,16 @@
 
     <div class="max-w-[1550px] w-full mx-auto px-4 md:px-6 my-8 flex flex-col items-start flex-grow">
         
-        <!-- BỘ ĐIỀU KHIỂN TOP (GỘP CẢ XANH/ĐỎ VÀ SÁNG/TỐI) -->
         <div class="flex flex-col sm:flex-row justify-between items-center gap-4 mb-6 w-full">
             <a href="index.html" class="btn-back-interactive">⬅️ Quay lại Trang chủ</a>
             
             <div class="flex items-center gap-4">
-                <!-- Chuyển đổi Xanh/Đỏ -->
                 <div class="theme-switcher-panel">
                     <span class="text-[10px] font-black uppercase tracking-wider px-3 opacity-70">Giao diện:</span>
                     <button onclick="switchSystemTheme('xanh')" id="btn-theme-xanh" class="btn-view-mode active">🔵 Xanh</button>
                     <button onclick="switchSystemTheme('do')" id="btn-theme-do" class="btn-view-mode">🔴 Đỏ</button>
                 </div>
 
-                <!-- Chuyển đổi Sáng/Tối -->
                 <div class="theme-switcher-panel">
                     <span class="text-[10px] font-black uppercase tracking-wider px-3 opacity-70">Chế độ xem:</span>
                     <button onclick="setTheme('light')" id="btn-theme-light" class="btn-view-mode active">☀️ Sáng</button>
@@ -110,9 +107,7 @@
                 QUẢN LÝ ĐƠN THƯ & PHẢN ÁNH 1022
             </h1>
 
-            <!-- ================= PHẦN 1: ĐƠN THƯ & TIẾP CÔNG DÂN ================= -->
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                <!-- Đơn thư -->
                 <div class="glass-card p-6 flex flex-col justify-between border-t-4 border-t-blue-500">
                     <div>
                         <h3 class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-4">Tình hình đơn thư</h3>
@@ -141,7 +136,6 @@
                     </div>
                 </div>
 
-                <!-- Tiếp công dân -->
                 <div class="glass-card p-6 flex flex-col justify-between border-t-4 border-t-purple-500">
                     <div>
                         <h3 class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-4">Tiếp công dân</h3>
@@ -167,7 +161,6 @@
                     </div>
                 </div>
 
-                <!-- Kết quả thi hành -->
                 <div class="glass-card p-6 flex flex-col justify-between border-t-4 border-t-emerald-500">
                     <div>
                         <h3 class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-4">Kết quả thi hành</h3>
@@ -184,12 +177,11 @@
                         <div class="w-full bg-slate-200 dark:bg-slate-700 h-3 rounded-full overflow-hidden">
                             <div id="display_percent_bar" class="progress-bar bg-emerald-500 h-full" style="width: 0%"></div>
                         </div>
-                        <p class="text-[10px] text-slate-400 mt-4 italic font-medium">Cập nhật số liệu Real-time từ Firebase.</p>
+                        <p class="text-[10px] text-slate-400 mt-4 italic font-medium">Dữ liệu kết nối tự động từ hệ thống.</p>
                     </div>
                 </div>
             </div>
 
-            <!-- ================= PHẦN 2: LĨNH VỰC TRỌNG TÂM ================= -->
             <div class="glass-card bg-white p-8 relative overflow-hidden">
                 <h3 class="text-xs font-black text-blue-900 dark:text-sky-300 uppercase tracking-widest mb-6 flex items-center gap-2">
                     <span class="w-2 h-4 bg-blue-600 dark:bg-sky-400 rounded-full"></span> Lĩnh vực trọng tâm
@@ -210,14 +202,12 @@
                 </div>
             </div>
 
-            <!-- ================= PHẦN 3: PHẢN ÁNH 1022 & NÚT THEO DÕI ================= -->
             <div class="pt-6 border-t border-slate-300/50 dark:border-slate-700">
                 <div class="flex flex-col md:flex-row justify-between items-center mb-6 gap-4">
                     <h2 class="theme-text text-xl md:text-2xl font-black uppercase tracking-wide font-['Montserrat']">
                         TỔNG HỢP TÌNH HÌNH PHẢN ÁNH 1022
                     </h2>
                     
-                    <!-- NÚT THEO DÕI PHẢN ÁNH ĐƯỢC THÊM VÀO ĐÂY -->
                     <a href="phan-anh/theo-doi-phan-anh.html" class="btn-action-primary">
                         <span>📊</span> Xem chi tiết Phản ánh
                     </a>
@@ -237,9 +227,8 @@
                     </div>
                     
                     <div class="glass-card bg-white p-8">
-                        <h3 class="font-bold border-b border-slate-200 dark:border-slate-700 pb-4 mb-4 uppercase text-slate-400 text-xs tracking-widest">Phân bổ lĩnh vực phản ánh</h3>
-                        <div id="fields_list" class="space-y-4">
-                            <!-- Dữ liệu JS 1022 sẽ điền vào đây -->
+                        <h3 class="font-bold border-b border-slate-200 dark:border-slate-700 pb-4 mb-4 uppercase text-slate-400 text-xs tracking-widest">Phân bổ cơ quan xử lý</h3>
+                        <div id="fields_list" class="space-y-4 max-h-[250px] overflow-y-auto custom-scrollbar pr-2">
                             <p class="text-xs text-slate-400 italic">Đang tải biểu đồ...</p>
                         </div>
                     </div>
@@ -266,62 +255,79 @@
         };
         const db = getDatabase(initializeApp(firebaseConfig));
 
-        // Lấy dữ liệu Đơn Thư
-        onValue(ref(db, 'dashboard_binhhung/don_thu_moi'), (snap) => {
+        // LƯU Ý: Vui lòng Upload file donthu.json vào đường dẫn dashboard_binhhung/don_thu trên Firebase
+        onValue(ref(db, 'dashboard_binhhung/don_thu'), (snap) => {
             const d = snap.val();
             if(!d) return;
 
-            const tongDon = (d.ky_truoc || 0) + (d.moi_phat_sinh || 0);
-            document.getElementById('display_tong_don').innerText = tongDon;
-            document.getElementById('display_ky_truoc').innerText = d.ky_truoc || 0;
-            document.getElementById('display_moi_phat_sinh').innerText = d.moi_phat_sinh || 0;
-            document.getElementById('display_du_dieu_kien').innerText = d.du_dieu_kien || 0;
-            document.getElementById('display_da_giai_quyet').innerText = d.da_giai_quyet || 0;
+            // 1. TÌNH HÌNH ĐƠN THƯ
+            const th = d.tinh_hinh_tiep_nhan_don_thu || {};
+            const pl = d.phan_loai_va_xu_ly_don || {};
+            
+            document.getElementById('display_tong_don').innerText = th.tong_so_don_nhan_duoc || 0;
+            document.getElementById('display_ky_truoc').innerText = th.don_ky_truoc_chuyen_sang || 0;
+            document.getElementById('display_moi_phat_sinh').innerText = th.don_tiep_nhan_trong_ky || 0;
+            document.getElementById('display_du_dieu_kien').innerText = pl.so_don_du_dieu_kien_xu_ly || 0;
+            document.getElementById('display_da_giai_quyet').innerText = pl.so_don_da_xu_ly || 0;
 
-            document.getElementById('display_luot_tiep').innerText = d.luot_tiep || 0;
-            document.getElementById('display_tong_nguoi').innerText = (d.tong_nguoi || 0) + " người";
-            document.getElementById('display_lanh_dao_tong').innerText = ((d.ct_tiep || 0) + (d.pct_tiep || 0)) + " lượt";
-            document.getElementById('display_ct').innerText = d.ct_tiep || 0;
-            document.getElementById('display_pct').innerText = d.pct_tiep || 0;
+            // 2. TIẾP CÔNG DÂN
+            const tcd = d.ket_qua_tiep_cong_dan || {};
+            const hinhThuc = tcd.chi_tiet_hinh_thuc_tiep || {};
+            const ct = hinhThuc.chu_tich_ubnd_xa_tiep_dinh_ky?.luot || 0;
+            const pct = hinhThuc.pho_chu_tich_ubnd_xa_tiep_dinh_ky?.luot || 0;
+            
+            document.getElementById('display_luot_tiep').innerText = tcd.tong_so_luot_tiep || 0;
+            document.getElementById('display_tong_nguoi').innerText = (tcd.tong_so_nguoi_duoc_tiep || 0) + " người";
+            document.getElementById('display_lanh_dao_tong').innerText = (ct + pct) + " lượt";
+            document.getElementById('display_ct').innerText = ct;
+            document.getElementById('display_pct').innerText = pct;
 
-            const daTH = d.da_thi_hanh || 0;
-            const tongQD = d.tong_qd || 1;
+            // 3. THI HÀNH QUYẾT ĐỊNH
+            const thqd = d.thi_hanh_quyet_dinh_giai_quyet || {};
+            const daTH = thqd.so_quyet_dinh_da_thi_hanh_xong || 0;
+            const tongQD = thqd.tong_so_quyet_dinh_phai_thi_hanh || 1; // Khử lỗi chia 0
             const percent = ((daTH / tongQD) * 100).toFixed(1);
+            
             document.getElementById('display_thi_hanh_ti_le').innerText = `${daTH}/${tongQD}`;
             document.getElementById('display_percent_text').innerText = percent + "%";
             document.getElementById('display_percent_bar').style.width = percent + "%";
-        });
 
-        // Lấy dữ liệu 1022
-        onValue(ref(db, 'dashboard_binhhung'), (snap) => {
-            const d = snap.val(); 
-            if(!d) return;
-            const p = d.pa_1022 || {}; 
-            const p1d = d.pa_1022_detail || {};
+            // 4. PHẢN ÁNH 1022
+            const pa = d.phan_anh_1022 || {};
+            const tc = pa.tong_cong || {};
+            const daXuLy = (tc.da_xu_ly?.trong_han || 0) + (tc.da_xu_ly?.tre_han || 0);
             
-            document.getElementById('p_tong').innerText = p.tong || 0;
-            document.getElementById('p_xong').innerText = p.da_giai_quyet || 0;
+            document.getElementById('p_tong').innerText = tc.tong_so || 0;
+            document.getElementById('p_xong').innerText = daXuLy;
             
-            const fs = [ 
-                {l:'Tiếng ồn', v:p1d.tieng_on, c:'bg-red-500'}, 
-                {l:'Kinh tế', v:p1d.kinh_te_ha_tang, c:'bg-orange-500'}, 
-                {l:'Trật tự', v:p1d.trat_tu_do_thi, c:'bg-yellow-500'}, 
-                {l:'Văn hóa', v:p1d.van_hoa_xa_hoi, c:'bg-emerald-500'}, 
-                {l:'Hành chính', v:p1d.hanh_chinh_cong, c:'bg-blue-500'}, 
-                {l:'Khác', v:p1d.khac, c:'bg-slate-400'} 
-            ];
+            const chiTiet = pa.chi_tiet_don_vi || [];
+            const colors = ['bg-red-500', 'bg-orange-500', 'bg-emerald-500', 'bg-blue-500', 'bg-purple-500', 'bg-yellow-500'];
             
-            document.getElementById('fields_list').innerHTML = fs.map(f => `
+            // Lọc các đơn vị có số lượng > 0 và sắp xếp giảm dần để render biểu đồ
+            const validUnits = chiTiet.filter(x => x.tong_so > 0).sort((a,b) => b.tong_so - a.tong_so);
+            
+            let htmlFields = '';
+            validUnits.forEach((item, index) => {
+                const c = colors[index % colors.length];
+                const v = item.tong_so;
+                // Rút gọn tên hiển thị
+                const name = item.don_vi.replace(' xã Bình Hưng', '').replace('Ủy ban nhân dân', 'UBND');
+                const p = tc.tong_so > 0 ? (v / tc.tong_so * 100) : 0;
+                
+                htmlFields += `
                 <div class="space-y-1.5">
                     <div class="flex justify-between text-[11px] font-black uppercase tracking-tight text-slate-600 dark:text-slate-300">
-                        <span>${f.l}</span>
-                        <span class="${f.c.replace('bg-', 'text-').replace('400','500')}">${f.v||0}</span>
+                        <span>${name}</span>
+                        <span class="${c.replace('bg-', 'text-').replace('400','500')}">${v}</span>
                     </div>
                     <div class="h-2.5 bg-slate-100 dark:bg-slate-700 rounded-full overflow-hidden shadow-inner">
-                        <div class="${f.c} h-full transition-all duration-1000 ease-out" style="width:${p.tong>0?(f.v/p.tong*100):0}%"></div>
+                        <div class="${c} h-full transition-all duration-1000 ease-out" style="width:${p}%"></div>
                     </div>
                 </div>
-            `).join('');
+                `;
+            });
+            
+            document.getElementById('fields_list').innerHTML = htmlFields || `<p class="text-xs text-slate-400 italic">Không có dữ liệu.</p>`;
         });
 
         // LẮNG NGHE LỆNH CHUYỂN THEME TỪ DASHBOARD CHA
