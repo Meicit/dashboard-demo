@@ -10,196 +10,250 @@
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Montserrat', sans-serif; transition: all 0.3s; min-height: 100vh; display: flex; flex-direction: column; }
+        /* ================= GHI ĐÈ BÓNG ĐỔ ================= */
+        .shadow-sm { box-shadow: 0 1px 2px 0 rgba(8, 47, 73, 0.1); }
+        .shadow-md { box-shadow: 0 4px 6px -1px rgba(8, 47, 73, 0.15), 0 2px 4px -2px rgba(8, 47, 73, 0.1); }
+        .shadow-lg { box-shadow: 0 10px 15px -3px rgba(8, 47, 73, 0.15), 0 4px 6px -4px rgba(8, 47, 73, 0.1); }
+
+        body { font-family: 'Montserrat', sans-serif; margin: 0; padding: 0; min-height: 100vh; display: flex; flex-direction: column; transition: background-color 0.3s ease, color 0.3s ease; }
+        .container-wrapper { max-width: 1550px; margin: 0 auto 30px auto; padding: 0 24px; width: 100%; flex-grow: 1; display: flex; flex-direction: column; }
         
-        /* THEME TỐI */
-        body.dark-theme { background-color: #0f172a; color: #f8fafc; }
-        body.dark-theme .glass-panel { background: rgba(30, 41, 59, 0.65); border-color: rgba(255, 255, 255, 0.1); box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.5); }
-        body.dark-theme .primary-wrapper { background-color: rgba(71, 85, 105, 0.05); border-color: rgba(71, 85, 105, 0.2); }
-        body.dark-theme .text-dynamic-title { color: #cbd5e1; }
-        body.dark-theme .text-dynamic-body { color: #94a3b8; }
-        body.dark-theme .btn-switcher-active { background: #334155; color: #f8fafc; border-color: #475569; }
+        .glass-panel { backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: 1px solid; border-radius: 24px; transition: all 0.3s; }
+        .teal-wrapper { backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-radius: 36px; padding: 24px; transition: all 0.4s ease; flex-grow: 1; display: flex; flex-direction: column; }
+        @media (min-width: 768px) { .teal-wrapper { padding: 36px; } }
 
-        /* THEME SÁNG */
-        body.light-theme { background-color: #f8fafc; color: #0f172a; }
-        body.light-theme .glass-panel { background: rgba(255, 255, 255, 0.95); border-color: rgba(71, 85, 105, 0.2); box-shadow: 0 20px 40px -15px rgba(15, 23, 42, 0.1); }
-        body.light-theme .primary-wrapper { background-color: rgba(71, 85, 105, 0.05); border-color: rgba(71, 85, 105, 0.2); }
-        body.light-theme .text-dynamic-title { color: #1e293b; } 
-        body.light-theme .text-dynamic-body { color: #475569; }
-        body.light-theme .btn-switcher-active { background: #1e293b; color: #f8fafc; border-color: #0f172a; }
+        /* ================= THEME TỐI (DARK MODE) ================= */
+        body.dark-theme { background-color: #082f49; color: #f0f9ff; }
+        body.dark-theme .glass-panel { background: rgba(12, 74, 110, 0.65); border-color: rgba(56, 189, 248, 0.2); box-shadow: 0 20px 40px -15px rgba(8, 47, 73, 0.4); }
+        body.dark-theme .teal-wrapper { background-color: rgba(14, 165, 233, 0.08); border: 1px solid rgba(14, 165, 233, 0.3); box-shadow: 0 20px 40px -15px rgba(8, 47, 73, 0.6); }
+        body.dark-theme .bg-widget-card { background-color: rgba(15, 23, 42, 0.6); border-color: rgba(56, 189, 248, 0.2); }
+        body.dark-theme .bg-widget-inner { background-color: rgba(15, 23, 42, 0.8); border-color: rgba(56, 189, 248, 0.15); }
+        body.dark-theme .control-theme-color { display: none !important; }
+        body.dark-theme .text-main-title { color: #60a5fa !important; }
 
-        .container-wrapper { max-width: 1550px; margin: 30px auto; padding: 0 24px; width: 100%; }
-        .glass-panel { backdrop-filter: blur(16px); border: 1px solid; border-radius: 24px; transition: all 0.3s; }
-        .primary-wrapper { backdrop-filter: blur(20px); border-radius: 36px; padding: 24px; transition: all 0.4s ease; border: 1px solid transparent; }
-        @media (min-width: 768px) { .primary-wrapper { padding: 36px; } }
+        /* ================= THEME SÁNG (LIGHT MODE) ================= */
+        body.light-theme { background-color: #f0f4f8; color: #1e3a8a; }
+        body.light-theme .glass-panel { background: rgba(255, 255, 255, 0.95); box-shadow: 0 20px 40px -15px rgba(12, 74, 110, 0.15); }
+        body.light-theme .bg-widget-card { background-color: #ffffff; }
+        body.light-theme .bg-widget-inner { background-color: #ffffff; }
 
-        .btn-back { display: inline-flex; align-items: center; gap: 8px; background: rgba(71, 85, 105, 0.1); border: 1px solid rgba(71, 85, 105, 0.3); padding: 12px 24px; border-radius: 14px; font-weight: 800; font-size: 12px; text-transform: uppercase; transition: all 0.3s ease;}
-        .btn-back:hover { transform: translateY(-2px); border-color: #64748b; }
+        /* --- SÁNG + XANH DƯƠNG ĐẬM (MẶC ĐỊNH) --- */
+        body.light-theme.theme-xanh-ios .glass-panel { border-color: rgba(12, 74, 142, 0.2); }
+        body.light-theme.theme-xanh-ios .bg-widget-card { border-color: rgba(12, 74, 142, 0.15); }
+        body.light-theme.theme-xanh-ios .bg-widget-inner { border-color: rgba(12, 74, 142, 0.08); }
+        body.light-theme.theme-xanh-ios .text-main-title { color: #0c4a8e !important; }
+        body.light-theme.theme-xanh-ios .teal-wrapper { 
+            background-color: rgba(12, 74, 142, 0.85); 
+            border: 1px solid rgba(255, 255, 255, 0.25); 
+            box-shadow: 0 20px 40px -10px rgba(12, 74, 142, 0.5); 
+        }
+
+        /* --- SÁNG + ĐỎ CỜ --- */
+        body.light-theme.theme-do-hanhchinh .glass-panel { border-color: rgba(252, 165, 165, 0.8); }
+        body.light-theme.theme-do-hanhchinh .bg-widget-card { border-color: rgba(218, 37, 29, 0.2); }
+        body.light-theme.theme-do-hanhchinh .bg-widget-inner { border-color: rgba(218, 37, 29, 0.1); }
+        body.light-theme.theme-do-hanhchinh .text-main-title { color: #da251d !important; }
+        body.light-theme.theme-do-hanhchinh .teal-wrapper { 
+            background-color: #da251d; 
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 0 20px 40px -15px rgba(218, 37, 29, 0.4);
+        }
+
+        /* NÚT QUAY LẠI ĐỘNG */
+        .btn-back { display: inline-flex; align-items: center; gap: 8px; padding: 12px 24px; border-radius: 14px; font-weight: 800; font-size: 12px; text-transform: uppercase; transition: all 0.3s ease; border: 1px solid; }
+        body.dark-theme .btn-back { background: rgba(14, 165, 233, 0.1); border-color: rgba(14, 165, 233, 0.3); color: #e0f2fe; }
+        body.dark-theme .btn-back:hover { background: rgba(14, 165, 233, 0.2); border-color: #38bdf8; transform: translateY(-2px); }
         
+        body.light-theme.theme-xanh-ios .btn-back { background: #ffffff; border-color: rgba(255, 255, 255, 0.8); color: #0c4a8e; }
+        body.light-theme.theme-xanh-ios .btn-back:hover { background: #f0f4f8; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); }
+
+        body.light-theme.theme-do-hanhchinh .btn-back { background: #ffffff; border-color: #fca5a5; color: #da251d; }
+        body.light-theme.theme-do-hanhchinh .btn-back:hover { background: #fef2f2; border-color: #da251d; transform: translateY(-2px); }
+
+        /* SCROLLBAR & CONTROLS */
         .custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
-        .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(71, 85, 105, 0.4); border-radius: 10px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { border-radius: 10px; }
+        body.dark-theme .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(56, 189, 248, 0.4); }
+        body.light-theme.theme-xanh-ios .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(12, 74, 142, 0.4); }
+        body.light-theme.theme-do-hanhchinh .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(218, 37, 29, 0.4); }
 
+        .controls-wrapper { display: flex; gap: 12px; align-items: center; }
+        .control-panel { border: 1px solid; padding: 4px; border-radius: 12px; display: flex; align-items: center; }
+        
+        body.dark-theme .control-panel { background: rgba(15, 23, 42, 0.5); border-color: rgba(56, 189, 248, 0.2); }
+        body.light-theme.theme-xanh-ios .control-panel { background: rgba(255, 255, 255, 0.15); border-color: rgba(255, 255, 255, 0.2); }
+        body.light-theme.theme-do-hanhchinh .control-panel { background: rgba(255, 255, 255, 0.2); border-color: rgba(255, 255, 255, 0.4); }
+
+        body.light-theme.theme-xanh-ios .control-panel button.text-blue-900 { color: #0c4a8e !important; }
+        body.light-theme.theme-xanh-ios .control-panel button.text-blue-800 { color: #ffffff !important; opacity: 0.8; }
+        body.light-theme.theme-xanh-ios .control-panel button.text-blue-800:hover { opacity: 1; }
+        body.light-theme.theme-xanh-ios .control-panel button.border-transparent { color: #ffffff; font-weight: 700; opacity: 0.9; }
+        body.light-theme.theme-xanh-ios .control-panel button.border-transparent:hover { background: rgba(255, 255, 255, 0.1); opacity: 1; }
+
+        @media (max-width: 1024px) { .controls-wrapper { flex-direction: column; align-items: flex-end; } }
+        @media (max-width: 640px) { .flex-responsive { flex-direction: column; align-items: stretch; gap: 16px; } .controls-wrapper { flex-direction: row; justify-content: space-between; align-items: center; width: 100%; } }
+
+        /* SPECIFIC COMPONENTS */
         .chart-container { position: relative; height: 220px; width: 100%; }
         .chart-container-large { position: relative; height: 320px; width: 100%; }
-
-        /* DATA ROW STYLING */
         .data-row { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px dashed rgba(100, 116, 139, 0.3); }
         .data-row:last-child { border-bottom: none; }
     </style>
 </head>
-<body class="light-theme custom-scrollbar" id="body-context">
+<body class="light-theme custom-scrollbar theme-xanh-ios" id="body-context">
 
-    <div class="container-wrapper space-y-6 flex-grow">
+    <div class="container-wrapper mt-8">
         
-        <!-- HEADER TOP -->
-        <div class="flex flex-col sm:flex-row justify-between items-center gap-4">
-            <a href="home.html" class="btn-back text-slate-900 dark:text-slate-200">⬅️ Quay lại Trang chủ</a>
+        <div class="teal-wrapper space-y-8 flex flex-col">
             
-            <div class="bg-slate-900 border border-slate-700 p-1 rounded-xl flex items-center shadow-md backdrop-blur">
-                <span class="text-[10px] font-black uppercase tracking-wider px-3 text-slate-300">Chế độ xem:</span>
-                <button onclick="setTheme('light')" id="btn-theme-light" class="flex items-center gap-1.5 text-[11px] font-extrabold uppercase px-3 py-1.5 rounded-lg transition border border-transparent text-white">☀️ Sáng</button>
-                <button onclick="setTheme('dark')" id="btn-theme-dark" class="flex items-center gap-1.5 text-[11px] font-extrabold uppercase px-3 py-1.5 rounded-lg transition border border-transparent text-white">🌙 Tối</button>
-            </div>
-        </div>
-
-        <div class="primary-wrapper space-y-6">
-
-            <!-- PAGE TITLE & MAIN KPI -->
-            <header class="glass-panel p-8 text-center md:text-left flex flex-col md:flex-row justify-between items-center gap-6 bg-gradient-to-r from-slate-500/10 to-blue-500/10 border-l-4 border-l-blue-600">
-                <div>
-                    <h1 class="text-3xl md:text-4xl font-black uppercase tracking-wider text-dynamic-title">
-                        Quốc phòng - An ninh
-                    </h1>
-               </div>
-                <div class="flex gap-6 text-right">
-                    <div class="bg-white/50 dark:bg-slate-800/50 p-4 rounded-xl border border-slate-200 dark:border-slate-700">
-                        <span class="block text-[10px] font-black uppercase tracking-wider text-emerald-600 dark:text-emerald-400 mb-1">Tỷ lệ khám phá án</span>
-                        <span class="text-3xl font-black text-slate-800 dark:text-white" id="kpi-khampha">0%</span>
-                    </div>
-                    <div class="bg-white/50 dark:bg-slate-800/50 p-4 rounded-xl border border-slate-200 dark:border-slate-700">
-                        <span class="block text-[10px] font-black uppercase tracking-wider text-sky-600 dark:text-sky-400 mb-1">Giải quyết Phản ánh</span>
-                        <span class="text-3xl font-black text-slate-800 dark:text-white" id="kpi-phananh">0%</span>
-                    </div>
-                </div>
-            </header>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <!-- KHỐI 1: TUYỂN QUÂN -->
-                <div class="glass-panel p-6 flex flex-col">
-                    <div class="flex items-center gap-3 mb-4">
-                        <div class="p-2.5 bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 rounded-lg"><i class="ph-fill ph-medal text-xl"></i></div>
-                        <h2 class="text-[13px] font-black uppercase tracking-wider text-dynamic-title">Công tác Tuyển quân</h2>
-                    </div>
-                    <div class="chart-container mb-2">
-                        <canvas id="tuyenQuanChart"></canvas>
-                    </div>
-                    <div class="mt-auto text-center">
-                        <span class="text-[11px] font-bold text-dynamic-body uppercase">Tổng nhập ngũ</span>
-                        <h3 class="text-2xl font-black text-emerald-600 dark:text-emerald-400" id="tq-tong">0</h3>
-                    </div>
-                </div>
-
-                <!-- KHỐI 2: AN NINH TRẬT TỰ -->
-                <div class="glass-panel p-6 flex flex-col">
-                    <div class="flex items-center gap-3 mb-6">
-                        <div class="p-2.5 bg-blue-500/20 text-blue-600 dark:text-blue-400 rounded-lg"><i class="ph-fill ph-shield-warning text-xl"></i></div>
-                        <h2 class="text-[13px] font-black uppercase tracking-wider text-dynamic-title">Phạm pháp Hình sự</h2>
-                    </div>
-                    <div class="flex-grow flex flex-col justify-center space-y-6">
-                        <div>
-                            <span class="text-[11px] font-bold text-dynamic-body uppercase">Số vụ Xảy ra</span>
-                            <div class="flex items-baseline gap-3 mt-1">
-                                <span class="text-4xl font-black text-rose-600 dark:text-rose-400" id="antt-sovu">0</span>
-                                <span class="text-xs font-black text-emerald-500 bg-emerald-500/10 px-2 py-1 rounded-md" id="antt-trend">▼ 0 vụ (0%)</span>
-                            </div>
-                        </div>
-                        <div class="pt-4 border-t border-slate-200 dark:border-slate-700">
-                            <span class="text-[11px] font-bold text-dynamic-body uppercase">Đã khám phá</span>
-                            <div class="flex items-center gap-3 mt-1">
-                                <div class="w-full bg-slate-200 dark:bg-slate-700 h-2.5 rounded-full overflow-hidden">
-                                    <div class="bg-blue-500 h-full rounded-full" id="antt-bar" style="width: 0%"></div>
-                                </div>
-                                <span class="text-sm font-black text-blue-600 dark:text-blue-400" id="antt-khampha-val">0/0</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- KHỐI 3: GIAO THÔNG & PCCC -->
-                <div class="glass-panel p-6 flex flex-col">
-                    <div class="flex items-center gap-3 mb-6">
-                        <div class="p-2.5 bg-amber-500/20 text-amber-600 dark:text-amber-400 rounded-lg"><i class="ph-fill ph-traffic-cone text-xl"></i></div>
-                        <h2 class="text-[13px] font-black uppercase tracking-wider text-dynamic-title">Giao thông & PCCC</h2>
-                    </div>
-                    <div class="flex-grow space-y-1" id="block-giaothong">
-                        <!-- Render via JS -->
-                    </div>
-                </div>
-
-                <!-- KHỐI 4: THÔNG TIN PHẢN ÁNH -->
-                <div class="glass-panel p-6 flex flex-col">
-                    <div class="flex items-center gap-3 mb-6">
-                        <div class="p-2.5 bg-fuchsia-500/20 text-fuchsia-600 dark:text-fuchsia-400 rounded-lg"><i class="ph-fill ph-headset text-xl"></i></div>
-                        <h2 class="text-[13px] font-black uppercase tracking-wider text-dynamic-title">Xử lý Phản ánh</h2>
-                    </div>
-                    <div class="flex-grow flex flex-col justify-center">
-                        <div class="text-center mb-6">
-                            <span class="text-5xl font-black text-fuchsia-600 dark:text-fuchsia-400 block" id="pa-tong">0</span>
-                            <span class="text-[10px] font-black text-dynamic-body uppercase tracking-wider mt-2 block">Tổng tiếp nhận</span>
-                        </div>
-                        <div class="space-y-3">
-                            <div class="flex justify-between items-center text-sm font-bold">
-                                <span class="text-dynamic-body">Đã xử lý:</span>
-                                <span class="text-emerald-600 dark:text-emerald-400" id="pa-daxuly">0</span>
-                            </div>
-                            <div class="flex justify-between items-center text-sm font-bold">
-                                <span class="text-dynamic-body">Đang xử lý (Trong hạn):</span>
-                                <span class="text-amber-600 dark:text-amber-400" id="pa-dangxuly">0</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- SECTION MA TÚY (FULL WIDTH) -->
-            <div class="glass-panel p-6">
-                <div class="flex items-center gap-3 mb-6">
-                    <div class="p-2.5 bg-rose-500/20 text-rose-600 dark:text-rose-400 rounded-lg"><i class="ph-fill ph-warning-octagon text-xl"></i></div>
-                    <h2 class="text-sm font-black uppercase tracking-wider text-dynamic-title">Công tác Phòng chống Ma túy</h2>
-                </div>
+            <div class="flex flex-col sm:flex-row justify-between items-center gap-4 flex-responsive mb-2">
+                <a href="../dashboard.html" class="btn-back">⬅️ Quay lại Trang chủ</a>
                 
-                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-                    <div class="lg:col-span-4 space-y-4">
-                        <div class="bg-rose-50 dark:bg-rose-900/20 p-5 rounded-2xl border border-rose-200 dark:border-rose-900">
-                            <span class="block text-[11px] font-black uppercase text-rose-600 dark:text-rose-400 mb-2">Tổng số vụ phát hiện</span>
-                            <span class="text-4xl font-black text-rose-700 dark:text-rose-300" id="matuy-vu">0</span>
+                <div class="controls-wrapper">
+                    <div class="control-panel">
+                        <button onclick="setTheme('light')" id="btn-theme-light" class="flex items-center gap-1.5 text-[11px] font-bold uppercase px-3 py-1.5 rounded-lg transition bg-white text-blue-900 shadow-sm border border-transparent">Sáng</button>
+                        <button onclick="setTheme('dark')" id="btn-theme-dark" class="flex items-center gap-1.5 text-[11px] font-bold uppercase px-3 py-1.5 rounded-lg transition text-blue-800 hover:text-white border border-transparent">Tối</button>
+                    </div>
+
+                    <div class="control-panel control-theme-color">
+                        <button onclick="switchSystemTheme('xanh')" id="btn-theme-xanh" class="flex items-center gap-1.5 text-[11px] uppercase px-3 py-1.5 rounded-lg transition border border-transparent">🔵 Xanh</button>
+                        <button onclick="switchSystemTheme('do')" id="btn-theme-do" class="flex items-center gap-1.5 text-[11px] uppercase px-3 py-1.5 rounded-lg transition border border-transparent">🔴 Đỏ</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex flex-col space-y-6 font-['Inter'] flex-grow">
+                
+                <div class="bg-widget-card border-2 rounded-3xl p-6 shadow-sm hover:-translate-y-1 transition-transform duration-300 flex flex-col md:flex-row justify-between items-center gap-6">
+                    <div class="text-center md:text-left">
+                        <h1 class="text-3xl md:text-4xl font-black uppercase tracking-wider text-main-title font-['Montserrat']">Quốc phòng - An ninh</h1>
+                        <p class="font-bold text-xs uppercase tracking-[0.15em] mt-2 opacity-80 text-slate-600 dark:text-slate-400">Tình hình đảm bảo trật tự an toàn xã hội năm 2026</p>
+                    </div>
+                    <div class="flex gap-4 md:gap-6 text-right">
+                        <div class="bg-widget-inner border p-4 rounded-2xl min-w-[140px] shadow-sm">
+                            <span class="block text-[10px] font-black uppercase tracking-wider text-emerald-600 dark:text-emerald-400 mb-1">Tỷ lệ khám phá án</span>
+                            <span class="text-3xl font-black text-slate-800 dark:text-white" id="kpi-khampha">0%</span>
                         </div>
-                        <div class="bg-orange-50 dark:bg-orange-900/20 p-5 rounded-2xl border border-orange-200 dark:border-orange-900">
-                            <span class="block text-[11px] font-black uppercase text-orange-600 dark:text-orange-400 mb-2">Tổng số đối tượng</span>
-                            <span class="text-4xl font-black text-orange-700 dark:text-orange-300" id="matuy-doituong">0</span>
+                        <div class="bg-widget-inner border p-4 rounded-2xl min-w-[140px] shadow-sm">
+                            <span class="block text-[10px] font-black uppercase tracking-wider text-sky-600 dark:text-sky-400 mb-1">Giải quyết Phản ánh</span>
+                            <span class="text-3xl font-black text-slate-800 dark:text-white" id="kpi-phananh">0%</span>
                         </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    
+                    <div class="glass-panel p-6 flex flex-col">
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="p-2.5 bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 rounded-lg"><i class="ph-fill ph-medal text-xl"></i></div>
+                            <h2 class="text-[13px] font-black uppercase tracking-wider text-main-title">Công tác Tuyển quân</h2>
+                        </div>
+                        <div class="chart-container mb-2">
+                            <canvas id="tuyenQuanChart"></canvas>
+                        </div>
+                        <div class="mt-auto text-center">
+                            <span class="text-[11px] font-bold text-slate-600 dark:text-slate-400 uppercase">Tổng nhập ngũ</span>
+                            <h3 class="text-2xl font-black text-emerald-600 dark:text-emerald-400" id="tq-tong">0</h3>
+                        </div>
+                    </div>
+
+                    <div class="glass-panel p-6 flex flex-col">
+                        <div class="flex items-center gap-3 mb-6">
+                            <div class="p-2.5 bg-blue-500/20 text-blue-600 dark:text-blue-400 rounded-lg"><i class="ph-fill ph-shield-warning text-xl"></i></div>
+                            <h2 class="text-[13px] font-black uppercase tracking-wider text-main-title">Phạm pháp Hình sự</h2>
+                        </div>
+                        <div class="flex-grow flex flex-col justify-center space-y-6">
+                            <div>
+                                <span class="text-[11px] font-bold text-slate-600 dark:text-slate-400 uppercase">Số vụ Xảy ra</span>
+                                <div class="flex items-baseline gap-3 mt-1">
+                                    <span class="text-4xl font-black text-rose-600 dark:text-rose-400" id="antt-sovu">0</span>
+                                    <span class="text-xs font-black text-emerald-500 bg-emerald-500/10 px-2 py-1 rounded-md" id="antt-trend">▼ 0 vụ (0%)</span>
+                                </div>
+                            </div>
+                            <div class="pt-4 border-t border-slate-200 dark:border-slate-700">
+                                <span class="text-[11px] font-bold text-slate-600 dark:text-slate-400 uppercase">Đã khám phá</span>
+                                <div class="flex items-center gap-3 mt-1">
+                                    <div class="w-full bg-slate-200 dark:bg-slate-700 h-2.5 rounded-full overflow-hidden">
+                                        <div class="bg-blue-500 h-full rounded-full" id="antt-bar" style="width: 0%"></div>
+                                    </div>
+                                    <span class="text-sm font-black text-blue-600 dark:text-blue-400" id="antt-khampha-val">0/0</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="glass-panel p-6 flex flex-col">
+                        <div class="flex items-center gap-3 mb-6">
+                            <div class="p-2.5 bg-amber-500/20 text-amber-600 dark:text-amber-400 rounded-lg"><i class="ph-fill ph-traffic-cone text-xl"></i></div>
+                            <h2 class="text-[13px] font-black uppercase tracking-wider text-main-title">Giao thông & PCCC</h2>
+                        </div>
+                        <div class="flex-grow space-y-1" id="block-giaothong">
+                            </div>
+                    </div>
+
+                    <div class="glass-panel p-6 flex flex-col">
+                        <div class="flex items-center gap-3 mb-6">
+                            <div class="p-2.5 bg-fuchsia-500/20 text-fuchsia-600 dark:text-fuchsia-400 rounded-lg"><i class="ph-fill ph-headset text-xl"></i></div>
+                            <h2 class="text-[13px] font-black uppercase tracking-wider text-main-title">Xử lý Phản ánh</h2>
+                        </div>
+                        <div class="flex-grow flex flex-col justify-center">
+                            <div class="text-center mb-6">
+                                <span class="text-5xl font-black text-fuchsia-600 dark:text-fuchsia-400 block" id="pa-tong">0</span>
+                                <span class="text-[10px] font-black text-slate-600 dark:text-slate-400 uppercase tracking-wider mt-2 block">Tổng tiếp nhận</span>
+                            </div>
+                            <div class="space-y-3">
+                                <div class="flex justify-between items-center text-sm font-bold">
+                                    <span class="text-slate-700 dark:text-slate-300">Đã xử lý:</span>
+                                    <span class="text-emerald-600 dark:text-emerald-400" id="pa-daxuly">0</span>
+                                </div>
+                                <div class="flex justify-between items-center text-sm font-bold">
+                                    <span class="text-slate-700 dark:text-slate-300">Đang xử lý (Trong hạn):</span>
+                                    <span class="text-amber-600 dark:text-amber-400" id="pa-dangxuly">0</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-widget-card border-2 rounded-3xl p-6 md:p-8 shadow-sm">
+                    <div class="flex items-center gap-3 mb-6 border-b pb-4 dark:border-slate-700/50">
+                        <div class="p-2.5 bg-rose-500/20 text-rose-600 dark:text-rose-400 rounded-lg"><i class="ph-fill ph-warning-octagon text-xl"></i></div>
+                        <h2 class="text-sm font-black uppercase tracking-wider text-main-title">Công tác Phòng chống Ma túy</h2>
                     </div>
                     
-                    <div class="lg:col-span-8">
-                        <h3 class="text-[11px] font-black uppercase tracking-wider text-dynamic-body mb-4 text-center">Biểu đồ Xử lý Đối tượng Ma túy</h3>
-                        <div class="chart-container-large">
-                            <canvas id="maTuyChart"></canvas>
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                        <div class="lg:col-span-4 space-y-4">
+                            <div class="bg-widget-inner p-5 rounded-2xl border shadow-sm">
+                                <span class="block text-[11px] font-black uppercase text-rose-600 dark:text-rose-400 mb-2">Tổng số vụ phát hiện</span>
+                                <span class="text-4xl font-black text-main-title" id="matuy-vu">0</span>
+                            </div>
+                            <div class="bg-widget-inner p-5 rounded-2xl border shadow-sm">
+                                <span class="block text-[11px] font-black uppercase text-orange-600 dark:text-orange-400 mb-2">Tổng số đối tượng</span>
+                                <span class="text-4xl font-black text-main-title" id="matuy-doituong">0</span>
+                            </div>
+                        </div>
+                        
+                        <div class="lg:col-span-8">
+                            <h3 class="text-[11px] font-black uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-4 text-center">Biểu đồ Xử lý Đối tượng Ma túy</h3>
+                            <div class="chart-container-large">
+                                <canvas id="maTuyChart"></canvas>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
+            </div>
         </div> 
     </div>
 
-    <footer class="w-full text-center py-6 font-bold text-[10px] uppercase tracking-[0.3em] border-t border-slate-200 dark:border-slate-800 bg-white/50 dark:bg-slate-900/40 backdrop-blur-md mt-auto text-dynamic-body">
+    <footer class="w-full text-center py-6 text-main-title font-bold text-[10px] uppercase tracking-[0.3em] border-t border-blue-200 dark:border-slate-700 bg-white/50 dark:bg-slate-900/50 backdrop-blur-md mt-auto transition-colors duration-300">
         &copy; 2026 IOC Xã Bình Hưng — Hệ thống Điều hành Quốc phòng An ninh
     </footer>
 
     <script>
         Chart.register(ChartDataLabels);
 
-        // JSON DATA (Hardcoded từ prompt)
+        // JSON DATA 
         const jsonData = {
             "thong_ke_bao_cao": {
                 "cong_tac_tuyen_quan": { "ty_le_dat_chi_tieu_phan_tram": 100, "tong_so_cong_dan_nhap_ngu": 33, "chi_tiet": { "nghia_vu_quan_su": 26, "nghia_vu_cong_an": 7 } },
@@ -220,7 +274,6 @@
 
         let tuyenQuanChartInstance = null;
         let maTuyChartInstance = null;
-        let currentTheme = 'light';
 
         function renderData() {
             const data = jsonData.thong_ke_bao_cao;
@@ -244,27 +297,27 @@
 
             // 4. GIAO THÔNG & PCCC
             const gt = data.an_toan_giao_thong;
-            const pccc = data.muc_chua_xac_dinh; // Assigning to PCCC context based on 0 value
+            const pccc = data.muc_chua_xac_dinh; 
             
             let gtHtml = `
                 <div class="data-row">
-                    <span class="text-[12px] font-bold text-dynamic-body">Va chạm giao thông</span>
+                    <span class="text-[12px] font-bold text-slate-700 dark:text-slate-300">Va chạm giao thông</span>
                     <span class="font-black text-emerald-600 dark:text-emerald-400">${gt.va_cham_giao_thong.so_vu_ghi_nhan}</span>
                 </div>
                 <div class="data-row">
-                    <span class="text-[12px] font-bold text-dynamic-body">Tai nạn giao thông</span>
+                    <span class="text-[12px] font-bold text-slate-700 dark:text-slate-300">Tai nạn giao thông</span>
                     <span class="font-black text-rose-600 dark:text-rose-400">${gt.tai_nan_giao_thong.so_vu_xay_ra} vụ / ${gt.tai_nan_giao_thong.so_nguoi_chet} chết</span>
                 </div>
                 <div class="data-row">
-                    <span class="text-[12px] font-bold text-dynamic-body">TNGT Đặc biệt nghiêm trọng</span>
+                    <span class="text-[12px] font-bold text-slate-700 dark:text-slate-300">TNGT Đặc biệt nghiêm trọng</span>
                     <span class="font-black text-emerald-600 dark:text-emerald-400">${gt.tai_nan_giao_thong.tngt_dac_biet_nghiem_trong}</span>
                 </div>
                 <div class="data-row">
-                    <span class="text-[12px] font-bold text-dynamic-body">Giảm so với cùng kỳ</span>
+                    <span class="text-[12px] font-bold text-slate-700 dark:text-slate-300">Giảm so với cùng kỳ</span>
                     <span class="font-black text-emerald-600 dark:text-emerald-400">▼ ${gt.tai_nan_giao_thong.so_sanh_cung_ky_nam_truoc.ty_le_giam_phan_tram}%</span>
                 </div>
-                <div class="data-row border-t border-slate-300 dark:border-slate-600 pt-2 mt-2">
-                    <span class="text-[12px] font-bold text-dynamic-body">Cháy nổ nghiêm trọng</span>
+                <div class="data-row border-t border-slate-300 dark:border-slate-700 pt-2 mt-2">
+                    <span class="text-[12px] font-bold text-slate-700 dark:text-slate-300">Cháy nổ nghiêm trọng</span>
                     <span class="font-black text-emerald-600 dark:text-emerald-400">${pccc.trang_thai}</span>
                 </div>
             `;
@@ -292,17 +345,21 @@
             renderMaTuyChart(mtLabels, mtData);
         }
 
-        // VẼ BIỂU ĐỒ TUYỂN QUÂN (Doughnut)
+        // VẼ BIỂU ĐỒ TUYỂN QUÂN
         function renderTuyenQuanChart(dataValues) {
             if(tuyenQuanChartInstance) tuyenQuanChartInstance.destroy();
             const ctx = document.getElementById('tuyenQuanChart').getContext('2d');
-            const textColor = currentTheme === 'light' ? '#1e293b' : '#f8fafc';
+            
+            const isDark = document.getElementById('body-context').classList.contains('dark-theme');
+            const isRed = document.getElementById('body-context').classList.contains('theme-do-hanhchinh') && !isDark;
+            const textColor = isDark ? '#e0f2fe' : (isRed ? '#da251d' : '#0c4a8e');
+            const borderColor = isDark ? '#0f172a' : '#ffffff';
             
             tuyenQuanChartInstance = new Chart(ctx, {
                 type: 'doughnut',
                 data: { 
                     labels: ['Nghĩa vụ Quân sự', 'Nghĩa vụ Công an'], 
-                    datasets: [{ data: dataValues, backgroundColor: ['#10b981', '#3b82f6'], borderWidth: 2, borderColor: currentTheme === 'light' ? '#ffffff' : '#1e293b' }] 
+                    datasets: [{ data: dataValues, backgroundColor: ['#10b981', '#3b82f6'], borderWidth: 2, borderColor: borderColor }] 
                 },
                 options: { 
                     maintainAspectRatio: false, cutout: '70%',
@@ -318,11 +375,14 @@
         function renderMaTuyChart(labels, dataValues) {
             if(maTuyChartInstance) maTuyChartInstance.destroy();
             const ctx = document.getElementById('maTuyChart').getContext('2d');
-            const textColor = currentTheme === 'light' ? '#1e293b' : '#f8fafc';
-            const gridColor = currentTheme === 'light' ? 'rgba(0,0,0,0.05)' : 'rgba(255,255,255,0.1)';
+            
+            const isDark = document.getElementById('body-context').classList.contains('dark-theme');
+            const isRed = document.getElementById('body-context').classList.contains('theme-do-hanhchinh') && !isDark;
+            const textColor = isDark ? '#e0f2fe' : (isRed ? '#da251d' : '#0c4a8e');
+            const gridColor = isDark ? 'rgba(255,255,255,0.1)' : (isRed ? 'rgba(218, 37, 29, 0.1)' : 'rgba(12, 74, 142, 0.1)');
 
             maTuyChartInstance = new Chart(ctx, {
-                type: 'bar', // Cột ngang
+                type: 'bar',
                 data: {
                     labels: labels,
                     datasets: [{
@@ -333,7 +393,7 @@
                     }]
                 },
                 options: {
-                    indexAxis: 'y', // Biến thành biểu đồ ngang
+                    indexAxis: 'y', 
                     maintainAspectRatio: false,
                     plugins: { 
                         legend: { display: false },
@@ -348,26 +408,42 @@
             });
         }
 
-        // HỆ THỐNG ĐỔI THEME SÁNG/TỐI
+        // HỆ THỐNG ĐỔI THEME 
         window.setTheme = function(themeName) {
             const body = document.getElementById('body-context');
             const btnLight = document.getElementById('btn-theme-light');
             const btnDark = document.getElementById('btn-theme-dark');
-            currentTheme = themeName;
 
-            if(themeName === 'light') {
-                body.classList.remove('dark-theme');
+            if (themeName === 'light') {
+                body.classList.remove('dark-theme'); 
                 body.classList.add('light-theme');
-                btnLight.className = "flex items-center gap-1.5 text-[11px] font-extrabold uppercase px-3 py-1.5 rounded-lg transition btn-switcher-active shadow-md";
-                btnDark.className = "flex items-center gap-1.5 text-[11px] font-extrabold uppercase px-3 py-1.5 rounded-lg transition border border-transparent text-slate-500 hover:text-slate-600";
+                btnLight.className = "flex items-center gap-1.5 text-[11px] font-bold uppercase px-3 py-1.5 rounded-lg transition bg-white text-blue-900 shadow-sm border border-transparent";
+                btnDark.className = "flex items-center gap-1.5 text-[11px] font-bold uppercase px-3 py-1.5 rounded-lg transition text-blue-800 hover:text-white border border-transparent";
             } else {
-                body.classList.remove('light-theme');
+                body.classList.remove('light-theme'); 
                 body.classList.add('dark-theme');
-                btnDark.className = "flex items-center gap-1.5 text-[11px] font-extrabold uppercase px-3 py-1.5 rounded-lg transition btn-switcher-active shadow-md";
-                btnLight.className = "flex items-center gap-1.5 text-[11px] font-extrabold uppercase px-3 py-1.5 rounded-lg transition border border-transparent text-slate-400 hover:text-slate-300";
+                btnDark.className = "flex items-center gap-1.5 text-[11px] font-bold uppercase px-3 py-1.5 rounded-lg transition bg-red-600 text-white shadow-sm border border-transparent";
+                btnLight.className = "flex items-center gap-1.5 text-[11px] font-bold uppercase px-3 py-1.5 rounded-lg transition text-blue-200 hover:text-white border border-transparent";
             }
-            renderData(); // Re-render to update chart text colors
+            renderData(); 
         }
+
+        window.switchSystemTheme = function(modeName) {
+            const body = document.getElementById('body-context');
+            if (modeName === 'do') {
+                body.classList.remove('theme-xanh-ios'); 
+                body.classList.add('theme-do-hanhchinh');
+            } else {
+                body.classList.remove('theme-do-hanhchinh'); 
+                body.classList.add('theme-xanh-ios');
+            }
+            setTheme('light'); 
+        }
+
+        window.addEventListener('message', function(event) {
+            if (event.data === 'theme-do') switchSystemTheme('do');
+            else if (event.data === 'theme-xanh') switchSystemTheme('xanh');
+        });
 
         // Khởi chạy khi load trang
         document.addEventListener('DOMContentLoaded', () => { 
