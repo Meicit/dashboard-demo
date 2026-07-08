@@ -8,7 +8,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700;800&family=Montserrat:wght@800;900&display=swap" rel="stylesheet">
     
     <style>
-        /* ================= GHI ĐÈ BÓNG ĐỔ ĐỂ LOẠI BỎ SẮC ĐEN ================= */F
+        /* ================= GHI ĐÈ BÓNG ĐỔ ĐỂ LOẠI BỎ SẮC ĐEN ================= */
         .shadow-sm { box-shadow: 0 1px 2px 0 rgba(8, 47, 73, 0.1); }
         .shadow-md { box-shadow: 0 4px 6px -1px rgba(8, 47, 73, 0.15), 0 2px 4px -2px rgba(8, 47, 73, 0.1); }
         .shadow-lg { box-shadow: 0 10px 15px -3px rgba(8, 47, 73, 0.15), 0 4px 6px -4px rgba(8, 47, 73, 0.1); }
@@ -155,25 +155,23 @@
         .chatbot-mascot {
             position: fixed;
             bottom: 20px;
-            z-index: 900; /* Nằm đè lên mọi thứ trừ Modal (1000) */
-            width: 85px;
+            z-index: 900;
+            width: 70px;
             cursor: pointer;
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
         @media (min-width: 768px) {
-            .chatbot-mascot { width: 120px; bottom: 30px; }
+            .chatbot-mascot { width: 100px; bottom: 30px; }
         }
 
         .chatbot-bin { left: 20px; animation: floatBot 4s ease-in-out infinite; }
         .chatbot-hun { right: 20px; animation: floatBot 3.5s ease-in-out infinite alternate; }
 
-        /* Khi rê chuột vào: Tạm dừng bay, phóng to lên */
         .chatbot-mascot:hover {
             transform: scale(1.15) translateY(-5px);
             animation-play-state: paused;
         }
 
-        /* Sử dụng drop-shadow để bám sát viền ảnh PNG trong suốt */
         .chatbot-mascot img {
             width: 100%; height: auto;
             filter: drop-shadow(0 10px 15px rgba(0,0,0,0.35));
@@ -202,6 +200,12 @@
         .chatbot-mascot:hover .chat-bubble {
             opacity: 1;
             transform: translateY(0);
+        }
+        
+        /* Class dùng để JS kích hoạt hiển thị bong bóng */
+        .show-bubble {
+            opacity: 1 !important;
+            transform: translateY(0) !important;
         }
 
         @keyframes floatBot {
@@ -241,7 +245,6 @@
                 </div>
             </div>
 
-            <!-- CHUYỂN ĐỔI THEME XANH / ĐỎ -->
             <div class="theme-selector-vertical lg:absolute lg:top-0 lg:right-0 bg-white/10 backdrop-blur-md border border-white/20 p-1.5 rounded-xl flex flex-col space-y-1.5 w-[75px] z-20 shadow-inner">
                 <button onclick="switchSystemTheme('xanh')" id="btn-theme-xanh" class="w-full text-center text-[10px] font-extrabold uppercase py-1.5 rounded-lg transition-all duration-300 bg-blue-600 text-white shadow-md">🔵 Xanh</button>
                 <button onclick="switchSystemTheme('do')" id="btn-theme-do" class="w-full text-center text-[10px] font-extrabold uppercase py-1.5 rounded-lg transition-all duration-300 text-white/80 hover:text-white">🔴 Đỏ</button>
@@ -253,7 +256,6 @@
         
         <div class="menu-panel-wrapper">
             
-            <!-- CÔNG TẮC ĐIỀU HƯỚNG SÁNG / TỐI -->
             <div class="flex justify-end w-full mb-6">
                 <div class="bg-white/10 dark:bg-sky-500/10 border border-white/20 dark:border-sky-500/20 p-1 rounded-xl flex items-center shadow-sm backdrop-blur">
                     <button onclick="setTheme('light')" id="btn-theme-light" class="flex items-center gap-1.5 text-[11px] font-extrabold uppercase px-3 py-1.5 rounded-lg transition bg-white text-blue-900 shadow-sm border border-blue-200">☀️ Sáng</button>
@@ -273,7 +275,6 @@
                 <a href="tuyen-truyen/tuyen-truyen.html" class="nav-card" style="background-image: url('icon/tuyentruyen.png');"><div class="text-overlay"><h3>Thông tin - Tuyên truyền</h3></div></a>
                 <a href="https://www.facebook.com/p/X%C3%A3-B%C3%ACnh-H%C3%B9ng-Th%C3%A0nh-Ph%E1%BB%91-H%E1%BB%93-Ch%C3%AD-Minh-100063653432652/" target="_blank" class="nav-card" style="background-image: url('icon/fanpage.png');"><div class="text-overlay"><h3>Fanpage xã Bình Hưng</h3></div></a>
                 
-                <!-- Vẫn giữ nguyên nút này để bấm mở Modal chọn AI -->
                 <div onclick="openAIModal()" class="nav-card" style="background-image: url('icon/trolyao.png');">
                     <div class="text-overlay">
                         <h3>Trợ lý Ảo</h3>
@@ -313,7 +314,6 @@
         </div>
     </div>
 
-    <!-- ================= 2 CHATBOT NẰM Ở 2 GÓC DƯỚI MÀN HÌNH ================= -->
     <div class="chatbot-mascot chatbot-bin" onclick="openAIModal()">
         <div class="chat-bubble">👋 Trợ lý BIN xin chào!</div>
         <img src="binBH.png" alt="Trợ lý BIN">
@@ -325,7 +325,6 @@
     </div>
 
 
-    <!-- MODAL ĐĂNG NHẬP -->
     <div id="loginModal" class="modal-overlay">
         <div class="modal-card">
             <div class="text-center mb-8">
@@ -353,7 +352,6 @@
         </div>
     </div>
 
-    <!-- MODAL CHỌN TRỢ LÝ ẢO AI -->
     <div id="aiModal" class="modal-overlay">
         <div class="modal-card">
             <div class="text-center mb-6">
@@ -379,12 +377,10 @@
         </div>
     </div>
 
-    <!-- FOOTER -->
     <footer class="w-full text-center py-6 text-slate-400 font-medium text-[11px] uppercase tracking-widest border-t transition-all duration-300 mt-auto">
         &copy; IOC BINH HƯNG — BẢN QUYỀN THUỘC UBND XÃ BÌNH HƯNG
     </footer>
 
-    <!-- SCRIPT -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
@@ -478,9 +474,66 @@
             document.getElementById('aiModal').classList.remove('open');
         }
 
-        // Khởi động trang với nền Sáng mặc định
+        // ================= HIỆU ỨNG BIN VÀ HUN =================
+        const chatPhrases = [
+            "IOC Binh Hung xin chào",
+            "IOC Binh Hung rất vui được hỗ trợ mọi người",
+            "Nhớ quay lại IOC Binh Hung thường xuyên ạ"
+        ];
+
+        // Lặp lại việc nói ngẫu nhiên mỗi 5 phút
+        setInterval(() => {
+            const randomPhrase = chatPhrases[Math.floor(Math.random() * chatPhrases.length)];
+            const binBubble = document.querySelector('.chatbot-bin .chat-bubble');
+            const hunBubble = document.querySelector('.chatbot-hun .chat-bubble');
+            
+            if(binBubble && hunBubble) {
+                binBubble.innerText = "👋 " + randomPhrase + "!";
+                hunBubble.innerText = "✨ " + randomPhrase + "!";
+                
+                binBubble.classList.add('show-bubble');
+                hunBubble.classList.add('show-bubble');
+                
+                setTimeout(() => {
+                    binBubble.classList.remove('show-bubble');
+                    hunBubble.classList.remove('show-bubble');
+                }, 5000);
+            }
+        }, 300000); // 300,000 ms = 5 phút
+
+        // Khởi động trang với nền Sáng mặc định & Kích hoạt lời chào ban đầu
         document.addEventListener('DOMContentLoaded', () => {
             setTheme('light');
+            
+            // Lời chào ban đầu ngay khi vừa vào web
+            const binBubble = document.querySelector('.chatbot-bin .chat-bubble');
+            const hunBubble = document.querySelector('.chatbot-hun .chat-bubble');
+
+            if(binBubble && hunBubble) {
+                // Lưu lại nội dung mặc định của bong bóng
+                const originalBinText = binBubble.innerText;
+                const originalHunText = hunBubble.innerText;
+
+                // Gán câu chào khởi tạo
+                binBubble.innerText = "👋 IOC Binh Hung xin chào!";
+                hunBubble.innerText = "✨ IOC Binh Hung xin chào!";
+
+                // Hiển thị bong bóng
+                binBubble.classList.add('show-bubble');
+                hunBubble.classList.add('show-bubble');
+
+                // Ẩn đi sau 5 giây và hoàn trả lại văn bản gốc 
+                // để lúc hover sau này nó hiện lại đúng câu mặc định
+                setTimeout(() => {
+                    binBubble.classList.remove('show-bubble');
+                    hunBubble.classList.remove('show-bubble');
+
+                    setTimeout(() => {
+                        binBubble.innerText = originalBinText;
+                        hunBubble.innerText = originalHunText;
+                    }, 300); // Chờ animation ẩn kết thúc mới đổi text
+                }, 5000);
+            }
         });
     </script>
 </body>
