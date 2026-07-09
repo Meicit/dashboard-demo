@@ -7,27 +7,35 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
     <style>
+        /* ================= GHI ĐÈ BÓNG ĐỔ ================= */
         .shadow-sm { box-shadow: 0 1px 2px 0 rgba(8, 47, 73, 0.1); }
         .shadow-md { box-shadow: 0 4px 6px -1px rgba(8, 47, 73, 0.15), 0 2px 4px -2px rgba(8, 47, 73, 0.1); }
+        .shadow-lg { box-shadow: 0 10px 15px -3px rgba(8, 47, 73, 0.15), 0 4px 6px -4px rgba(8, 47, 73, 0.1); }
 
         body { font-family: 'Montserrat', sans-serif; margin: 0; padding: 0; min-height: 100vh; display: flex; flex-direction: column; transition: background-color 0.3s ease, color 0.3s ease; }
         .container-wrapper { max-width: 1550px; margin: 0 auto 30px auto; padding: 0 24px; width: 100%; }
         
+        .glass-panel { backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: 1px solid; border-radius: 24px; transition: all 0.3s; }
         .teal-wrapper { backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-radius: 36px; padding: 24px; transition: all 0.4s ease; }
         @media (min-width: 768px) { .teal-wrapper { padding: 36px; } }
 
-        /* THEME TỐI */
+        /* ================= THEME TỐI (DARK MODE) ================= */
         body.dark-theme { background-color: #082f49; color: #f0f9ff; }
+        body.dark-theme .glass-panel { background: rgba(12, 74, 110, 0.65); border-color: rgba(56, 189, 248, 0.2); box-shadow: 0 20px 40px -15px rgba(8, 47, 73, 0.4); }
         body.dark-theme .teal-wrapper { background-color: rgba(14, 165, 233, 0.08); border: 1px solid rgba(14, 165, 233, 0.3); box-shadow: 0 20px 40px -15px rgba(8, 47, 73, 0.6); }
         body.dark-theme .bg-widget-card { background-color: rgba(15, 23, 42, 0.6); border-color: rgba(56, 189, 248, 0.2); }
         body.dark-theme .bg-widget-inner { background-color: rgba(15, 23, 42, 0.8); border-color: rgba(56, 189, 248, 0.15); }
+        body.dark-theme .control-theme-color { display: none !important; }
         body.dark-theme .text-main-title { color: #60a5fa !important; }
 
-        /* THEME SÁNG (Mặc định Xanh IOS) */
+        /* ================= THEME SÁNG (LIGHT MODE) ================= */
         body.light-theme { background-color: #f0f4f8; color: #1e3a8a; }
+        body.light-theme .glass-panel { background: rgba(255, 255, 255, 0.95); box-shadow: 0 20px 40px -15px rgba(12, 74, 110, 0.15); }
         body.light-theme .bg-widget-card { background-color: #ffffff; }
         body.light-theme .bg-widget-inner { background-color: #ffffff; }
 
+        /* --- SÁNG + XANH DƯƠNG ĐẬM (MẶC ĐỊNH) --- */
+        body.light-theme.theme-xanh-ios .glass-panel { border-color: rgba(12, 74, 142, 0.2); }
         body.light-theme.theme-xanh-ios .bg-widget-card { border-color: rgba(12, 74, 142, 0.15); }
         body.light-theme.theme-xanh-ios .bg-widget-inner { border-color: rgba(12, 74, 142, 0.08); }
         body.light-theme.theme-xanh-ios .text-main-title { color: #0c4a8e !important; }
@@ -38,33 +46,58 @@
             box-shadow: 0 20px 40px -10px rgba(12, 74, 142, 0.5); 
         }
 
-        /* BUTTONS */
-        .btn-action { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 12px 24px; border-radius: 14px; font-weight: 800; font-size: 12px; text-transform: uppercase; transition: all 0.3s ease; border: 1px solid; cursor: pointer; }
-        
-        body.dark-theme .btn-action { background: rgba(14, 165, 233, 0.1); border-color: rgba(14, 165, 233, 0.3); color: #e0f2fe; }
-        body.dark-theme .btn-action:hover { background: rgba(14, 165, 233, 0.2); border-color: #38bdf8; transform: translateY(-2px); }
-        
-        body.light-theme.theme-xanh-ios .btn-action { background: #ffffff; border-color: rgba(255, 255, 255, 0.8); color: #0c4a8e; }
-        body.light-theme.theme-xanh-ios .btn-action:hover { background: #f0f4f8; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); }
+        /* --- SÁNG + ĐỎ CỜ --- */
+        body.light-theme.theme-do-hanhchinh .glass-panel { border-color: rgba(252, 165, 165, 0.8); }
+        body.light-theme.theme-do-hanhchinh .bg-widget-card { border-color: rgba(218, 37, 29, 0.2); }
+        body.light-theme.theme-do-hanhchinh .bg-widget-inner { border-color: rgba(218, 37, 29, 0.1); }
+        body.light-theme.theme-do-hanhchinh .text-main-title { color: #da251d !important; }
+        body.light-theme.theme-do-hanhchinh .teal-wrapper { 
+            background-color: #da251d; 
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 0 20px 40px -15px rgba(218, 37, 29, 0.4);
+        }
 
-        /* CONTROLS */
+        /* NÚT QUAY LẠI/HÀNH ĐỘNG ĐỘNG */
+        .btn-back { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 12px 24px; border-radius: 14px; font-weight: 800; font-size: 12px; text-transform: uppercase; transition: all 0.3s ease; border: 1px solid; cursor: pointer; }
+        
+        body.dark-theme .btn-back { background: rgba(14, 165, 233, 0.1); border-color: rgba(14, 165, 233, 0.3); color: #e0f2fe; }
+        body.dark-theme .btn-back:hover { background: rgba(14, 165, 233, 0.2); border-color: #38bdf8; transform: translateY(-2px); }
+        
+        body.light-theme.theme-xanh-ios .btn-back { background: #ffffff; border-color: rgba(255, 255, 255, 0.8); color: #0c4a8e; }
+        body.light-theme.theme-xanh-ios .btn-back:hover { background: #f0f4f8; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); }
+
+        body.light-theme.theme-do-hanhchinh .btn-back { background: #ffffff; border-color: #fca5a5; color: #da251d; }
+        body.light-theme.theme-do-hanhchinh .btn-back:hover { background: #fef2f2; border-color: #da251d; transform: translateY(-2px); }
+
+        /* Nút Tiến độ active state */
+        .btn-progress-active { background: #10b981 !important; color: #ffffff !important; border-color: #059669 !important; box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4) !important; }
+
+        /* SCROLLBAR & CONTROLS */
         .custom-scrollbar::-webkit-scrollbar { width: 6px; }
         .custom-scrollbar::-webkit-scrollbar-thumb { border-radius: 10px; }
         body.dark-theme .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(56, 189, 248, 0.4); }
         body.light-theme.theme-xanh-ios .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(12, 74, 142, 0.4); }
+        body.light-theme.theme-do-hanhchinh .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(218, 37, 29, 0.4); }
 
         .controls-wrapper { display: flex; gap: 12px; align-items: center; }
         .control-panel { border: 1px solid; padding: 4px; border-radius: 12px; display: flex; align-items: center; }
         
         body.dark-theme .control-panel { background: rgba(15, 23, 42, 0.5); border-color: rgba(56, 189, 248, 0.2); }
         body.light-theme.theme-xanh-ios .control-panel { background: rgba(255, 255, 255, 0.15); border-color: rgba(255, 255, 255, 0.2); }
+        body.light-theme.theme-do-hanhchinh .control-panel { background: rgba(255, 255, 255, 0.2); border-color: rgba(255, 255, 255, 0.4); }
 
         body.light-theme.theme-xanh-ios .control-panel button.text-blue-900 { color: #0c4a8e !important; }
         body.light-theme.theme-xanh-ios .control-panel button.text-blue-800 { color: #ffffff !important; opacity: 0.8; }
         body.light-theme.theme-xanh-ios .control-panel button.text-blue-800:hover { opacity: 1; }
+        body.light-theme.theme-xanh-ios .control-panel button.border-transparent { color: #ffffff; font-weight: 700; opacity: 0.9; }
+        body.light-theme.theme-xanh-ios .control-panel button.border-transparent:hover { background: rgba(255, 255, 255, 0.1); opacity: 1; }
 
         @media (max-width: 1024px) { .controls-wrapper { flex-direction: column; align-items: flex-end; } }
         @media (max-width: 640px) { .flex-responsive { flex-direction: column; align-items: stretch; gap: 16px; } .controls-wrapper { flex-direction: row; justify-content: space-between; align-items: center; width: 100%; } }
+
+        /* Animation */
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+        .animate-fade-in { animation: fadeIn 0.4s ease forwards; }
     </style>
 </head>
 <body class="light-theme custom-scrollbar theme-xanh-ios" id="body-context">
@@ -72,37 +105,43 @@
     <div class="container-wrapper mt-8">
         <div class="teal-wrapper space-y-8">
             
+            <!-- HEADER CONTROLS -->
             <div class="flex flex-col sm:flex-row justify-between items-center gap-4 flex-responsive">
-                <div class="flex gap-4">
-                    <a href="#" class="btn-action">⬅️ Quay lại</a>
-                    <!-- Nút tải lại trang dành riêng cho index.html -->
-                    <button onclick="location.reload()" class="btn-action">🔄 Tải lại trang</button>
+                <div class="flex flex-wrap gap-4">
+                    <button class="btn-back">⬅️ Quay lại</button>
+                    <button onclick="location.reload()" class="btn-back">🔄 Tải lại trang</button>
+                    <!-- Nút Xem tiến độ / Kết quả -->
+                    <button onclick="toggleProgress()" id="btn-progress" class="btn-back">📊 Xem tiến độ / Kết quả</button>
                 </div>
                 
                 <div class="controls-wrapper">
+                    <!-- Nút Sáng/Tối -->
                     <div class="control-panel">
                         <button onclick="setTheme('light')" id="btn-theme-light" class="flex items-center gap-1.5 text-[11px] font-bold uppercase px-3 py-1.5 rounded-lg transition bg-white text-blue-900 shadow-sm border border-transparent">Sáng</button>
                         <button onclick="setTheme('dark')" id="btn-theme-dark" class="flex items-center gap-1.5 text-[11px] font-bold uppercase px-3 py-1.5 rounded-lg transition text-blue-800 hover:text-white border border-transparent">Tối</button>
+                    </div>
+
+                    <!-- Nút Xanh/Đỏ -->
+                    <div class="control-panel control-theme-color">
+                        <button onclick="switchSystemTheme('xanh')" id="btn-theme-xanh" class="flex items-center gap-1.5 text-[11px] uppercase px-3 py-1.5 rounded-lg transition border border-transparent">🔵 Xanh</button>
+                        <button onclick="switchSystemTheme('do')" id="btn-theme-do" class="flex items-center gap-1.5 text-[11px] uppercase px-3 py-1.5 rounded-lg transition border border-transparent">🔴 Đỏ</button>
                     </div>
                 </div>
             </div>
 
             <div class="flex flex-col space-y-6 font-['Inter']">
                 
-                <!-- PHẦN TRÊN: HIỂN THỊ CHUNG CƯ THÍ ĐIỂM -->
+                <!-- PHẦN TRÊN: HIỂN THỊ CHUNG CƯ -->
                 <div class="bg-widget-card border-2 border-indigo-200 dark:border-indigo-800/50 rounded-3xl p-6 md:p-10 shadow-sm transition-colors duration-300">
                     <h3 class="text-sm md:text-base font-black text-main-title uppercase tracking-wider mb-6 flex items-center justify-center gap-2 text-center opacity-80">
                         🚀 Chung Cư Thí Điểm Thực Hiện "Chung Cư Số"
                     </h3>
-                    
                     <div class="bg-widget-inner rounded-3xl p-8 border shadow-sm mb-4 flex items-center justify-center bg-slate-50 dark:bg-slate-800/50">
-                        <h1 class="text-4xl md:text-6xl font-black text-main-title text-center tracking-wider drop-shadow-sm">
-                            LOVERA VISTA
-                        </h1>
+                        <h1 class="text-4xl md:text-6xl font-black text-main-title text-center tracking-wider drop-shadow-sm">LOVERA VISTA</h1>
                     </div>
-                   </div>
+                </div>
 
-                <!-- PHẦN DƯỚI: THỂ HIỆN CÁC TIÊU CHÍ -->
+                <!-- PHẦN DƯỚI: THỂ HIỆN CÁC TIÊU CHÍ & KẾT QUẢ -->
                 <div class="mt-8 mb-4 border-b border-white/20 pb-4">
                     <h2 class="text-xl md:text-2xl font-black text-white uppercase tracking-wider drop-shadow-md">
                         📋 Bộ 08 Tiêu Chí Thực Hiện Chung Cư Số
@@ -112,110 +151,270 @@
 
                 <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 items-stretch">
                     
-    <div class="bg-widget-card border-2 rounded-3xl p-6 shadow-md hover:-translate-y-2 transition-transform duration-300 flex flex-col h-full">
-        <div class="flex justify-between items-start mb-3">
-            <h3 class="text-[13px] font-black text-main-title uppercase tracking-wider">1. Về công dân số</h3>
-        </div>
-        <ul class="list-disc pl-4 flex-grow border-t border-blue-200/60 dark:border-slate-700/50 pt-4 text-inherit">
-            <li class='text-[12px] md:text-[13px] leading-relaxed mb-2 opacity-80 font-semibold'>Tỷ lệ người dân được cấp tài khoản định danh điện tử (VNeID) mức độ 2 (đối với công dân từ đủ 14 tuổi trở lên) đạt 100%.</li>
-<li class='text-[12px] md:text-[13px] leading-relaxed mb-2 opacity-80 font-semibold'>Tỷ lệ dân số trưởng thành sử dụng dịch vụ công trực tuyến đạt trên 70%.</li>
-<li class='text-[12px] md:text-[13px] leading-relaxed mb-2 opacity-80 font-semibold'>Tỷ lệ người dân tiếp cận phương tiện thông tin cơ sở đạt trên 80%.</li>
-<li class='text-[12px] md:text-[13px] leading-relaxed mb-2 opacity-80 font-semibold'>Tỷ lệ người dân sử dụng ứng dụng “Công dân số TPHCM” đạt trên 95%.</li>
-<li class='text-[12px] md:text-[13px] leading-relaxed mb-2 opacity-80 font-semibold'>Ban Quản lý, Ban Quản trị Chung cư được tập huấn, am hiểu về kiến thức chuyển đổi số, công dân số đạt 100%.</li>
+                    <!-- TIÊU CHÍ 1 -->
+                    <div class="bg-widget-card border-2 rounded-3xl p-6 shadow-md transition-transform duration-300 flex flex-col h-full">
+                        <div class="flex justify-between items-start mb-3">
+                            <h3 class="text-[13px] font-black text-main-title uppercase tracking-wider">1. Về công dân số</h3>
+                        </div>
+                        
+                        <!-- Nội dung Text -->
+                        <div class="criteria-content flex-grow border-t border-blue-200/60 dark:border-slate-700/50 pt-4 animate-fade-in">
+                            <ul class="list-disc pl-4 text-inherit">
+                                <li class='text-[12px] md:text-[13px] leading-relaxed mb-2 opacity-80 font-semibold'>Cấp VNeID mức độ 2 đạt 100%.</li>
+                                <li class='text-[12px] md:text-[13px] leading-relaxed mb-2 opacity-80 font-semibold'>Sử dụng dịch vụ công trực tuyến đạt trên 70%.</li>
+                                <li class='text-[12px] md:text-[13px] leading-relaxed mb-2 opacity-80 font-semibold'>Tiếp cận phương tiện thông tin cơ sở đạt trên 80%.</li>
+                                <li class='text-[12px] md:text-[13px] leading-relaxed mb-2 opacity-80 font-semibold'>Sử dụng ứng dụng “Công dân số TPHCM” đạt trên 95%.</li>
+                                <li class='text-[12px] md:text-[13px] leading-relaxed mb-2 opacity-80 font-semibold'>BQL, BQT được tập huấn chuyển đổi số đạt 100%.</li>
+                            </ul>
+                        </div>
+                        
+                        <!-- Nội dung Tiến độ (Mặc định ẩn) -->
+                        <div class="progress-content hidden flex-grow border-t border-blue-200/60 dark:border-slate-700/50 pt-4 animate-fade-in">
+                            <div class="mb-4">
+                                <div class="flex justify-between items-end mb-1">
+                                    <span class="text-[11px] font-bold uppercase opacity-70">Hoàn thành</span>
+                                    <span class="text-lg font-black text-green-600 dark:text-green-400">85%</span>
+                                </div>
+                                <div class="w-full bg-gray-200/60 dark:bg-gray-700/60 rounded-full h-2">
+                                    <div class="bg-green-500 h-2 rounded-full" style="width: 85%"></div>
+                                </div>
+                            </div>
+                            <div class="space-y-2 mt-4">
+                                <div class="flex items-start gap-2"><span class="text-green-500 text-sm">✅</span><span class="text-[12px] font-semibold opacity-80">VNeID mức 2: Đạt 100%</span></div>
+                                <div class="flex items-start gap-2"><span class="text-yellow-500 text-sm">⏳</span><span class="text-[12px] font-semibold opacity-80">Dịch vụ công: Đạt 65/70%</span></div>
+                                <div class="flex items-start gap-2"><span class="text-green-500 text-sm">✅</span><span class="text-[12px] font-semibold opacity-80">App Công dân số: Đạt 98%</span></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- TIÊU CHÍ 2 -->
+                    <div class="bg-widget-card border-2 rounded-3xl p-6 shadow-md transition-transform duration-300 flex flex-col h-full">
+                        <div class="flex justify-between items-start mb-3">
+                            <h3 class="text-[13px] font-black text-main-title uppercase tracking-wider">2. Về Kinh tế số</h3>
+                        </div>
+                        
+                        <div class="criteria-content flex-grow border-t border-blue-200/60 dark:border-slate-700/50 pt-4 animate-fade-in">
+                            <ul class="list-disc pl-4 text-inherit">
+                                <li class='text-[12px] md:text-[13px] leading-relaxed mb-2 opacity-80 font-semibold'>Doanh nghiệp, hộ KD có mã QR thanh toán đạt 100%.</li>
+                                <li class='text-[12px] md:text-[13px] leading-relaxed mb-2 opacity-80 font-semibold'>Thanh toán trực tuyến dịch vụ thiết yếu, đóng quỹ, thuế đạt trên 90%.</li>
+                                <li class='text-[12px] md:text-[13px] leading-relaxed mb-2 opacity-80 font-semibold'>Hỗ trợ khai, nộp thuế điện tử đạt 100%.</li>
+                                <li class='text-[12px] md:text-[13px] leading-relaxed mb-2 opacity-80 font-semibold'>Chung cư thu nộp quỹ qua tài khoản.</li>
+                            </ul>
+                        </div>
 
-        </ul>
-    </div>
-    
-    <div class="bg-widget-card border-2 rounded-3xl p-6 shadow-md hover:-translate-y-2 transition-transform duration-300 flex flex-col h-full">
-        <div class="flex justify-between items-start mb-3">
-            <h3 class="text-[13px] font-black text-main-title uppercase tracking-wider">2. Về Kinh tế số</h3>
-        </div>
-        <ul class="list-disc pl-4 flex-grow border-t border-blue-200/60 dark:border-slate-700/50 pt-4 text-inherit">
-            <li class='text-[12px] md:text-[13px] leading-relaxed mb-2 opacity-80 font-semibold'>Tỷ lệ doanh nghiệp, hộ kinh doanh có mã QR thanh toán và chấp nhận thanh toán không dùng tiền mặt đạt 100%.</li>
-<li class='text-[12px] md:text-[13px] leading-relaxed mb-2 opacity-80 font-semibold'>Tỷ lệ người dân thực hiện thanh toán trực tuyến, không dùng tiền mặt đối với các dịch vụ thiết yếu, đóng các loại quỹ, thuế sử dụng đất Phi nông nghiệp đạt trên 90%.</li>
-<li class='text-[12px] md:text-[13px] leading-relaxed mb-2 opacity-80 font-semibold'>Tỷ lệ người dân, hộ kinh doanh, doanh nghiệp được hướng dẫn và thực hiện khai, nộp thuế điện tử đạt 100%.</li>
-<li class='text-[12px] md:text-[13px] leading-relaxed mb-2 opacity-80 font-semibold'>Nhà chung cư thực hiện thu, nộp các loại quỹ pháp lệnh qua tài khoản.</li>
+                        <div class="progress-content hidden flex-grow border-t border-blue-200/60 dark:border-slate-700/50 pt-4 animate-fade-in">
+                            <div class="mb-4">
+                                <div class="flex justify-between items-end mb-1">
+                                    <span class="text-[11px] font-bold uppercase opacity-70">Hoàn thành</span>
+                                    <span class="text-lg font-black text-blue-600 dark:text-blue-400">92%</span>
+                                </div>
+                                <div class="w-full bg-gray-200/60 dark:bg-gray-700/60 rounded-full h-2">
+                                    <div class="bg-blue-500 h-2 rounded-full" style="width: 92%"></div>
+                                </div>
+                            </div>
+                            <div class="space-y-2 mt-4">
+                                <div class="flex items-start gap-2"><span class="text-green-500 text-sm">✅</span><span class="text-[12px] font-semibold opacity-80">Có QR thanh toán: 100%</span></div>
+                                <div class="flex items-start gap-2"><span class="text-green-500 text-sm">✅</span><span class="text-[12px] font-semibold opacity-80">Thanh toán không TM: 95%</span></div>
+                                <div class="flex items-start gap-2"><span class="text-green-500 text-sm">✅</span><span class="text-[12px] font-semibold opacity-80">Thu nộp qua tài khoản: Hoàn tất</span></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- TIÊU CHÍ 3 -->
+                    <div class="bg-widget-card border-2 rounded-3xl p-6 shadow-md transition-transform duration-300 flex flex-col h-full">
+                        <div class="flex justify-between items-start mb-3">
+                            <h3 class="text-[13px] font-black text-main-title uppercase tracking-wider">3. An ninh trật tự số</h3>
+                        </div>
+                        
+                        <div class="criteria-content flex-grow border-t border-blue-200/60 dark:border-slate-700/50 pt-4 animate-fade-in">
+                            <ul class="list-disc pl-4 text-inherit">
+                                <li class='text-[12px] md:text-[13px] leading-relaxed mb-2 opacity-80 font-semibold'>Bao phủ Camera giám sát tích hợp AI đạt 100%.</li>
+                                <li class='text-[12px] md:text-[13px] leading-relaxed mb-2 opacity-80 font-semibold'>Sử dụng ứng dụng “Báo cháy 114” đạt trên 95%.</li>
+                                <li class='text-[12px] md:text-[13px] leading-relaxed mb-2 opacity-80 font-semibold'>Lắp đặt thiết bị báo cháy thông minh đạt 100%.</li>
+                                <li class='text-[12px] md:text-[13px] leading-relaxed mb-2 opacity-80 font-semibold'>Sử dụng ứng dụng SOS ANTT đạt 90% trở lên.</li>
+                                <li class='text-[12px] md:text-[13px] leading-relaxed mb-2 opacity-80 font-semibold'>Chung cư kết nối Camera ANTT Xã đạt 100%.</li>
+                            </ul>
+                        </div>
 
-        </ul>
-    </div>
-    
-    <div class="bg-widget-card border-2 rounded-3xl p-6 shadow-md hover:-translate-y-2 transition-transform duration-300 flex flex-col h-full">
-        <div class="flex justify-between items-start mb-3">
-            <h3 class="text-[13px] font-black text-main-title uppercase tracking-wider">3. Về an ninh trật tự số</h3>
-        </div>
-        <ul class="list-disc pl-4 flex-grow border-t border-blue-200/60 dark:border-slate-700/50 pt-4 text-inherit">
-            <li class='text-[12px] md:text-[13px] leading-relaxed mb-2 opacity-80 font-semibold'>Tỷ lệ bao phủ Camera giám sát an ninh, điều phối giao thông, quản lý đô thị có tích hợp AI đạt 100%.</li>
-<li class='text-[12px] md:text-[13px] leading-relaxed mb-2 opacity-80 font-semibold'>Tỷ lệ người dân sử dụng ứng dụng “Báo cháy 114” đạt trên 95%; tham gia “Tổ liên gia an toàn PCCC” đạt 100%; có kỹ năng PCCC đạt 100%.</li>
-<li class='text-[12px] md:text-[13px] leading-relaxed mb-2 opacity-80 font-semibold'>100% hộ sản xuất kinh doanh, các kho xưởng, nhà trọ được lắp đặt thiết bị báo cháy thông minh, có kết nối với Trung tâm thông tin chỉ huy Phòng Cảnh sát PCCC và CNCH.</li>
-<li class='text-[12px] md:text-[13px] leading-relaxed mb-2 opacity-80 font-semibold'>Tỷ lệ người dân được tuyên truyền, cảnh báo thủ đoạn lừa đảo công nghệ, tội phạm mạng, văn hóa giao thông, tác hại của ma túy đạt 100%.</li>
-<li class='text-[12px] md:text-[13px] leading-relaxed mb-2 opacity-80 font-semibold'>Tỷ lệ người dân biết và sử dụng ứng dụng SOS an ninh trật tự đạt từ 90% trở lên.</li>
-<li class='text-[12px] md:text-[13px] leading-relaxed mb-2 opacity-80 font-semibold'>Tỷ lệ chung cư kết nối với hệ thống camera An ninh trật tự xã đạt 100%.</li>
+                        <div class="progress-content hidden flex-grow border-t border-blue-200/60 dark:border-slate-700/50 pt-4 animate-fade-in">
+                            <div class="mb-4">
+                                <div class="flex justify-between items-end mb-1">
+                                    <span class="text-[11px] font-bold uppercase opacity-70">Hoàn thành</span>
+                                    <span class="text-lg font-black text-green-600 dark:text-green-400">100%</span>
+                                </div>
+                                <div class="w-full bg-gray-200/60 dark:bg-gray-700/60 rounded-full h-2">
+                                    <div class="bg-green-500 h-2 rounded-full" style="width: 100%"></div>
+                                </div>
+                            </div>
+                            <div class="space-y-2 mt-4">
+                                <div class="flex items-start gap-2"><span class="text-green-500 text-sm">✅</span><span class="text-[12px] font-semibold opacity-80">Camera AI: Phủ sóng 100%</span></div>
+                                <div class="flex items-start gap-2"><span class="text-green-500 text-sm">✅</span><span class="text-[12px] font-semibold opacity-80">Kết nối Camera xã: Xong</span></div>
+                                <div class="flex items-start gap-2"><span class="text-green-500 text-sm">✅</span><span class="text-[12px] font-semibold opacity-80">Báo cháy 114: Đạt 98%</span></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- TIÊU CHÍ 4 -->
+                    <div class="bg-widget-card border-2 rounded-3xl p-6 shadow-md transition-transform duration-300 flex flex-col h-full">
+                        <div class="flex justify-between items-start mb-3">
+                            <h3 class="text-[13px] font-black text-main-title uppercase tracking-wider">4. Đô thị - môi trường số</h3>
+                        </div>
+                        
+                        <div class="criteria-content flex-grow border-t border-blue-200/60 dark:border-slate-700/50 pt-4 animate-fade-in">
+                            <ul class="list-disc pl-4 text-inherit">
+                                <li class='text-[12px] md:text-[13px] leading-relaxed mb-2 opacity-80 font-semibold'>Xây dựng bản đồ số công nghệ GIS.</li>
+                                <li class='text-[12px] md:text-[13px] leading-relaxed mb-2 opacity-80 font-semibold'>Kênh tiếp nhận và xử lý vi phạm trong 24 giờ đạt 100%.</li>
+                                <li class='text-[12px] md:text-[13px] leading-relaxed mb-2 opacity-80 font-semibold'>Xử lý điểm rác, ô nhiễm trong 24 giờ đạt 100%.</li>
+                            </ul>
+                        </div>
 
-        </ul>
-    </div>
-    
-    <div class="bg-widget-card border-2 rounded-3xl p-6 shadow-md hover:-translate-y-2 transition-transform duration-300 flex flex-col h-full">
-        <div class="flex justify-between items-start mb-3">
-            <h3 class="text-[13px] font-black text-main-title uppercase tracking-wider">4. Về đô thị - môi trường số</h3>
-        </div>
-        <ul class="list-disc pl-4 flex-grow border-t border-blue-200/60 dark:border-slate-700/50 pt-4 text-inherit">
-            <li class='text-[12px] md:text-[13px] leading-relaxed mb-2 opacity-80 font-semibold'>Xây dựng bản đồ số công nghệ GIS số hóa lên bản đồ quản lý.</li>
-<li class='text-[12px] md:text-[13px] leading-relaxed mb-2 opacity-80 font-semibold'>Có kênh tiếp nhận và xử lý vi phạm xây dựng, lòng lề đường, rao vặt quảng cáo trong 24 giờ làm việc đạt 100%.</li>
-<li class='text-[12px] md:text-[13px] leading-relaxed mb-2 opacity-80 font-semibold'>Tỷ lệ xử lý các điểm rác phát sinh, ô nhiễm môi trường, ô nhiễm tiếng ồn, ô nhiễm không khí trong 24 giờ đạt 100%.</li>
+                        <div class="progress-content hidden flex-grow border-t border-blue-200/60 dark:border-slate-700/50 pt-4 animate-fade-in">
+                            <div class="mb-4">
+                                <div class="flex justify-between items-end mb-1">
+                                    <span class="text-[11px] font-bold uppercase opacity-70">Hoàn thành</span>
+                                    <span class="text-lg font-black text-orange-500 dark:text-orange-400">75%</span>
+                                </div>
+                                <div class="w-full bg-gray-200/60 dark:bg-gray-700/60 rounded-full h-2">
+                                    <div class="bg-orange-500 h-2 rounded-full" style="width: 75%"></div>
+                                </div>
+                            </div>
+                            <div class="space-y-2 mt-4">
+                                <div class="flex items-start gap-2"><span class="text-yellow-500 text-sm">⏳</span><span class="text-[12px] font-semibold opacity-80">Bản đồ GIS: Đang xây dựng dữ liệu</span></div>
+                                <div class="flex items-start gap-2"><span class="text-green-500 text-sm">✅</span><span class="text-[12px] font-semibold opacity-80">Kênh xử lý vi phạm 24h: 100%</span></div>
+                                <div class="flex items-start gap-2"><span class="text-green-500 text-sm">✅</span><span class="text-[12px] font-semibold opacity-80">Xử lý ô nhiễm 24h: Đạt</span></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- TIÊU CHÍ 5 -->
+                    <div class="bg-widget-card border-2 rounded-3xl p-6 shadow-md transition-transform duration-300 flex flex-col h-full">
+                        <div class="flex justify-between items-start mb-3">
+                            <h3 class="text-[13px] font-black text-main-title uppercase tracking-wider">5. Giáo dục số</h3>
+                        </div>
+                        
+                        <div class="criteria-content flex-grow border-t border-blue-200/60 dark:border-slate-700/50 pt-4 animate-fade-in">
+                            <ul class="list-disc pl-4 text-inherit">
+                                <li class='text-[12px] md:text-[13px] leading-relaxed mb-2 opacity-80 font-semibold'>Tuyên truyền trang thông tin, kho học liệu số giáo dục.</li>
+                                <li class='text-[12px] md:text-[13px] leading-relaxed mb-2 opacity-80 font-semibold'>Tập huấn AI cho hệ thống chính trị trong quản lý.</li>
+                                <li class='text-[12px] md:text-[13px] leading-relaxed mb-2 opacity-80 font-semibold'>100% chung cư kết nối Zalo cộng đồng.</li>
+                            </ul>
+                        </div>
 
-        </ul>
-    </div>
-    
-    <div class="bg-widget-card border-2 rounded-3xl p-6 shadow-md hover:-translate-y-2 transition-transform duration-300 flex flex-col h-full">
-        <div class="flex justify-between items-start mb-3">
-            <h3 class="text-[13px] font-black text-main-title uppercase tracking-wider">5. Giáo dục số</h3>
-        </div>
-        <ul class="list-disc pl-4 flex-grow border-t border-blue-200/60 dark:border-slate-700/50 pt-4 text-inherit">
-            <li class='text-[12px] md:text-[13px] leading-relaxed mb-2 opacity-80 font-semibold'>Tuyên truyền, giáo dục đến người dân về trang thông tin giáo dục của xã, kho học liệu số giáo dục.</li>
-<li class='text-[12px] md:text-[13px] leading-relaxed mb-2 opacity-80 font-semibold'>Giáo dục, triển khai các nội dung tập huấn AI cho hệ thống chính trị trong quản lý trên nền tảng số.</li>
-<li class='text-[12px] md:text-[13px] leading-relaxed mb-2 opacity-80 font-semibold'>100% chung cư có kết nối Zalo trong nhóm cộng đồng để tuyên truyền các chính sách, quy định pháp luật của Nhà nước.</li>
+                        <div class="progress-content hidden flex-grow border-t border-blue-200/60 dark:border-slate-700/50 pt-4 animate-fade-in">
+                            <div class="mb-4">
+                                <div class="flex justify-between items-end mb-1">
+                                    <span class="text-[11px] font-bold uppercase opacity-70">Hoàn thành</span>
+                                    <span class="text-lg font-black text-green-600 dark:text-green-400">100%</span>
+                                </div>
+                                <div class="w-full bg-gray-200/60 dark:bg-gray-700/60 rounded-full h-2">
+                                    <div class="bg-green-500 h-2 rounded-full" style="width: 100%"></div>
+                                </div>
+                            </div>
+                            <div class="space-y-2 mt-4">
+                                <div class="flex items-start gap-2"><span class="text-green-500 text-sm">✅</span><span class="text-[12px] font-semibold opacity-80">Kết nối Zalo cộng đồng: 100%</span></div>
+                                <div class="flex items-start gap-2"><span class="text-green-500 text-sm">✅</span><span class="text-[12px] font-semibold opacity-80">Tập huấn AI: Đã triển khai</span></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- TIÊU CHÍ 6 -->
+                    <div class="bg-widget-card border-2 rounded-3xl p-6 shadow-md transition-transform duration-300 flex flex-col h-full">
+                        <div class="flex justify-between items-start mb-3">
+                            <h3 class="text-[13px] font-black text-main-title uppercase tracking-wider">6. Về an sinh xã hội số</h3>
+                        </div>
+                        
+                        <div class="criteria-content flex-grow border-t border-blue-200/60 dark:border-slate-700/50 pt-4 animate-fade-in">
+                            <ul class="list-disc pl-4 text-inherit">
+                                <li class='text-[12px] md:text-[13px] leading-relaxed mb-2 opacity-80 font-semibold'>Hoàn thành CSDL an sinh xã hội và chia sẻ dùng chung.</li>
+                                <li class='text-[12px] md:text-[13px] leading-relaxed mb-2 opacity-80 font-semibold'>Hồ sơ sức khỏe điện tử đạt trên 95%.</li>
+                                <li class='text-[12px] md:text-[13px] leading-relaxed mb-2 opacity-80 font-semibold'>Chi trả trợ cấp an sinh qua ngân hàng đạt 100%.</li>
+                            </ul>
+                        </div>
 
-        </ul>
-    </div>
-    
-    <div class="bg-widget-card border-2 rounded-3xl p-6 shadow-md hover:-translate-y-2 transition-transform duration-300 flex flex-col h-full">
-        <div class="flex justify-between items-start mb-3">
-            <h3 class="text-[13px] font-black text-main-title uppercase tracking-wider">6. Về an sinh xã hội số</h3>
-        </div>
-        <ul class="list-disc pl-4 flex-grow border-t border-blue-200/60 dark:border-slate-700/50 pt-4 text-inherit">
-            <li class='text-[12px] md:text-[13px] leading-relaxed mb-2 opacity-80 font-semibold'>Hoàn thành cơ sở dữ liệu về an sinh xã hội (hộ cận nghèo, gia đình chính sách, diện bảo trợ, người có hoàn cảnh khó khăn,...) và chia sẻ dùng chung.</li>
-<li class='text-[12px] md:text-[13px] leading-relaxed mb-2 opacity-80 font-semibold'>Tỷ lệ người dân có hồ sơ sức khỏe điện tử đạt trên 95%.</li>
-<li class='text-[12px] md:text-[13px] leading-relaxed mb-2 opacity-80 font-semibold'>Tỷ lệ đối tượng chính sách, bảo trợ xã hội nhận chi trả trợ cấp an sinh qua tài khoản ngân hàng (trừ các trường hợp bất khả kháng) đạt 100%.</li>
+                        <div class="progress-content hidden flex-grow border-t border-blue-200/60 dark:border-slate-700/50 pt-4 animate-fade-in">
+                            <div class="mb-4">
+                                <div class="flex justify-between items-end mb-1">
+                                    <span class="text-[11px] font-bold uppercase opacity-70">Hoàn thành</span>
+                                    <span class="text-lg font-black text-green-600 dark:text-green-400">95%</span>
+                                </div>
+                                <div class="w-full bg-gray-200/60 dark:bg-gray-700/60 rounded-full h-2">
+                                    <div class="bg-green-500 h-2 rounded-full" style="width: 95%"></div>
+                                </div>
+                            </div>
+                            <div class="space-y-2 mt-4">
+                                <div class="flex items-start gap-2"><span class="text-green-500 text-sm">✅</span><span class="text-[12px] font-semibold opacity-80">CSDL An sinh: Hoàn thiện</span></div>
+                                <div class="flex items-start gap-2"><span class="text-green-500 text-sm">✅</span><span class="text-[12px] font-semibold opacity-80">Chi trả qua NH: Đạt 100%</span></div>
+                                <div class="flex items-start gap-2"><span class="text-green-500 text-sm">✅</span><span class="text-[12px] font-semibold opacity-80">Hồ sơ sức khỏe điện tử: 96%</span></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- TIÊU CHÍ 7 -->
+                    <div class="bg-widget-card border-2 rounded-3xl p-6 shadow-md transition-transform duration-300 flex flex-col h-full">
+                        <div class="flex justify-between items-start mb-3">
+                            <h3 class="text-[13px] font-black text-main-title uppercase tracking-wider">7. Giao tiếp số - QR một chạm</h3>
+                        </div>
+                        
+                        <div class="criteria-content flex-grow border-t border-blue-200/60 dark:border-slate-700/50 pt-4 animate-fade-in">
+                            <ul class="list-disc pl-4 text-inherit">
+                                <li class='text-[12px] md:text-[13px] leading-relaxed mb-2 opacity-80 font-semibold'>Xây dựng kênh kết nối thông tin 2 chiều qua ứng dụng.</li>
+                                <li class='text-[12px] md:text-[13px] leading-relaxed mb-2 opacity-80 font-semibold'>Giải quyết thông tin qua Chatbot AI trực tiếp.</li>
+                                <li class='text-[12px] md:text-[13px] leading-relaxed mb-2 opacity-80 font-semibold'>Tham gia nhóm thông tin trực tuyến đạt 95%.</li>
+                                <li class='text-[12px] md:text-[13px] leading-relaxed mb-2 opacity-80 font-semibold'>Tin tức dạng đa phương tiện (Infographic, Video, Podcast,...).</li>
+                            </ul>
+                        </div>
 
-        </ul>
-    </div>
-    
-    <div class="bg-widget-card border-2 rounded-3xl p-6 shadow-md hover:-translate-y-2 transition-transform duration-300 flex flex-col h-full">
-        <div class="flex justify-between items-start mb-3">
-            <h3 class="text-[13px] font-black text-main-title uppercase tracking-wider">7. Giao tiếp số - QR một chạm</h3>
-        </div>
-        <ul class="list-disc pl-4 flex-grow border-t border-blue-200/60 dark:border-slate-700/50 pt-4 text-inherit">
-            <li class='text-[12px] md:text-[13px] leading-relaxed mb-2 opacity-80 font-semibold'>Xây dựng kênh kết nối từ Chung cư - Người dân để các thông tin từ Đảng ủy, HĐND, UBND, UB MTTQ Việt Nam xã được gửi đến thông qua ứng dụng trên nền tảng số.</li>
-<li class='text-[12px] md:text-[13px] leading-relaxed mb-2 opacity-80 font-semibold'>Khi người dân cần thông tin, cần kết nối với Xã sẽ được giải quyết qua Chatbot AI trực tiếp tại từng hộ gia đình.</li>
-<li class='text-[12px] md:text-[13px] leading-relaxed mb-2 opacity-80 font-semibold'>Tỷ lệ người dân (hoặc đại diện hộ gia đình) tham gia nhóm thông tin trực tuyến của chung cư và của xã đạt 95%.</li>
-<li class='text-[12px] md:text-[13px] leading-relaxed mb-2 opacity-80 font-semibold'>Tin tức tuyên truyền về chủ trương của Đảng, chính sách pháp luật của Nhà nước được biên tập dưới dạng đa phương tiện (Infographic, Video ngắn, Podcast,...).</li>
+                        <div class="progress-content hidden flex-grow border-t border-blue-200/60 dark:border-slate-700/50 pt-4 animate-fade-in">
+                            <div class="mb-4">
+                                <div class="flex justify-between items-end mb-1">
+                                    <span class="text-[11px] font-bold uppercase opacity-70">Hoàn thành</span>
+                                    <span class="text-lg font-black text-orange-500 dark:text-orange-400">80%</span>
+                                </div>
+                                <div class="w-full bg-gray-200/60 dark:bg-gray-700/60 rounded-full h-2">
+                                    <div class="bg-orange-500 h-2 rounded-full" style="width: 80%"></div>
+                                </div>
+                            </div>
+                            <div class="space-y-2 mt-4">
+                                <div class="flex items-start gap-2"><span class="text-green-500 text-sm">✅</span><span class="text-[12px] font-semibold opacity-80">Nhóm thông tin trực tuyến: 95%</span></div>
+                                <div class="flex items-start gap-2"><span class="text-yellow-500 text-sm">⏳</span><span class="text-[12px] font-semibold opacity-80">Chatbot AI: Đang thử nghiệm</span></div>
+                                <div class="flex items-start gap-2"><span class="text-green-500 text-sm">✅</span><span class="text-[12px] font-semibold opacity-80">Kênh đa phương tiện: Đã có</span></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- TIÊU CHÍ 8 -->
+                    <div class="bg-widget-card border-2 rounded-3xl p-6 shadow-md transition-transform duration-300 flex flex-col h-full">
+                        <div class="flex justify-between items-start mb-3">
+                            <h3 class="text-[13px] font-black text-main-title uppercase tracking-wider">8. Về kiến nghị số</h3>
+                        </div>
+                        
+                        <div class="criteria-content flex-grow border-t border-blue-200/60 dark:border-slate-700/50 pt-4 animate-fade-in">
+                            <ul class="list-disc pl-4 text-inherit">
+                                <li class='text-[12px] md:text-[13px] leading-relaxed mb-2 opacity-80 font-semibold'>Dùng nền tảng số để phản ánh, kiến nghị đạt 100%.</li>
+                                <li class='text-[12px] md:text-[13px] leading-relaxed mb-2 opacity-80 font-semibold'>Xây dựng Chatbot AI phản ánh, kiến nghị.</li>
+                                <li class='text-[12px] md:text-[13px] leading-relaxed mb-2 opacity-80 font-semibold'>Giải quyết phản ánh, kiến nghị đúng hạn đạt 100%.</li>
+                                <li class='text-[12px] md:text-[13px] leading-relaxed mb-2 opacity-80 font-semibold'>100% căn hộ dán mã QR kênh phản ánh.</li>
+                            </ul>
+                        </div>
 
-        </ul>
-    </div>
-    
-    <div class="bg-widget-card border-2 rounded-3xl p-6 shadow-md hover:-translate-y-2 transition-transform duration-300 flex flex-col h-full">
-        <div class="flex justify-between items-start mb-3">
-            <h3 class="text-[13px] font-black text-main-title uppercase tracking-wider">8. Về kiến nghị số</h3>
-        </div>
-        <ul class="list-disc pl-4 flex-grow border-t border-blue-200/60 dark:border-slate-700/50 pt-4 text-inherit">
-            <li class='text-[12px] md:text-[13px] leading-relaxed mb-2 opacity-80 font-semibold'>Tỷ lệ người dân dùng nền tảng số để phản ánh, kiến nghị với cấp ủy, chính quyền đạt 100%.</li>
-<li class='text-[12px] md:text-[13px] leading-relaxed mb-2 opacity-80 font-semibold'>Xây dựng công cụ Chatbot AI để người dân trực tiếp phản ánh, kiến nghị tại chung cư.</li>
-<li class='text-[12px] md:text-[13px] leading-relaxed mb-2 opacity-80 font-semibold'>Tỷ lệ giải quyết phản ánh, kiến nghị của người dân đúng hạn đạt 100%.</li>
-<li class='text-[12px] md:text-[13px] leading-relaxed mb-2 opacity-80 font-semibold'>100% căn hộ chung cư dán mã QR code kênh phản ánh kiến nghị số của xã.</li>
+                        <div class="progress-content hidden flex-grow border-t border-blue-200/60 dark:border-slate-700/50 pt-4 animate-fade-in">
+                            <div class="mb-4">
+                                <div class="flex justify-between items-end mb-1">
+                                    <span class="text-[11px] font-bold uppercase opacity-70">Hoàn thành</span>
+                                    <span class="text-lg font-black text-blue-600 dark:text-blue-400">90%</span>
+                                </div>
+                                <div class="w-full bg-gray-200/60 dark:bg-gray-700/60 rounded-full h-2">
+                                    <div class="bg-blue-500 h-2 rounded-full" style="width: 90%"></div>
+                                </div>
+                            </div>
+                            <div class="space-y-2 mt-4">
+                                <div class="flex items-start gap-2"><span class="text-green-500 text-sm">✅</span><span class="text-[12px] font-semibold opacity-80">Giải quyết đúng hạn: 100%</span></div>
+                                <div class="flex items-start gap-2"><span class="text-green-500 text-sm">✅</span><span class="text-[12px] font-semibold opacity-80">Dán QR căn hộ: Xong 100%</span></div>
+                                <div class="flex items-start gap-2"><span class="text-yellow-500 text-sm">⏳</span><span class="text-[12px] font-semibold opacity-80">Chatbot AI kiến nghị: Xây dựng</span></div>
+                            </div>
+                        </div>
+                    </div>
 
-        </ul>
-    </div>
-    
                 </div>
 
             </div>
@@ -227,6 +426,32 @@
     </footer>
 
     <script>
+        // HÀM HIỂN THỊ TIẾN ĐỘ / KẾT QUẢ
+        let isProgressView = false;
+        function toggleProgress() {
+            isProgressView = !isProgressView;
+            const btn = document.getElementById('btn-progress');
+            const criteriaContents = document.querySelectorAll('.criteria-content');
+            const progressContents = document.querySelectorAll('.progress-content');
+
+            if (isProgressView) {
+                // Đang ở chế độ xem Tiến độ
+                btn.innerHTML = '🔙 Xem lại các Tiêu chí';
+                btn.classList.add('btn-progress-active');
+                
+                criteriaContents.forEach(el => el.classList.add('hidden'));
+                progressContents.forEach(el => el.classList.remove('hidden'));
+            } else {
+                // Quay về chế độ Text mặc định
+                btn.innerHTML = '📊 Xem tiến độ / Kết quả';
+                btn.classList.remove('btn-progress-active');
+                
+                progressContents.forEach(el => el.classList.add('hidden'));
+                criteriaContents.forEach(el => el.classList.remove('hidden'));
+            }
+        }
+
+        // HÀM ĐỔI THEME SÁNG / TỐI
         function setTheme(themeName) {
             const body = document.getElementById('body-context');
             const btnLight = document.getElementById('btn-theme-light');
@@ -240,9 +465,22 @@
             } else {
                 body.classList.remove('light-theme'); 
                 body.classList.add('dark-theme');
-                btnDark.className = "flex items-center gap-1.5 text-[11px] font-bold uppercase px-3 py-1.5 rounded-lg transition bg-blue-600 text-white shadow-sm border border-transparent";
+                btnDark.className = "flex items-center gap-1.5 text-[11px] font-bold uppercase px-3 py-1.5 rounded-lg transition bg-red-600 text-white shadow-sm border border-transparent";
                 btnLight.className = "flex items-center gap-1.5 text-[11px] font-bold uppercase px-3 py-1.5 rounded-lg transition text-blue-200 hover:text-white border border-transparent";
             }
+        }
+
+        // HÀM ĐỔI CHỦ ĐỀ MÀU SẮC (XANH / ĐỎ)
+        function switchSystemTheme(modeName) {
+            const body = document.getElementById('body-context');
+            if (modeName === 'do') {
+                body.classList.remove('theme-xanh-ios'); 
+                body.classList.add('theme-do-hanhchinh');
+            } else {
+                body.classList.remove('theme-do-hanhchinh'); 
+                body.classList.add('theme-xanh-ios');
+            }
+            setTheme('light'); 
         }
 
         document.addEventListener('DOMContentLoaded', () => {
