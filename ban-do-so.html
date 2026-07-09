@@ -92,32 +92,6 @@
         body.light-theme.theme-do-hanhchinh .tab-btn { background: #ffffff; border-color: rgba(218, 37, 29, 0.2); color: #da251d; }
         body.light-theme.theme-do-hanhchinh .tab-btn.active, body.light-theme.theme-do-hanhchinh .tab-btn:hover { background: #da251d; color: #fff; border-color: #da251d; box-shadow: 0 4px 10px rgba(218, 37, 29, 0.2); }
 
-        /* ================= DROPDOWN MENU ================= */
-        .dropdown-menu {
-            position: absolute; top: 110%; left: 0; min-width: 380px;
-            border-radius: 16px; padding: 8px 0; border: 1px solid;
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.15);
-            backdrop-filter: blur(20px); transition: all 0.2s ease-in-out;
-            transform-origin: top left; transform: scale(0.95); opacity: 0; pointer-events: none;
-        }
-        .dropdown-wrapper.open .dropdown-menu { transform: scale(1); opacity: 1; pointer-events: auto; z-index: 100; }
-        .dropdown-item {
-            display: block; width: 100%; text-align: left; padding: 12px 20px;
-            font-size: 0.8rem; font-weight: 700; transition: all 0.2s; cursor: pointer;
-        }
-
-        body.light-theme.theme-xanh-ios .dropdown-menu { background: rgba(255, 255, 255, 0.98); border-color: rgba(12, 74, 142, 0.2); }
-        body.light-theme.theme-xanh-ios .dropdown-item { color: #0c4a8e; border-bottom: 1px solid #f1f5f9; }
-        body.light-theme.theme-xanh-ios .dropdown-item:hover { background: #f0f4f8; color: #1e3a8a; padding-left: 24px; }
-        
-        body.light-theme.theme-do-hanhchinh .dropdown-menu { background: rgba(255, 255, 255, 0.98); border-color: rgba(218, 37, 29, 0.2); }
-        body.light-theme.theme-do-hanhchinh .dropdown-item { color: #da251d; border-bottom: 1px solid #fff1f2; }
-        body.light-theme.theme-do-hanhchinh .dropdown-item:hover { background: #fef2f2; color: #a81c15; padding-left: 24px; }
-
-        body.dark-theme .dropdown-menu { background: rgba(15, 23, 42, 0.95); border-color: rgba(56, 189, 248, 0.3); }
-        body.dark-theme .dropdown-item { color: #bae6fd; border-bottom: 1px solid rgba(56, 189, 248, 0.1); }
-        body.dark-theme .dropdown-item:hover { background: rgba(12, 74, 110, 0.8); color: #fff; padding-left: 24px; }
-
         /* ================= SCROLLBAR & CONTROLS ================= */
         .custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
         .custom-scrollbar::-webkit-scrollbar-thumb { border-radius: 10px; }
@@ -190,32 +164,24 @@
 
             <div class="flex flex-col space-y-4 font-['Inter'] h-full flex-grow">
                 
+                <!-- TABS (Đã thay đổi Tab DWG thành Địa chỉ đỏ) -->
                 <div class="flex flex-row gap-3 overflow-x-visible pb-3 pt-2 custom-scrollbar items-center">
                     <button onclick="changeMap('ranh-ap', this)" class="tab-btn active shrink-0">🗺️ Ranh 39 ấp xã Bình Hưng</button>
                     <button onclick="window.open('https://thongtinquyhoach.hochiminhcity.gov.vn', '_blank')" class="tab-btn shrink-0 opacity-80 hover:opacity-100">🔍 Tra cứu thông tin quy hoạch ↗</button>
-                    
-                    <div class="relative dropdown-wrapper shrink-0 z-50" id="dwg-dropdown">
-                        <button onclick="toggleDropdown()" class="tab-btn w-full flex items-center justify-between gap-2 border-dashed">
-                            <span>📐 Bản đồ Quy hoạch (DWG)</span>
-                            <span class="text-[10px]">▼</span>
-                        </button>
-                        <div class="dropdown-menu">
-                            <button onclick="loadDWGMap('04. QH TMB SDD (1)')" class="dropdown-item">1. 04. QH TMB SDD (1)</button>
-                            <button onclick="loadDWGMap('04. QH TMB SDD')" class="dropdown-item">2. 04. QH TMB SDD</button>
-                            <button onclick="loadDWGMap('4. NSG SU DUNG DAT (03-2012)')" class="dropdown-item">3. 4. NSG SU DUNG DAT (03-2012)</button>
-                            <button onclick="loadDWGMap('BVDHKG')" class="dropdown-item">4. BVDHKG</button>
-                            <button onclick="loadDWGMap('QH 03 SDD - 2000 BAC PHONG PHU ngay 06-08-2013')" class="dropdown-item">5. QH 03 SDD - 2000 BAC PHONG PHU</button>
-                            <button onclick="loadDWGMap('QHCT DOC TRUC QL50')" class="dropdown-item">6. QHCT DOC TRUC QL50</button>
-                            <button onclick="loadDWGMap('QHSDDCHORAY')" class="dropdown-item">7. QHSDDCHORAY</button>
-                            <button onclick="loadDWGMap('tong mat bang toan khu-01-2-2010')" class="dropdown-item">8. Tong mat bang toan khu-01-2-2010</button>
-                        </div>
-                    </div>
+                    <button onclick="changeMap('dia-chi-do', this)" class="tab-btn shrink-0">📍 Bản đồ địa chỉ đỏ xã Bình Hưng</button>
                 </div>
 
+                <!-- BẢN ĐỒ / NỘI DUNG HIỂN THỊ -->
                 <div class="bg-widget-card border-2 rounded-3xl shadow-sm transition-all duration-300 overflow-hidden relative flex flex-col items-center justify-center h-[700px] w-full">
                     
-                    <div id="dwg-alert" class="hidden absolute top-4 left-1/2 -translate-x-1/2 w-11/12 md:w-3/4 p-4 rounded-xl bg-amber-100 dark:bg-amber-900/80 border border-amber-400 dark:border-amber-500 text-amber-800 dark:text-amber-200 shadow-lg z-10 text-center font-medium text-sm transition-opacity duration-500 backdrop-blur-md">
+                    <!-- Lớp hiển thị "Đang cập nhật" -->
+                    <div id="updating-message" class="hidden absolute inset-0 flex items-center justify-center z-20 backdrop-blur-md bg-white/50 dark:bg-slate-900/50">
+                        <div class="text-center p-8 bg-white dark:bg-slate-800 rounded-2xl shadow-xl border border-blue-200 dark:border-slate-700">
+                            <span class="text-5xl block mb-4">🚧</span>
+                            <h2 class="text-2xl font-bold text-slate-800 dark:text-white mb-2">Đang cập nhật</h2>
+                            <p class="text-slate-500 dark:text-slate-400">Dữ liệu bản đồ đang trong quá trình xây dựng và hoàn thiện.</p>
                         </div>
+                    </div>
                     
                     <iframe id="map-iframe" src="https://www.google.com/maps/d/embed?mid=1r3Pu1JREpzimi67036GbAuFPN23knQA&ehbc=2E312F" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
                 </div>
@@ -229,73 +195,26 @@
     </footer>
 
     <script>
-        // ================= MỞ/ĐÓNG MENU DROPDOWN =================
-        function toggleDropdown() {
-            const dropdown = document.getElementById('dwg-dropdown');
-            dropdown.classList.toggle('open');
-        }
-
-        // Bấm ra ngoài vùng menu thì đóng lại
-        document.addEventListener('click', function(event) {
-            const dropdown = document.getElementById('dwg-dropdown');
-            if (!dropdown.contains(event.target)) {
-                dropdown.classList.remove('open');
-            }
-        });
-
         // ================= HÀM CHUYỂN ĐỔI BẢN ĐỒ =================
         window.changeMap = function(type, buttonElement) {
             const iframe = document.getElementById('map-iframe');
-            document.getElementById('dwg-alert').classList.add('hidden'); 
+            const updatingMsg = document.getElementById('updating-message');
             
+            // Chuyển đổi trạng thái nút (Active)
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            buttonElement.classList.add('active');
+            
+            // Xử lý hiển thị
             if (type === 'ranh-ap') {
+                updatingMsg.classList.add('hidden'); // Ẩn thông báo "Đang cập nhật"
+                iframe.style.display = 'block';      // Hiện Iframe
                 iframe.src = "https://www.google.com/maps/d/embed?mid=1r3Pu1JREpzimi67036GbAuFPN23knQA&ehbc=2E312F";
-                
-                document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-                buttonElement.classList.add('active');
+            } else if (type === 'dia-chi-do') {
+                iframe.style.display = 'none';       // Ẩn Iframe
+                iframe.src = "";                     // Dừng load tài nguyên của Iframe (Tối ưu hiệu suất)
+                updatingMsg.classList.remove('hidden'); // Hiện thông báo "Đang cập nhật"
             }
         };
-
-        // ================= HÀM TẢI BẢN ĐỒ DWG THÔNG QUA API SHARECAD =================
-        window.loadDWGMap = function(fileName) {
-            const iframe = document.getElementById('map-iframe');
-            const alertBox = document.getElementById('dwg-alert');
-            
-            // Lấy URL hiện tại của thư mục
-            const baseUrl = window.location.href.substring(0, window.location.href.lastIndexOf('/') + 1);
-            
-            // Tạo đường dẫn tuyệt đối trỏ tới file DWG
-            const fileUrl = baseUrl + "du-lieu-quy-hoach/" + fileName + ".dwg";
-            
-            // TẠO URL GỌI IFRAME CỦA SHARECAD
-            const shareCadUrl = `https://iframe.sharecad.org/cadframe/load?url=${encodeURIComponent(fileUrl)}`;
-            
-            // Nhúng iframe
-            iframe.src = shareCadUrl;
-            
-            // Xử lý cảnh báo nếu người dùng đang test bằng Localhost
-            const hostname = window.location.hostname;
-            if(hostname === "localhost" || hostname === "127.0.0.1" || window.location.protocol === "file:") {
-                alertBox.innerHTML = `⚠️ <strong class="font-black">Lưu ý Localhost:</strong> Trình xem ShareCAD yêu cầu file .dwg phải ở trên máy chủ công khai (Public URL). Vì bạn đang chạy code offline, màn hình dưới có thể báo lỗi hoặc trắng trơn. Hãy upload lên GitHub Pages để tính năng này hoạt động bình thường!`;
-                alertBox.classList.remove('hidden');
-            } else {
-                alertBox.innerHTML = `⏳ Đang kết nối tới máy chủ ShareCAD để tải và kết xuất bản đồ <strong>${fileName}.dwg</strong>. Vui lòng đợi trong giây lát...`;
-                alertBox.classList.remove('hidden');
-                
-                // Tự động mờ thông báo sau 8 giây
-                setTimeout(() => { 
-                    alertBox.classList.add('hidden'); 
-                }, 8000);
-            }
-            
-            // Thay đổi giao diện nút
-            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-            document.querySelector('#dwg-dropdown > button').classList.add('active');
-            document.querySelector('#dwg-dropdown > button span:first-child').innerText = `📐 ${fileName}`;
-            
-            // Đóng menu thả xuống
-            document.getElementById('dwg-dropdown').classList.remove('open');
-        }
 
         // ================= GIAO DIỆN THEME THEO GIAO DIỆN MỚI =================
         function setTheme(themeName) {
