@@ -5,151 +5,185 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Văn hóa Xã hội — Xã Bình Hưng</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Phosphor Icons (for beautiful UI icons) -->
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Montserrat', sans-serif; background-color: #f8fafc; color: #1e293b; transition: all 0.3s; min-height: 100vh; display: flex; flex-direction: column; }
+        /* ================= GHI ĐÈ BÓNG ĐỔ ================= */
+        .shadow-sm { box-shadow: 0 1px 2px 0 rgba(8, 47, 73, 0.1); }
+        .shadow-md { box-shadow: 0 4px 6px -1px rgba(8, 47, 73, 0.15), 0 2px 4px -2px rgba(8, 47, 73, 0.1); }
+        .shadow-lg { box-shadow: 0 10px 15px -3px rgba(8, 47, 73, 0.15), 0 4px 6px -4px rgba(8, 47, 73, 0.1); }
+
+        body { font-family: 'Montserrat', sans-serif; margin: 0; padding: 0; min-height: 100vh; display: flex; flex-direction: column; transition: background-color 0.3s ease, color 0.3s ease; }
+        .container-wrapper { max-width: 1550px; margin: 0 auto 30px auto; padding: 0 24px; width: 100%; }
         
-        /* THEME TỐI */
-        body.dark-theme { background-color: #0f172a; color: #f8fafc; }
-        body.dark-theme .glass-panel { background: rgba(30, 41, 59, 0.65); border-color: rgba(255, 255, 255, 0.1); box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.5); }
-        body.dark-theme .primary-wrapper { background-color: rgba(139, 92, 246, 0.05); border-color: rgba(139, 92, 246, 0.2); }
-        body.dark-theme .text-dynamic-title { color: #c4b5fd; }
-        body.dark-theme .text-dynamic-body { color: #e2e8f0; }
-        body.dark-theme .btn-switcher-active { background: #6d28d9; color: #f8fafc; border-color: #8b5cf6; }
+        .glass-panel { backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: 1px solid; border-radius: 24px; transition: all 0.3s; }
+        .teal-wrapper { backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-radius: 36px; padding: 24px; transition: all 0.4s ease; }
+        @media (min-width: 768px) { .teal-wrapper { padding: 36px; } }
 
-        /* THEME SÁNG */
-        body.light-theme { background-color: #f8fafc; color: #1e293b; }
-        body.light-theme .glass-panel { background: rgba(255, 255, 255, 0.95); border-color: rgba(139, 92, 246, 0.2); box-shadow: 0 20px 40px -15px rgba(109, 40, 217, 0.15); }
-        body.light-theme .primary-wrapper { background-color: rgba(139, 92, 246, 0.08); border-color: rgba(139, 92, 246, 0.3); }
-        body.light-theme .text-dynamic-title { color: #4c1d95; } 
-        body.light-theme .text-dynamic-body { color: #334155; }
-        body.light-theme .btn-switcher-active { background: #5b21b6; color: #f8fafc; border-color: #4c1d95; }
+        /* ================= THEME TỐI (DARK MODE) ================= */
+        body.dark-theme { background-color: #082f49; color: #f0f9ff; }
+        body.dark-theme .glass-panel { background: rgba(12, 74, 110, 0.65); border-color: rgba(56, 189, 248, 0.2); box-shadow: 0 20px 40px -15px rgba(8, 47, 73, 0.4); }
+        body.dark-theme .teal-wrapper { background-color: rgba(14, 165, 233, 0.08); border: 1px solid rgba(14, 165, 233, 0.3); box-shadow: 0 20px 40px -15px rgba(8, 47, 73, 0.6); }
+        body.dark-theme .bg-widget-card { background-color: rgba(15, 23, 42, 0.6); border-color: rgba(56, 189, 248, 0.2); }
+        body.dark-theme .bg-widget-inner { background-color: rgba(15, 23, 42, 0.8); border-color: rgba(56, 189, 248, 0.15); }
+        body.dark-theme .control-theme-color { display: none !important; } /* Ẩn nút Xanh/Đỏ khi ở chế độ tối */
+        body.dark-theme .text-main-title { color: #60a5fa !important; }
 
-        .container-wrapper { max-width: 1550px; margin: 30px auto; padding: 0 24px; width: 100%; }
-        .glass-panel { backdrop-filter: blur(16px); border: 1px solid; border-radius: 24px; transition: all 0.3s; }
-        .primary-wrapper { backdrop-filter: blur(20px); border-radius: 36px; padding: 24px; transition: all 0.4s ease; border: 1px solid transparent; }
-        @media (min-width: 768px) { .primary-wrapper { padding: 36px; } }
+        /* ================= THEME SÁNG (LIGHT MODE) ================= */
+        body.light-theme { background-color: #f0f4f8; color: #1e3a8a; }
+        body.light-theme .glass-panel { background: rgba(255, 255, 255, 0.95); box-shadow: 0 20px 40px -15px rgba(12, 74, 110, 0.15); }
+        body.light-theme .bg-widget-card { background-color: #ffffff; }
+        body.light-theme .bg-widget-inner { background-color: #ffffff; }
 
-        .btn-back { display: inline-flex; align-items: center; gap: 8px; background: rgba(139, 92, 246, 0.1); border: 1px solid rgba(139, 92, 246, 0.3); padding: 12px 24px; border-radius: 14px; font-weight: 800; font-size: 12px; text-transform: uppercase; transition: all 0.3s ease;}
-        .btn-back:hover { transform: translateY(-2px); border-color: #8b5cf6; }
+        /* --- SÁNG + XANH DƯƠNG ĐẬM (MẶC ĐỊNH) --- */
+        body.light-theme.theme-xanh-ios .glass-panel { border-color: rgba(12, 74, 142, 0.2); }
+        body.light-theme.theme-xanh-ios .bg-widget-card { border-color: rgba(12, 74, 142, 0.15); }
+        body.light-theme.theme-xanh-ios .bg-widget-inner { border-color: rgba(12, 74, 142, 0.08); }
+        body.light-theme.theme-xanh-ios .text-main-title { color: #0c4a8e !important; }
         
-        .custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
-        .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(139, 92, 246, 0.4); border-radius: 10px; }
+        body.light-theme.theme-xanh-ios .teal-wrapper { 
+            background-color: rgba(12, 74, 142, 0.85);
+            border: 1px solid rgba(255, 255, 255, 0.25); 
+            box-shadow: 0 20px 40px -10px rgba(12, 74, 142, 0.5); 
+        }
+
+        /* --- SÁNG + ĐỎ CỜ --- */
+        body.light-theme.theme-do-hanhchinh .glass-panel { border-color: rgba(252, 165, 165, 0.8); }
+        body.light-theme.theme-do-hanhchinh .bg-widget-card { border-color: rgba(218, 37, 29, 0.2); }
+        body.light-theme.theme-do-hanhchinh .bg-widget-inner { border-color: rgba(218, 37, 29, 0.1); }
+        body.light-theme.theme-do-hanhchinh .text-main-title { color: #da251d !important; }
+
+        body.light-theme.theme-do-hanhchinh .teal-wrapper { 
+            background-color: #da251d; 
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 0 20px 40px -15px rgba(218, 37, 29, 0.4);
+        }
+
+        /* NÚT QUAY LẠI ĐỘNG */
+        .btn-back { display: inline-flex; align-items: center; gap: 8px; padding: 12px 24px; border-radius: 14px; font-weight: 800; font-size: 12px; text-transform: uppercase; transition: all 0.3s ease; border: 1px solid; }
+        
+        body.dark-theme .btn-back { background: rgba(14, 165, 233, 0.1); border-color: rgba(14, 165, 233, 0.3); color: #e0f2fe; }
+        body.dark-theme .btn-back:hover { background: rgba(14, 165, 233, 0.2); border-color: #38bdf8; transform: translateY(-2px); }
+        
+        body.light-theme.theme-xanh-ios .btn-back { background: #ffffff; border-color: rgba(255, 255, 255, 0.8); color: #0c4a8e; }
+        body.light-theme.theme-xanh-ios .btn-back:hover { background: #f0f4f8; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); }
+
+        body.light-theme.theme-do-hanhchinh .btn-back { background: #ffffff; border-color: #fca5a5; color: #da251d; }
+        body.light-theme.theme-do-hanhchinh .btn-back:hover { background: #fef2f2; border-color: #da251d; transform: translateY(-2px); }
+
+        /* SCROLLBAR & CONTROLS */
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { border-radius: 10px; }
+        body.dark-theme .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(56, 189, 248, 0.4); }
+        body.light-theme.theme-xanh-ios .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(12, 74, 142, 0.4); }
+        body.light-theme.theme-do-hanhchinh .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(218, 37, 29, 0.4); }
+
+        .controls-wrapper { display: flex; gap: 12px; align-items: center; }
+        .control-panel { border: 1px solid; padding: 4px; border-radius: 12px; display: flex; align-items: center; }
+        
+        body.dark-theme .control-panel { background: rgba(15, 23, 42, 0.5); border-color: rgba(56, 189, 248, 0.2); }
+        body.light-theme.theme-xanh-ios .control-panel { background: rgba(255, 255, 255, 0.15); border-color: rgba(255, 255, 255, 0.2); }
+        body.light-theme.theme-do-hanhchinh .control-panel { background: rgba(255, 255, 255, 0.2); border-color: rgba(255, 255, 255, 0.4); }
+
+        /* Nút con bên trong control panel của Xanh IOS */
+        body.light-theme.theme-xanh-ios .control-panel button.text-blue-900 { color: #0c4a8e !important; }
+        body.light-theme.theme-xanh-ios .control-panel button.text-blue-800 { color: #ffffff !important; opacity: 0.8; }
+        body.light-theme.theme-xanh-ios .control-panel button.text-blue-800:hover { opacity: 1; }
+        body.light-theme.theme-xanh-ios .control-panel button.border-transparent { color: #ffffff; font-weight: 700; opacity: 0.9; }
+        body.light-theme.theme-xanh-ios .control-panel button.border-transparent:hover { background: rgba(255, 255, 255, 0.1); opacity: 1; }
+
+        @media (max-width: 1024px) { .controls-wrapper { flex-direction: column; align-items: flex-end; } }
+        @media (max-width: 640px) { .flex-responsive { flex-direction: column; align-items: stretch; gap: 16px; } .controls-wrapper { flex-direction: row; justify-content: space-between; align-items: center; width: 100%; } }
 
         /* LIST ITEM STYLING */
-        .data-item { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px dashed rgba(139, 92, 246, 0.2); }
+        .data-item { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px dashed rgba(156, 163, 175, 0.4); }
         .data-item:last-child { border-bottom: none; }
-        .item-label { font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 600; opacity: 0.9; }
-        .item-value { font-family: 'Montserrat', sans-serif; font-size: 14px; font-weight: 800; color: #7c3aed; text-align: right; }
-        body.dark-theme .item-value { color: #a78bfa; }
+        .item-label { font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 600; opacity: 0.85; }
+        .item-value { font-family: 'Montserrat', sans-serif; font-size: 14px; font-weight: 800; text-align: right; }
     </style>
 </head>
-<body class="light-theme custom-scrollbar" id="body-context">
+<body class="light-theme custom-scrollbar theme-xanh-ios" id="body-context">
 
-    <div class="container-wrapper space-y-6 flex-grow">
+    <div class="container-wrapper mt-8 flex-grow">
         
-        <!-- HEADER TOP -->
-        <div class="flex flex-col sm:flex-row justify-between items-center gap-4">
-            <a href="home.html" class="btn-back text-violet-900 dark:text-violet-200">⬅️ Quay lại Trang chủ</a>
+        <div class="teal-wrapper space-y-8">
             
-            <div class="bg-violet-950/90 border border-violet-800 p-1 rounded-xl flex items-center shadow-md backdrop-blur">
-                <span class="text-[10px] font-black uppercase tracking-wider px-3 text-violet-300">Chế độ xem:</span>
-                <button onclick="setTheme('light')" id="btn-theme-light" class="flex items-center gap-1.5 text-[11px] font-extrabold uppercase px-3 py-1.5 rounded-lg transition border border-transparent text-white">☀️ Sáng</button>
-                <button onclick="setTheme('dark')" id="btn-theme-dark" class="flex items-center gap-1.5 text-[11px] font-extrabold uppercase px-3 py-1.5 rounded-lg transition border border-transparent text-white">🌙 Tối</button>
+            <div class="flex flex-col sm:flex-row justify-between items-center gap-4 flex-responsive">
+                <a href="home.html" class="btn-back">⬅️ Quay lại Trang chủ</a>
+                
+                <div class="controls-wrapper">
+                    <div class="control-panel">
+                        <button onclick="setTheme('light')" id="btn-theme-light" class="flex items-center gap-1.5 text-[11px] font-bold uppercase px-3 py-1.5 rounded-lg transition bg-white text-blue-900 shadow-sm border border-transparent">Sáng</button>
+                        <button onclick="setTheme('dark')" id="btn-theme-dark" class="flex items-center gap-1.5 text-[11px] font-bold uppercase px-3 py-1.5 rounded-lg transition text-blue-800 hover:text-white border border-transparent">Tối</button>
+                    </div>
+
+                    <div class="control-panel control-theme-color">
+                        <button onclick="switchSystemTheme('xanh')" id="btn-theme-xanh" class="flex items-center gap-1.5 text-[11px] uppercase px-3 py-1.5 rounded-lg transition border border-transparent">🔵 Xanh</button>
+                        <button onclick="switchSystemTheme('do')" id="btn-theme-do" class="flex items-center gap-1.5 text-[11px] uppercase px-3 py-1.5 rounded-lg transition border border-transparent">🔴 Đỏ</button>
+                    </div>
+                </div>
             </div>
-        </div>
-
-        <div class="primary-wrapper space-y-8">
-
-            <!-- PAGE TITLE -->
-            <header class="glass-panel p-8 text-center md:text-left flex flex-col md:flex-row justify-between items-center gap-6 bg-gradient-to-r from-violet-500/10 to-fuchsia-500/10">
-                <div>
-                    <h1 class="text-3xl md:text-4xl font-black uppercase tracking-wider text-dynamic-title">
-                        Văn Hóa - Xã Hội
-                    </h1>
-                    <p class="font-bold text-xs uppercase tracking-[0.15em] mt-2 opacity-80 text-dynamic-body">
-                        UBND Xã Bình Hưng — Tình hình phát triển VH-XH
-                    </p>
-                </div>
-                <div class="text-right">
-                    <span class="block text-[11px] font-black uppercase tracking-wider text-violet-600 dark:text-violet-300 mb-1">Tỷ lệ bao phủ BHYT</span>
-                    <span class="text-4xl font-black text-fuchsia-600 dark:text-fuchsia-400" id="kpi-bhyt">95.34%</span>
-                </div>
-            </header>
 
             <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
-                <!-- KHỐI 1: GIÁO DỤC -->
-                <div class="glass-panel p-6 flex flex-col h-full border-t-4 border-t-blue-500 hover:transform hover:-translate-y-1 transition duration-300">
-                    <div class="flex items-center gap-3 mb-6">
-                        <div class="p-3 bg-blue-500/20 text-blue-600 dark:text-blue-400 rounded-xl"><i class="ph-fill ph-student text-2xl"></i></div>
-                        <h2 class="text-sm font-black uppercase tracking-wider text-dynamic-title">Giáo dục & Đào tạo</h2>
+                <div class="bg-widget-card border-2 rounded-3xl p-6 shadow-sm hover:-translate-y-1 transition-transform duration-300 flex flex-col h-full">
+                    <div class="flex items-center gap-3 mb-4 border-b border-gray-200 dark:border-slate-700 pb-3">
+                        <div class="p-2.5 bg-widget-inner border shadow-sm rounded-xl shrink-0 text-main-title"><i class="ph-fill ph-users-three text-xl"></i></div>
+                        <h2 class="text-sm font-black uppercase tracking-wider text-main-title">I. Lĩnh vực Nội vụ</h2>
                     </div>
-                    <div class="space-y-4 flex-grow" id="block-giao-duc">
-                        <!-- Render via JS -->
-                    </div>
+                    <div class="space-y-1 flex-grow" id="block-noi-vu">
+                        </div>
                 </div>
 
-                <!-- KHỐI 2: NỘI VỤ & LĐTBXH -->
-                <div class="glass-panel p-6 flex flex-col h-full border-t-4 border-t-emerald-500 hover:transform hover:-translate-y-1 transition duration-300">
-                    <div class="flex items-center gap-3 mb-6">
-                        <div class="p-3 bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 rounded-xl"><i class="ph-fill ph-users-three text-2xl"></i></div>
-                        <h2 class="text-sm font-black uppercase tracking-wider text-dynamic-title">Lao động - Nội vụ</h2>
+                <div class="bg-widget-card border-2 rounded-3xl p-6 shadow-sm hover:-translate-y-1 transition-transform duration-300 flex flex-col h-full">
+                    <div class="flex items-center gap-3 mb-4 border-b border-gray-200 dark:border-slate-700 pb-3">
+                        <div class="p-2.5 bg-widget-inner border shadow-sm rounded-xl shrink-0 text-main-title"><i class="ph-fill ph-student text-xl"></i></div>
+                        <h2 class="text-sm font-black uppercase tracking-wider text-main-title">II. Lĩnh vực Giáo dục và Đào tạo</h2>
                     </div>
-                    <div class="space-y-4 flex-grow" id="block-noi-vu">
-                        <!-- Render via JS -->
-                    </div>
+                    <div class="space-y-1 flex-grow" id="block-giao-duc">
+                        </div>
                 </div>
 
-                <!-- KHỐI 3: VĂN HÓA DU LỊCH -->
-                <div class="glass-panel p-6 flex flex-col h-full border-t-4 border-t-amber-500 hover:transform hover:-translate-y-1 transition duration-300">
-                    <div class="flex items-center gap-3 mb-6">
-                        <div class="p-3 bg-amber-500/20 text-amber-600 dark:text-amber-400 rounded-xl"><i class="ph-fill ph-map-pin text-2xl"></i></div>
-                        <h2 class="text-sm font-black uppercase tracking-wider text-dynamic-title">VHTT & Du lịch</h2>
+                <div class="bg-widget-card border-2 rounded-3xl p-6 shadow-sm hover:-translate-y-1 transition-transform duration-300 flex flex-col h-full">
+                    <div class="flex items-center gap-3 mb-4 border-b border-gray-200 dark:border-slate-700 pb-3">
+                        <div class="p-2.5 bg-widget-inner border shadow-sm rounded-xl shrink-0 text-main-title"><i class="ph-fill ph-map-pin text-xl"></i></div>
+                        <h2 class="text-[12px] font-black uppercase tracking-wider text-main-title">III. Lĩnh vực Văn hoá, Khoa học & Du lịch</h2>
                     </div>
-                    <div class="space-y-4 flex-grow" id="block-van-hoa">
-                        <!-- Render via JS -->
-                    </div>
+                    <div class="space-y-1 flex-grow" id="block-van-hoa">
+                        </div>
                 </div>
 
-                <!-- KHỐI 4: Y TẾ -->
-                <div class="glass-panel p-6 flex flex-col h-full border-t-4 border-t-rose-500 hover:transform hover:-translate-y-1 transition duration-300">
-                    <div class="flex items-center gap-3 mb-6">
-                        <div class="p-3 bg-rose-500/20 text-rose-600 dark:text-rose-400 rounded-xl"><i class="ph-fill ph-first-aid-kit text-2xl"></i></div>
-                        <h2 class="text-sm font-black uppercase tracking-wider text-dynamic-title">Y tế & Dân số</h2>
+                <div class="bg-widget-card border-2 rounded-3xl p-6 shadow-sm hover:-translate-y-1 transition-transform duration-300 flex flex-col h-full">
+                    <div class="flex items-center gap-3 mb-4 border-b border-gray-200 dark:border-slate-700 pb-3">
+                        <div class="p-2.5 bg-widget-inner border shadow-sm rounded-xl shrink-0 text-main-title"><i class="ph-fill ph-first-aid-kit text-xl"></i></div>
+                        <h2 class="text-sm font-black uppercase tracking-wider text-main-title">IV. Lĩnh vực Y tế</h2>
                     </div>
-                    <div class="space-y-4 flex-grow" id="block-y-te">
-                        <!-- Render via JS -->
-                    </div>
+                    <div class="space-y-1 flex-grow" id="block-y-te">
+                        </div>
                 </div>
             </div>
 
-            <!-- BẢNG CHI TIẾT KIỂM TRA LIÊN NGÀNH -->
-            <div class="glass-panel p-6">
-                <div class="flex items-center gap-3 mb-6">
-                    <div class="p-3 bg-fuchsia-500/20 text-fuchsia-600 dark:text-fuchsia-400 rounded-xl"><i class="ph-fill ph-shield-check text-2xl"></i></div>
-                    <h2 class="text-sm font-black uppercase tracking-wider text-dynamic-title">Chi tiết Kiểm tra Liên ngành Văn hóa</h2>
+            <div class="bg-widget-card border-2 rounded-3xl p-6 md:p-8 shadow-sm">
+                <div class="flex items-center gap-3 mb-6 border-b border-gray-200 dark:border-slate-700 pb-4">
+                    <div class="p-2.5 bg-widget-inner border shadow-sm rounded-xl shrink-0 text-main-title"><i class="ph-fill ph-shield-check text-2xl"></i></div>
+                    <h2 class="text-base font-black uppercase tracking-wider text-main-title">Chi tiết Kiểm tra Liên ngành Văn hóa</h2>
                 </div>
                 
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                    <div class="lg:col-span-1 space-y-2" id="block-kiem-tra-kpi">
-                        <!-- Render KPI -->
-                    </div>
+                    <div class="lg:col-span-1 space-y-4" id="block-kiem-tra-kpi">
+                        </div>
                     
                     <div class="lg:col-span-2">
-                        <div class="w-full overflow-x-auto custom-scrollbar rounded-xl border border-violet-200 dark:border-violet-900/50">
+                        <div class="w-full overflow-x-auto custom-scrollbar rounded-2xl border border-gray-200 dark:border-slate-700 shadow-sm bg-widget-inner">
                             <table class="w-full text-left border-collapse">
                                 <thead>
-                                    <tr class="bg-violet-100 dark:bg-violet-900/40 text-violet-900 dark:text-violet-200 text-[11px] uppercase tracking-wider font-black">
-                                        <th class="p-4 border-b border-violet-200 dark:border-violet-800">Loại hình cơ sở</th>
-                                        <th class="p-4 border-b border-violet-200 dark:border-violet-800 text-center">Tổng số cơ sở</th>
-                                        <th class="p-4 border-b border-violet-200 dark:border-violet-800 text-center text-amber-600 dark:text-amber-400">Số cơ sở bị nhắc nhở</th>
+                                    <tr class="bg-gray-50/50 dark:bg-slate-800/50 text-main-title text-[11px] uppercase tracking-wider font-black">
+                                        <th class="p-4 border-b border-gray-200 dark:border-slate-700">Loại hình cơ sở</th>
+                                        <th class="p-4 border-b border-gray-200 dark:border-slate-700 text-center">Tổng số cơ sở</th>
+                                        <th class="p-4 border-b border-gray-200 dark:border-slate-700 text-center text-rose-500">Số cơ sở bị nhắc nhở</th>
                                     </tr>
                                 </thead>
-                                <tbody id="table-kiem-tra" class="text-[13px] font-medium text-dynamic-body">
-                                    <!-- Render Rows -->
-                                </tbody>
+                                <tbody id="table-kiem-tra" class="text-[13px] font-medium">
+                                    </tbody>
                             </table>
                         </div>
                     </div>
@@ -159,171 +193,241 @@
         </div> 
     </div>
 
-    <footer class="w-full text-center py-6 font-bold text-[10px] uppercase tracking-[0.3em] border-t border-violet-200 dark:border-violet-900 bg-white/50 dark:bg-slate-900/40 backdrop-blur-md mt-auto text-dynamic-body">
+    <footer class="w-full text-center py-6 text-main-title font-bold text-[10px] uppercase tracking-[0.3em] border-t border-gray-200 dark:border-slate-800 bg-white/50 dark:bg-slate-900/50 backdrop-blur-md mt-auto transition-colors duration-300">
         &copy; 2026 IOC Xã Bình Hưng — Hệ thống Điều hành Văn hóa Xã hội
     </footer>
 
     <script>
-        // Dữ liệu JSON tĩnh (được gắn cứng từ prompt của bạn)
+        // Dữ liệu JSON dựa trên 4 lĩnh vực cấu trúc I, II, III, IV
         const jsonData = {
-            "linh_vuc_giao_duc_va_dao_tao": {
-                "khen_thuong_danh_hieu": { "nha_giao_nhan_dan_uu_tu": "01 trường hợp (Không đạt)" },
-                "phong_chong_tai_nan_duoi_nuoc": { "so_truong_dat": "66/80 trường", "so_truong_khong_danh_gia": "14 trường" },
-                "so_luong_truong_hoc": { "mam_non_cong_lap": 6, "mam_non_tu_thuc": 7, "quoc_te": 4, "thcs_cong_lap": 3, "thpt": 1, "tieu_hoc_cong_lap": 6 }
+            "I_Linh_vuc_Noi_vu": {
+                "Bao_tro_xa_hoi": {
+                    "Quyet_dinh_huu_tri_xa_hoi": "301",
+                    "Quyet_dinh_nguoi_khuyet_tat": "86",
+                    "Doi_tuong_tro_cap_huu_tri_xa_hoi": "1709"
+                },
+                "Lao_dong": {
+                    "Hoa_giai_tranh_chap_tien_luong": "1"
+                },
+                "Nhan_su": {
+                    "Quyet_dinh_nang_luong_can_bo": "45",
+                    "Quyet_dinh_chuc_danh_tai_ap": "109"
+                },
+                "Thi_dua_khen_thuong": {
+                    "Khen_thuong_cham_lo_Tet": "19 tập thể, 47 cá nhân"
+                },
+                "Tre_em_Binh_dang_gioi": {
+                    "Tong_so_tre_em": "22.594",
+                    "Tre_duoi_16_tuoi_thuong_tru": "12.579"
+                },
+                "Ton_giao": {
+                    "Co_so_ton_giao_hop_phap": "16",
+                    "Diem_sinh_hoat_ton_giao": "9"
+                },
+                "Dan_toc": {
+                    "Tong_so_nguoi": "6.998",
+                    "Tong_so_dan_toc": "32"
+                }
             },
-            "linh_vuc_noi_vu": {
-                "bao_tro_xa_hoi": { "cap_the_bhyt_huu_tri_xa_hoi": 301, "cap_the_bhyt_nguoi_khuyet_tat": 86, "quyet_dinh_hoa_tang": 103, "quyet_dinh_huu_tri_xa_hoi": 301, "quyet_dinh_mai_tang_phi": 75, "quyet_dinh_nguoi_khuyet_tat": 86 },
-                "lao_dong": { "hoa_giai_tranh_chap_tien_luong": "01 trường hợp" },
-                "thi_dua_khen_thuong": { "cham_lo_tet_2026": "19 tập thể, 47 cá nhân", "cong_tac_bau_cu": "19 tập thể, 184 cá nhân", "hoi_thi_trang_tri_tet_2026": "41 tập thể, 47 cá nhân", "tong_ket_phong_trao_thi_dua_yeu_nuoc": "15 tập thể, 62 cá nhân" }
+            "II_Linh_vuc_Giao_duc_va_Dao_tao": {
+                "So_truong_mam_non_cong_lap": "6",
+                "So_truong_tieu_hoc_cong_lap": "6",
+                "So_truong_THCS_cong_lap": "3",
+                "So_truong_THPT": "1",
+                "So_truong_mam_non_tu_thuc": "7",
+                "So_truong_quoc_te": "4",
+                "Phong_chong_tai_nan_duoi_nuoc_dat": "66/80 trường"
             },
-            "linh_vuc_van_hoa_khoa_hoc_thong_tin_gia_dinh_du_lich": {
-                "du_lich_va_quang_cao": { "co_so_chuyen_doi_hinh_thuc": 3, "co_so_luu_tru_dang_hoat_dong": 125, "co_so_ngung_kinh_doanh": 17, "cum_bang_ron_quang_cao": 1, "cum_pa_no_quang_cao": 19, "dia_chi_do": 12 },
-                "kiem_tra_lien_nganh": { "chi_tiet_co_so": { "ca_phe_giai_khat": 30, "hot_toc": 4, "karaoke": 8, "khach_san": 148, "massage": 22, "quan_an_co_nu_tiep_vien": 12, "tro_choi_dien_tu": 4 }, "chi_tiet_nhac_nho": { "ca_phe_giai_khat": 46, "karaoke": 11, "khach_san": 29, "massage": 19, "quan_an": 5, "tro_choi_dien_tu": 6 }, "ket_qua_nhac_nho": 160, "ky_cam_ket": "151/228 cơ sở", "lap_bien_ban_vi_pham": 9, "so_co_so_chap_hanh_dong_phat": "8/9", "so_luot_kiem_tra": 169, "tong_so_co_so_kinh_doanh": 228, "tong_tien_phat_vnd": 31500000 },
-                "tuyen_truyen_co_dong": { "bang_ron": 67, "banner": 64, "pa_no": 252 },
-                "van_hoa_the_thao": { "chuong_trinh_bieu_dien": 3, "clb_doi_nhom_the_thao": 11, "clb_doi_nhom_van_nghe": 9, "cuoc_thi_hoi_thi": 16 }
+            "III_Linh_vuc_Van_hoa_Khoa_hoc_Thong_tin_Gia_dinh_Du_lich": {
+                "Van_hoa_The_duc_The_thao": {
+                    "CLB_doi_nhom_the_thao": "11",
+                    "CLB_doi_nhom_van_nghe": "9",
+                    "To_chuc_cuoc_thi_hoi_thi": "16"
+                },
+                "Tuyen_truyen": {
+                    "Treo_bang_ron": "67",
+                    "Treo_pa_no": "252"
+                },
+                "Du_lich": {
+                    "Co_so_dang_hoat_dong": "125",
+                    "Co_so_ngung_kinh_doanh": "17"
+                },
+                "Di_san": {
+                    "Dia_chi_do": "12"
+                },
+                "Kiem_tra_lien_nganh": {
+                    "Tong_co_so_kinh_doanh": "228",
+                    "Luot_co_so_kiem_tra": "169",
+                    "Luot_co_so_nhac_nho": "160",
+                    "Luot_lap_bien_ban_vi_pham": "9",
+                    "Tong_tien_phat": "31.500.000",
+                    "Ky_cam_ket_dich_vu_van_hoa": "151/228 cơ sở",
+                    "Chi_tiet_co_so": {
+                        "khach_san": 148, "ca_phe": 30, "massage": 22, "quan_an": 12, "karaoke": 8, "hot_toc": 4, "dien_tu": 4
+                    },
+                    "Chi_tiet_nhac_nho": {
+                        "khach_san": 29, "ca_phe": 46, "massage": 19, "quan_an": 5, "karaoke": 11, "dien_tu": 6
+                    }
+                }
             },
-            "linh_vuc_y_te": {
-                "an_toan_thuc_pham": { "bang_ron_khau_hieu": 69, "kiem_tra_co_so": 2, "lop_tap_huan": 2, "nguoi_tham_du_tap_huan": 232 },
-                "bao_hiem_y_te": { "cap_doi_tu_nguyen": 11193, "cap_moi_chua_tham_gia": 14736, "chi_tiet_nhom_doi_tuong": { "an_ninh_co_so": 129, "bao_tro_xa_hoi": 494, "can_bo_cong_chuc_co_quan": 47, "hoc_sinh_sinh_vien": 12093, "huu_tri_xa_hoi": 1380, "nguoi_co_cong": 288, "nguoi_dan_xa_an_toan_khu": 37217, "tre_em_duoi_6_tuoi": 4168, "vien_chuc_nguoi_lao_dong_truong_hoc": 755 }, "tong_cap_moi_khu_an_toan": 25929, "tong_ty_le_cap_bhyt": "95,34% (56.571/59.335 nhân khẩu)" },
-                "phong_chong_te_nan_xa_hoi": { "dua_vao_trung_tam_dieu_duong_tam_than": 2, "dua_vao_trung_tam_ho_tro_xa_hoi": 1, "ky_cam_ket": "98/187 cơ sở (tỷ lệ 52,4%)" }
+            "IV_Linh_vuc_Y_te": {
+                "An_toan_thuc_pham": {
+                    "Lop_tap_huan_truc_tuyen": "2 lớp (232 người)",
+                    "Kiem_tra_co_so_kinh_doanh": "2"
+                },
+                "Phong_chong_te_nan_xa_hoi": {
+                    "Lap_ho_so_dua_vao_trung_tam": "3 trường hợp",
+                    "Ky_ban_cam_ket": "98/187 cơ sở (52,4%)"
+                },
+                "Bao_hiem_y_te": {
+                    "Cap_moi_va_cap_doi": "25.929 trường hợp",
+                    "Cap_moi_chua_tham_gia": "14.736",
+                    "Cap_doi_tu_nguyen": "11.193",
+                    "Ty_le_cap_BHYT_dat": "95,34% (56.571 người)"
+                },
+                "Kham_suc_khoe": {
+                    "Ty_le_kham_suc_khoe_toan_dan": "100% (75.023 người)"
+                }
             }
         };
 
-        // Hàm hỗ trợ format tiền tệ
-        const formatMoney = (val) => new Intl.NumberFormat('vi-VN').format(val || 0);
-
-        // Hàm tạo 1 dòng (row) HTML cho danh sách
-        const createItem = (label, value) => `
+        const createItem = (label, value, customValueClass = "text-main-title") => `
             <div class="data-item">
-                <span class="item-label text-dynamic-body">${label}</span>
-                <span class="item-value">${value}</span>
+                <span class="item-label">${label}</span>
+                <span class="item-value ${customValueClass}">${value}</span>
             </div>
         `;
 
         function renderData() {
-            // ================== GIÁO DỤC ==================
-            const edu = jsonData.linh_vuc_giao_duc_va_dao_tao;
-            const schools = edu.so_luong_truong_hoc;
-            const totalSchools = Object.values(schools).reduce((a, b) => a + b, 0);
-            
-            let eduHtml = createItem("Tổng số cơ sở giáo dục", `${totalSchools} trường`);
-            eduHtml += createItem("Mầm non công lập", schools.mam_non_cong_lap);
-            eduHtml += createItem("Mầm non tư thục", schools.mam_non_tu_thuc);
-            eduHtml += createItem("Tiểu học công lập", schools.tieu_hoc_cong_lap);
-            eduHtml += createItem("THCS công lập", schools.thcs_cong_lap);
-            eduHtml += createItem("Trường Quốc tế", schools.quoc_te);
-            eduHtml += createItem("Trường đạt chuẩn PC Tai nạn đuối nước", `<span class="text-blue-500">${edu.phong_chong_tai_nan_duoi_nuoc.so_truong_dat}</span>`);
-            document.getElementById('block-giao-duc').innerHTML = eduHtml;
+            // ================== I. NỘI VỤ ==================
+            const i = jsonData.I_Linh_vuc_Noi_vu;
+            let iHtml = createItem("QĐ Hưu trí xã hội", i.Bao_tro_xa_hoi.Quyet_dinh_huu_tri_xa_hoi);
+            iHtml += createItem("QĐ Người khuyết tật", i.Bao_tro_xa_hoi.Quyet_dinh_nguoi_khuyet_tat);
+            iHtml += createItem("Hòa giải tranh chấp lương", i.Lao_dong.Hoa_giai_tranh_chap_tien_luong);
+            iHtml += createItem("Tổng số trẻ em", i.Tre_em_Binh_dang_gioi.Tong_so_tre_em);
+            iHtml += createItem("Cơ sở tôn giáo / Điểm SH", `${i.Ton_giao.Co_so_ton_giao_hop_phap} / ${i.Ton_giao.Diem_sinh_hoat_ton_giao}`);
+            iHtml += createItem("Dân tộc", `${i.Dan_toc.Tong_so_dan_toc} dân tộc (${i.Dan_toc.Tong_so_nguoi} người)`);
+            document.getElementById('block-noi-vu').innerHTML = iHtml;
 
-            // ================== NỘI VỤ ==================
-            const noivu = jsonData.linh_vuc_noi_vu;
-            const btxh = noivu.bao_tro_xa_hoi;
-            let noivuHtml = createItem("Hòa giải tranh chấp lương", noivu.lao_dong.hoa_giai_tranh_chap_tien_luong);
-            noivuHtml += createItem("QĐ Hưu trí xã hội", btxh.quyet_dinh_huu_tri_xa_hoi);
-            noivuHtml += createItem("QĐ Trợ cấp Người khuyết tật", btxh.quyet_dinh_nguoi_khuyet_tat);
-            noivuHtml += createItem("Cấp thẻ BHYT Hưu trí", btxh.cap_the_bhyt_huu_tri_xa_hoi);
-            noivuHtml += createItem("Hỗ trợ Mai táng phí / Hỏa táng", `${btxh.quyet_dinh_mai_tang_phi} / ${btxh.quyet_dinh_hoa_tang}`);
-            noivuHtml += `<div class="mt-4 pt-4 border-t border-dashed border-emerald-500/30">
-                            <span class="block text-[11px] font-black uppercase text-emerald-600 dark:text-emerald-400 mb-2">Khen thưởng thi đua tiêu biểu</span>
-                            <div class="text-[12px] font-medium leading-relaxed opacity-90 text-dynamic-body">
-                                • Chăm lo Tết 2026: ${noivu.thi_dua_khen_thuong.cham_lo_tet_2026}<br>
-                                • Công tác bầu cử: ${noivu.thi_dua_khen_thuong.cong_tac_bau_cu}
+            // ================== II. GIÁO DỤC ==================
+            const ii = jsonData.II_Linh_vuc_Giao_duc_va_Dao_tao;
+            const totalSchools = parseInt(ii.So_truong_mam_non_cong_lap) + parseInt(ii.So_truong_mam_non_tu_thuc) + parseInt(ii.So_truong_tieu_hoc_cong_lap) + parseInt(ii.So_truong_THCS_cong_lap) + parseInt(ii.So_truong_THPT) + parseInt(ii.So_truong_quoc_te);
+            let iiHtml = createItem("Tổng số cơ sở giáo dục", `${totalSchools} trường`);
+            iiHtml += createItem("Mầm non công lập", ii.So_truong_mam_non_cong_lap);
+            iiHtml += createItem("Mầm non tư thục", ii.So_truong_mam_non_tu_thuc);
+            iiHtml += createItem("Tiểu học công lập", ii.So_truong_tieu_hoc_cong_lap);
+            iiHtml += createItem("THCS / THPT công lập", `${ii.So_truong_THCS_cong_lap} / ${ii.So_truong_THPT}`);
+            iiHtml += createItem("Trường Quốc tế", ii.So_truong_quoc_te);
+            iiHtml += createItem("PC Tai nạn đuối nước", ii.Phong_chong_tai_nan_duoi_nuoc_dat, "text-emerald-500");
+            document.getElementById('block-giao-duc').innerHTML = iiHtml;
+
+            // ================== III. VĂN HÓA ==================
+            const iii = jsonData.III_Linh_vuc_Van_hoa_Khoa_hoc_Thong_tin_Gia_dinh_Du_lich;
+            let iiiHtml = createItem("CLB / Đội nhóm Thể thao", iii.Van_hoa_The_duc_The_thao.CLB_doi_nhom_the_thao);
+            iiiHtml += createItem("CLB / Đội nhóm Văn nghệ", iii.Van_hoa_The_duc_The_thao.CLB_doi_nhom_van_nghe);
+            iiiHtml += createItem("Tuyên truyền (Pano/Băng rôn)", `${iii.Tuyen_truyen.Treo_pa_no} / ${iii.Tuyen_truyen.Treo_bang_ron}`);
+            iiiHtml += createItem("CS Lưu trú (HĐ / Ngừng)", `<span class="text-emerald-500">${iii.Du_lich.Co_so_dang_hoat_dong}</span> / <span class="text-rose-500">${iii.Du_lich.Co_so_ngung_kinh_doanh}</span>`, "");
+            iiiHtml += createItem("Địa chỉ đỏ", iii.Di_san.Dia_chi_do);
+            document.getElementById('block-van-hoa').innerHTML = iiiHtml;
+
+            // ================== IV. Y TẾ ==================
+            const iv = jsonData.IV_Linh_vuc_Y_te;
+            let ivHtml = createItem("Tỷ lệ bao phủ BHYT", iv.Bao_hiem_y_te.Ty_le_cap_BHYT_dat, "text-rose-500 text-[16px]");
+            ivHtml += createItem("Cấp mới chưa tham gia", iv.Bao_hiem_y_te.Cap_moi_chua_tham_gia);
+            ivHtml += createItem("Cấp BHYT tự nguyện", iv.Bao_hiem_y_te.Cap_doi_tu_nguyen);
+            ivHtml += createItem("Khám SK toàn dân", iv.Kham_suc_khoe.Ty_le_kham_suc_khoe_toan_dan);
+            ivHtml += createItem("Ký cam kết phòng chống TNXH", iv.Phong_chong_te_nan_xa_hoi.Ky_ban_cam_ket);
+            ivHtml += `<div class="mt-4 pt-4 border-t border-dashed border-gray-300 dark:border-gray-600">
+                            <span class="block text-[11px] font-black uppercase text-main-title mb-2">Công tác An toàn thực phẩm</span>
+                            <div class="text-[12px] font-medium opacity-85 leading-relaxed">
+                                Tổ chức ${iv.An_toan_thuc_pham.Lop_tap_huan_truc_tuyen}. Kiểm tra ${iv.An_toan_thuc_pham.Kiem_tra_co_so_kinh_doanh} cơ sở kinh doanh.
                             </div>
-                          </div>`;
-            document.getElementById('block-noi-vu').innerHTML = noivuHtml;
-
-            // ================== VĂN HÓA ==================
-            const vanhoa = jsonData.linh_vuc_van_hoa_khoa_hoc_thong_tin_gia_dinh_du_lich;
-            let vanhoaHtml = createItem("Cơ sở lưu trú HĐ / Ngừng", `<span class="text-emerald-500">${vanhoa.du_lich_va_quang_cao.co_so_luu_tru_dang_hoat_dong}</span> / <span class="text-rose-500">${vanhoa.du_lich_va_quang_cao.co_so_ngung_kinh_doanh}</span>`);
-            vanhoaHtml += createItem("CLB / Đội nhóm Thể thao", vanhoa.van_hoa_the_thao.clb_doi_nhom_the_thao);
-            vanhoaHtml += createItem("CLB / Đội nhóm Văn nghệ", vanhoa.van_hoa_the_thao.clb_doi_nhom_van_nghe);
-            vanhoaHtml += createItem("Tuyên truyền (Băng rôn/Banner)", `${vanhoa.tuyen_truyen_co_dong.bang_ron} / ${vanhoa.tuyen_truyen_co_dong.banner}`);
-            vanhoaHtml += createItem("Quản lý Địa chỉ đỏ", vanhoa.du_lich_va_quang_cao.dia_chi_do);
-            document.getElementById('block-van-hoa').innerHTML = vanhoaHtml;
-
-            // ================== Y TẾ ==================
-            const yte = jsonData.linh_vuc_y_te;
-            let yteHtml = createItem("Cấp mới BHYT chưa tham gia", formatMoney(yte.bao_hiem_y_te.cap_moi_chua_tham_gia));
-            yteHtml += createItem("Cấp BHYT tự nguyện", formatMoney(yte.bao_hiem_y_te.cap_doi_tu_nguyen));
-            yteHtml += createItem("Cấp mới khu An toàn (ATK)", `<span class="text-fuchsia-500">${formatMoney(yte.bao_hiem_y_te.tong_cap_moi_khu_an_toan)}</span>`);
-            yteHtml += createItem("Ký cam kết phòng tệ nạn XH", yte.phong_chong_te_nan_xa_hoi.ky_cam_ket);
-            yteHtml += `<div class="mt-4 pt-4 border-t border-dashed border-rose-500/30">
-                            <span class="block text-[11px] font-black uppercase text-rose-600 dark:text-rose-400 mb-2">Công tác An toàn thực phẩm</span>
-                            <div class="text-[12px] font-medium opacity-90 text-dynamic-body">
-                                Tổ chức ${yte.an_toan_thuc_pham.lop_tap_huan} lớp tập huấn với ${yte.an_toan_thuc_pham.nguoi_tham_du_tap_huan} người tham dự. Treo ${yte.an_toan_thuc_pham.bang_ron_khau_hieu} băng rôn khẩu hiệu.
-                            </div>
-                          </div>`;
-            document.getElementById('block-y-te').innerHTML = yteHtml;
+                        </div>`;
+            document.getElementById('block-y-te').innerHTML = ivHtml;
 
             // ================== KIỂM TRA LIÊN NGÀNH ==================
-            const kiemtra = vanhoa.kiem_tra_lien_nganh;
+            const kiemtra = iii.Kiem_tra_lien_nganh;
             
             // KPI Panel
             let kpiHtml = `
-                <div class="bg-violet-100 dark:bg-violet-900/30 p-4 rounded-xl border border-violet-200 dark:border-violet-800">
-                    <span class="block text-[10px] font-black uppercase text-violet-500 dark:text-violet-400 mb-1">Tổng lượt kiểm tra</span>
-                    <span class="text-2xl font-black text-violet-800 dark:text-violet-200">${kiemtra.so_luot_kiem_tra} lượt</span>
+                <div class="bg-widget-inner p-5 rounded-2xl border border-gray-200 dark:border-slate-700 shadow-sm">
+                    <span class="block text-[10px] font-black uppercase opacity-70 mb-1">Tổng lượt kiểm tra</span>
+                    <span class="text-2xl font-black text-main-title">${kiemtra.Luot_co_so_kiem_tra} <span class="text-xs">lượt</span></span>
                 </div>
-                <div class="bg-rose-50 dark:bg-rose-900/20 p-4 rounded-xl border border-rose-200 dark:border-rose-900/50 mt-4">
-                    <span class="block text-[10px] font-black uppercase text-rose-500 dark:text-rose-400 mb-1">Lập BB Vi phạm / Chấp hành</span>
-                    <span class="text-2xl font-black text-rose-700 dark:text-rose-300">${kiemtra.lap_bien_ban_vi_pham} / ${kiemtra.so_co_so_chap_hanh_dong_phat}</span>
+                <div class="bg-widget-inner p-5 rounded-2xl border border-gray-200 dark:border-slate-700 shadow-sm">
+                    <span class="block text-[10px] font-black uppercase opacity-70 mb-1">Lập BB Vi phạm / Nhắc nhở</span>
+                    <span class="text-2xl font-black text-main-title">${kiemtra.Luot_lap_bien_ban_vi_pham} <span class="text-base font-medium opacity-50">/</span> ${kiemtra.Luot_co_so_nhac_nho}</span>
                 </div>
-                <div class="bg-amber-50 dark:bg-amber-900/20 p-4 rounded-xl border border-amber-200 dark:border-amber-900/50 mt-4">
-                    <span class="block text-[10px] font-black uppercase text-amber-600 dark:text-amber-500 mb-1">Tổng tiền thu phạt</span>
-                    <span class="text-2xl font-black text-amber-700 dark:text-amber-400">${formatMoney(kiemtra.tong_tien_phat_vnd)} <span class="text-xs">VNĐ</span></span>
+                <div class="bg-widget-inner p-5 rounded-2xl border border-gray-200 dark:border-slate-700 shadow-sm">
+                    <span class="block text-[10px] font-black uppercase opacity-70 mb-1">Tổng tiền thu phạt</span>
+                    <span class="text-2xl font-black text-main-title">${kiemtra.Tong_tien_phat} <span class="text-xs">VNĐ</span></span>
                 </div>
             `;
             document.getElementById('block-kiem-tra-kpi').innerHTML = kpiHtml;
 
             // Bảng Map Data
             const mapLoaiHinh = {
-                "ca_phe_giai_khat": "Cà phê / Giải khát",
                 "khach_san": "Khách sạn / Lưu trú",
+                "ca_phe": "Cà phê / Giải khát",
                 "massage": "Dịch vụ Massage",
-                "quan_an": "Quán ăn",
-                "quan_an_co_nu_tiep_vien": "Quán ăn có nữ tiếp viên",
+                "quan_an": "Quán ăn có tiếp viên",
                 "karaoke": "Dịch vụ Karaoke",
                 "hot_toc": "Hớt tóc",
-                "tro_choi_dien_tu": "Trò chơi điện tử"
+                "dien_tu": "Trò chơi điện tử"
             };
 
             let tableHtml = '';
-            for (const key in kiemtra.chi_tiet_co_so) {
-                const total = kiemtra.chi_tiet_co_so[key];
-                const warning = kiemtra.chi_tiet_nhac_nho[key] || 0; // Một số mục không có nhắc nhở
+            for (const key in kiemtra.Chi_tiet_co_so) {
+                const total = kiemtra.Chi_tiet_co_so[key];
+                const warning = kiemtra.Chi_tiet_nhac_nho[key] || 0; 
                 
                 tableHtml += `
-                    <tr class="border-b border-violet-100 dark:border-violet-800/30 hover:bg-violet-50 dark:hover:bg-violet-900/20 transition">
-                        <td class="p-4 font-bold text-violet-900 dark:text-violet-200">${mapLoaiHinh[key] || key}</td>
-                        <td class="p-4 text-center font-mono font-bold">${total}</td>
-                        <td class="p-4 text-center font-mono font-black text-amber-600 dark:text-amber-400">${warning > 0 ? warning : '-'}</td>
+                    <tr class="border-b border-gray-200 dark:border-slate-700 hover:bg-gray-50/50 dark:hover:bg-slate-800/50 transition">
+                        <td class="p-4 font-bold opacity-90">${mapLoaiHinh[key] || key}</td>
+                        <td class="p-4 text-center font-mono font-bold text-main-title">${total}</td>
+                        <td class="p-4 text-center font-mono font-black text-rose-500">${warning > 0 ? warning : '-'}</td>
                     </tr>
                 `;
             }
             document.getElementById('table-kiem-tra').innerHTML = tableHtml;
         }
 
-        // HỆ THỐNG ĐỔI THEME SÁNG/TỐI
-        window.setTheme = function(themeName) {
+        // HỆ THỐNG ĐỔI THEME SÁNG/TỐI TỪ UI_UX.HTML
+        function setTheme(themeName) {
             const body = document.getElementById('body-context');
             const btnLight = document.getElementById('btn-theme-light');
             const btnDark = document.getElementById('btn-theme-dark');
 
-            if(themeName === 'light') {
-                body.classList.remove('dark-theme');
+            if (themeName === 'light') {
+                body.classList.remove('dark-theme'); 
                 body.classList.add('light-theme');
-                btnLight.className = "flex items-center gap-1.5 text-[11px] font-extrabold uppercase px-3 py-1.5 rounded-lg transition btn-switcher-active shadow-md";
-                btnDark.className = "flex items-center gap-1.5 text-[11px] font-extrabold uppercase px-3 py-1.5 rounded-lg transition border border-transparent text-violet-900 hover:text-violet-700";
+                btnLight.className = "flex items-center gap-1.5 text-[11px] font-bold uppercase px-3 py-1.5 rounded-lg transition bg-white text-blue-900 shadow-sm border border-transparent";
+                btnDark.className = "flex items-center gap-1.5 text-[11px] font-bold uppercase px-3 py-1.5 rounded-lg transition text-blue-800 hover:text-white border border-transparent";
             } else {
-                body.classList.remove('light-theme');
+                body.classList.remove('light-theme'); 
                 body.classList.add('dark-theme');
-                btnDark.className = "flex items-center gap-1.5 text-[11px] font-extrabold uppercase px-3 py-1.5 rounded-lg transition btn-switcher-active shadow-md";
-                btnLight.className = "flex items-center gap-1.5 text-[11px] font-extrabold uppercase px-3 py-1.5 rounded-lg transition border border-transparent text-violet-400 hover:text-violet-300";
+                btnDark.className = "flex items-center gap-1.5 text-[11px] font-bold uppercase px-3 py-1.5 rounded-lg transition bg-red-600 text-white shadow-sm border border-transparent";
+                btnLight.className = "flex items-center gap-1.5 text-[11px] font-bold uppercase px-3 py-1.5 rounded-lg transition text-blue-200 hover:text-white border border-transparent";
             }
+        }
+
+        // HỆ THỐNG LOGIC ĐỔI CHỦ ĐỀ MÀU (XANH / ĐỎ)
+        function switchSystemTheme(modeName) {
+            const body = document.getElementById('body-context');
+            if (modeName === 'do') {
+                body.classList.remove('theme-xanh-ios'); 
+                body.classList.add('theme-do-hanhchinh');
+            } else {
+                body.classList.remove('theme-do-hanhchinh'); 
+                body.classList.add('theme-xanh-ios');
+            }
+            // Mặc định ép về chế độ Sáng khi chuyển Chủ đề Xanh/Đỏ
+            setTheme('light'); 
         }
 
         // Khởi chạy khi load trang
         document.addEventListener('DOMContentLoaded', () => { 
+            // Theme mặc định là light-theme và theme-xanh-ios từ body
             setTheme('light');
             renderData();
         });
