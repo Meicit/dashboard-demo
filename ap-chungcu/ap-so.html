@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trung tâm Điều hành số 70 ấp - Xã Bình Hưng</title>
+    <title>Trung tâm Điều hành 39 ấp - Xã Bình Hưng</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -24,8 +24,7 @@
         .btn-back:hover { transform: translateY(-2px); border-color: #ef4444; background: rgba(239, 68, 68, 0.1); color: #ef4444 !important; }
         .tab-content { transition: all 0.2s; }
 
-        /* ================= CỦ SỬA LỖI MÀU SẮC PH N PHỐI THEME ĐỘNG ================= */
-        /* ☀️ NỀN SÁNG (Mặc định) */
+        /* ☀️ NỀN SÁNG */
         body.light-theme { background-color: #f8fafc; color: #0b4a8f; }
         body.light-theme .text-dynamic-title { color: #031b4e !important; } 
         body.light-theme .text-dynamic-body { color: #1e3a8a !important; }  
@@ -49,14 +48,10 @@
         body.dark-theme .input-dark { background: rgba(15, 23, 42, 0.6); border-color: rgba(255, 255, 255, 0.15); color: #ffffff; }
         body.dark-theme .btn-back { color: #38bdf8; }
 
-        /* ================= CẤU HÌNH MÀU HEADER ĐỘNG KHÔNG BỊ PHÁ THEME ================= */
+        /* CẤU HÌNH MÀU HEADER */
         .main-header { background-size: 400% 400%; animation: gradientGIF 12s ease infinite; }
         body.theme-xanh-ios .main-header { background: linear-gradient(-45deg, #0b4a8f, #05234a, #0d5cb3, #02142d); border-bottom: 2px solid #032b5c; box-shadow: 0 4px 15px rgba(11, 74, 143, 0.15); }
-        body.theme-do-hanhchinh .main-header { background: linear-gradient(-45deg, #dc2626, #7f1d1d, #ef4444, #450a0a); border-bottom: 2px solid #991b1b; box-shadow: 0 4px 15px rgba(220, 38, 38, 0.15); }
         @keyframes gradientGIF { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
-
-        .logo-main { animation: float 4s ease-in-out infinite; }
-        @keyframes float { 0%, 100% { transform: translateY(0); filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.2)); } 50% { transform: translateY(-3px); filter: drop-shadow(0 8px 12px rgba(0, 0, 0, 0.3)); } }
     </style>
 </head>
 <body class="theme-xanh-ios light-theme custom-scrollbar" id="dynamic-body">
@@ -64,17 +59,10 @@
     <header class="main-header w-full py-6 px-6 md:px-12 select-none relative transition-all duration-300 mb-6">
         <div class="max-w-[1550px] mx-auto flex flex-col items-center justify-center relative header-layout">
             <div class="flex flex-row items-center space-x-6 w-auto">
-                <div class="flex-shrink-0">
-                    <img src="logo.png" alt="Logo" class="logo-main w-20 h-auto">
-                </div>
                 <div class="flex flex-col items-start justify-center space-y-2 text-left">
                     <p class="text-white font-black tracking-[0.12em] text-xl md:text-2xl lg:text-3xl uppercase leading-none m-0 p-0 drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)] font-['Montserrat']">IOC BINH HUNG</p>
                     <h1 class="title-main text-sm md:text-base lg:text-lg font-bold uppercase tracking-[0.08em] text-white/90 leading-tight m-0 p-0 drop-shadow-[0_2px_4px_rgba(0,0,0,0.2)]">Cổng thông tin và điều hành xã Bình Hưng, Thành phố Hồ Chí Minh</h1>
                 </div>
-            </div>
-            <div class="theme-selector-vertical lg:absolute lg:top-0 lg:right-0 bg-white/10 backdrop-blur-md border border-white/20 p-1.5 rounded-xl flex flex-col space-y-1.5 w-[75px] z-20 shadow-inner">
-                <button onclick="switchSystemTheme('xanh')" id="btn-theme-xanh" class="w-full text-center text-[10px] font-extrabold uppercase py-1.5 rounded-lg transition-all duration-300 bg-blue-600 text-white shadow-md">🔵 Xanh</button>
-                <button onclick="switchSystemTheme('do')" id="btn-theme-do" class="w-full text-center text-[10px] font-extrabold uppercase py-1.5 rounded-lg transition-all duration-300 text-white/80 hover:text-white">🔴 Đỏ</button>
             </div>
         </div>
     </header>
@@ -91,28 +79,22 @@
         <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
             <div class="glass-panel p-5 border-l-4 border-sky-500">
                 <p class="text-[10px] font-bold text-sky-500 uppercase tracking-wider">Số lượng ấp</p>
-                <h3 class="text-2xl font-black text-dynamic-title mt-1">39 <span class="text-sm font-bold text-dynamic-label">Ấp</span></h3>
+                <h3 class="text-2xl font-black text-dynamic-title mt-1" id="stat-ap">... <span class="text-sm font-bold text-dynamic-label">Ấp</span></h3>
             </div>
             <div class="glass-panel p-5 border-l-4 border-emerald-500">
                 <p class="text-[10px] font-bold text-emerald-500 uppercase tracking-wider">Tổng diện tích tự nhiên</p>
-                <h3 class="text-2xl font-black text-dynamic-title mt-1">3.235,43 <span class="text-sm font-bold text-dynamic-label">ha</span></h3>
+                <h3 class="text-2xl font-black text-dynamic-title mt-1" id="stat-area">... <span class="text-sm font-bold text-dynamic-label">ha</span></h3>
             </div>
             <div class="glass-panel p-5 border-l-4 border-amber-500">
-                <p class="text-[10px] font-bold text-amber-500 uppercase tracking-wider">Quy mô dân cư</p>
-                <h3 class="text-2xl font-black text-dynamic-title mt-1">43.444 <span class="text-sm font-bold text-dynamic-label">Hộ dân</span></h3>
+                <p class="text-[10px] font-bold text-amber-500 uppercase tracking-wider">Quy mô hộ dân</p>
+                <h3 class="text-2xl font-black text-dynamic-title mt-1" id="stat-house">... <span class="text-sm font-bold text-dynamic-label">Hộ</span></h3>
             </div>
-            <div class="glass-panel p-5 border-l-4 border-indigo-500">
-                <p class="text-[10px] font-bold text-indigo-500 uppercase tracking-wider">Quy mô nhân khẩu</p>
-                <h3 class="text-2xl font-black text-dynamic-title mt-1">163.387 <span class="text-sm font-bold text-dynamic-label">Người</span></h3>
-            </div>
-        </div>
+      </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
             <div class="lg:col-span-8 glass-panel p-5">
                 <div class="flex justify-between items-center mb-3">
-                    <!-- Đã điều chỉnh tiêu đề hiển thị từ Top 10 sang Top 5 -->
-                    <h2 class="text-xs font-black uppercase tracking-wider text-dynamic-title">📊 Top 5 Ấp đông dân nhất</h2>
-                    
+                    <h2 class="text-xs font-black uppercase tracking-wider text-dynamic-title">📊 Top 5 Ấp quy mô lớn nhất</h2>
                 </div>
                 <div class="w-full relative h-[250px]">
                     <canvas id="hamletsChart"></canvas>
@@ -121,9 +103,9 @@
 
             <div class="lg:col-span-4 glass-panel p-5 flex flex-col justify-between">
                 <div>
-                    <h2 class="text-xs font-black uppercase tracking-wider text-dynamic-title mb-3">🏆 Bảng xếp hạng Top 5 Đơn vị Dẫn đầu</h2>
+                    <h2 class="text-xs font-black uppercase tracking-wider text-dynamic-title mb-3">🏆 Bảng xếp hạng Top 5</h2>
                     <div class="flex border-b border-slate-300 dark:border-slate-700 text-[10px] font-bold uppercase mb-3" id="tab-nav-wrapper">
-                        <button onclick="switchTab('tab_pop', this)" class="w-full text-center pb-1.5 border-b-2 border-sky-500 text-sky-500 font-black">Dân số</button>
+                        <button onclick="switchTab('tab_pop', this)" class="w-full text-center pb-1.5 border-b-2 border-sky-500 text-sky-500 font-black">Đảng viên</button>
                         <button onclick="switchTab('tab_house', this)" class="w-full text-center pb-1.5 border-b-2 border-transparent text-slate-400 font-bold">Số hộ</button>
                         <button onclick="switchTab('tab_area', this)" class="w-full text-center pb-1.5 border-b-2 border-transparent text-slate-400 font-bold">Diện tích</button>
                     </div>
@@ -138,7 +120,7 @@
 
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
             <div class="lg:col-span-5 glass-panel p-5 flex flex-col justify-between">
-                <h2 class="text-xs font-black uppercase tracking-wider text-dynamic-label mb-3">📋 Biểu mẫu & Nhật ký điều hành ấp</h2>
+                <h2 class="text-xs font-black uppercase tracking-wider text-dynamic-label mb-3">📋 Chi tiết dữ liệu Ấp</h2>
                 <form id="hamletEditForm" class="space-y-3.5 text-[11px] font-['Inter'] flex-grow flex flex-col justify-between">
                     <div class="grid grid-cols-2 gap-3">
                         <div class="flex flex-col space-y-1">
@@ -146,40 +128,37 @@
                             <input type="text" id="f_name" readonly class="input-dark font-bold bg-slate-200/50 dark:bg-slate-900/40 py-2 text-dynamic-title" value="Đang tải...">
                         </div>
                         <div class="flex flex-col space-y-1">
-                            <label class="font-bold text-dynamic-label uppercase text-[9px]">Diện tích tự nhiên (Kèm chuỗi đvt)</label>
-                            <input type="text" id="f_area" required class="input-dark font-semibold py-2">
+                            <label class="font-bold text-dynamic-label uppercase text-[9px]">Diện tích tự nhiên</label>
+                            <input type="text" id="f_area" readonly class="input-dark font-semibold py-2 bg-slate-200/50 dark:bg-slate-900/40">
                         </div>
                     </div>
                     <div class="grid grid-cols-2 gap-3">
                         <div class="flex flex-col space-y-1">
-                            <label class="font-bold text-dynamic-label uppercase text-[9px]">Số hộ dân cư (Kèm chuỗi đvt)</label>
-                            <input type="text" id="f_households" required class="input-dark font-semibold py-2">
+                            <label class="font-bold text-dynamic-label uppercase text-[9px]">Số hộ dân cư</label>
+                            <input type="text" id="f_households" readonly class="input-dark font-semibold py-2 bg-slate-200/50 dark:bg-slate-900/40">
                         </div>
                         <div class="flex flex-col space-y-1">
-                            <label class="font-bold text-dynamic-label uppercase text-[9px]">Tổng số nhân khẩu (Kèm chuỗi đvt)</label>
-                            <input type="text" id="f_population" required class="input-dark font-semibold py-2">
+                            <label class="font-bold text-dynamic-label uppercase text-[9px]">Số Đảng viên</label>
+                            <input type="text" id="f_population" readonly class="input-dark font-semibold py-2 bg-slate-200/50 dark:bg-slate-900/40">
                         </div>
                     </div>
                     <div class="grid grid-cols-2 gap-3">
                         <div class="flex flex-col space-y-1">
                             <label class="font-bold text-dynamic-label uppercase text-[9px]">Bí thư Chi bộ</label>
-                            <input type="text" id="f_secretary" required class="input-dark font-semibold py-2">
+                            <input type="text" id="f_secretary" readonly class="input-dark font-semibold py-2 bg-slate-200/50 dark:bg-slate-900/40">
                         </div>
                         <div class="flex flex-col space-y-1">
-                            <label class="font-bold text-dynamic-label uppercase text-[9px]">Trưởng Ban điều hành Ấp</label>
-                            <input type="text" id="f_leader" required class="input-dark font-semibold py-2">
+                            <label class="font-bold text-dynamic-label uppercase text-[9px]">Trưởng Ấp</label>
+                            <input type="text" id="f_leader" readonly class="input-dark font-semibold py-2 bg-slate-200/50 dark:bg-slate-900/40">
                         </div>
                     </div>
                     <div class="flex flex-col space-y-1">
-                        <label class="font-bold text-dynamic-label uppercase text-[9px]">Số điện thoại liên lạc khẩn cấp</label>
-                        <input type="text" id="f_phone" required class="input-dark font-mono font-bold text-sky-600 py-2">
+                        <label class="font-bold text-dynamic-label uppercase text-[9px]">Trưởng Ban Công tác mặt trận</label>
+                        <input type="text" id="f_front_committee" readonly class="input-dark font-bold text-sky-600 py-2 bg-slate-200/50 dark:bg-slate-900/40">
                     </div>
                     <div class="flex flex-col space-y-1">
-                        <label class="font-bold text-dynamic-label uppercase text-[9px]">Địa giới & Ranh giới địa lý tiếp giáp</label>
-                        <textarea id="f_boundary" required rows="2" class="input-dark font-semibold custom-scrollbar resize-none py-2 text-dynamic-body"></textarea>
-                    </div>
-                    <div class="text-right pt-1">
-                        <button type="submit" id="btnSave" class="w-full bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white font-bold text-xs uppercase tracking-wider py-2.5 rounded-xl shadow-lg transition">💾 Cập nhật số liệu trực tiếp lên Firebase Cloud</button>
+                        <label class="font-bold text-dynamic-label uppercase text-[9px]">Cơ sở thành lập & Trụ sở</label>
+                        <textarea id="f_boundary" readonly rows="3" class="input-dark font-semibold custom-scrollbar resize-none py-2 text-dynamic-body bg-slate-200/50 dark:bg-slate-900/40"></textarea>
                     </div>
                 </form>
             </div>
@@ -187,16 +166,16 @@
             <div class="lg:col-span-7 glass-panel p-5 flex flex-col justify-between">
                 <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-3">
                     <div>
-                        <h2 class="text-xs font-black uppercase tracking-wider text-dynamic-title">🗂️ Danh bạ Hồ sơ chi tiết 70 Ấp</h2>
-                        <p class="text-[9px] text-dynamic-label font-medium mt-0.5">Chọn ô để liên thông dữ liệu sang biểu mẫu bên trái</p>
+                        <h2 class="text-xs font-black uppercase tracking-wider text-dynamic-title">🗂️ Danh bạ Hồ sơ chi tiết 39 Ấp</h2>
+                        <p class="text-[9px] text-dynamic-label font-medium mt-0.5">Chọn ô để xem dữ liệu</p>
                     </div>
                     <div class="relative w-full sm:w-64">
                         <span class="absolute left-3 top-2.5 text-[10px]">🔍</span>
-                        <input type="text" id="search_hamlet" placeholder="Tìm số ấp, cán bộ, ranh giới..." class="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl pl-8 pr-3 py-1.5 text-[11px] font-semibold text-slate-800 dark:text-white focus:outline-none focus:border-sky-500 placeholder-slate-400">
+                        <input type="text" id="search_hamlet" placeholder="Tìm tên ấp, cán bộ..." class="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl pl-8 pr-3 py-1.5 text-[11px] font-semibold text-slate-800 dark:text-white focus:outline-none focus:border-sky-500 placeholder-slate-400">
                     </div>
                 </div>
                 <div id="hamlets_grid" class="grid grid-cols-2 sm:grid-cols-3 gap-3 h-[395px] overflow-y-auto pr-1 custom-scrollbar text-[11px]">
-                    <div class="col-span-full text-center py-12 text-dynamic-body font-bold animate-pulse">⏳ Đang đồng bộ kho dữ liệu số Firebase Realtime Cloud...</div>
+                    <div class="col-span-full text-center py-12 text-dynamic-body font-bold animate-pulse">⏳ Đang đồng bộ dữ liệu từ Firebase Realtime Database...</div>
                 </div>
             </div>
         </div>
@@ -206,7 +185,7 @@
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getDatabase, ref, onValue, update } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+        import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
         const firebaseConfig = {
             databaseURL: "https://dashboard-demo-ce0da-default-rtdb.asia-southeast1.firebasedatabase.app"
@@ -221,17 +200,61 @@
         let lastTheme = 'light'; 
         let currentSelectedHamlet = 'Ấp 1';
 
+        // Hàm hỗ trợ format text (Hiển thị trống nếu Firebase trả về undefined/null)
+        function formatPerson(person) {
+            if (!person) return "Trống";
+            const name = person.ho_ten || "Trống tên";
+            const phone = person.sdt || "Không có SĐT";
+            return `${name} - ${phone}`;
+        }
+
         onValue(hamletsNodeRef, (snapshot) => {
-            const remoteData = snapshot.val();
-            if(!remoteData) {
-                document.getElementById('hamlets_grid').innerHTML = `<div class="col-span-full text-center text-red-400 py-10 font-bold">⚠️ Chưa cấu hình dữ liệu trên Firebase Realtime!</div>`;
+            const data = snapshot.val();
+            if(!data) {
+                document.getElementById('hamlets_grid').innerHTML = `<div class="col-span-full text-center text-red-500 py-12 font-bold text-sm">⚠️ Chưa có dữ liệu trên Firebase Realtime!</div>`;
                 return;
             }
-            hamletsData = Object.values(remoteData);
+
+            // Sửa lỗi hiển thị 3 item: Firebase đang trả về một Object lớn chứa cả `xa`, `tong_quan`, và `danh_sach_ap`
+            // Lấy đúng mảng dữ liệu 39 ấp
+            let rawArray = [];
+            if (data.danh_sach_ap && Array.isArray(data.danh_sach_ap)) {
+                rawArray = data.danh_sach_ap;
+            } else if (Array.isArray(data)) {
+                rawArray = data;
+            } else {
+                rawArray = Object.values(data);
+            }
+            
+            hamletsData = rawArray.map(ap => ({
+                name: ap.ten_ap || ap.name || "Chưa xác định",
+                area: (ap.dien_tich_tu_nhien_ha || ap.area_num || 0) + " ha",
+                area_num: parseFloat(ap.dien_tich_tu_nhien_ha || ap.area_num) || 0,
+                households: (ap.so_ho_dan || ap.households_num || 0) + " hộ",
+                households_num: parseInt(ap.so_ho_dan || ap.households_num) || 0,
+                population: (ap.so_dang_vien || ap.population_num || 0) + " đ.viên",
+                population_num: parseInt(ap.so_dang_vien || ap.population_num) || 0,
+                secretary: formatPerson(ap.nhan_su?.bi_thu_chi_bo),
+                leader: formatPerson(ap.nhan_su?.truong_ap),
+                front_committee: formatPerson(ap.nhan_su?.truong_ban_ctmt),
+                boundary: `Thành lập trên cơ sở: ${ap.thanh_lap_tren_co_so || 'Không có thông tin'}\nTrụ sở: ${ap.tru_so_van_phong || 'Không có thông tin'}`
+            }));
+
+            // Tính toán tự động số liệu tổng quan (Dựa vào mảng 39 ấp mới hoặc object tổng quan)
+            const totalAp = hamletsData.length;
+            const totalArea = hamletsData.reduce((sum, h) => sum + h.area_num, 0).toLocaleString('vi-VN', { maximumFractionDigits: 2 });
+            const totalHouse = hamletsData.reduce((sum, h) => sum + h.households_num, 0);
+            const totalPop = hamletsData.reduce((sum, h) => sum + h.population_num, 0);
+
+            document.getElementById('stat-ap').innerHTML = `${totalAp} <span class="text-sm font-bold text-dynamic-label">Ấp</span>`;
+            document.getElementById('stat-area').innerHTML = `${totalArea} <span class="text-sm font-bold text-dynamic-label">ha</span>`;
+            document.getElementById('stat-house').innerHTML = `${totalHouse.toLocaleString('vi-VN')} <span class="text-sm font-bold text-dynamic-label">Hộ</span>`;
+            document.getElementById('stat-pop').innerHTML = `${totalPop.toLocaleString('vi-VN')} <span class="text-sm font-bold text-dynamic-label">Đồng chí</span>`;
+
             renderGrid(hamletsData);
             renderRankings(hamletsData);
-            setTheme(lastTheme); 
-            selectHamlet(currentSelectedHamlet);
+            window.setTheme(lastTheme); 
+            window.selectHamlet(currentSelectedHamlet);
         });
 
         function renderGrid(data) {
@@ -243,9 +266,9 @@
                         <span class="text-[8px] bg-slate-900 border border-slate-700 text-amber-400 font-bold px-1.5 py-0.5 rounded">${h.area}</span>
                     </div>
                     <div class="space-y-0.5 text-[10px] text-dynamic-body font-medium">
-                        <p class="truncate">👤 BT: <span class="font-semibold text-dynamic-title">${h.secretary}</span></p>
-                        <p>🏠 Hộ: <span class="text-amber-500 font-bold">${h.households_num}</span></p>
-                        <p>👥 Dân: <span class="text-sky-500 font-bold">${h.population_num}</span></p>
+                        <p class="truncate">👤 BT: <span class="font-semibold text-dynamic-title">${h.secretary.split(' - ')[0]}</span></p>
+                        <p class="truncate">👷 TẤ: <span class="text-amber-500 font-bold">${h.leader.split(' - ')[0]}</span></p>
+                        <p>🏠 Hộ: <span class="text-sky-500 font-bold">${h.households_num}</span> - ⭐ ĐV: <span class="text-sky-500 font-bold">${h.population_num}</span></p>
                     </div>
                 </div>
             `).join('');
@@ -280,7 +303,6 @@
                 </div>
             `).join('');
             
-            // Đã đổi cấu trúc lấy dữ liệu từ Top 10 sang Top 5 cho phần biểu đồ cột
             const top5ChartData = [...data].sort((a,b) => b.population_num - a.population_num).slice(0,5);
             updateChartData(top5ChartData);
         }
@@ -316,18 +338,14 @@
                 data: {
                     labels: [],
                     datasets: [
-                        { label: 'Quy mô Nhân khẩu (Người)', data: [], backgroundColor: 'rgba(14, 165, 233, 0.75)', borderColor: '#0ea5e9', borderWidth: 1, borderRadius: 5 },
+                        { label: 'Số lượng Đảng viên', data: [], backgroundColor: 'rgba(14, 165, 233, 0.75)', borderColor: '#0ea5e9', borderWidth: 1, borderRadius: 5 },
                         { label: 'Số hộ dân cư (Hộ)', data: [], backgroundColor: 'rgba(245, 158, 11, 0.75)', borderColor: '#f59e0b', borderWidth: 1, borderRadius: 5 }
                     ]
                 },
                 plugins: [showDataLabelsPlugin], 
                 options: {
                     responsive: true, maintainAspectRatio: false,
-                    layout: {
-                        padding: {
-                            top: 25 
-                        }
-                    },
+                    layout: { padding: { top: 25 } },
                     plugins: { legend: { labels: { color: textColor, font: { weight: 'bold', size: 10 } } } },
                     scales: {
                         x: { grid: { display: false }, ticks: { color: textColor, font: { weight: 'bold', size: 9 } } },
@@ -336,7 +354,6 @@
                 }
             });
             if(hamletsData.length > 0) {
-                // Đã đổi cấu trúc lát cắt sang lấy Top 5 khi khởi tạo vẽ lại biểu đồ
                 const top5ChartData = [...hamletsData].sort((a,b) => b.population_num - a.population_num).slice(0,5);
                 updateChartData(top5ChartData);
             }
@@ -357,48 +374,17 @@
 
             document.getElementById('f_name').value = hamlet.name;
             document.getElementById('f_area').value = hamlet.area;
-            document.getElementById('f_secretary').value = hamlet.secretary;
             document.getElementById('f_households').value = hamlet.households;
             document.getElementById('f_population').value = hamlet.population;
+            document.getElementById('f_secretary').value = hamlet.secretary;
             document.getElementById('f_leader').value = hamlet.leader;
+            document.getElementById('f_front_committee').value = hamlet.front_committee;
             document.getElementById('f_boundary').value = hamlet.boundary;
-            document.getElementById('f_phone').value = hamlet.phone;
 
             document.querySelectorAll('.hamlet-card').forEach(c => c.classList.remove('active'));
             const selectedCard = document.getElementById(`card_${name.replace(' ', '_')}`);
             if(selectedCard) selectedCard.classList.add('active');
         }
-
-        document.getElementById('hamletEditForm').addEventListener('submit', function(event) {
-            event.preventDefault();
-            const btnSave = document.getElementById('btnSave');
-            btnSave.disabled = true;
-            btnSave.innerText = "⏳ Hệ thống đang đồng bộ dữ liệu lên Cloud...";
-            const nameKey = document.getElementById('f_name').value;
-            
-            const targetIndex = hamletsData.findIndex(h => h.name === nameKey);
-            if(targetIndex === -1) { alert("Không xác định được chỉ mục ấp!"); btnSave.disabled = false; return; }
-
-            const recordSpecificRef = ref(db, `dashboard_binhhung/du_lieu_39_ap/${targetIndex}`);
-            const txtArea = document.getElementById('f_area').value.trim();
-            const txtHouse = document.getElementById('f_households').value.trim();
-            const txtPop = document.getElementById('f_population').value.trim();
-
-            const payload = {
-                area: txtArea, area_num: parseFloat(txtArea) || 0,
-                households: txtHouse, households_num: parseInt(txtHouse) || 0,
-                population: txtPop, population_num: parseInt(txtPop) || 0,
-                secretary: document.getElementById('f_secretary').value.trim(),
-                leader: document.getElementById('f_leader').value.trim(),
-                phone: document.getElementById('f_phone').value.trim(),
-                boundary: document.getElementById('f_boundary').value.trim()
-            };
-
-            update(recordSpecificRef, payload)
-                .then(() => alert(`✅ Đã cập nhật thành công số liệu ${nameKey} thời gian thực lên Firebase Cloud!`))
-                .catch((err) => alert("🚨 Lỗi đường truyền Firebase: " + err.message))
-                .finally(() => { btnSave.disabled = false; btnSave.innerText = "💾 Cập nhật số liệu trực tiếp lên Firebase Cloud"; });
-        });
 
         document.getElementById('search_hamlet').addEventListener('input', function(e) {
             const kw = e.target.value.toLowerCase().trim();
@@ -408,7 +394,6 @@
             renderGrid(filtered);
         });
 
-        // 🌟 SỬA TRIỆT ĐỂ LỖI ĐỔI THEME VÀ CHỮ BIẾN MẤT
         window.setTheme = function(themeName) {
             lastTheme = themeName;
             const body = document.getElementById('body-context');
@@ -422,7 +407,7 @@
                 for(let btn of tabWrapper.children) {
                     if(!btn.classList.contains('text-sky-500')) btn.className = "w-full text-center pb-1.5 border-b-2 border-transparent text-blue-900 font-bold hover:text-sky-500";
                 }
-                renderChart('#031b4e');
+                window.renderChart('#031b4e');
             } else {
                 document.body.classList.remove('light-theme'); document.body.classList.add('dark-theme');
                 document.getElementById('btn-theme-dark').className = "flex items-center gap-1.5 text-[11px] font-extrabold uppercase px-3 py-1.5 rounded-lg transition bg-sky-700 text-white shadow-md border border-sky-500";
@@ -430,22 +415,7 @@
                 for(let btn of tabWrapper.children) {
                     if(!btn.classList.contains('text-sky-500')) btn.className = "w-full text-center pb-1.5 border-b-2 border-transparent text-slate-400 font-bold hover:text-white";
                 }
-                renderChart('#00f0ff');
-            }
-        }
-
-        window.switchSystemTheme = function(modeName) {
-            const body = document.getElementById('dynamic-body');
-            const btnXanh = document.getElementById('btn-theme-xanh');
-            const btnDo = document.getElementById('btn-theme-do');
-            if (modeName === 'do') {
-                body.classList.remove('theme-xanh-ios'); body.classList.add('theme-do-hanhchinh');
-                btnDo.className = "w-full text-center text-[10px] font-extrabold uppercase py-1.5 rounded-lg transition-all duration-300 bg-red-600 text-white shadow-md";
-                btnXanh.className = "w-full text-center text-[10px] font-extrabold uppercase py-1.5 rounded-lg transition-all duration-300 text-white/80 hover:text-white";
-            } else {
-                body.classList.remove('theme-do-hanhchinh'); body.classList.add('theme-xanh-ios');
-                btnXanh.className = "w-full text-center text-[10px] font-extrabold uppercase py-1.5 rounded-lg transition-all duration-300 bg-blue-600 text-white shadow-md";
-                btnDo.className = "w-full text-center text-[10px] font-extrabold uppercase py-1.5 rounded-lg transition-all duration-300 text-white/80 hover:text-white";
+                window.renderChart('#00f0ff');
             }
         }
 
