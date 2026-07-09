@@ -3,178 +3,251 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Danh sách Chung cư - Xã Bình Hưng</title>
+    <title>Chung cư số Lovera Vista - IOC Bình Hưng</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Inter', sans-serif; }
+        .shadow-sm { box-shadow: 0 1px 2px 0 rgba(8, 47, 73, 0.1); }
+        .shadow-md { box-shadow: 0 4px 6px -1px rgba(8, 47, 73, 0.15), 0 2px 4px -2px rgba(8, 47, 73, 0.1); }
+
+        body { font-family: 'Montserrat', sans-serif; margin: 0; padding: 0; min-height: 100vh; display: flex; flex-direction: column; transition: background-color 0.3s ease, color 0.3s ease; }
+        .container-wrapper { max-width: 1550px; margin: 0 auto 30px auto; padding: 0 24px; width: 100%; }
         
-        /* ================= KỸ THUẬT NỀN ĐỘNG GRADIENT TẠI HEADER ĐỒNG BỘ HOME.HTML ================= */
-        body.theme-xanh-ios .main-header {
-            background: linear-gradient(-45deg, #0b4a8f, #05234a, #0d5cb3, #02142d);
-            background-size: 400% 400%;
-            animation: gradientGIF 12s ease infinite;
-            box-shadow: 0 4px 15px rgba(11, 74, 143, 0.15);
-            border-bottom: 2px solid #032b5c;
+        .teal-wrapper { backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-radius: 36px; padding: 24px; transition: all 0.4s ease; }
+        @media (min-width: 768px) { .teal-wrapper { padding: 36px; } }
+
+        /* THEME TỐI */
+        body.dark-theme { background-color: #082f49; color: #f0f9ff; }
+        body.dark-theme .teal-wrapper { background-color: rgba(14, 165, 233, 0.08); border: 1px solid rgba(14, 165, 233, 0.3); box-shadow: 0 20px 40px -15px rgba(8, 47, 73, 0.6); }
+        body.dark-theme .bg-widget-card { background-color: rgba(15, 23, 42, 0.6); border-color: rgba(56, 189, 248, 0.2); }
+        body.dark-theme .bg-widget-inner { background-color: rgba(15, 23, 42, 0.8); border-color: rgba(56, 189, 248, 0.15); }
+        body.dark-theme .text-main-title { color: #60a5fa !important; }
+
+        /* THEME SÁNG (Mặc định Xanh IOS) */
+        body.light-theme { background-color: #f0f4f8; color: #1e3a8a; }
+        body.light-theme .bg-widget-card { background-color: #ffffff; }
+        body.light-theme .bg-widget-inner { background-color: #ffffff; }
+
+        body.light-theme.theme-xanh-ios .bg-widget-card { border-color: rgba(12, 74, 142, 0.15); }
+        body.light-theme.theme-xanh-ios .bg-widget-inner { border-color: rgba(12, 74, 142, 0.08); }
+        body.light-theme.theme-xanh-ios .text-main-title { color: #0c4a8e !important; }
+        
+        body.light-theme.theme-xanh-ios .teal-wrapper { 
+            background-color: rgba(12, 74, 142, 0.85);
+            border: 1px solid rgba(255, 255, 255, 0.25); 
+            box-shadow: 0 20px 40px -10px rgba(12, 74, 142, 0.5); 
         }
 
-        body.theme-do-hanhchinh .main-header {
-            background: linear-gradient(-45deg, #dc2626, #7f1d1d, #ef4444, #450a0a);
-            background-size: 400% 400%;
-            animation: gradientGIF 12s ease infinite;
-            box-shadow: 0 4px 15px rgba(220, 38, 38, 0.15);
-            border-bottom: 2px solid #991b1b;
-        }
+        /* BUTTONS */
+        .btn-action { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 12px 24px; border-radius: 14px; font-weight: 800; font-size: 12px; text-transform: uppercase; transition: all 0.3s ease; border: 1px solid; cursor: pointer; }
+        
+        body.dark-theme .btn-action { background: rgba(14, 165, 233, 0.1); border-color: rgba(14, 165, 233, 0.3); color: #e0f2fe; }
+        body.dark-theme .btn-action:hover { background: rgba(14, 165, 233, 0.2); border-color: #38bdf8; transform: translateY(-2px); }
+        
+        body.light-theme.theme-xanh-ios .btn-action { background: #ffffff; border-color: rgba(255, 255, 255, 0.8); color: #0c4a8e; }
+        body.light-theme.theme-xanh-ios .btn-action:hover { background: #f0f4f8; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); }
 
-        @keyframes gradientGIF {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
+        /* CONTROLS */
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { border-radius: 10px; }
+        body.dark-theme .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(56, 189, 248, 0.4); }
+        body.light-theme.theme-xanh-ios .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(12, 74, 142, 0.4); }
 
-        /* LOGO ANIMATION CHUYỂN ĐỘNG NHẸ */
-        .logo-main {
-            animation: float 4s ease-in-out infinite;
-        }
-        @keyframes float {
-            0%, 100% { transform: translateY(0); filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.2)); }
-            50% { transform: translateY(-3px); filter: drop-shadow(0 8px 12px rgba(0, 0, 0, 0.3)); }
-        }
+        .controls-wrapper { display: flex; gap: 12px; align-items: center; }
+        .control-panel { border: 1px solid; padding: 4px; border-radius: 12px; display: flex; align-items: center; }
+        
+        body.dark-theme .control-panel { background: rgba(15, 23, 42, 0.5); border-color: rgba(56, 189, 248, 0.2); }
+        body.light-theme.theme-xanh-ios .control-panel { background: rgba(255, 255, 255, 0.15); border-color: rgba(255, 255, 255, 0.2); }
 
-        @media (max-width: 1024px) {
-            .header-layout { flex-direction: column !important; }
-            .theme-selector-vertical { 
-                position: relative !important; top: 0 !important; right: 0 !important; 
-                margin-top: 16px; flex-direction: row !important; space-x: 2; width: auto !important;
-            }
-            .theme-selector-vertical button { margin-left: 4px; margin-right: 4px; }
-        }
+        body.light-theme.theme-xanh-ios .control-panel button.text-blue-900 { color: #0c4a8e !important; }
+        body.light-theme.theme-xanh-ios .control-panel button.text-blue-800 { color: #ffffff !important; opacity: 0.8; }
+        body.light-theme.theme-xanh-ios .control-panel button.text-blue-800:hover { opacity: 1; }
+
+        @media (max-width: 1024px) { .controls-wrapper { flex-direction: column; align-items: flex-end; } }
+        @media (max-width: 640px) { .flex-responsive { flex-direction: column; align-items: stretch; gap: 16px; } .controls-wrapper { flex-direction: row; justify-content: space-between; align-items: center; width: 100%; } }
     </style>
 </head>
-<body class="theme-xanh-ios bg-slate-100 flex flex-col min-h-screen" id="dynamic-body">
+<body class="light-theme custom-scrollbar theme-xanh-ios" id="body-context">
 
-    <header class="main-header w-full py-6 px-6 md:px-12 select-none relative transition-all duration-300">
-        <div class="max-w-[1550px] mx-auto flex flex-col items-center justify-center relative header-layout">
+    <div class="container-wrapper mt-8">
+        <div class="teal-wrapper space-y-8">
             
-            <div class="flex flex-row items-center space-x-6 w-auto">
-                <div class="flex-shrink-0">
-                    <img src="../logo.png" alt="Logo" class="logo-main w-20 h-auto" onerror="this.src='logo.png'">
+            <div class="flex flex-col sm:flex-row justify-between items-center gap-4 flex-responsive">
+                <div class="flex gap-4">
+                    <a href="#" class="btn-action">⬅️ Quay lại</a>
+                    <!-- Nút tải lại trang dành riêng cho index.html -->
+                    <button onclick="location.reload()" class="btn-action">🔄 Tải lại trang</button>
                 </div>
-                <div class="flex flex-col items-start justify-center space-y-2 text-left">
-                    <p class="text-white font-black tracking-[0.12em] text-xl md:text-2xl lg:text-3xl uppercase leading-none m-0 p-0 drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)] font-['Montserrat']">
-                        IOC BINH HUNG
-                    </p>
-                    <h1 class="title-main text-sm md:text-base lg:text-lg font-bold uppercase tracking-[0.08em] text-white/90 leading-tight m-0 p-0 drop-shadow-[0_2px_4px_rgba(0,0,0,0.2)]">
-                        Cổng thông tin và điều hành xã Bình Hưng, Thành phố Hồ Chí Minh
-                    </h1>
+                
+                <div class="controls-wrapper">
+                    <div class="control-panel">
+                        <button onclick="setTheme('light')" id="btn-theme-light" class="flex items-center gap-1.5 text-[11px] font-bold uppercase px-3 py-1.5 rounded-lg transition bg-white text-blue-900 shadow-sm border border-transparent">Sáng</button>
+                        <button onclick="setTheme('dark')" id="btn-theme-dark" class="flex items-center gap-1.5 text-[11px] font-bold uppercase px-3 py-1.5 rounded-lg transition text-blue-800 hover:text-white border border-transparent">Tối</button>
+                    </div>
                 </div>
             </div>
 
-            <div class="theme-selector-vertical lg:absolute lg:top-0 lg:right-0 bg-white/10 backdrop-blur-md border border-white/20 p-1.5 rounded-xl flex flex-col space-y-1.5 w-[75px] z-20 shadow-inner">
-                <button onclick="switchSystemTheme('xanh')" id="btn-theme-xanh" class="w-full text-center text-[10px] font-extrabold uppercase py-1.5 rounded-lg transition-all duration-300 bg-blue-600 text-white shadow-md">🔵 Xanh</button>
-                <button onclick="switchSystemTheme('do')" id="btn-theme-do" class="w-full text-center text-[10px] font-extrabold uppercase py-1.5 rounded-lg transition-all duration-300 text-white/80 hover:text-white">🔴 Đỏ</button>
-            </div>
-            
-        </div>
-    </header>
+            <div class="flex flex-col space-y-6 font-['Inter']">
+                
+                <!-- PHẦN TRÊN: HIỂN THỊ CHUNG CƯ THÍ ĐIỂM -->
+                <div class="bg-widget-card border-2 border-indigo-200 dark:border-indigo-800/50 rounded-3xl p-6 md:p-10 shadow-sm transition-colors duration-300">
+                    <h3 class="text-sm md:text-base font-black text-main-title uppercase tracking-wider mb-6 flex items-center justify-center gap-2 text-center opacity-80">
+                        🚀 Chung Cư Thí Điểm Thực Hiện "Chung Cư Số"
+                    </h3>
+                    
+                    <div class="bg-widget-inner rounded-3xl p-8 border shadow-sm mb-4 flex items-center justify-center bg-slate-50 dark:bg-slate-800/50">
+                        <h1 class="text-4xl md:text-6xl font-black text-main-title text-center tracking-wider drop-shadow-sm">
+                            LOVERA VISTA
+                        </h1>
+                    </div>
+                   </div>
 
-    <main class="flex-grow w-full max-w-7xl mx-auto px-4 md:px-8 py-8">
-        <a href="hien-thi-ap-chungcu.html" class="mb-6 inline-flex items-center gap-2 bg-white hover:bg-slate-50 border border-slate-200 text-slate-700 px-5 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider shadow-sm transition-all duration-300 hover:-translate-y-0.5 shrink-0">
-            ⬅️ Quay lại Trang Điều phối
-        </a>
-        
-        <div class="bg-white p-6 rounded-3xl shadow-xl overflow-hidden border border-slate-200">
-            <h2 class="text-xl md:text-2xl font-black text-sky-700 mb-6 uppercase text-center border-b border-slate-100 pb-4 tracking-tight">
-                Bảng Thống kê Quản lý Nhà Chung cư Xã Bình Hưng
-            </h2>
-            
-            <div class="overflow-x-auto">
-                <table class="w-full text-left border-collapse min-w-[700px]">
-                    <thead>
-                        <tr class="bg-sky-600 text-white text-[11px] uppercase tracking-wider">
-                            <th class="p-4 rounded-tl-xl">Tên Chung cư</th>
-                            <th class="p-4 text-center">Block</th>
-                            <th class="p-4">Chủ đầu tư</th>
-                            <th class="p-4 text-center">Năm XD</th>
-                            <th class="p-4 text-center rounded-tr-xl">Tổng Căn hộ</th>
-                        </tr>
-                    </thead>
-                    <tbody id="chung-cu-table" class="text-sm text-slate-700">
-                        </tbody>
-                </table>
-            </div>
-        </div>
-    </main>
+                <!-- PHẦN DƯỚI: THỂ HIỆN CÁC TIÊU CHÍ -->
+                <div class="mt-8 mb-4 border-b border-white/20 pb-4">
+                    <h2 class="text-xl md:text-2xl font-black text-white uppercase tracking-wider drop-shadow-md">
+                        📋 Bộ 08 Tiêu Chí Thực Hiện Chung Cư Số
+                    </h2>
+                    <p class="text-blue-100 text-sm mt-1 font-medium">Theo Nghị quyết số 10-NQ/ĐU Đảng ủy Xã Bình Hưng</p>
+                </div>
 
-    <footer class="w-full text-center py-6 text-slate-400 font-medium text-[11px] uppercase tracking-widest border-t border-slate-200 bg-white shadow-sm mt-auto">
-        &copy; 2026 IOC BINH HƯNG — BẢN QUYỀN THUỘC UBND XÃ BÌNH HƯNG
+                <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 items-stretch">
+                    
+    <div class="bg-widget-card border-2 rounded-3xl p-6 shadow-md hover:-translate-y-2 transition-transform duration-300 flex flex-col h-full">
+        <div class="flex justify-between items-start mb-3">
+            <h3 class="text-[13px] font-black text-main-title uppercase tracking-wider">1. Về công dân số</h3>
+        </div>
+        <ul class="list-disc pl-4 flex-grow border-t border-blue-200/60 dark:border-slate-700/50 pt-4 text-inherit">
+            <li class='text-[12px] md:text-[13px] leading-relaxed mb-2 opacity-80 font-semibold'>Tỷ lệ người dân được cấp tài khoản định danh điện tử (VNeID) mức độ 2 (đối với công dân từ đủ 14 tuổi trở lên) đạt 100%.</li>
+<li class='text-[12px] md:text-[13px] leading-relaxed mb-2 opacity-80 font-semibold'>Tỷ lệ dân số trưởng thành sử dụng dịch vụ công trực tuyến đạt trên 70%.</li>
+<li class='text-[12px] md:text-[13px] leading-relaxed mb-2 opacity-80 font-semibold'>Tỷ lệ người dân tiếp cận phương tiện thông tin cơ sở đạt trên 80%.</li>
+<li class='text-[12px] md:text-[13px] leading-relaxed mb-2 opacity-80 font-semibold'>Tỷ lệ người dân sử dụng ứng dụng “Công dân số TPHCM” đạt trên 95%.</li>
+<li class='text-[12px] md:text-[13px] leading-relaxed mb-2 opacity-80 font-semibold'>Ban Quản lý, Ban Quản trị Chung cư được tập huấn, am hiểu về kiến thức chuyển đổi số, công dân số đạt 100%.</li>
+
+        </ul>
+    </div>
+    
+    <div class="bg-widget-card border-2 rounded-3xl p-6 shadow-md hover:-translate-y-2 transition-transform duration-300 flex flex-col h-full">
+        <div class="flex justify-between items-start mb-3">
+            <h3 class="text-[13px] font-black text-main-title uppercase tracking-wider">2. Về Kinh tế số</h3>
+        </div>
+        <ul class="list-disc pl-4 flex-grow border-t border-blue-200/60 dark:border-slate-700/50 pt-4 text-inherit">
+            <li class='text-[12px] md:text-[13px] leading-relaxed mb-2 opacity-80 font-semibold'>Tỷ lệ doanh nghiệp, hộ kinh doanh có mã QR thanh toán và chấp nhận thanh toán không dùng tiền mặt đạt 100%.</li>
+<li class='text-[12px] md:text-[13px] leading-relaxed mb-2 opacity-80 font-semibold'>Tỷ lệ người dân thực hiện thanh toán trực tuyến, không dùng tiền mặt đối với các dịch vụ thiết yếu, đóng các loại quỹ, thuế sử dụng đất Phi nông nghiệp đạt trên 90%.</li>
+<li class='text-[12px] md:text-[13px] leading-relaxed mb-2 opacity-80 font-semibold'>Tỷ lệ người dân, hộ kinh doanh, doanh nghiệp được hướng dẫn và thực hiện khai, nộp thuế điện tử đạt 100%.</li>
+<li class='text-[12px] md:text-[13px] leading-relaxed mb-2 opacity-80 font-semibold'>Nhà chung cư thực hiện thu, nộp các loại quỹ pháp lệnh qua tài khoản.</li>
+
+        </ul>
+    </div>
+    
+    <div class="bg-widget-card border-2 rounded-3xl p-6 shadow-md hover:-translate-y-2 transition-transform duration-300 flex flex-col h-full">
+        <div class="flex justify-between items-start mb-3">
+            <h3 class="text-[13px] font-black text-main-title uppercase tracking-wider">3. Về an ninh trật tự số</h3>
+        </div>
+        <ul class="list-disc pl-4 flex-grow border-t border-blue-200/60 dark:border-slate-700/50 pt-4 text-inherit">
+            <li class='text-[12px] md:text-[13px] leading-relaxed mb-2 opacity-80 font-semibold'>Tỷ lệ bao phủ Camera giám sát an ninh, điều phối giao thông, quản lý đô thị có tích hợp AI đạt 100%.</li>
+<li class='text-[12px] md:text-[13px] leading-relaxed mb-2 opacity-80 font-semibold'>Tỷ lệ người dân sử dụng ứng dụng “Báo cháy 114” đạt trên 95%; tham gia “Tổ liên gia an toàn PCCC” đạt 100%; có kỹ năng PCCC đạt 100%.</li>
+<li class='text-[12px] md:text-[13px] leading-relaxed mb-2 opacity-80 font-semibold'>100% hộ sản xuất kinh doanh, các kho xưởng, nhà trọ được lắp đặt thiết bị báo cháy thông minh, có kết nối với Trung tâm thông tin chỉ huy Phòng Cảnh sát PCCC và CNCH.</li>
+<li class='text-[12px] md:text-[13px] leading-relaxed mb-2 opacity-80 font-semibold'>Tỷ lệ người dân được tuyên truyền, cảnh báo thủ đoạn lừa đảo công nghệ, tội phạm mạng, văn hóa giao thông, tác hại của ma túy đạt 100%.</li>
+<li class='text-[12px] md:text-[13px] leading-relaxed mb-2 opacity-80 font-semibold'>Tỷ lệ người dân biết và sử dụng ứng dụng SOS an ninh trật tự đạt từ 90% trở lên.</li>
+<li class='text-[12px] md:text-[13px] leading-relaxed mb-2 opacity-80 font-semibold'>Tỷ lệ chung cư kết nối với hệ thống camera An ninh trật tự xã đạt 100%.</li>
+
+        </ul>
+    </div>
+    
+    <div class="bg-widget-card border-2 rounded-3xl p-6 shadow-md hover:-translate-y-2 transition-transform duration-300 flex flex-col h-full">
+        <div class="flex justify-between items-start mb-3">
+            <h3 class="text-[13px] font-black text-main-title uppercase tracking-wider">4. Về đô thị - môi trường số</h3>
+        </div>
+        <ul class="list-disc pl-4 flex-grow border-t border-blue-200/60 dark:border-slate-700/50 pt-4 text-inherit">
+            <li class='text-[12px] md:text-[13px] leading-relaxed mb-2 opacity-80 font-semibold'>Xây dựng bản đồ số công nghệ GIS số hóa lên bản đồ quản lý.</li>
+<li class='text-[12px] md:text-[13px] leading-relaxed mb-2 opacity-80 font-semibold'>Có kênh tiếp nhận và xử lý vi phạm xây dựng, lòng lề đường, rao vặt quảng cáo trong 24 giờ làm việc đạt 100%.</li>
+<li class='text-[12px] md:text-[13px] leading-relaxed mb-2 opacity-80 font-semibold'>Tỷ lệ xử lý các điểm rác phát sinh, ô nhiễm môi trường, ô nhiễm tiếng ồn, ô nhiễm không khí trong 24 giờ đạt 100%.</li>
+
+        </ul>
+    </div>
+    
+    <div class="bg-widget-card border-2 rounded-3xl p-6 shadow-md hover:-translate-y-2 transition-transform duration-300 flex flex-col h-full">
+        <div class="flex justify-between items-start mb-3">
+            <h3 class="text-[13px] font-black text-main-title uppercase tracking-wider">5. Giáo dục số</h3>
+        </div>
+        <ul class="list-disc pl-4 flex-grow border-t border-blue-200/60 dark:border-slate-700/50 pt-4 text-inherit">
+            <li class='text-[12px] md:text-[13px] leading-relaxed mb-2 opacity-80 font-semibold'>Tuyên truyền, giáo dục đến người dân về trang thông tin giáo dục của xã, kho học liệu số giáo dục.</li>
+<li class='text-[12px] md:text-[13px] leading-relaxed mb-2 opacity-80 font-semibold'>Giáo dục, triển khai các nội dung tập huấn AI cho hệ thống chính trị trong quản lý trên nền tảng số.</li>
+<li class='text-[12px] md:text-[13px] leading-relaxed mb-2 opacity-80 font-semibold'>100% chung cư có kết nối Zalo trong nhóm cộng đồng để tuyên truyền các chính sách, quy định pháp luật của Nhà nước.</li>
+
+        </ul>
+    </div>
+    
+    <div class="bg-widget-card border-2 rounded-3xl p-6 shadow-md hover:-translate-y-2 transition-transform duration-300 flex flex-col h-full">
+        <div class="flex justify-between items-start mb-3">
+            <h3 class="text-[13px] font-black text-main-title uppercase tracking-wider">6. Về an sinh xã hội số</h3>
+        </div>
+        <ul class="list-disc pl-4 flex-grow border-t border-blue-200/60 dark:border-slate-700/50 pt-4 text-inherit">
+            <li class='text-[12px] md:text-[13px] leading-relaxed mb-2 opacity-80 font-semibold'>Hoàn thành cơ sở dữ liệu về an sinh xã hội (hộ cận nghèo, gia đình chính sách, diện bảo trợ, người có hoàn cảnh khó khăn,...) và chia sẻ dùng chung.</li>
+<li class='text-[12px] md:text-[13px] leading-relaxed mb-2 opacity-80 font-semibold'>Tỷ lệ người dân có hồ sơ sức khỏe điện tử đạt trên 95%.</li>
+<li class='text-[12px] md:text-[13px] leading-relaxed mb-2 opacity-80 font-semibold'>Tỷ lệ đối tượng chính sách, bảo trợ xã hội nhận chi trả trợ cấp an sinh qua tài khoản ngân hàng (trừ các trường hợp bất khả kháng) đạt 100%.</li>
+
+        </ul>
+    </div>
+    
+    <div class="bg-widget-card border-2 rounded-3xl p-6 shadow-md hover:-translate-y-2 transition-transform duration-300 flex flex-col h-full">
+        <div class="flex justify-between items-start mb-3">
+            <h3 class="text-[13px] font-black text-main-title uppercase tracking-wider">7. Giao tiếp số - QR một chạm</h3>
+        </div>
+        <ul class="list-disc pl-4 flex-grow border-t border-blue-200/60 dark:border-slate-700/50 pt-4 text-inherit">
+            <li class='text-[12px] md:text-[13px] leading-relaxed mb-2 opacity-80 font-semibold'>Xây dựng kênh kết nối từ Chung cư - Người dân để các thông tin từ Đảng ủy, HĐND, UBND, UB MTTQ Việt Nam xã được gửi đến thông qua ứng dụng trên nền tảng số.</li>
+<li class='text-[12px] md:text-[13px] leading-relaxed mb-2 opacity-80 font-semibold'>Khi người dân cần thông tin, cần kết nối với Xã sẽ được giải quyết qua Chatbot AI trực tiếp tại từng hộ gia đình.</li>
+<li class='text-[12px] md:text-[13px] leading-relaxed mb-2 opacity-80 font-semibold'>Tỷ lệ người dân (hoặc đại diện hộ gia đình) tham gia nhóm thông tin trực tuyến của chung cư và của xã đạt 95%.</li>
+<li class='text-[12px] md:text-[13px] leading-relaxed mb-2 opacity-80 font-semibold'>Tin tức tuyên truyền về chủ trương của Đảng, chính sách pháp luật của Nhà nước được biên tập dưới dạng đa phương tiện (Infographic, Video ngắn, Podcast,...).</li>
+
+        </ul>
+    </div>
+    
+    <div class="bg-widget-card border-2 rounded-3xl p-6 shadow-md hover:-translate-y-2 transition-transform duration-300 flex flex-col h-full">
+        <div class="flex justify-between items-start mb-3">
+            <h3 class="text-[13px] font-black text-main-title uppercase tracking-wider">8. Về kiến nghị số</h3>
+        </div>
+        <ul class="list-disc pl-4 flex-grow border-t border-blue-200/60 dark:border-slate-700/50 pt-4 text-inherit">
+            <li class='text-[12px] md:text-[13px] leading-relaxed mb-2 opacity-80 font-semibold'>Tỷ lệ người dân dùng nền tảng số để phản ánh, kiến nghị với cấp ủy, chính quyền đạt 100%.</li>
+<li class='text-[12px] md:text-[13px] leading-relaxed mb-2 opacity-80 font-semibold'>Xây dựng công cụ Chatbot AI để người dân trực tiếp phản ánh, kiến nghị tại chung cư.</li>
+<li class='text-[12px] md:text-[13px] leading-relaxed mb-2 opacity-80 font-semibold'>Tỷ lệ giải quyết phản ánh, kiến nghị của người dân đúng hạn đạt 100%.</li>
+<li class='text-[12px] md:text-[13px] leading-relaxed mb-2 opacity-80 font-semibold'>100% căn hộ chung cư dán mã QR code kênh phản ánh kiến nghị số của xã.</li>
+
+        </ul>
+    </div>
+    
+                </div>
+
+            </div>
+        </div> 
+    </div>
+
+    <footer class="w-full text-center py-6 text-main-title font-bold text-[10px] uppercase tracking-[0.3em] border-t border-blue-200 dark:border-slate-700 bg-white/50 dark:bg-slate-900/50 backdrop-blur-md mt-auto transition-colors duration-300">
+        &copy; 2026 IOC BÌNH HƯNG - CỔNG THÔNG TIN VÀ ĐIỀU HÀNH
     </footer>
 
     <script>
-        const chungCuData = [
-            { name: "CHUNG CƯ AVIEW 1", block: 1, cdt: "Tân Bình", nam: 2008, canHo: 192 },
-            { name: "CHUNG CƯ AVIEW 2", block: 1, cdt: "Tân Bình", nam: 2019, canHo: 223 },
-            { name: "CHUNG CƯ CONIC GARDEN", block: 2, cdt: "Lĩnh Phong", nam: 2006, canHo: 362 },
-            { name: "CHUNG CƯ CONIC ĐÌNH KHIÊM", block: 1, cdt: "Lĩnh Phong", nam: 2005, canHo: 158 },
-            { name: "CHUNG CƯ CONIC ĐÔNG NAM Á", block: 1, cdt: "Lĩnh Phong", nam: 2006, canHo: 242 },
-            { name: "CHUNG CƯ CONIC SKYWAY G", block: 1, cdt: "Lĩnh Phong", nam: 2016, canHo: 164 },
-            { name: "CHUNG CƯ CONIC SKYWAY H", block: 1, cdt: "Lĩnh Phong", nam: 2017, canHo: 146 },
-            { name: "CHUNG CƯ TERAROSSA B3, B4", block: 1, cdt: "Khang Nam", nam: 2012, canHo: 383 },
-            { name: "CHUNG CƯ TERAROSSA C2", block: 1, cdt: "Khang Nam", nam: 2018, canHo: 129 },
-            { name: "CHUNG CƯ THE MANSION", block: 5, cdt: "Quốc Cường GL", nam: 2012, canHo: 212 },
-            { name: "CHUNG CƯ LOVERA VISTA", block: 1, cdt: "Khang Phúc", nam: 2021, canHo: 1310 },
-            { name: "CHUNG CƯ SÀI GÒN INTELA", block: 1, cdt: "Bắc Phước Kiển", nam: 2021, canHo: 1068 },
-            { name: "CHUNG CƯ HẠNH PHÚC A", block: 1, cdt: "Tổng Cty Xây dựng số 1", nam: 2018, canHo: 336 },
-            { name: "CHUNG CƯ HẠNH PHÚC B", block: 1, cdt: "Tổng Cty Xây dựng số 1", nam: 2016, canHo: 218 },
-            { name: "CHUNG CƯ HẠNH PHÚC C", block: 1, cdt: "Tổng Cty Xây dựng số 1", nam: 2016, canHo: 190 },
-            { name: "CHUNG CƯ HẠNH PHÚC D", block: 1, cdt: "Tổng Cty Xây dựng số 1", nam: 2017, canHo: 0 },
-            { name: "CHUNG CƯ TĐC 194", block: 1, cdt: "ĐTXD 194", nam: 2020, canHo: 84 },
-            { name: "CHUNG CƯ SINH LỢI", block: 1, cdt: "Sinh Lợi", nam: 2010, canHo: 104 },
-            { name: "CHUNG CƯ HOÀNG THÁP", block: 1, cdt: "Sinh Lợi", nam: 2009, canHo: 152 },
-            { name: "CHUNG CƯ HỒNG LĨNH", block: 1, cdt: "Hồng Lĩnh", nam: 2009, canHo: 188 },
-            { name: "CHUNG CƯ CITIZEN.TS", block: 1, cdt: "Việt Tâm", nam: 2017, canHo: 69 },
-            { name: "THE EASTER CITY-6B", block: 1, cdt: "Quốc Cường GL", nam: 2016, canHo: 572 },
-            { name: "CHUNG CƯ HIM LAM 23", block: 4, cdt: "Him Lam", nam: 2007, canHo: 360 },
-            { name: "CHUNG CƯ SÀI GÒN MIA", block: 3, cdt: "Việt Tâm", nam: 2019, canHo: 964 },
-            { name: "FLORA MIZUKI MP1, MP2", block: 2, cdt: "NNH Mizuki", nam: 2019, canHo: 590 },
-            { name: "FLORA MIZUKI MP3-MP5", block: 3, cdt: "NNH Mizuki", nam: 2019, canHo: 847 },
-            { name: "FLORA MIZUKI MP6-MP8", block: 3, cdt: "NNH Mizuki", nam: 2022, canHo: 760 },
-            { name: "FLORA MIZUKI MP9, MPX", block: 2, cdt: "NNH Mizuki", nam: 2023, canHo: 177 },
-            { name: "FLORA PANORAMA FP1", block: 1, cdt: "NNH Mizuki", nam: 2023, canHo: 164 },
-            { name: "FLORA PANORAMA FP2, FP3", block: 2, cdt: "NNH Mizuki", nam: 2023, canHo: 252 },
-            { name: "EHOMES NAM SÀI GÒN A", block: 3, cdt: "Nguyễn Sơn", nam: 2018, canHo: 218 },
-            { name: "EHOMES NAM SÀI GÒN B,D,E,G,H", block: 2, cdt: "Nguyễn Sơn", nam: 2019, canHo: 1218 },
-            { name: "CHUNG CƯ TERRA MI-A", block: 1, cdt: "Khang Nam", nam: 2022, canHo: 440 }
-        ];
+        function setTheme(themeName) {
+            const body = document.getElementById('body-context');
+            const btnLight = document.getElementById('btn-theme-light');
+            const btnDark = document.getElementById('btn-theme-dark');
 
-        const tbody = document.getElementById('chung-cu-table');
-        chungCuData.forEach(cc => {
-            tbody.innerHTML += `
-                <tr class="border-b border-slate-100 hover:bg-sky-50 transition duration-200">
-                    <td class="p-4 font-bold text-sky-900">${cc.name}</td>
-                    <td class="p-4 text-center font-medium">${cc.block}</td>
-                    <td class="p-4 text-slate-600">${cc.cdt}</td>
-                    <td class="p-4 text-center text-slate-600">${cc.nam}</td>
-                    <td class="p-4 text-center font-black text-sky-600">${cc.canHo.toLocaleString()}</td>
-                </tr>
-            `;
-        });
-
-        // HOÁN ĐỔI THEME HEADER (XANH / ĐỎ)
-        window.switchSystemTheme = function(modeName) {
-            const body = document.getElementById('dynamic-body');
-            const btnXanh = document.getElementById('btn-theme-xanh');
-            const btnDo = document.getElementById('btn-theme-do');
-            if (modeName === 'do') {
-                body.classList.remove('theme-xanh-ios'); body.classList.add('theme-do-hanhchinh');
-                btnDo.className = "w-full text-center text-[10px] font-extrabold uppercase py-1.5 rounded-lg transition-all duration-300 bg-red-600 text-white shadow-md";
-                btnXanh.className = "w-full text-center text-[10px] font-extrabold uppercase py-1.5 rounded-lg transition-all duration-300 text-white/80 hover:text-white";
+            if (themeName === 'light') {
+                body.classList.remove('dark-theme'); 
+                body.classList.add('light-theme');
+                btnLight.className = "flex items-center gap-1.5 text-[11px] font-bold uppercase px-3 py-1.5 rounded-lg transition bg-white text-blue-900 shadow-sm border border-transparent";
+                btnDark.className = "flex items-center gap-1.5 text-[11px] font-bold uppercase px-3 py-1.5 rounded-lg transition text-blue-800 hover:text-white border border-transparent";
             } else {
-                body.classList.remove('theme-do-hanhchinh'); body.classList.add('theme-xanh-ios');
-                btnXanh.className = "w-full text-center text-[10px] font-extrabold uppercase py-1.5 rounded-lg transition-all duration-300 bg-blue-600 text-white shadow-md";
-                btnDo.className = "w-full text-center text-[10px] font-extrabold uppercase py-1.5 rounded-lg transition-all duration-300 text-white/80 hover:text-white";
+                body.classList.remove('light-theme'); 
+                body.classList.add('dark-theme');
+                btnDark.className = "flex items-center gap-1.5 text-[11px] font-bold uppercase px-3 py-1.5 rounded-lg transition bg-blue-600 text-white shadow-sm border border-transparent";
+                btnLight.className = "flex items-center gap-1.5 text-[11px] font-bold uppercase px-3 py-1.5 rounded-lg transition text-blue-200 hover:text-white border border-transparent";
             }
         }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            setTheme('light');
+        });
     </script>
 </body>
 </html>
