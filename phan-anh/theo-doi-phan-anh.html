@@ -119,9 +119,9 @@
                     <thead>
                         <tr class="border-b border-slate-200 text-slate-400 font-bold text-[11px] uppercase tracking-wider bg-slate-50/70">
                             <th class="py-3 px-4 w-[100px]">Mã Đơn</th>
-                            <th class="py-3 px-4 w-[180px]">Thông Tin Dân</th>
-                            <th class="py-3 px-4">Nội Dung Kiến Nghị</th>
-                            <th class="py-3 px-4 w-[180px] text-center">⏱️ Hạn Xử Lý (24h)</th>
+                            <th class="py-3 px-4 w-[280px]">Thông Tin Công Dân</th>
+                            <th class="py-3 px-4 min-w-[200px]">Nội Dung Kiến Nghị</th>
+                            <th class="py-3 px-4 w-[160px] text-center">⏱️ Hạn Xử Lý (24h)</th>
                             <th class="py-3 px-4 w-[140px] text-center">Trạng Thái</th>
                             <th class="py-3 px-4 w-[240px]">Hành Động Cán Bộ</th>
                         </tr>
@@ -185,29 +185,54 @@
                 if (item.status === "Đang xử lý") statusClass = "bg-amber-500 text-amber-950";
                 if (item.status === "Đã hoàn thành") statusClass = "bg-emerald-600";
 
+                // Xử lý nút xem tệp đính kèm (Hỗ trợ cả ảnh và tài liệu PDF/Word)
+                let attachmentHtml = '';
+                const fileData = item.attachedFileData || item.imageUrl;
+                if (fileData) {
+                    const isImage = item.attachedFileType ? item.attachedFileType.startsWith('image/') : true;
+                    if (isImage) {
+                        attachmentHtml = `<button onclick="viewBase64Image('${fileData}')" class="mt-2 text-[10px] text-sky-600 dark:text-sky-300 bg-sky-50 dark:bg-sky-900/30 px-2 py-1 rounded font-bold uppercase hover:shadow-md border border-sky-100 dark:border-sky-800 transition">🖼️ Xem ảnh hiện trường</button>`;
+                    } else {
+                        attachmentHtml = `<a href="${fileData}" download="tai_lieu_dinh_kem_${item.trackingCode}" class="mt-2 inline-block text-[10px] text-rose-600 dark:text-rose-300 bg-rose-50 dark:bg-rose-900/30 px-2 py-1 rounded font-bold uppercase hover:shadow-md border border-rose-100 dark:border-rose-800 transition">📎 Tải tệp tài liệu</a>`;
+                    }
+                }
+
+                // Hiển thị Hình thức nhận kết quả
+                const receiveMethodText = (item.receiveMethod === 'email') ? '📩 Trả qua Email' : '🌐 Tra trên Website';
+
                 tr.innerHTML = `
-                    <td class="py-4 px-4 font-mono font-black text-blue-600 dark:text-sky-400 tracking-wider">${item.trackingCode}</td>
-                    <td class="py-4 px-4 space-y-1">
-                        <p class="font-bold text-xs">${item.fullname}</p>
-                        <p class="text-[10px] text-slate-400 font-medium">CCCD: ${item.cccd}</p>
-                        <p class="text-[10px] text-slate-400 font-medium break-all">${item.email}</p>
+                    <td class="py-4 px-4 align-top font-mono font-black text-blue-600 dark:text-sky-400 tracking-wider">${item.trackingCode}</td>
+                    
+                    <td class="py-4 px-4 align-top space-y-1.5">
+                        <p class="font-black text-sm text-indigo-700 dark:text-indigo-400 uppercase tracking-wide">${item.fullname}</p>
+                        <p class="text-[11px] font-bold text-sky-700 dark:text-sky-300">👤 CCCD: <span class="font-medium text-sky-900 dark:text-sky-100">${item.cccd}</span></p>
+                        <p class="text-[11px] font-bold text-rose-600 dark:text-rose-400">📞 SĐT: <span class="font-medium text-rose-900 dark:text-rose-100">${item.phone || 'Chưa cập nhật'}</span></p>
+                        <p class="text-[11px] font-bold text-fuchsia-600 dark:text-fuchsia-400 break-all">📧 Email: <span class="font-medium text-fuchsia-900 dark:text-fuchsia-100">${item.email}</span></p>
+                        <p class="text-[11px] font-bold text-emerald-700 dark:text-emerald-400 leading-snug">📍 Địa chỉ: <span class="font-medium text-emerald-900 dark:text-emerald-100">${item.address || 'Chưa cập nhật'}</span></p>
+                        <div class="mt-1">
+                            <span class="inline-block text-[9px] font-black text-amber-700 dark:text-amber-400 bg-amber-100 dark:bg-amber-900/40 px-2 py-0.5 rounded border border-amber-200 dark:border-amber-700 uppercase tracking-wider">${receiveMethodText}</span>
+                        </div>
                     </td>
-                    <td class="py-4 px-4 pr-6">
-                        <p class="text-slate-500 text-[10px] font-medium mb-1">Gửi lúc: ${new Date(item.createdAt).toLocaleString('vi-VN')}</p>
+
+                    <td class="py-4 px-4 pr-6 align-top">
+                        <p class="text-slate-500 text-[10px] font-bold mb-2 uppercase tracking-wider">Gửi lúc: <span class="text-slate-800 dark:text-slate-200">${new Date(item.createdAt).toLocaleString('vi-VN')}</span></p>
                         <p class="text-xs font-semibold text-justify leading-relaxed">${item.content}</p>
-                        ${item.imageUrl ? `<button onclick="viewBase64Image('${item.imageUrl}')" class="mt-2 text-[10px] text-sky-600 dark:text-sky-300 bg-sky-50 dark:bg-sky-900/30 px-2 py-0.5 rounded font-bold uppercase hover:underline border border-sky-100 dark:border-sky-800">👁 Xem ảnh hiện trường</button>` : ''}
+                        ${attachmentHtml}
                     </td>
-                    <td class="py-4 px-4 text-center font-mono font-bold" id="countdown-${item.id}">
+
+                    <td class="py-4 px-4 text-center align-top font-mono font-bold" id="countdown-${item.id}">
                         --:--:--
                     </td>
-                    <td class="py-4 px-4 text-center">
-                        <span class="px-2.5 py-1.5 rounded-md text-[10px] font-black uppercase text-white shadow-sm ${statusClass}">${item.status}</span>
+
+                    <td class="py-4 px-4 text-center align-top">
+                        <span class="px-2.5 py-1.5 rounded-md text-[10px] font-black uppercase text-white shadow-sm ${statusClass} block w-max mx-auto">${item.status}</span>
                     </td>
-                    <td class="py-4 px-4 space-y-2">
-                        <textarea id="replyInp-${item.id}" rows="2" placeholder="Nhập chỉ đạo hoặc ý kiến phản hồi công khai..." class="w-full bg-white border border-slate-200 rounded-lg p-2 text-[11px] font-medium outline-none focus:border-sky-500 transition">${item.replyContent || ''}</textarea>
-                        <div class="flex gap-1.5 justify-end">
-                            <button onclick="updateComplaint('${item.id}', 'Đang xử lý')" class="bg-amber-500 hover:bg-amber-600 text-white font-bold text-[10px] uppercase px-2 py-1.5 rounded shadow-sm transition">Xử lý ⚙️</button>
-                            <button onclick="updateComplaint('${item.id}', 'Đã hoàn thành')" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-[10px] uppercase px-2 py-1.5 rounded shadow-sm transition">Duyệt xong ✓</button>
+
+                    <td class="py-4 px-4 align-top space-y-2">
+                        <textarea id="replyInp-${item.id}" rows="3" placeholder="Nhập chỉ đạo hoặc ý kiến phản hồi công khai..." class="w-full bg-white border border-slate-200 rounded-lg p-2 text-[11px] font-medium outline-none focus:border-sky-500 focus:ring-2 focus:ring-sky-500/20 transition leading-relaxed">${item.replyContent || ''}</textarea>
+                        <div class="flex gap-2 justify-end">
+                            <button onclick="updateComplaint('${item.id}', 'Đang xử lý')" class="bg-amber-500 hover:bg-amber-600 text-white font-bold text-[10px] uppercase px-3 py-2 rounded-lg shadow-sm transition">Xử lý ⚙️</button>
+                            <button onclick="updateComplaint('${item.id}', 'Đã hoàn thành')" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-[10px] uppercase px-3 py-2 rounded-lg shadow-sm transition">Duyệt xong ✓</button>
                         </div>
                     </td>
                 `;
