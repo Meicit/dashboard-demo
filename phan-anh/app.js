@@ -47,12 +47,20 @@ document.getElementById('complaintForm').addEventListener('submit', async (e) =>
     e.preventDefault();
 
     const submitBtn = document.getElementById('submitBtn');
+    
+    // Lấy dữ liệu từ giao diện
     const fullname = document.getElementById('fullname').value.trim();
     const cccd = document.getElementById('cccd').value.trim();
     const email = document.getElementById('email').value.trim();
+    
+    // 2 TRƯỜNG DỮ LIỆU MỚI THÊM
+    const address = document.getElementById('address').value.trim();
+    const receiveMethod = document.getElementById('receiveMethod').value.trim();
+    
     const content = document.getElementById('content').value.trim();
     const imageFile = document.getElementById('imageFile').files[0];
 
+    // Kiểm tra CCCD
     const cccdRegex = /^\d{12}$/;
     if (!cccdRegex.test(cccd)) {
         alert("⚠️ Số Căn cước công dân không hợp lệ! Vui lòng nhập đúng và đủ 12 chữ số.");
@@ -74,13 +82,17 @@ document.getElementById('complaintForm').addEventListener('submit', async (e) =>
         }
 
         const trackingCode = generateTrackingCode();
+        
+        // Cập nhật object dữ liệu để lưu lên Firestore
         const complaintData = {
             trackingCode: trackingCode,
             fullname: fullname,
             cccd: cccd,
             email: email,
+            address: address,               // Lưu Địa chỉ liên hệ
+            receiveMethod: receiveMethod,   // Lưu Hình thức nhận kết quả
             content: content,
-            imageUrl: finalImageData, // Lưu chuỗi văn bản ảnh đã nén thẳng vào Firestore
+            imageUrl: finalImageData,       // Lưu chuỗi văn bản ảnh đã nén thẳng vào Firestore
             status: "Đang tiếp nhận",
             replyContent: "",
             createdAt: new Date().toISOString()
