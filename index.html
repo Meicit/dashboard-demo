@@ -250,15 +250,12 @@
         
         <div class="menu-panel-wrapper">
             
-            <!-- Khu vực chứa các nút chọn Theme và Chế độ Sáng/Tối -->
             <div class="flex justify-end w-full mb-6 gap-3">
-                <!-- Bộ chọn Theme Xanh / Đỏ -->
                 <div id="theme-selector-horizontal" class="bg-white/10 dark:bg-sky-500/10 border border-white/20 dark:border-sky-500/20 p-1 rounded-xl flex items-center shadow-sm backdrop-blur transition-all duration-300">
                     <button onclick="switchSystemTheme('xanh')" id="btn-theme-xanh" class="flex items-center gap-1.5 text-[11px] font-extrabold uppercase px-3 py-1.5 rounded-lg transition-all duration-300 bg-blue-600 text-white shadow-sm border border-blue-500">🔵 Xanh</button>
                     <button onclick="switchSystemTheme('do')" id="btn-theme-do" class="flex items-center gap-1.5 text-[11px] font-extrabold uppercase px-3 py-1.5 rounded-lg transition-all duration-300 border border-transparent text-white/80 hover:text-white">🔴 Đỏ</button>
                 </div>
 
-                <!-- Bộ chọn Chế độ Sáng / Tối -->
                 <div class="bg-white/10 dark:bg-sky-500/10 border border-white/20 dark:border-sky-500/20 p-1 rounded-xl flex items-center shadow-sm backdrop-blur transition-all duration-300">
                     <button onclick="setTheme('light')" id="btn-theme-light" class="flex items-center gap-1.5 text-[11px] font-extrabold uppercase px-3 py-1.5 rounded-lg transition bg-white text-blue-900 shadow-sm border border-blue-200">☀️ Sáng</button>
                     <button onclick="setTheme('dark')" id="btn-theme-dark" class="flex items-center gap-1.5 text-[11px] font-extrabold uppercase px-3 py-1.5 rounded-lg transition border border-transparent text-white/70 hover:text-white dark:text-sky-200 dark:hover:text-white">🌙 Tối</button>
@@ -385,7 +382,8 @@
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+        // Bổ sung thêm onAuthStateChanged vào dòng import
+        import { getAuth, signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyCjS8jJtoV5HLcYIpVTX1zP5DbyYmXsbh4",
@@ -400,6 +398,28 @@
 
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
+
+        // ================= LOGIC TỰ ĐỘNG BẬT MODAL (DEEP LINKING) =================
+        onAuthStateChanged(auth, (user) => {
+            const targetUrl = localStorage.getItem('redirectTarget');
+            
+            if (!user) {
+                // Nếu chưa đăng nhập và phát hiện có link chờ (bị đá từ trang con ra)
+                if (targetUrl) {
+                    // Tự động bật Modal đăng nhập
+                    document.getElementById('loginModal').classList.add('open');
+                    // Tự động trỏ chuột vào ô nhập email cho tiện
+                    setTimeout(() => document.getElementById('email').focus(), 300);
+                }
+            } else {
+                // Nếu đã đăng nhập (có lưu phiên bản Firebase) mà vào lại trang chủ
+                // Kiểm tra xem có đang muốn truy cập link nào không
+                if (targetUrl) {
+                    localStorage.removeItem('redirectTarget');
+                    window.location.href = targetUrl;
+                }
+            }
+        });
 
         // HÀM CHUYỂN ĐỔI THEME HEADER XANH / ĐỎ
         window.switchSystemTheme = function(modeName) {
@@ -449,6 +469,8 @@
         window.closeLoginModal = function() {
             document.getElementById('loginModal').classList.remove('open');
             document.getElementById('loginForm').reset();
+            // Nếu người dùng ấn "Hủy" đăng nhập, thì xóa luôn đường dẫn chờ
+            localStorage.removeItem('redirectTarget');
         }
         
         window.submitAuth = function(e) {
@@ -464,7 +486,7 @@
                     const targetUrl = localStorage.getItem('redirectTarget');
                     
                     if (targetUrl) {
-                        // Nếu có link chờ (như link vào trang Theo dõi phản ánh), xóa khỏi bộ nhớ và chuyển thẳng tới link đó
+                        // BƯỚC NÀY SẼ CHUYỂN BẠN VÀO THẲNG TRANG THEO DÕI PHẢN ÁNH
                         localStorage.removeItem('redirectTarget');
                         window.location.href = targetUrl;
                     } else {
@@ -512,31 +534,25 @@
                     hunBubble.classList.remove('show-bubble');
                 }, 5000);
             }
-        }, 120000); // 120,000 ms = 2 phút
+        }, 120000); 
 
         // Khởi động trang với nền Sáng mặc định & Kích hoạt lời chào ban đầu
         document.addEventListener('DOMContentLoaded', () => {
             setTheme('light');
             
-            // Lời chào ban đầu ngay khi vừa vào web
             const binBubble = document.querySelector('.chatbot-bin .chat-bubble');
             const hunBubble = document.querySelector('.chatbot-hun .chat-bubble');
 
             if(binBubble && hunBubble) {
-                // Lưu lại nội dung mặc định của bong bóng
                 const originalBinText = binBubble.innerText;
                 const originalHunText = hunBubble.innerText;
 
-                // Gán câu chào khởi tạo
                 binBubble.innerText = "👋 IOC Binh Hung xin chào!";
                 hunBubble.innerText = "✨ IOC Binh Hung xin chào!";
 
-                // Hiển thị bong bóng
                 binBubble.classList.add('show-bubble');
                 hunBubble.classList.add('show-bubble');
 
-                // Ẩn đi sau 5 giây và hoàn trả lại văn bản gốc 
-                // để lúc hover sau này nó hiện lại đúng câu mặc định
                 setTimeout(() => {
                     binBubble.classList.remove('show-bubble');
                     hunBubble.classList.remove('show-bubble');
@@ -544,7 +560,7 @@
                     setTimeout(() => {
                         binBubble.innerText = originalBinText;
                         hunBubble.innerText = originalHunText;
-                    }, 300); // Chờ animation ẩn kết thúc mới đổi text
+                    }, 300); 
                 }, 5000);
             }
         });
