@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gửi Phản Ánh - Cấu trúc Giao diện Mới</title>
+    <title>Gửi Phản Ánh - Tích hợp Firebase</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
     
     <style>
-        /* ================= GHI ĐÈ BÓNG ĐỔ (TỪ UI_UX.HTML) ================= */
+        /* ================= GHI ĐÈ BÓNG ĐỔ ================= */
         .shadow-sm { box-shadow: 0 1px 2px 0 rgba(8, 47, 73, 0.1); }
         .shadow-md { box-shadow: 0 4px 6px -1px rgba(8, 47, 73, 0.15), 0 2px 4px -2px rgba(8, 47, 73, 0.1); }
         .shadow-lg { box-shadow: 0 10px 15px -3px rgba(8, 47, 73, 0.15), 0 4px 6px -4px rgba(8, 47, 73, 0.1); }
@@ -154,11 +154,9 @@
                 <div class="bg-widget-card border-2 rounded-[2rem] p-6 md:p-10 shadow-sm transition-all duration-300 w-full max-w-4xl">
                     <div class="border-b border-slate-200/60 dark:border-slate-700 pb-6 mb-8 text-center">
                         <h2 class="text-2xl md:text-3xl font-black text-main-title uppercase tracking-wide font-['Montserrat']">Gửi phản ánh trực tuyến</h2>
-                 
                     </div>
 
                     <form id="complaintForm" class="space-y-6">
-                        <!-- HÀNG 1: Tên & CCCD -->
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div>
                                 <label class="text-xs font-bold text-main-title opacity-80 block mb-2 uppercase tracking-wider">Họ và tên công dân <span class="text-red-500">*</span></label>
@@ -172,7 +170,6 @@
                             </div>
                         </div>
 
-                        <!-- HÀNG 2: SĐT & Email -->
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div>
                                 <label class="text-xs font-bold text-main-title opacity-80 block mb-2 uppercase tracking-wider">Số điện thoại <span class="text-red-500">*</span></label>
@@ -188,7 +185,6 @@
                             </div>
                         </div>
 
-                        <!-- HÀNG 3: ĐỊA CHỈ & HÌNH THỨC NHẬN KQ -->
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div>
                                 <label class="text-xs font-bold text-main-title opacity-80 block mb-2 uppercase tracking-wider">
@@ -235,9 +231,22 @@
         &copy; 2026 GIAO DIỆN CÓ LOGIC THEME - IOC BÌNH HƯNG
     </footer>
 
-    <script>
+    <script type="module">
+        // Import các hàm cần thiết từ Firebase SDK
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getDatabase, ref, push, set } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+
+        // Cấu hình Firebase
+        const firebaseConfig = {
+            databaseURL: "https://dashboard-demo-ce0da-default-rtdb.asia-southeast1.firebasedatabase.app"
+        };
+
+        // Khởi tạo Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+
         // ================= JS CHO CHỨC NĂNG ĐỔI THEME =================
-        function setTheme(themeName) {
+        window.setTheme = function(themeName) {
             const body = document.getElementById('body-context');
             const btnLight = document.getElementById('btn-theme-light');
             const btnDark = document.getElementById('btn-theme-dark');
@@ -255,7 +264,7 @@
             }
         }
 
-        function switchSystemTheme(modeName) {
+        window.switchSystemTheme = function(modeName) {
             const body = document.getElementById('body-context');
             if (modeName === 'do') {
                 body.classList.remove('theme-xanh-ios'); 
@@ -264,13 +273,12 @@
                 body.classList.remove('theme-do-hanhchinh'); 
                 body.classList.add('theme-xanh-ios');
             }
-            // Mặc định ép về chế độ Sáng khi chuyển Chủ đề Xanh/Đỏ
-            setTheme('light'); 
+            window.setTheme('light'); 
         }
 
-        // ================= JS XỬ LÝ LOGIC KIỂM TRA FORM =================
+        // ================= JS XỬ LÝ LOGIC KIỂM TRA FORM & LƯU FIREBASE =================
         document.addEventListener('DOMContentLoaded', () => {
-            setTheme('light'); // Khởi tạo theme mặc định
+            window.setTheme('light'); 
 
             const receiveMethod = document.getElementById('receiveMethod');
             const emailInput = document.getElementById('email');
@@ -279,37 +287,86 @@
             const addressStar = document.getElementById('address-star');
             const form = document.getElementById('complaintForm');
 
-            // 1. Lắng nghe sự thay đổi của Dropdown "Hình thức nhận kết quả"
+            // Hiển thị (*) yêu cầu nhập nếu chọn nhận qua Email
             receiveMethod.addEventListener('change', function() {
-                // Reset trạng thái ban đầu
                 emailInput.required = false;
                 addressInput.required = false;
                 emailStar.classList.add('hidden');
                 addressStar.classList.add('hidden');
 
-                // Áp dụng luật kiểm tra tùy thuộc vào giá trị được chọn
                 if (this.value === 'email') {
                     emailInput.required = true;
-                    emailStar.classList.remove('hidden'); // Hiển thị dấu *
+                    emailStar.classList.remove('hidden'); 
                 }
             });
 
-            // 2. Lắng nghe hành động gửi Form để xử lý thông báo Custom (Nâng cao)
+            // Gửi dữ liệu form lên Firebase
             form.addEventListener('submit', function(e) {
+                e.preventDefault(); // Chặn tải lại trang
+
                 const method = receiveMethod.value;
                 const emailVal = emailInput.value.trim();
 
-                // Kiểm tra thủ công phòng trường hợp trình duyệt không hỗ trợ "required" tốt
                 if (method === 'email' && emailVal === '') {
-                    e.preventDefault();
                     alert('Vui lòng nhập Địa chỉ Email để có thể nhận kết quả qua mail!');
                     emailInput.focus();
                     return;
                 }
 
-                // e.preventDefault(); 
-                // Xoá comment hàm e.preventDefault() ở trên nếu bạn muốn chặn form để test.
-                // Thêm code xử lý đẩy API hoặc nộp form tại đây.
+                // A. Tạo mã tra cứu ngẫu nhiên (Format: BH-2026-XXXX)
+                const randomStr = Math.random().toString(36).substring(2, 6).toUpperCase();
+                const trackingCode = `BH-2026-${randomStr}`;
+
+                // B. Lấy dữ liệu từ Form - ĐỒNG BỘ CHÍNH XÁC VỚI JSON BẠN ĐÃ CUNG CẤP
+                const formData = {
+                    ma_tra_cuu: trackingCode,
+                    ho_ten: document.getElementById('fullname').value,
+                    cccd: document.getElementById('cccd').value,
+                    sdt: document.getElementById('phone').value,
+                    email: emailVal,
+                    dia_chi: document.getElementById('address').value,
+                    hinh_thuc_nhan: method,
+                    noi_dung: document.getElementById('content').value,
+                    thoi_gian_gui: new Date().toISOString(),
+                    trang_thai: "Chờ tiếp nhận",
+                    ket_qua_xu_ly: "" // Trường mới thêm để tương thích 100% JSON mẫu
+                };
+
+                // C. Hiệu ứng UX nút bấm
+                const submitBtn = document.getElementById('submitBtn');
+                const originalBtnText = submitBtn.innerHTML;
+                submitBtn.innerHTML = '<span>Đang gửi dữ liệu...</span> ⏳';
+                submitBtn.disabled = true;
+                submitBtn.classList.add('opacity-70', 'cursor-not-allowed');
+
+                // D. Đẩy dữ liệu vào đường dẫn: dashboard_binhhung/phan_anh_nguoi_dan
+                const phanAnhRef = ref(db, 'dashboard_binhhung/phan_anh_nguoi_dan');
+                const newPhanAnhRef = push(phanAnhRef); 
+                
+                set(newPhanAnhRef, formData)
+                    .then(() => {
+                        // Bật lên thông báo thành công chứa mã tra cứu
+                        alert(`✅ GỬI PHẢN ÁNH THÀNH CÔNG!\n\nMã tra cứu của bạn là: ${trackingCode}\n\nVui lòng lưu lại mã này để tra cứu tiến độ xử lý.`);
+                        
+                        // Xóa trắng form để chuẩn bị cho lần nhập tiếp theo
+                        form.reset();
+                        
+                        // Reset giao diện báo lỗi
+                        emailInput.required = false;
+                        addressInput.required = false;
+                        emailStar.classList.add('hidden');
+                        addressStar.classList.add('hidden');
+                    })
+                    .catch((error) => {
+                        alert("❌ Đã xảy ra lỗi khi gửi phản ánh. Vui lòng kiểm tra kết nối mạng và thử lại!");
+                        console.error("Lỗi Firebase:", error);
+                    })
+                    .finally(() => {
+                        // Khôi phục nút bấm
+                        submitBtn.innerHTML = originalBtnText;
+                        submitBtn.disabled = false;
+                        submitBtn.classList.remove('opacity-70', 'cursor-not-allowed');
+                    });
             });
         });
     </script>
