@@ -411,6 +411,9 @@
                     document.getElementById('loginModal').classList.add('open');
                     setTimeout(() => document.getElementById('email').focus(), 300);
                 }
+            } else {
+                // ĐÃ SỬA LỖI: Cấp thẻ thông hành nếu Firebase xác nhận user đã đăng nhập từ trước
+                sessionStorage.setItem("isLoggedIn", "true");
             }
         });
 
@@ -441,7 +444,7 @@
                 body.classList.remove('dark-theme');
                 body.classList.add('light-theme');
                 btnLight.className = "flex items-center gap-1.5 text-[11px] font-extrabold uppercase px-3 py-1.5 rounded-lg transition bg-white text-blue-900 shadow-sm border border-blue-200";
-                btnDark.className = "flex items-center gap-1.5 text-[11px] font-extrabold uppercase px-3 py-1.5 rounded-lg transition border border-transparent text-white/70 hover:text-white dark:text-sky-200 dark:hover:text-white";
+                btnDark.className = "flex items-center gap-1.5 text-[11px] font-extrabold uppercase px-3 py-1.5 rounded-lg transition border border-transparent text-slate-500 hover:text-blue-900 dark:text-sky-200 dark:hover:text-white";
             } else {
                 body.classList.remove('light-theme');
                 body.classList.add('dark-theme');
@@ -465,6 +468,8 @@
         
         window.openLoginModal = function() {
             if (auth.currentUser) {
+                // ĐÃ SỬA LỖI: Cấp thẻ thông hành trước khi qua dashboard
+                sessionStorage.setItem("isLoggedIn", "true");
                 window.location.href = "dashboard.html";
             } else {
                 document.getElementById('loginModal').classList.add('open');
@@ -479,6 +484,9 @@
 
             signInWithEmailAndPassword(auth, emailInp, passInp)
                 .then(() => {
+                    // ĐÃ SỬA LỖI: Cấp thẻ thông hành ngay khi Firebase xác thực thành công
+                    sessionStorage.setItem("isLoggedIn", "true");
+
                     // Lấy link TRƯỚC KHI xử lý cái khác
                     const targetUrl = localStorage.getItem('redirectTarget');
                     
