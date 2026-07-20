@@ -4,6 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Văn hóa Xã hội — Xã Bình Hưng</title>
+
+    <!-- ĐÃ THÊM: Kiểm tra session đồng bộ, không gọi Auth để tránh lag/văng iframe -->
+    <script>
+        if (sessionStorage.getItem("isLoggedIn") !== "true") {
+            window.top.location.replace("../index.html"); 
+        }
+    </script>
+
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -109,7 +117,7 @@
         <div class="teal-wrapper space-y-8">
             
             <div class="flex flex-col sm:flex-row justify-between items-center gap-4 flex-responsive">
-                <a href="home.html" class="btn-back">⬅️ Quay lại Trang chủ</a>
+                <a href="../dashboard.html" class="btn-back">⬅️ Quay lại Trang chủ</a>
                 
                 <div class="controls-wrapper">
                     <div class="control-panel">
@@ -424,6 +432,14 @@
             // Mặc định ép về chế độ Sáng khi chuyển Chủ đề Xanh/Đỏ
             setTheme('light'); 
         }
+
+        // ĐÃ THÊM: Lắng nghe sự kiện đồng bộ theme từ iframe cha (dashboard.html)
+        window.addEventListener('message', function(event) {
+            if (event.data === 'theme-do') switchSystemTheme('do');
+            else if (event.data === 'theme-xanh') switchSystemTheme('xanh');
+            else if (event.data === 'theme-light') setTheme('light');
+            else if (event.data === 'theme-dark') setTheme('dark');
+        });
 
         // Khởi chạy khi load trang
         document.addEventListener('DOMContentLoaded', () => { 
