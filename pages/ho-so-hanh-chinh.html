@@ -93,7 +93,7 @@
 
         /* COMPONENTS BIỂU ĐỒ & DASHBOARD */
         .label-text { font-size: 11px; font-weight: 900; text-transform: uppercase; letter-spacing: 0.05em; }
-        .value-big { font-size: 40px; font-weight: 900; line-height: 1; }
+        .value-big { font-size: 48px; font-weight: 900; line-height: 1; letter-spacing: -1px; }
         .res-box { padding: 12px; border-radius: 14px; text-align: center; border: 1px solid; font-family: 'Inter', sans-serif; }
         .res-label { font-size: 10px; font-weight: 800; text-transform: uppercase; margin-bottom: 2px; }
         .res-value { font-size: 18px; font-weight: 900; }
@@ -151,83 +151,69 @@
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                <!-- 1. Tiếp nhận trong ngày -->
-                <div class="glass-panel p-5 border-t-[8px] border-purple-600 dark:border-purple-400 flex flex-col justify-start space-y-4 transition-colors">
-                    <div class="flex justify-between items-end">
-                        <div>
-                            <p class="label-text text-purple-500">Tiếp nhận trong ngày</p>
-                            <h2 id="day_total" class="value-big text-purple-600 mt-1">0</h2>
-                        </div>
-                        <p class="text-[9px] font-bold text-dyn-muted uppercase italic">Hồ sơ/Ngày</p>
+                
+                <!-- 1. Tiếp nhận trong ngày (Đã thiết kế lại tập trung vào Tổng số) -->
+                <div class="glass-panel p-6 border-t-[8px] border-purple-600 dark:border-purple-400 flex flex-col justify-center items-center text-center space-y-4 transition-colors relative overflow-hidden">
+                    <div class="absolute -right-4 -top-4 w-24 h-24 bg-purple-500/10 rounded-full blur-xl"></div>
+                    <p class="label-text text-purple-500 w-full text-left">Tiếp nhận trong ngày</p>
+                    <div class="flex-grow flex items-center justify-center">
+                        <h2 id="day_total" class="text-7xl font-black text-purple-600 drop-shadow-sm">0</h2>
                     </div>
-                    <div class="grid grid-cols-2 gap-3 mt-4">
-                        <div class="card-stat p-3 rounded-xl border border-purple-500/30">
-                            <p class="text-[9px] font-bold uppercase mb-0.5 text-purple-500">Trực tuyến</p>
-                            <p id="day_online" class="text-xl font-black text-purple-600">0</p>
-                        </div>
-                        <div class="card-stat p-3 rounded-xl border border-dyn">
-                            <p class="text-[9px] font-bold text-dyn-muted uppercase mb-0.5">Trực tiếp</p>
-                            <p id="day_offline" class="text-xl font-black text-dyn-bold">0</p>
-                        </div>
+                    <div class="w-full bg-purple-50 dark:bg-purple-900/30 rounded-xl p-2.5 border border-purple-100 dark:border-purple-800/50">
+                        <p class="text-[10px] font-bold text-purple-600 dark:text-purple-300 uppercase tracking-widest">Hồ sơ tiếp nhận mới</p>
                     </div>
                 </div>
 
                 <!-- 2. Tiếp nhận trong tháng -->
                 <div class="glass-panel p-5 border-t-[8px] border-blue-600 dark:border-sky-400 flex flex-col justify-between space-y-4 transition-colors">
-                    <div class="flex justify-between items-end">
+                    <div class="flex justify-between items-start">
                         <div>
                             <p class="label-text text-blue-500">Tiếp nhận trong tháng</p>
-                            <h2 id="month_total" class="value-big text-blue-600 mt-1">0</h2>
+                            <h2 id="month_total" class="value-big text-blue-600 mt-2">0</h2>
                         </div>
-                        <p class="text-[9px] font-bold text-dyn-muted uppercase italic">Hồ sơ/Tháng</p>
-                    </div>
-                    <div class="grid grid-cols-2 gap-3">
-                        <div class="card-stat p-3 rounded-xl border border-blue-500/30">
-                            <p class="text-[9px] font-bold uppercase mb-0.5 text-blue-500">Trực tuyến</p>
-                            <p id="month_online" class="text-xl font-black text-blue-600">0</p>
-                        </div>
-                        <div class="card-stat p-3 rounded-xl border border-dyn">
-                            <p class="text-[9px] font-bold text-dyn-muted uppercase mb-0.5">Trực tiếp</p>
-                            <p id="month_offline" class="text-xl font-black text-dyn-bold">0</p>
+                        <div class="bg-blue-100 dark:bg-blue-900/40 px-3 py-1.5 rounded-lg border border-blue-200 dark:border-blue-800/50">
+                            <p class="text-[9px] font-bold text-blue-600 dark:text-blue-300 uppercase">Hồ sơ / Tháng</p>
                         </div>
                     </div>
-                    <div>
-                        <p class="label-text text-dyn-muted mb-2 border-b border-dyn pb-1 italic">Kết quả giải quyết (Tháng)</p>
-                        <div class="grid grid-cols-4 gap-2">
-                            <div class="res-box text-emerald-500 border-emerald-500/30"><p class="res-label">Trước hạn</p><p id="res_before" class="res-value">0</p></div>
-                            <div class="res-box border-blue-500/30 text-blue-500"><p class="res-label">Đúng hạn</p><p id="res_in_time" class="res-value">0</p></div>
-                            <div class="res-box text-rose-500 border-rose-500/30"><p class="res-label">Trễ hạn</p><p id="res_late" class="res-value">0</p></div>
-                            <div class="res-box border-dyn bg-dyn-light"><p class="res-label text-dyn-muted">Xin lỗi</p><p id="res_sorry" class="res-value text-dyn-bold">0</p></div>
+                    
+                    <div class="pt-2">
+                        <p class="label-text text-dyn-muted mb-3 border-b border-dyn pb-1.5 italic">Kết quả giải quyết (Tháng)</p>
+                        <div class="grid grid-cols-2 gap-3">
+                            <div class="res-box border-blue-500/30 text-blue-600 dark:text-blue-400 bg-blue-50/50 dark:bg-blue-900/20">
+                                <p class="res-label">Đúng hạn</p>
+                                <p id="res_in_time" class="text-2xl font-black">0</p>
+                            </div>
+                            <div class="res-box text-rose-600 dark:text-rose-400 border-rose-500/30 bg-rose-50/50 dark:bg-rose-900/20">
+                                <p class="res-label">Trễ hạn</p>
+                                <p id="res_late" class="text-2xl font-black">0</p>
+                            </div>
                         </div>
                     </div>
                 </div>
 
                 <!-- 3. Lũy kế -->
                 <div class="glass-panel p-5 border-t-[8px] border-emerald-600 dark:border-teal-400 flex flex-col justify-between space-y-4 transition-colors">
-                    <div class="flex justify-between items-end">
+                    <div class="flex justify-between items-start">
                         <div>
-                            <p class="label-text text-emerald-500">Lũy kế đến ngày <span id="luy_ke_date" class="font-bold text-emerald-700 dark:text-teal-200">--/--</span></p>
-                            <h2 id="total_luy_ke" class="value-big mt-1 text-emerald-600">0</h2>
+                            <p class="label-text text-emerald-500">Lũy kế đến <span id="luy_ke_date" class="font-bold text-emerald-700 dark:text-teal-200">--/--</span></p>
+                            <h2 id="total_luy_ke" class="value-big mt-2 text-emerald-600">0</h2>
                         </div>
-                        <p class="text-[9px] font-bold text-dyn-muted uppercase italic">Tổng lũy kế</p>
-                    </div>
-                    <div class="grid grid-cols-2 gap-3">
-                        <div class="card-stat p-3 rounded-xl border border-emerald-500/30">
-                            <p class="text-[9px] font-bold uppercase mb-0.5 text-emerald-500">Trực tuyến</p>
-                            <p id="total_online" class="text-xl font-black text-emerald-600">0</p>
-                        </div>
-                        <div class="card-stat p-3 rounded-xl border border-dyn">
-                            <p class="text-[9px] font-bold text-dyn-muted uppercase mb-0.5">Trực tiếp</p>
-                            <p id="total_offline" class="text-xl font-black text-dyn-bold">0</p>
+                        <div class="bg-emerald-100 dark:bg-teal-900/40 px-3 py-1.5 rounded-lg border border-emerald-200 dark:border-teal-800/50">
+                            <p class="text-[9px] font-bold text-emerald-600 dark:text-teal-300 uppercase">Tổng hồ sơ</p>
                         </div>
                     </div>
-                    <div>
-                        <p class="label-text text-dyn-muted mb-2 border-b border-dyn pb-1 italic">Kết quả giải quyết (Lũy kế)</p>
-                        <div class="grid grid-cols-4 gap-2">
-                            <div class="res-box text-emerald-500 border-emerald-500/30"><p class="res-label">Trước hạn</p><p id="lk_res_before" class="res-value">0</p></div>
-                            <div class="res-box border-blue-500/30 text-blue-500"><p class="res-label">Đúng hạn</p><p id="lk_res_in_time" class="res-value">0</p></div>
-                            <div class="res-box text-rose-500 border-rose-500/30"><p class="res-label">Trễ hạn</p><p id="lk_res_late" class="res-value">0</p></div>
-                            <div class="res-box border-dyn bg-dyn-light"><p class="res-label text-dyn-muted">Xin lỗi</p><p id="lk_res_sorry" class="res-value text-dyn-bold">0</p></div>
+                    
+                    <div class="pt-2">
+                        <p class="label-text text-dyn-muted mb-3 border-b border-dyn pb-1.5 italic">Kết quả giải quyết (Lũy kế)</p>
+                        <div class="grid grid-cols-2 gap-3">
+                            <div class="res-box border-emerald-500/30 text-emerald-600 dark:text-emerald-400 bg-emerald-50/50 dark:bg-teal-900/20">
+                                <p class="res-label">Đúng hạn</p>
+                                <p id="lk_res_in_time" class="text-2xl font-black">0</p>
+                            </div>
+                            <div class="res-box text-rose-600 dark:text-rose-400 border-rose-500/30 bg-rose-50/50 dark:bg-rose-900/20">
+                                <p class="res-label">Trễ hạn</p>
+                                <p id="lk_res_late" class="text-2xl font-black">0</p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -241,21 +227,21 @@
                 </div>
                 <div class="glass-panel p-4 flex justify-between items-center border-l-[8px] border-indigo-500 dark:border-indigo-400 transition-colors">
                     <div><p class="label-text text-dyn-muted">Số hóa lũy kế</p><p id="total_digital" class="text-3xl font-black text-dyn-bold">0</p></div>
-                    <div class="w-12 h-12 rounded-xl flex items-center justify-center font-black text-xs border border-dyn text-dyn-bold bg-dyn-light">DIGI</div>
+                    <div class="w-12 h-12 rounded-xl flex items-center justify-center font-black text-xs border border-dyn text-dyn-bold bg-dyn-light shadow-sm">DIGI</div>
                 </div>
             </div>
 
-            <!-- Biểu Đồ -->
+            <!-- Biểu Đồ (Đã thay đổi Bar Chart hiển thị theo Lĩnh vực) -->
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-                <div class="lg:col-span-7 glass-panel p-5">
-                    <h2 class="text-xs font-black uppercase tracking-wider text-dyn-muted mb-3">📊 Đồ thị So sánh Tiếp nhận Hồ sơ</h2>
-                    <div class="w-full relative h-[260px]">
+                <div class="lg:col-span-8 glass-panel p-5">
+                    <h2 class="text-xs font-black uppercase tracking-wider text-dyn-muted mb-4">📊 Lũy kế tiếp nhận hồ sơ theo lĩnh vực</h2>
+                    <div class="w-full relative h-[280px]">
                         <canvas id="dashboardBarChart"></canvas>
                     </div>
                 </div>
-                <div class="lg:col-span-5 glass-panel p-5 flex flex-col justify-between">
-                    <h2 class="text-xs font-black uppercase tracking-wider text-dyn-muted mb-3">🎯 Cơ cấu kết quả giải quyết</h2>
-                    <div class="w-full relative h-[220px] flex justify-center">
+                <div class="lg:col-span-4 glass-panel p-5 flex flex-col justify-between">
+                    <h2 class="text-xs font-black uppercase tracking-wider text-dyn-muted mb-3 text-center">🎯 Tỉ lệ giải quyết (Lũy kế)</h2>
+                    <div class="w-full relative h-[240px] flex justify-center">
                         <canvas id="dashboardPieChart"></canvas>
                     </div>
                 </div>
@@ -274,135 +260,118 @@
         let currentSnapshotData = {}; 
         Chart.defaults.font.family = 'Inter';
 
-        // Dữ liệu JSON tĩnh được tích hợp sẵn 
+        // Dữ liệu JSON tĩnh 
         const jsonData = {
-            "ngay_nhap_so_lieu": "2026-07-21",
-            "du_lieu_phat_sinh": {
-                "trong_ngay": {
-                    "truc_tuyen": 15,
-                    "truc_tiep": 20
-                },
-                "trong_thang": {
-                    "tiep_nhan_truc_tuyen": 250,
-                    "tiep_nhan_truc_tiep": 310,
-                    "da_giai_quyet_dung_han": 545,
-                    "da_giai_quyet_tre_han": 15
-                }
+          "ngay_nhap_so_lieu": "2026-07-21",
+          "du_lieu_phat_sinh": {
+            "trong_ngay": { "tong_tiep_nhan": 35 },
+            "trong_thang": { "tong_tiep_nhan": 560, "da_giai_quyet_dung_han": 545, "da_giai_quyet_tre_han": 15 }
+          },
+          "du_lieu_luy_ke": {
+            "trong_danh_muc": {
+              "tong_tiep_nhan": 14608,
+              "da_giai_quyet": { "tong": 14580, "dung_han": 14543, "tre_han": 37, "ty_le_da_giai_quyet": 99.8, "ty_le_dung_han": 99.74, "ty_le_tre_han": 0.26 },
+              "dang_giai_quyet": { "tong": 28, "trong_han": 28, "tre_han": 0, "ty_le": 0.2 },
+              "huong_dan_ho_so": 10819,
+              "chi_tiet_linh_vuc": [
+                { "ten_linh_vuc": "Chứng thực", "tiep_nhan": 9765, "da_giai_quyet_dung_han": 9765, "da_giai_quyet_tre_han": 0, "dang_giai_quyet": 0 },
+                { "ten_linh_vuc": "Hộ tịch", "tiep_nhan": 2405, "da_giai_quyet_dung_han": 2405, "da_giai_quyet_tre_han": 0, "dang_giai_quyet": 0 },
+                { "ten_linh_vuc": "Văn hóa - Xã hội", "tiep_nhan": 441, "da_giai_quyet_dung_han": 441, "da_giai_quyet_tre_han": 0, "dang_giai_quyet": 0 },
+                { "ten_linh_vuc": "Kinh tế", "tiep_nhan": 1640, "da_giai_quyet_dung_han": 1640, "da_giai_quyet_tre_han": 0, "dang_giai_quyet": 0 },
+                { "ten_linh_vuc": "Xây dựng", "tiep_nhan": 272, "da_giai_quyet_dung_han": 237, "da_giai_quyet_tre_han": 35, "dang_giai_quyet": 0 },
+                { "ten_linh_vuc": "Nông nghiệp", "tiep_nhan": 85, "da_giai_quyet_dung_han": 55, "da_giai_quyet_tre_han": 2, "dang_giai_quyet": 28 }
+              ]
             },
-            "du_lieu_luy_ke": {
-                "trong_danh_muc": {
-                    "tong_tiep_nhan": 14608,
-                    "da_giai_quyet": {
-                        "tong": 14580,
-                        "dung_han": 14543,
-                        "tre_han": 37,
-                        "ty_le_da_giai_quyet": 99.8,
-                        "ty_le_dung_han": 99.74,
-                        "ty_le_tre_han": 0.26
-                    },
-                    "dang_giai_quyet": {
-                        "tong": 28,
-                        "trong_han": 28,
-                        "tre_han": 0,
-                        "ty_le": 0.2
-                    },
-                    "huong_dan_ho_so": 10819,
-                    "chi_tiet_linh_vuc": [
-                        { "ten_linh_vuc": "Chứng thực", "tiep_nhan": 9765, "da_giai_quyet_dung_han": 9765, "da_giai_quyet_tre_han": 0, "dang_giai_quyet": 0 },
-                        { "ten_linh_vuc": "Hộ tịch", "tiep_nhan": 2405, "da_giai_quyet_dung_han": 2405, "da_giai_quyet_tre_han": 0, "dang_giai_quyet": 0 },
-                        { "ten_linh_vuc": "Văn hóa - Xã hội", "tiep_nhan": 441, "da_giai_quyet_dung_han": 441, "da_giai_quyet_tre_han": 0, "dang_giai_quyet": 0 },
-                        { "ten_linh_vuc": "Kinh tế", "tiep_nhan": 1640, "da_giai_quyet_dung_han": 1640, "da_giai_quyet_tre_han": 0, "dang_giai_quyet": 0 },
-                        { "ten_linh_vuc": "Xây dựng", "tiep_nhan": 272, "da_giai_quyet_dung_han": 237, "da_giai_quyet_tre_han": 35, "dang_giai_quyet": 0 },
-                        { "ten_linh_vuc": "Nông nghiệp", "tiep_nhan": 85, "da_giai_quyet_dung_han": 55, "da_giai_quyet_tre_han": 2, "dang_giai_quyet": 28 }
-                    ]
-                },
-                "ngoai_danh_muc": {
-                    "tong_tiep_nhan": 342,
-                    "da_giai_quyet": {
-                        "tong": 334,
-                        "dung_han": 200,
-                        "tre_han": 134,
-                        "ty_le_da_giai_quyet": 97.66,
-                        "ty_le_dung_han": 59.88,
-                        "ty_le_tre_han": 40.12
-                    },
-                    "dang_giai_quyet": {
-                        "tong": 8,
-                        "trong_han": 8,
-                        "tre_han": 0,
-                        "ty_le": 2.34
-                    }
-                }
-            },
-            "chi_so_danh_gia_va_chuyen_doi_so": {
-                "muc_do_hai_long": {
-                    "ty_le_phan_tram": 98.5,
-                    "so_luot_danh_gia": 14200
-                },
-                "ty_le_so_hoa_ho_so": 85.0
+            "ngoai_danh_muc": {
+              "tong_tiep_nhan": 342,
+              "da_giai_quyet": { "tong": 334, "dung_han": 200, "tre_han": 134, "ty_le_da_giai_quyet": 97.66, "ty_le_dung_han": 59.88, "ty_le_tre_han": 40.12 },
+              "dang_giai_quyet": { "tong": 8, "trong_han": 8, "tre_han": 0, "ty_le": 2.34 }
             }
+          },
+          "chi_so_danh_gia_va_chuyen_doi_so": {
+            "muc_do_hai_long": { "ty_le_phan_tram": 98.5, "so_luot_danh_gia": 14200 },
+            "ty_le_so_hoa_ho_so": 85.0
+          }
         };
 
         function updateCharts(d, textColor, isDark) {
             if(barChart) barChart.destroy();
             if(pieChart) pieChart.destroy();
 
-            let colorOnline = 'rgba(59, 130, 246, 0.8)'; 
-            let borderOnline = '#2563eb';
-            let colorOffline = 'rgba(14, 165, 233, 0.3)';
-            let borderOffline = '#0ea5e9';
+            let colorBar = 'rgba(59, 130, 246, 0.8)'; 
+            let borderBar = '#2563eb';
             let gridColor = 'rgba(14, 165, 233, 0.15)';
 
             if (isDark) {
-                colorOnline = 'rgba(56, 189, 248, 0.8)'; borderOnline = '#38bdf8';
+                colorBar = 'rgba(56, 189, 248, 0.8)'; borderBar = '#38bdf8';
                 gridColor = 'rgba(255, 255, 255, 0.1)';
             }
 
+            // Biểu đồ cột: Hiển thị tiếp nhận theo từng Lĩnh vực
             const ctxBar = document.getElementById('dashboardBarChart').getContext('2d');
             barChart = new Chart(ctxBar, {
                 type: 'bar',
                 data: {
-                    labels: ['Trong ngày', 'Trong tháng', 'Tổng lũy kế'],
+                    labels: d.linh_vuc_labels || [],
                     datasets: [
-                        { label: 'Hồ sơ Trực tuyến', data: [d.day_online || 0, d.month_online || 0, d.total_online || 0], backgroundColor: colorOnline, borderColor: borderOnline, borderWidth: 1, borderRadius: 6 },
-                        { label: 'Hồ sơ Trực tiếp', data: [d.day_offline || 0, d.month_offline || 0, d.total_offline || 0], backgroundColor: colorOffline, borderColor: borderOffline, borderWidth: 1, borderRadius: 6 }
+                        { 
+                            label: 'Số lượng hồ sơ', 
+                            data: d.linh_vuc_data || [], 
+                            backgroundColor: colorBar, 
+                            borderColor: borderBar, 
+                            borderWidth: 1, 
+                            borderRadius: 6,
+                            barPercentage: 0.6
+                        }
                     ]
                 },
                 options: {
                     responsive: true, maintainAspectRatio: false,
                     plugins: { 
-                        legend: { labels: { color: textColor, font: { weight: 'bold', size: 10 } }, padding: { bottom: 20 } },
-                        datalabels: { color: textColor, anchor: 'end', align: 'top', font: { weight: 'bold', size: 11 }, formatter: Math.round, offset: 4 }
+                        legend: { display: false },
+                        datalabels: { 
+                            color: textColor, 
+                            anchor: 'end', 
+                            align: 'top', 
+                            font: { weight: 'bold', size: 11 }, 
+                            formatter: (value) => value > 0 ? value.toLocaleString('vi-VN') : '', 
+                            offset: 2 
+                        }
                     },
                     scales: {
-                        x: { grid: { display: false }, ticks: { color: textColor, font: { weight: 'bold', size: 10 } } },
-                        y: { grid: { color: gridColor }, ticks: { color: textColor, font: { size: 10 } }, beginAtZero: true, grace: '15%' }
+                        x: { grid: { display: false }, ticks: { color: textColor, font: { weight: '600', size: 11 }, maxRotation: 45, minRotation: 0 } },
+                        y: { type: 'logarithmic', grid: { color: gridColor }, ticks: { color: textColor, font: { size: 10 } }, beginAtZero: true } // Dùng Logarithmic do chênh lệch số lượng lĩnh vực lớn (9700 vs 85)
                     },
-                    layout: { padding: { top: 10 } } 
+                    layout: { padding: { top: 20 } } 
                 }
             });
 
+            // Biểu đồ tròn: Cơ cấu giải quyết đúng hạn / trễ hạn
             const ctxPie = document.getElementById('dashboardPieChart').getContext('2d');
             pieChart = new Chart(ctxPie, {
-                type: 'pie',
+                type: 'doughnut',
                 data: {
                     labels: ['Đúng hạn', 'Trễ hạn'],
                     datasets: [{
                         data: [d.lk_res_in_time || 0, d.lk_res_late || 0],
                         backgroundColor: ['rgba(16, 185, 129, 0.85)', 'rgba(244, 63, 94, 0.85)'],
-                        borderWidth: 2, borderColor: '#ffffff'
+                        borderWidth: 3, 
+                        borderColor: isDark ? '#0f172a' : '#ffffff',
+                        hoverOffset: 4
                     }]
                 },
                 options: {
-                    responsive: true, maintainAspectRatio: false, layout: { padding: 10 },
+                    responsive: true, maintainAspectRatio: false, layout: { padding: 15 },
+                    cutout: '65%', // Tạo khoảng trống ở giữa
                     plugins: { 
-                        legend: { position: 'right', labels: { color: textColor, font: { weight: 'bold', size: 10 } } },
+                        legend: { position: 'bottom', labels: { color: textColor, font: { weight: 'bold', size: 11 }, padding: 15 } },
                         datalabels: {
-                            color: '#ffffff', font: { weight: 'bold', size: 12 },
+                            color: '#ffffff', font: { weight: '900', size: 13 },
                             formatter: (value, ctx) => {
                                 let sum = 0; ctx.chart.data.datasets[0].data.map(data => { sum += data; });
                                 if (sum === 0) return "0%";
-                                return (value * 100 / sum).toFixed(1) + "%";
+                                let percentage = (value * 100 / sum).toFixed(1);
+                                return percentage > 1 ? percentage + "%" : ""; // Ẩn label nếu tỷ lệ quá nhỏ để không bị tràn
                             }
                         }
                     }
@@ -410,70 +379,51 @@
             });
         }
 
-        // Tải và ánh xạ dữ liệu trực tiếp từ hằng số JSON
         function loadDataFromJSON() {
-            // Lấy khối dữ liệu phát sinh & lũy kế
             const phatSinh = jsonData.du_lieu_phat_sinh;
             const luyKe = jsonData.du_lieu_luy_ke;
             const danhGia = jsonData.chi_so_danh_gia_va_chuyen_doi_so;
 
-            // Xử lý Ngày
-            const dayOnline = phatSinh.trong_ngay.truc_tuyen || 0;
-            const dayOffline = phatSinh.trong_ngay.truc_tiep || 0;
-            
-            // Xử lý Tháng
-            const monthOnline = phatSinh.trong_thang.tiep_nhan_truc_tuyen || 0;
-            const monthOffline = phatSinh.trong_thang.tiep_nhan_truc_tiep || 0;
-            
             // Xử lý Lũy Kế Tổng (Trong + Ngoài)
             const lkTrong = luyKe.trong_danh_muc.tong_tiep_nhan || 0;
             const lkNgoai = luyKe.ngoai_danh_muc.tong_tiep_nhan || 0;
             const totalLk = lkTrong + lkNgoai;
             
-            // Lũy kế trực tuyến/trực tiếp hiện không có trong json, mô phỏng hiển thị biểu đồ
-            const lkOnline = Math.round(totalLk * 0.45); 
-            const lkOffline = totalLk - lkOnline;
-
             const lkDungHan = (luyKe.trong_danh_muc.da_giai_quyet.dung_han || 0) + (luyKe.ngoai_danh_muc.da_giai_quyet.dung_han || 0);
             const lkTreHan = (luyKe.trong_danh_muc.da_giai_quyet.tre_han || 0) + (luyKe.ngoai_danh_muc.da_giai_quyet.tre_han || 0);
 
-            // Cập nhật biến dữ liệu để truyền vào Chart
+            // Bóc tách mảng Lĩnh vực từ JSON
+            const danhSachLinhVuc = luyKe.trong_danh_muc.chi_tiet_linh_vuc || [];
+            const nhanLinhVuc = danhSachLinhVuc.map(item => {
+                // Rút gọn tên lĩnh vực cho đẹp biểu đồ
+                if (item.ten_linh_vuc === "Văn hóa - Xã hội") return "Văn hóa-XH";
+                return item.ten_linh_vuc;
+            });
+            const duLieuLinhVuc = danhSachLinhVuc.map(item => item.tiep_nhan);
+
+            // Cập nhật biến State cho Chart
             currentSnapshotData = {
-                day_online: dayOnline, day_offline: dayOffline,
-                month_online: monthOnline, month_offline: monthOffline,
-                total_online: lkOnline, total_offline: lkOffline,
-                lk_res_in_time: lkDungHan, lk_res_late: lkTreHan
+                lk_res_in_time: lkDungHan, 
+                lk_res_late: lkTreHan,
+                linh_vuc_labels: nhanLinhVuc,
+                linh_vuc_data: duLieuLinhVuc
             }; 
 
-            // Đẩy dữ liệu ra giao diện UI 
-            document.getElementById('day_total').innerText = dayOnline + dayOffline;
-            document.getElementById('day_online').innerText = dayOnline;
-            document.getElementById('day_offline').innerText = dayOffline;
+            // Ánh xạ dữ liệu lên giao diện
+            document.getElementById('day_total').innerText = (phatSinh.trong_ngay.tong_tiep_nhan || 0).toLocaleString('vi-VN');
+            document.getElementById('month_total').innerText = (phatSinh.trong_thang.tong_tiep_nhan || 0).toLocaleString('vi-VN');
+            document.getElementById('res_in_time').innerText = (phatSinh.trong_thang.da_giai_quyet_dung_han || 0).toLocaleString('vi-VN');
+            document.getElementById('res_late').innerText = (phatSinh.trong_thang.da_giai_quyet_tre_han || 0).toLocaleString('vi-VN');
             
-            document.getElementById('month_total').innerText = monthOnline + monthOffline;
-            document.getElementById('month_online').innerText = monthOnline;
-            document.getElementById('month_offline').innerText = monthOffline;
-            document.getElementById('res_before').innerText = 0; 
-            document.getElementById('res_in_time').innerText = phatSinh.trong_thang.da_giai_quyet_dung_han || 0;
-            document.getElementById('res_late').innerText = phatSinh.trong_thang.da_giai_quyet_tre_han || 0;
-            document.getElementById('res_sorry').innerText = 0;
+            document.getElementById('total_luy_ke').innerText = totalLk.toLocaleString('vi-VN');
+            document.getElementById('lk_res_in_time').innerText = lkDungHan.toLocaleString('vi-VN');
+            document.getElementById('lk_res_late').innerText = lkTreHan.toLocaleString('vi-VN');
             
-            document.getElementById('total_luy_ke').innerText = totalLk;
-            document.getElementById('total_online').innerText = lkOnline;
-            document.getElementById('total_offline').innerText = lkOffline;
-            
-            // Tách hiển thị ngày tháng
             let dateParts = jsonData.ngay_nhap_so_lieu ? jsonData.ngay_nhap_so_lieu.split('-') : [];
             document.getElementById('luy_ke_date').innerText = dateParts.length === 3 ? `${dateParts[2]}/${dateParts[1]}` : "--/--";
             
-            document.getElementById('lk_res_before').innerText = 0;
-            document.getElementById('lk_res_in_time').innerText = lkDungHan;
-            document.getElementById('lk_res_late').innerText = lkTreHan;
-            document.getElementById('lk_res_sorry').innerText = 0;
-            
-            // Đánh giá hài lòng & Số hóa
             document.getElementById('sat_rate').innerText = danhGia.muc_do_hai_long.ty_le_phan_tram + "%";
-            document.getElementById('sat_count').innerText = danhGia.muc_do_hai_long.so_luot_danh_gia || 0;
+            document.getElementById('sat_count').innerText = (danhGia.muc_do_hai_long.so_luot_danh_gia || 0).toLocaleString('vi-VN');
             document.getElementById('total_digital').innerText = danhGia.ty_le_so_hoa_ho_so + "%";
 
             refreshChartColors();
@@ -524,7 +474,7 @@
 
         document.addEventListener('DOMContentLoaded', () => {
             setTheme('light');
-            loadDataFromJSON(); // Gọi hàm đổ dữ liệu đã được gán sẵn
+            loadDataFromJSON(); 
         });
     </script>
 </body>
