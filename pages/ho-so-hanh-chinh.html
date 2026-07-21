@@ -258,21 +258,15 @@
         &copy; 2026 IOC Xã Bình Hưng — Hệ thống  i-Dashboard
     </footer>
 
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
-        import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-database.js";
-
+   <script>
+        // Cấu hình Chart.js (Giữ nguyên cấu hình ban đầu của bạn)
         Chart.register(ChartDataLabels);
-        const firebaseConfig = { databaseURL: "https://dashboard-demo-ce0da-default-rtdb.asia-southeast1.firebasedatabase.app" };
-        const app = initializeApp(firebaseConfig);
-        const db = getDatabase(app);
-        const dbRef = ref(db, 'dashboard_binhhung/ho_so_chi_tiet');
-
         let barChart = null; let pieChart = null;
         let currentSnapshotData = {}; 
         Chart.defaults.font.family = 'Inter';
 
         function updateCharts(d, textColor, isDark) {
+            // [GIỮ NGUYÊN TOÀN BỘ HÀM updateCharts() NHƯ FILE CŨ]
             if(barChart) barChart.destroy();
             if(pieChart) pieChart.destroy();
 
@@ -293,39 +287,19 @@
                 data: {
                     labels: ['Trong ngày', 'Trong tháng', 'Tổng lũy kế'],
                     datasets: [
-                        // Cập nhật để Bar chart hiển thị thêm cột "Trong ngày"
                         { label: 'Hồ sơ Trực tuyến', data: [d.day_online || 0, d.month_online || 0, d.total_online || 0], backgroundColor: colorOnline, borderColor: borderOnline, borderWidth: 1, borderRadius: 6 },
                         { label: 'Hồ sơ Trực tiếp', data: [d.day_offline || 0, d.month_offline || 0, d.total_offline || 0], backgroundColor: colorOffline, borderColor: borderOffline, borderWidth: 1, borderRadius: 6 }
                     ]
                 },
                 options: {
-                    responsive: true, 
-                    maintainAspectRatio: false,
+                    responsive: true, maintainAspectRatio: false,
                     plugins: { 
-                        legend: { 
-                            labels: { color: textColor, font: { weight: 'bold', size: 10 } },
-                            padding: { bottom: 20 }
-                        },
-                        datalabels: { 
-                            color: textColor, 
-                            anchor: 'end', 
-                            align: 'top', 
-                            font: { weight: 'bold', size: 11 }, 
-                            formatter: Math.round,
-                            offset: 4
-                        }
+                        legend: { labels: { color: textColor, font: { weight: 'bold', size: 10 } }, padding: { bottom: 20 } },
+                        datalabels: { color: textColor, anchor: 'end', align: 'top', font: { weight: 'bold', size: 11 }, formatter: Math.round, offset: 4 }
                     },
                     scales: {
-                        x: { 
-                            grid: { display: false }, 
-                            ticks: { color: textColor, font: { weight: 'bold', size: 10 } } 
-                        },
-                        y: { 
-                            grid: { color: gridColor }, 
-                            ticks: { color: textColor, font: { size: 10 } },
-                            beginAtZero: true, 
-                            grace: '15%' 
-                        }
+                        x: { grid: { display: false }, ticks: { color: textColor, font: { weight: 'bold', size: 10 } } },
+                        y: { grid: { color: gridColor }, ticks: { color: textColor, font: { size: 10 } }, beginAtZero: true, grace: '15%' }
                     },
                     layout: { padding: { top: 10 } } 
                 }
@@ -359,71 +333,77 @@
             });
         }
 
-        onValue(dbRef, (snap) => {
-            const d = snap.val() || {};
-            currentSnapshotData = d; 
+        // KẾT NỐI API VIETTEL THAY THẾ FIREBASE
+        function loadDataFromViettelDB() {
+            // LƯU Ý: Sửa link theo tên miền thực tế
+            const apiUrl = "https://tenmiencuaban.com/api_hosohanhchinh.php?t=" + new Date().getTime(); 
 
-            // Cập nhật Dữ liệu Tiếp nhận trong ngày
-            document.getElementById('day_total').innerText = d.day_total || 0;
-            document.getElementById('day_online').innerText = d.day_online || 0;
-            document.getElementById('day_offline').innerText = d.day_offline || 0;
+            fetch(apiUrl)
+                .then(response => response.json())
+                .then(response => {
+                    if(!response || response.error || !response.success) {
+                        console.error("Lỗi dữ liệu API"); return;
+                    }
+                    const d = response.data;
+                    currentSnapshotData = d; 
 
-            document.getElementById('month_total').innerText = d.month_total || 0;
-            document.getElementById('month_online').innerText = d.month_online || 0;
-            document.getElementById('month_offline').innerText = d.month_offline || 0;
-            document.getElementById('res_before').innerText = d.res_before || 0;
-            document.getElementById('res_in_time').innerText = d.res_in_time || 0;
-            document.getElementById('res_late').innerText = d.res_late || 0;
-            document.getElementById('res_sorry').innerText = d.res_sorry || 0;
-            document.getElementById('total_luy_ke').innerText = d.total_luy_ke || 0;
-            document.getElementById('total_online').innerText = d.total_online || 0;
-            document.getElementById('total_offline').innerText = d.total_offline || 0;
-            document.getElementById('luy_ke_date').innerText = d.luy_ke_date || "--/--";
-            document.getElementById('lk_res_before').innerText = d.lk_res_before || 0;
-            document.getElementById('lk_res_in_time').innerText = d.lk_res_in_time || 0;
-            document.getElementById('lk_res_late').innerText = d.lk_res_late || 0;
-            document.getElementById('lk_res_sorry').innerText = d.lk_res_sorry || 0;
-            document.getElementById('sat_rate').innerText = (d.sat_rate || 0) + "%";
-            document.getElementById('sat_count').innerText = d.sat_count || 0;
-            document.getElementById('total_digital').innerText = d.total_digital || 0;
+                    document.getElementById('day_total').innerText = d.day_total || 0;
+                    document.getElementById('day_online').innerText = d.day_online || 0;
+                    document.getElementById('day_offline').innerText = d.day_offline || 0;
+                    
+                    document.getElementById('month_total').innerText = d.month_total || 0;
+                    document.getElementById('month_online').innerText = d.month_online || 0;
+                    document.getElementById('month_offline').innerText = d.month_offline || 0;
+                    document.getElementById('res_before').innerText = d.res_before || 0;
+                    document.getElementById('res_in_time').innerText = d.res_in_time || 0;
+                    document.getElementById('res_late').innerText = d.res_late || 0;
+                    document.getElementById('res_sorry').innerText = d.res_sorry || 0;
+                    
+                    document.getElementById('total_luy_ke').innerText = d.total_luy_ke || 0;
+                    document.getElementById('total_online').innerText = d.total_online || 0;
+                    document.getElementById('total_offline').innerText = d.total_offline || 0;
+                    document.getElementById('luy_ke_date').innerText = d.luy_ke_date || "--/--";
+                    document.getElementById('lk_res_before').innerText = d.lk_res_before || 0;
+                    document.getElementById('lk_res_in_time').innerText = d.lk_res_in_time || 0;
+                    document.getElementById('lk_res_late').innerText = d.lk_res_late || 0;
+                    document.getElementById('lk_res_sorry').innerText = d.lk_res_sorry || 0;
+                    
+                    document.getElementById('sat_rate').innerText = (d.sat_rate || 0) + "%";
+                    document.getElementById('sat_count').innerText = d.sat_count || 0;
+                    document.getElementById('total_digital').innerText = d.total_digital || 0;
 
-            refreshChartColors();
-        });
+                    refreshChartColors();
+                })
+                .catch(error => console.error("Lỗi kết nối cơ sở dữ liệu:", error));
+        }
 
         function refreshChartColors() {
+            // [GIỮ NGUYÊN THEME LOGIC CŨ]
             const isDark = document.getElementById('body-context').classList.contains('dark-theme');
             let textColor = '#1e3a8a'; 
             if (isDark) textColor = '#e0f2fe'; 
-
             updateCharts(currentSnapshotData, textColor, isDark);
             applyThemeColors(isDark);
         }
 
         function applyThemeColors(isDark) {
-            // Loại bỏ cấu hình boxKpiTotal do đã xóa phần QĐ 766
             const bgDynLights = document.querySelectorAll('.bg-dyn-light');
             bgDynLights.forEach(e => e.classList.remove('bg-indigo-50', 'bg-white/5'));
-
-            if(isDark) {
-                bgDynLights.forEach(e => e.classList.add('bg-white/5'));
-            } else {
-                bgDynLights.forEach(e => e.classList.add('bg-indigo-50'));
-            }
+            if(isDark) { bgDynLights.forEach(e => e.classList.add('bg-white/5')); } 
+            else { bgDynLights.forEach(e => e.classList.add('bg-indigo-50')); }
         }
 
+        // [HÀM setTheme VÀ switchSystemTheme GIỮ NGUYÊN]
         window.setTheme = function(themeName) {
             const body = document.getElementById('body-context');
             const btnLight = document.getElementById('btn-theme-light');
             const btnDark = document.getElementById('btn-theme-dark');
-
             if (themeName === 'light') {
-                body.classList.remove('dark-theme'); 
-                body.classList.add('light-theme');
+                body.classList.remove('dark-theme'); body.classList.add('light-theme');
                 btnLight.className = "flex items-center gap-1.5 text-[11px] font-bold uppercase px-3 py-1.5 rounded-lg transition bg-white text-blue-900 shadow-sm border border-transparent";
                 btnDark.className = "flex items-center gap-1.5 text-[11px] font-bold uppercase px-3 py-1.5 rounded-lg transition text-blue-800 hover:text-white border border-transparent";
             } else {
-                body.classList.remove('light-theme'); 
-                body.classList.add('dark-theme');
+                body.classList.remove('light-theme'); body.classList.add('dark-theme');
                 btnDark.className = "flex items-center gap-1.5 text-[11px] font-bold uppercase px-3 py-1.5 rounded-lg transition bg-red-600 text-white shadow-sm border border-transparent";
                 btnLight.className = "flex items-center gap-1.5 text-[11px] font-bold uppercase px-3 py-1.5 rounded-lg transition text-blue-200 hover:text-white border border-transparent";
             }
@@ -433,25 +413,18 @@
         window.switchSystemTheme = function(modeName) {
             const body = document.getElementById('body-context');
             if (modeName === 'do') {
-                body.classList.remove('theme-xanh-ios'); 
-                body.classList.add('theme-do-hanhchinh');
-                
-                if (window.parent && window.parent.document) {
-                    window.parent.document.body.classList.add('theme-do-hanhchinh');
-                }
+                body.classList.remove('theme-xanh-ios'); body.classList.add('theme-do-hanhchinh');
+                if (window.parent && window.parent.document) window.parent.document.body.classList.add('theme-do-hanhchinh');
             } else {
-                body.classList.remove('theme-do-hanhchinh'); 
-                body.classList.add('theme-xanh-ios');
-                
-                if (window.parent && window.parent.document) {
-                    window.parent.document.body.classList.remove('theme-do-hanhchinh');
-                }
+                body.classList.remove('theme-do-hanhchinh'); body.classList.add('theme-xanh-ios');
+                if (window.parent && window.parent.document) window.parent.document.body.classList.remove('theme-do-hanhchinh');
             }
             setTheme('light'); 
         }
 
         document.addEventListener('DOMContentLoaded', () => {
             setTheme('light');
+            loadDataFromViettelDB(); // Khởi chạy kéo dữ liệu API
         });
     </script>
 </body>
