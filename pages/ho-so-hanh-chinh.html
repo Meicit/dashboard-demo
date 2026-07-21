@@ -37,8 +37,6 @@
         body.dark-theme .res-box { background: rgba(8, 47, 73, 0.6); border-color: rgba(56, 189, 248, 0.15); }
         body.dark-theme .control-theme-color { display: none !important; }
         body.dark-theme .text-main-title { color: #60a5fa !important; }
-        body.dark-theme .header-branding h1 { color: #60a5fa; }
-        body.dark-theme .header-branding h2 { color: #e0f2fe; }
 
         /* ================= THEME SÁNG (LIGHT MODE) ================= */
         body.light-theme { background-color: #f0f4f8; color: #1e3a8a; }
@@ -48,8 +46,6 @@
         /* --- SÁNG + XANH DƯƠNG ĐẬM (MẶC ĐỊNH) --- */
         body.light-theme.theme-xanh-ios .glass-panel { border-color: rgba(12, 74, 142, 0.2); }
         body.light-theme.theme-xanh-ios .text-main-title { color: #0c4a8e !important; }
-        body.light-theme.theme-xanh-ios .header-branding h1 { color: #0c4a8e; }
-        body.light-theme.theme-xanh-ios .header-branding h2 { color: #1e3a8a; }
         body.light-theme.theme-xanh-ios .teal-wrapper { 
             background-color: rgba(12, 74, 142, 0.85);
             border: 1px solid rgba(255, 255, 255, 0.25); 
@@ -59,8 +55,6 @@
         /* --- SÁNG + ĐỎ CỜ --- */
         body.light-theme.theme-do-hanhchinh .glass-panel { border-color: rgba(252, 165, 165, 0.8); }
         body.light-theme.theme-do-hanhchinh .text-main-title { color: #da251d !important; }
-        body.light-theme.theme-do-hanhchinh .header-branding h1 { color: #da251d; }
-        body.light-theme.theme-do-hanhchinh .header-branding h2 { color: #991b1b; }
         body.light-theme.theme-do-hanhchinh .teal-wrapper { 
             background-color: #da251d; 
             border: 1px solid rgba(255, 255, 255, 0.8);
@@ -125,13 +119,6 @@
 <body class="light-theme custom-scrollbar theme-xanh-ios" id="body-context">
 
     <div class="container-wrapper mt-8">
-        
-        <!-- Header Top Center -->
-        <div class="header-branding text-center mb-8 px-4 transition-colors">
-            <h1 class="text-sm md:text-lg font-bold tracking-wider uppercase mb-1">CỔNG THÔNG TIN VÀ ĐIỀU HÀNH XÃ BÌNH HƯNG, THÀNH PHỐ HỒ CHÍ MINH</h1>
-            <h2 class="text-2xl md:text-3xl font-black tracking-tight">IOC BINH HUNG</h2>
-        </div>
-
         <div class="teal-wrapper space-y-6">
             
             <div class="flex flex-row justify-between items-center flex-responsive">
@@ -152,7 +139,7 @@
 
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
                 
-                <!-- 1. Tiếp nhận trong ngày (Đã thiết kế lại tập trung vào Tổng số) -->
+                <!-- 1. Tiếp nhận trong ngày (Tập trung vào Tổng số) -->
                 <div class="glass-panel p-6 border-t-[8px] border-purple-600 dark:border-purple-400 flex flex-col justify-center items-center text-center space-y-4 transition-colors relative overflow-hidden">
                     <div class="absolute -right-4 -top-4 w-24 h-24 bg-purple-500/10 rounded-full blur-xl"></div>
                     <p class="label-text text-purple-500 w-full text-left">Tiếp nhận trong ngày</p>
@@ -231,7 +218,7 @@
                 </div>
             </div>
 
-            <!-- Biểu Đồ (Đã thay đổi Bar Chart hiển thị theo Lĩnh vực) -->
+            <!-- Biểu Đồ -->
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
                 <div class="lg:col-span-8 glass-panel p-5">
                     <h2 class="text-xs font-black uppercase tracking-wider text-dyn-muted mb-4">📊 Lũy kế tiếp nhận hồ sơ theo lĩnh vực</h2>
