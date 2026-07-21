@@ -234,10 +234,77 @@
                 </div>
             </div>
 
+            <!-- KHỐI MỚI: Chi tiết kết quả giải quyết & Đánh giá -->
+            <div class="glass-panel p-5 sm:p-6 space-y-6">
+                <div class="flex items-center justify-between">
+                    <h2 class="text-sm font-black uppercase tracking-wider text-dyn-muted">📑 Chi tiết kết quả giải quyết & Đánh giá</h2>
+                </div>
+
+                <!-- Khung nguyên nhân trễ hạn (Tự động hiển thị từ JSON) -->
+                <div id="alert_tre_han_container" class="bg-rose-50 dark:bg-rose-900/20 border-l-4 border-rose-500 p-4 rounded-r-xl shadow-sm" style="display: none;">
+                    <p class="text-sm text-gray-700 dark:text-gray-300 leading-relaxed font-medium">
+                        <strong class="text-rose-600 dark:text-rose-400">Nguyên nhân trễ hạn (<span id="alert_so_luong_tre">0</span> hồ sơ):</strong> <span id="alert_noi_dung_tre"></span>
+                    </p>
+                </div>
+
+                <!-- Bảng hiển thị chi tiết theo lĩnh vực -->
+                <div class="overflow-x-auto rounded-xl border border-dyn custom-scrollbar">
+                    <table class="w-full text-left border-collapse">
+                        <thead class="bg-gray-50 dark:bg-gray-800/50">
+                            <tr class="border-b-2 border-dyn text-dyn-muted text-[10px] sm:text-xs uppercase tracking-wider">
+                                <th class="p-3 sm:p-4 font-bold">Lĩnh vực (Trong danh mục)</th>
+                                <th class="p-3 sm:p-4 text-center font-bold">Tiếp nhận</th>
+                                <th class="p-3 sm:p-4 text-center text-emerald-600 dark:text-emerald-400 font-bold">Đúng hạn</th>
+                                <th class="p-3 sm:p-4 text-center text-rose-600 dark:text-rose-400 font-bold">Trễ hạn</th>
+                                <th class="p-3 sm:p-4 text-center text-blue-600 dark:text-blue-400 font-bold">Đang GQ</th>
+                            </tr>
+                        </thead>
+                        <tbody id="table_chi_tiet" class="text-sm font-medium divide-y divide-gray-200 dark:divide-gray-700/50">
+                            <!-- Dữ liệu JS tự động render -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Thông tin phụ: Ngoài danh mục & Hướng dẫn -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                    <!-- Thủ tục ngoài danh mục -->
+                    <div class="p-5 bg-gray-50 dark:bg-gray-800/40 rounded-xl border border-dyn flex flex-col justify-between">
+                        <h3 class="text-xs font-black uppercase text-dyn-muted mb-3">📦 Thủ tục ngoài danh mục</h3>
+                        <div class="grid grid-cols-2 gap-4 text-sm">
+                            <div>
+                                <p class="text-gray-500 dark:text-gray-400 mb-1">Tiếp nhận</p>
+                                <p id="ngoai_dm_tiep_nhan" class="text-xl font-bold text-dyn-bold">0</p>
+                            </div>
+                            <div>
+                                <p class="text-gray-500 dark:text-gray-400 mb-1">Đang GQ</p>
+                                <p id="ngoai_dm_dang_gq" class="text-xl font-bold text-blue-500">0</p>
+                            </div>
+                            <div>
+                                <p class="text-gray-500 dark:text-gray-400 mb-1">Đúng hạn</p>
+                                <p id="ngoai_dm_dung_han" class="text-xl font-bold text-emerald-500">0</p>
+                            </div>
+                            <div>
+                                <p class="text-gray-500 dark:text-gray-400 mb-1">Trễ hạn</p>
+                                <p id="ngoai_dm_tre_han" class="text-xl font-bold text-rose-500">0</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Công tác hướng dẫn -->
+                    <div class="p-5 bg-blue-50/50 dark:bg-blue-900/10 rounded-xl border border-blue-200 dark:border-blue-800/50 flex flex-col justify-center items-center text-center">
+                        <div class="w-12 h-12 bg-blue-100 dark:bg-blue-900/50 rounded-full flex items-center justify-center mb-3">
+                            <span class="text-xl">ℹ️</span>
+                        </div>
+                        <h3 class="text-xs font-black uppercase text-blue-600 dark:text-blue-400 mb-2">Công tác Hướng dẫn</h3>
+                        <p class="text-sm text-gray-600 dark:text-gray-300">Đã thực hiện hướng dẫn <span id="huong_dan_ho_so" class="text-xl font-black text-blue-600 dark:text-blue-400 mx-1">0</span> trường hợp thuộc các lĩnh vực khác nhau.</p>
+                    </div>
+                </div>
+            </div>
+
         </div> 
     </div>
 
-    <footer class="w-full text-center py-6 font-bold text-[10px] uppercase tracking-[0.3em] border-t border-dyn bg-white/50 backdrop-blur-md ftr-dyn transition-colors text-dyn-muted dark:bg-slate-900/40">
+    <footer class="w-full text-center py-6 font-bold text-[10px] uppercase tracking-[0.3em] border-t border-dyn bg-white/50 backdrop-blur-md ftr-dyn transition-colors text-dyn-muted dark:bg-slate-900/40 mt-8">
         &copy; 2026 CỔNG THÔNG TIN VÀ ĐIỀU HÀNH XÃ BÌNH HƯNG — Hệ thống i-Dashboard
     </footer>
 
@@ -247,7 +314,7 @@
         let currentSnapshotData = {}; 
         Chart.defaults.font.family = 'Inter';
 
-        // Dữ liệu JSON tĩnh 
+        // Dữ liệu JSON tĩnh (Đã cập nhật thêm "nguyen_nhan_tre_han")
         const jsonData = {
           "ngay_nhap_so_lieu": "2026-07-21",
           "du_lieu_phat_sinh": {
@@ -257,7 +324,15 @@
           "du_lieu_luy_ke": {
             "trong_danh_muc": {
               "tong_tiep_nhan": 14608,
-              "da_giai_quyet": { "tong": 14580, "dung_han": 14543, "tre_han": 37, "ty_le_da_giai_quyet": 99.8, "ty_le_dung_han": 99.74, "ty_le_tre_han": 0.26 },
+              "da_giai_quyet": { 
+                  "tong": 14580, 
+                  "dung_han": 14543, 
+                  "tre_han": 37, 
+                  "ty_le_da_giai_quyet": 99.8, 
+                  "ty_le_dung_han": 99.74, 
+                  "ty_le_tre_han": 0.26,
+                  "nguyen_nhan_tre_han": "Do thời gian giải quyết tương đối ngắn phải thực hiện xác minh thực địa, cơ sở dữ liệu chưa cập nhật đầy đủ phải thực hiện tra cứu thủ công các pháp lý cũ, đồng thời hệ thống tính thời gian là giây phút nên khi kết thúc hồ sơ trễ hơn thời gian hệ thống 1 phút về thể hiện kết quả trễ."
+              },
               "dang_giai_quyet": { "tong": 28, "trong_han": 28, "tre_han": 0, "ty_le": 0.2 },
               "huong_dan_ho_so": 10819,
               "chi_tiet_linh_vuc": [
@@ -327,7 +402,7 @@
                     },
                     scales: {
                         x: { grid: { display: false }, ticks: { color: textColor, font: { weight: '600', size: 11 }, maxRotation: 45, minRotation: 0 } },
-                        y: { type: 'logarithmic', grid: { color: gridColor }, ticks: { color: textColor, font: { size: 10 } }, beginAtZero: true } // Dùng Logarithmic do chênh lệch số lượng lĩnh vực lớn (9700 vs 85)
+                        y: { type: 'logarithmic', grid: { color: gridColor }, ticks: { color: textColor, font: { size: 10 } }, beginAtZero: true } 
                     },
                     layout: { padding: { top: 20 } } 
                 }
@@ -349,7 +424,7 @@
                 },
                 options: {
                     responsive: true, maintainAspectRatio: false, layout: { padding: 15 },
-                    cutout: '65%', // Tạo khoảng trống ở giữa
+                    cutout: '65%', 
                     plugins: { 
                         legend: { position: 'bottom', labels: { color: textColor, font: { weight: 'bold', size: 11 }, padding: 15 } },
                         datalabels: {
@@ -358,7 +433,7 @@
                                 let sum = 0; ctx.chart.data.datasets[0].data.map(data => { sum += data; });
                                 if (sum === 0) return "0%";
                                 let percentage = (value * 100 / sum).toFixed(1);
-                                return percentage > 1 ? percentage + "%" : ""; // Ẩn label nếu tỷ lệ quá nhỏ để không bị tràn
+                                return percentage > 1 ? percentage + "%" : ""; 
                             }
                         }
                     }
@@ -382,7 +457,6 @@
             // Bóc tách mảng Lĩnh vực từ JSON
             const danhSachLinhVuc = luyKe.trong_danh_muc.chi_tiet_linh_vuc || [];
             const nhanLinhVuc = danhSachLinhVuc.map(item => {
-                // Rút gọn tên lĩnh vực cho đẹp biểu đồ
                 if (item.ten_linh_vuc === "Văn hóa - Xã hội") return "Văn hóa-XH";
                 return item.ten_linh_vuc;
             });
@@ -396,7 +470,7 @@
                 linh_vuc_data: duLieuLinhVuc
             }; 
 
-            // Ánh xạ dữ liệu lên giao diện
+            // Ánh xạ dữ liệu khối Trên
             document.getElementById('day_total').innerText = (phatSinh.trong_ngay.tong_tiep_nhan || 0).toLocaleString('vi-VN');
             document.getElementById('month_total').innerText = (phatSinh.trong_thang.tong_tiep_nhan || 0).toLocaleString('vi-VN');
             document.getElementById('res_in_time').innerText = (phatSinh.trong_thang.da_giai_quyet_dung_han || 0).toLocaleString('vi-VN');
@@ -412,6 +486,45 @@
             document.getElementById('sat_rate').innerText = danhGia.muc_do_hai_long.ty_le_phan_tram + "%";
             document.getElementById('sat_count').innerText = (danhGia.muc_do_hai_long.so_luot_danh_gia || 0).toLocaleString('vi-VN');
             document.getElementById('total_digital').innerText = danhGia.ty_le_so_hoa_ho_so + "%";
+
+            // Xử lý Alert Box Nguyên nhân trễ hạn
+            const nguyenNhan = luyKe.trong_danh_muc.da_giai_quyet.nguyen_nhan_tre_han;
+            const soLuongTre = luyKe.trong_danh_muc.da_giai_quyet.tre_han || 0;
+            
+            const alertContainer = document.getElementById('alert_tre_han_container');
+            if (soLuongTre > 0 && nguyenNhan) {
+                alertContainer.style.display = 'block';
+                document.getElementById('alert_so_luong_tre').innerText = soLuongTre;
+                document.getElementById('alert_noi_dung_tre').innerText = nguyenNhan;
+            } else {
+                alertContainer.style.display = 'none';
+            }
+
+            // 1. Đổ dữ liệu vào bảng HTML
+            const tableBody = document.getElementById('table_chi_tiet');
+            tableBody.innerHTML = ''; 
+            
+            danhSachLinhVuc.forEach(lv => {
+                const tr = document.createElement('tr');
+                tr.className = 'hover:bg-gray-50/50 dark:hover:bg-gray-800/30 transition-colors text-gray-800 dark:text-gray-200';
+                
+                tr.innerHTML = `
+                    <td class="p-3 sm:p-4 border-b border-gray-100 dark:border-gray-700/50">${lv.ten_linh_vuc}</td>
+                    <td class="p-3 sm:p-4 text-center border-b border-gray-100 dark:border-gray-700/50 font-bold">${lv.tiep_nhan.toLocaleString('vi-VN')}</td>
+                    <td class="p-3 sm:p-4 text-center border-b border-gray-100 dark:border-gray-700/50 text-emerald-600 dark:text-emerald-400 font-bold">${lv.da_giai_quyet_dung_han.toLocaleString('vi-VN')}</td>
+                    <td class="p-3 sm:p-4 text-center border-b border-gray-100 dark:border-gray-700/50 ${lv.da_giai_quyet_tre_han > 0 ? 'text-rose-600 dark:text-rose-400 font-bold' : 'text-gray-400'}">${lv.da_giai_quyet_tre_han > 0 ? lv.da_giai_quyet_tre_han.toLocaleString('vi-VN') : '-'}</td>
+                    <td class="p-3 sm:p-4 text-center border-b border-gray-100 dark:border-gray-700/50 ${lv.dang_giai_quyet > 0 ? 'text-blue-600 dark:text-blue-400 font-bold' : 'text-gray-400'}">${lv.dang_giai_quyet > 0 ? lv.dang_giai_quyet.toLocaleString('vi-VN') : '-'}</td>
+                `;
+                tableBody.appendChild(tr);
+            });
+
+            // 2. Điền dữ liệu Ngoài danh mục & Hướng dẫn
+            document.getElementById('ngoai_dm_tiep_nhan').innerText = (luyKe.ngoai_danh_muc.tong_tiep_nhan || 0).toLocaleString('vi-VN');
+            document.getElementById('ngoai_dm_dung_han').innerText = (luyKe.ngoai_danh_muc.da_giai_quyet.dung_han || 0).toLocaleString('vi-VN');
+            document.getElementById('ngoai_dm_tre_han').innerText = (luyKe.ngoai_danh_muc.da_giai_quyet.tre_han || 0).toLocaleString('vi-VN');
+            document.getElementById('ngoai_dm_dang_gq').innerText = (luyKe.ngoai_danh_muc.dang_giai_quyet.tong || 0).toLocaleString('vi-VN');
+            
+            document.getElementById('huong_dan_ho_so').innerText = (luyKe.trong_danh_muc.huong_dan_ho_so || 0).toLocaleString('vi-VN');
 
             refreshChartColors();
         }
