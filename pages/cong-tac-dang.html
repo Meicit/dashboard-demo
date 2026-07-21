@@ -1,7 +1,314 @@
-<script>
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Công tác Đảng - Xã Bình Hưng</title>
+    
+    <!-- ĐÃ THÊM: Kiểm tra session đồng bộ, không gọi Auth để tránh lag/văng iframe -->
+    <script>
+        if (sessionStorage.getItem("isLoggedIn") !== "true") {
+            window.top.location.replace("../index.html"); 
+        }
+    </script>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* ================= GHI ĐÈ BÓNG ĐỔ ================= */
+        .shadow-sm { box-shadow: 0 1px 2px 0 rgba(8, 47, 73, 0.1); }
+        .shadow-md { box-shadow: 0 4px 6px -1px rgba(8, 47, 73, 0.15), 0 2px 4px -2px rgba(8, 47, 73, 0.1); }
+        .shadow-lg { box-shadow: 0 10px 15px -3px rgba(8, 47, 73, 0.15), 0 4px 6px -4px rgba(8, 47, 73, 0.1); }
+
+        body { font-family: 'Montserrat', sans-serif; margin: 0; padding: 0; min-height: 100vh; display: flex; flex-direction: column; transition: background-color 0.3s ease, color 0.3s ease; }
+        .container-wrapper { max-width: 1550px; margin: 0 auto 30px auto; padding: 0 24px; width: 100%; }
+        
+        .glass-panel { backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: 1px solid; border-radius: 24px; transition: all 0.3s; }
+        .teal-wrapper { backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-radius: 36px; padding: 24px; transition: all 0.4s ease; }
+        @media (min-width: 768px) { .teal-wrapper { padding: 36px; } }
+
+        /* ================= THEME TỐI (DARK MODE) ================= */
+        body.dark-theme { background-color: #082f49; color: #f0f9ff; }
+        body.dark-theme .glass-panel { background: rgba(12, 74, 110, 0.65); border-color: rgba(56, 189, 248, 0.2); box-shadow: 0 20px 40px -15px rgba(8, 47, 73, 0.4); }
+        body.dark-theme .teal-wrapper { background-color: rgba(14, 165, 233, 0.08); border: 1px solid rgba(14, 165, 233, 0.3); box-shadow: 0 20px 40px -15px rgba(8, 47, 73, 0.6); }
+        body.dark-theme .bg-widget-card { background-color: rgba(15, 23, 42, 0.6); border-color: rgba(56, 189, 248, 0.2); }
+        body.dark-theme .bg-widget-inner { background-color: rgba(15, 23, 42, 0.8); border-color: rgba(56, 189, 248, 0.15); }
+        body.dark-theme .control-theme-color { display: none !important; }
+
+        /* ================= THEME SÁNG (LIGHT MODE) ================= */
+        body.light-theme { background-color: #f0f4f8; color: #1e3a8a; }
+        body.light-theme .glass-panel { background: rgba(255, 255, 255, 0.95); box-shadow: 0 20px 40px -15px rgba(12, 74, 110, 0.15); }
+        body.light-theme .bg-widget-card { background-color: #ffffff; }
+        body.light-theme .bg-widget-inner { background-color: #ffffff; }
+
+        /* --- SÁNG + XANH DƯƠNG ĐẬM (MẶC ĐỊNH) --- */
+        body.light-theme.theme-xanh-ios .glass-panel { border-color: rgba(12, 74, 142, 0.2); }
+        body.light-theme.theme-xanh-ios .bg-widget-card { border-color: rgba(12, 74, 142, 0.15); }
+        body.light-theme.theme-xanh-ios .bg-widget-inner { border-color: rgba(12, 74, 142, 0.08); }
+        body.light-theme.theme-xanh-ios .text-main-title { color: #0c4a8e !important; }
+        
+        body.light-theme.theme-xanh-ios .teal-wrapper { 
+            background-color: rgba(12, 74, 142, 0.85); 
+            border: 1px solid rgba(255, 255, 255, 0.25); 
+            box-shadow: 0 20px 40px -10px rgba(12, 74, 142, 0.5); 
+        }
+
+        /* --- SÁNG + ĐỎ CỜ --- */
+        body.light-theme.theme-do-hanhchinh .glass-panel { border-color: rgba(252, 165, 165, 0.8); }
+        body.light-theme.theme-do-hanhchinh .bg-widget-card { border-color: rgba(218, 37, 29, 0.2); }
+        body.light-theme.theme-do-hanhchinh .bg-widget-inner { border-color: rgba(218, 37, 29, 0.1); }
+        body.light-theme.theme-do-hanhchinh .text-main-title { color: #da251d !important; }
+
+        body.light-theme.theme-do-hanhchinh .teal-wrapper { 
+            background-color: #da251d; 
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 0 20px 40px -15px rgba(218, 37, 29, 0.4);
+        }
+
+        /* NÚT QUAY LẠI ĐỘNG */
+        .btn-back { display: inline-flex; align-items: center; gap: 8px; padding: 12px 24px; border-radius: 14px; font-weight: 800; font-size: 12px; text-transform: uppercase; transition: all 0.3s ease; border: 1px solid; }
+        
+        body.dark-theme .btn-back { background: rgba(14, 165, 233, 0.1); border-color: rgba(14, 165, 233, 0.3); color: #e0f2fe; }
+        body.dark-theme .btn-back:hover { background: rgba(14, 165, 233, 0.2); border-color: #38bdf8; transform: translateY(-2px); }
+        
+        body.light-theme.theme-xanh-ios .btn-back { background: #ffffff; border-color: rgba(255, 255, 255, 0.8); color: #0c4a8e; }
+        body.light-theme.theme-xanh-ios .btn-back:hover { background: #f0f4f8; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); }
+
+        body.light-theme.theme-do-hanhchinh .btn-back { background: #ffffff; border-color: #fca5a5; color: #da251d; }
+        body.light-theme.theme-do-hanhchinh .btn-back:hover { background: #fef2f2; border-color: #da251d; transform: translateY(-2px); }
+
+        /* SCROLLBAR & CONTROLS */
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { border-radius: 10px; }
+        body.dark-theme .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(56, 189, 248, 0.4); }
+        body.light-theme.theme-xanh-ios .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(12, 74, 142, 0.4); }
+        body.light-theme.theme-do-hanhchinh .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(218, 37, 29, 0.4); }
+
+        .controls-wrapper { display: flex; gap: 12px; align-items: center; }
+        .control-panel { border: 1px solid; padding: 4px; border-radius: 12px; display: flex; align-items: center; }
+        
+        body.dark-theme .control-panel { background: rgba(15, 23, 42, 0.5); border-color: rgba(56, 189, 248, 0.2); }
+        body.light-theme.theme-xanh-ios .control-panel { background: rgba(255, 255, 255, 0.15); border-color: rgba(255, 255, 255, 0.2); }
+        body.light-theme.theme-do-hanhchinh .control-panel { background: rgba(255, 255, 255, 0.2); border-color: rgba(255, 255, 255, 0.4); }
+
+        /* Nút con bên trong control panel */
+        body.light-theme.theme-xanh-ios .control-panel button.text-blue-900 { color: #0c4a8e !important; }
+        body.light-theme.theme-xanh-ios .control-panel button.text-blue-800 { color: #ffffff !important; opacity: 0.8; }
+        body.light-theme.theme-xanh-ios .control-panel button.text-blue-800:hover { opacity: 1; }
+        body.light-theme.theme-xanh-ios .control-panel button.border-transparent { color: #ffffff; font-weight: 700; opacity: 0.9; }
+        body.light-theme.theme-xanh-ios .control-panel button.border-transparent:hover { background: rgba(255, 255, 255, 0.1); opacity: 1; }
+
+        @media (max-width: 1024px) { .controls-wrapper { flex-direction: column; align-items: flex-end; } }
+        @media (max-width: 640px) { .flex-responsive { flex-direction: column; align-items: stretch; gap: 16px; } .controls-wrapper { flex-direction: row; justify-content: space-between; align-items: center; width: 100%; } }
+    </style>
+</head>
+<body class="light-theme custom-scrollbar theme-xanh-ios" id="body-context">
+
+    <div class="container-wrapper mt-8">
+        <div class="teal-wrapper space-y-8">
+            
+            <div class="flex flex-col sm:flex-row justify-between items-center gap-4 flex-responsive">
+                <a href="../dashboard.html" class="btn-back">⬅️ Quay lại Trang chủ</a>
+                
+                <div class="controls-wrapper">
+                    <div class="control-panel">
+                        <button onclick="setTheme('light')" id="btn-theme-light" class="flex items-center gap-1.5 text-[11px] font-bold uppercase px-3 py-1.5 rounded-lg transition bg-white text-blue-900 shadow-sm border border-transparent">Sáng</button>
+                        <button onclick="setTheme('dark')" id="btn-theme-dark" class="flex items-center gap-1.5 text-[11px] font-bold uppercase px-3 py-1.5 rounded-lg transition text-blue-800 hover:text-white border border-transparent">Tối</button>
+                    </div>
+                    <div class="control-panel control-theme-color">
+                        <button onclick="switchSystemTheme('xanh')" id="btn-theme-xanh" class="flex items-center gap-1.5 text-[11px] uppercase px-3 py-1.5 rounded-lg transition border border-transparent">🔵 Xanh</button>
+                        <button onclick="switchSystemTheme('do')" id="btn-theme-do" class="flex items-center gap-1.5 text-[11px] uppercase px-3 py-1.5 rounded-lg transition border border-transparent">🔴 Đỏ</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="flex flex-col space-y-6 font-['Inter']">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <div class="bg-widget-card border-2 rounded-3xl p-6 shadow-sm hover:-translate-y-1 transition-transform duration-300">
+                        <div class="flex justify-between items-start mb-4">
+                            <div>
+                                <h3 class="text-sm font-black text-blue-700 dark:text-blue-300 uppercase tracking-wider">Tổ chức Đảng</h3>
+                                <p class="text-[11px] font-bold text-blue-500/80 dark:text-blue-400 uppercase mt-1">Toàn Đảng bộ Xã Bình Hưng</p>
+                            </div>
+                            <div class="w-12 h-12 bg-blue-600 text-white rounded-2xl flex items-center justify-center text-2xl shadow-inner">🏛️</div>
+                        </div>
+                        <div class="flex items-end gap-3 mb-6">
+                            <span id="tc_tong" class="text-5xl font-black text-blue-800 dark:text-blue-100">0</span>
+                            <span class="text-sm font-bold text-blue-600 dark:text-blue-300 mb-1">Tổ chức</span>
+                        </div>
+                        <div class="grid grid-cols-3 gap-2 border-t border-blue-200/60 dark:border-blue-800/60 pt-4">
+                            <div class="bg-widget-inner rounded-xl p-3 text-center border shadow-sm">
+                                <span id="tc_dbcs" class="block text-xl font-black text-indigo-700 dark:text-indigo-300">0</span>
+                                <span class="block text-[10px] font-bold text-blue-600 dark:text-blue-400 mt-1 uppercase">Đảng bộ CS</span>
+                            </div>
+                            <div class="bg-widget-inner rounded-xl p-3 text-center border shadow-sm">
+                                <span id="tc_cbcs" class="block text-xl font-black text-indigo-700 dark:text-indigo-300">0</span>
+                                <span class="block text-[10px] font-bold text-blue-600 dark:text-blue-400 mt-1 uppercase">Chi bộ CS</span>
+                            </div>
+                            <div class="bg-widget-inner rounded-xl p-3 text-center border shadow-sm">
+                                <span id="tc_cbtt" class="block text-xl font-black text-indigo-700 dark:text-indigo-300">0</span>
+                                <span class="block text-[10px] font-bold text-blue-600 dark:text-blue-400 mt-1 uppercase">Chi bộ Trực thuộc</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-widget-card border-2 rounded-3xl p-6 shadow-sm hover:-translate-y-1 transition-transform duration-300">
+                        <div class="flex justify-between items-start mb-4">
+                            <div>
+                                <h3 class="text-sm font-black text-teal-700 dark:text-teal-300 uppercase tracking-wider">Số lượng Đảng viên</h3>
+                                <p class="text-[11px] font-bold text-teal-500/80 dark:text-teal-400 uppercase mt-1">Nguồn nhân lực chính trị</p>
+                            </div>
+                            <div class="w-12 h-12 bg-teal-600 text-white rounded-2xl flex items-center justify-center text-2xl shadow-inner">👥</div>
+                        </div>
+                        <div class="flex items-end gap-3 mb-6">
+                            <span id="dv_tong" class="text-5xl font-black text-teal-800 dark:text-teal-100">0</span>
+                            <span class="text-sm font-bold text-teal-600 dark:text-teal-300 mb-1">Đồng chí</span>
+                        </div>
+                        <div class="grid grid-cols-3 gap-2 border-t border-teal-200/60 dark:border-teal-800/60 pt-4">
+                            <div class="bg-widget-inner rounded-xl p-3 text-center border shadow-sm">
+                                <span id="dv_ct" class="block text-xl font-black text-emerald-700 dark:text-emerald-300">0</span>
+                                <span class="block text-[10px] font-bold text-teal-600 dark:text-teal-400 mt-1 uppercase">Chính thức</span>
+                            </div>
+                            <div class="bg-widget-inner rounded-xl p-3 text-center border shadow-sm">
+                                <span id="dv_db" class="block text-xl font-black text-emerald-700 dark:text-emerald-300">0</span>
+                                <span class="block text-[10px] font-bold text-teal-600 dark:text-teal-400 mt-1 uppercase">Dự bị</span>
+                            </div>
+                            <div class="bg-widget-inner rounded-xl p-3 text-center border shadow-sm">
+                                <span id="dv_mien" class="block text-xl font-black text-emerald-700 dark:text-emerald-300">0</span>
+                                <span class="block text-[10px] font-bold text-teal-600 dark:text-teal-400 mt-1 uppercase">Miễn sinh hoạt</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-widget-card border-2 border-indigo-200 dark:border-indigo-800/50 rounded-3xl p-6 md:p-8 shadow-sm">
+                    <h3 class="text-base font-black text-indigo-800 dark:text-indigo-300 uppercase tracking-wider mb-6 flex items-center gap-2">
+                        🚀 Tiến độ Công tác Tạo nguồn & Phát triển Đảng viên (2026)
+                    </h3>
+                    
+                    <div class="bg-widget-inner rounded-2xl p-5 border shadow-sm mb-6">
+                        <div class="flex justify-between items-end mb-3">
+                            <div>
+                                <span id="pt_ht" class="text-3xl font-black text-indigo-700 dark:text-indigo-300">0</span>
+                                <span class="text-sm font-bold text-indigo-400">/ <span id="pt_ct">0</span> Chỉ tiêu</span>
+                            </div>
+                            <span id="pt_percent" class="text-xl font-black text-rose-600 dark:text-rose-400">0%</span>
+                        </div>
+                        <div class="w-full bg-slate-200 dark:bg-slate-700 h-4 rounded-full overflow-hidden">
+                            <div id="pt_progress_bar" class="bg-gradient-to-r from-indigo-500 to-rose-500 h-full rounded-full" style="width: 0%"></div>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                        <div class="bg-widget-inner p-4 rounded-2xl border text-center relative overflow-hidden">
+                            <div class="absolute -right-4 -bottom-4 text-6xl opacity-10">✍️</div>
+                            <span id="pt_ll" class="block text-2xl font-black text-indigo-600 dark:text-indigo-300">0</span>
+                            <span class="block text-[10px] font-bold text-indigo-800 dark:text-indigo-200 uppercase mt-1">Đang viết lý lịch</span>
+                        </div>
+                        <div class="bg-widget-inner p-4 rounded-2xl border text-center relative overflow-hidden">
+                            <div class="absolute -right-4 -bottom-4 text-6xl opacity-10">🔍</div>
+                            <span id="pt_xm" class="block text-2xl font-black text-indigo-600 dark:text-indigo-300">0</span>
+                            <span class="block text-[10px] font-bold text-indigo-800 dark:text-indigo-200 uppercase mt-1">Đang xác minh</span>
+                        </div>
+                        <div class="bg-widget-inner p-4 rounded-2xl border text-center relative overflow-hidden">
+                            <div class="absolute -right-4 -bottom-4 text-6xl opacity-10">📑</div>
+                            <span id="pt_tc" class="block text-2xl font-black text-indigo-600 dark:text-indigo-300">0</span>
+                            <span class="block text-[10px] font-bold text-indigo-800 dark:text-indigo-200 uppercase mt-1">Trình Tiêu chuẩn CT</span>
+                        </div>
+                        <div class="bg-widget-inner p-4 rounded-2xl border text-center relative overflow-hidden">
+                            <div class="absolute -right-4 -bottom-4 text-6xl opacity-10">⚙️</div>
+                            <span id="pt_nv" class="block text-2xl font-black text-indigo-600 dark:text-indigo-300">0</span>
+                            <span class="block text-[10px] font-bold text-indigo-800 dark:text-indigo-200 uppercase mt-1">Thực hiện Nghiệp vụ</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="bg-widget-card border-2 border-amber-200 dark:border-amber-800/50 rounded-3xl p-6 shadow-sm">
+                        <h3 class="text-xs font-black text-amber-800 dark:text-amber-300 uppercase border-b border-amber-200/60 dark:border-amber-800/60 pb-3 mb-4">🔄 Biến động Đảng viên</h3>
+                        <ul class="space-y-3">
+                            <li class="flex justify-between items-center bg-widget-inner p-3 rounded-xl border">
+                                <span class="text-xs font-bold text-amber-900 dark:text-amber-100">📥 Tiếp nhận chuyển đến</span>
+                                <span id="bd_tn" class="text-sm font-black text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-900/40 px-2 py-1 rounded-lg">...</span>
+                            </li>
+                            <li class="flex justify-between items-center bg-widget-inner p-3 rounded-xl border">
+                                <span class="text-xs font-bold text-amber-900 dark:text-amber-100">📤 Chuyển sinh hoạt đi</span>
+                                <span id="bd_cd" class="text-sm font-black text-rose-600 dark:text-rose-400 bg-rose-50 dark:bg-rose-900/40 px-2 py-1 rounded-lg">...</span>
+                            </li>
+                            <li class="pl-4 text-[10px] font-bold text-amber-700/80 dark:text-amber-400/80 italic list-disc list-inside">13 về nơi công tác, 06 về thường trú</li>
+                            <li class="flex justify-between items-center bg-widget-inner p-3 rounded-xl border mt-2">
+                                <span class="text-xs font-bold text-amber-900 dark:text-amber-100">🔄 Chuyển sinh hoạt nội bộ</span>
+                                <span id="bd_cnb" class="text-sm font-black text-amber-600 dark:text-amber-400 bg-amber-100 dark:bg-amber-900/40 px-2 py-1 rounded-lg">0</span>
+                            </li>
+                            <li class="flex justify-between items-center bg-widget-inner p-3 rounded-xl border">
+                                <span class="text-xs font-bold text-amber-900 dark:text-amber-100">🎓 Chuyển Đảng chính thức</span>
+                                <span id="bd_cct" class="text-sm font-black text-sky-600 dark:text-sky-400 bg-sky-50 dark:bg-sky-900/40 px-2 py-1 rounded-lg">0</span>
+                            </li>
+                            <li class="flex justify-between items-center bg-widget-inner p-3 rounded-xl border">
+                                <span class="text-xs font-bold text-amber-900 dark:text-amber-100">❌ Xóa tên Đảng viên</span>
+                                <span id="bd_xt" class="text-sm font-black text-rose-600 dark:text-rose-400 bg-rose-50 dark:bg-rose-900/40 px-2 py-1 rounded-lg">0</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-widget-card border-2 border-cyan-200 dark:border-cyan-800/50 rounded-3xl p-6 shadow-sm">
+                        <h3 class="text-xs font-black text-cyan-800 dark:text-cyan-300 uppercase border-b border-cyan-200/60 dark:border-cyan-800/60 pb-3 mb-4">📑 Thẩm tra & Nhận xét</h3>
+                        <ul class="space-y-3">
+                            <li class="bg-widget-inner p-3 rounded-xl border">
+                                <span class="block text-2xl font-black text-cyan-700 dark:text-cyan-300 mb-1"><span id="tt_xvd">0</span> <span class="text-[10px] font-bold text-cyan-600/70 uppercase">Trường hợp</span></span>
+                                <span class="text-xs font-bold text-cyan-900 dark:text-cyan-100">Thẩm tra, xác minh người xin vào Đảng</span>
+                            </li>
+                            <li class="bg-widget-inner p-3 rounded-xl border">
+                                <span class="block text-2xl font-black text-cyan-700 dark:text-cyan-300 mb-1"><span id="tt_ctcb">0</span> <span class="text-[10px] font-bold text-cyan-600/70 uppercase">Trường hợp</span></span>
+                                <span class="text-xs font-bold text-cyan-900 dark:text-cyan-100">Thẩm tra phục vụ công tác Cán bộ</span>
+                            </li>
+                            <li class="bg-widget-inner p-3 rounded-xl border">
+                                <span class="block text-2xl font-black text-cyan-700 dark:text-cyan-300 mb-1"><span id="tt_nkd">0</span> <span class="text-[10px] font-bold text-cyan-600/70 uppercase">Trường hợp</span></span>
+                                <span class="text-xs font-bold text-cyan-900 dark:text-cyan-100">Nhận xét Đảng viên nơi khác chuyển đến</span>
+                            </li>
+                            <li class="flex justify-between items-center bg-widget-inner p-3 rounded-xl border">
+                                <span class="text-xs font-bold text-cyan-900 dark:text-cyan-100">Nhận xét Cấp ủy cư trú (ĐV dự bị)</span>
+                                <span id="tt_cuct" class="text-sm font-black text-cyan-700 dark:text-cyan-300 bg-cyan-100 dark:bg-cyan-900/40 px-2 py-1 rounded-lg">0</span>
+                            </li>
+                            <li class="flex justify-between items-center bg-widget-inner p-3 rounded-xl border">
+                                <span class="text-xs font-bold text-cyan-900 dark:text-cyan-100">Nhận xét xin vào Đảng (nơi cư trú)</span>
+                                <span id="tt_xvdct" class="text-sm font-black text-cyan-700 dark:text-cyan-300 bg-cyan-100 dark:bg-cyan-900/40 px-2 py-1 rounded-lg">0</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-widget-card border-2 border-rose-200 dark:border-rose-800/50 rounded-3xl p-6 shadow-sm flex flex-col justify-between">
+                        <div>
+                            <h3 class="text-xs font-black text-rose-800 dark:text-rose-300 uppercase border-b border-rose-200/60 dark:border-rose-800/60 pb-3 mb-4">✈️ Đảng viên đi nước ngoài</h3>
+                            <div class="bg-widget-inner p-5 rounded-2xl border text-center mb-4 shadow-sm">
+                                <div class="text-5xl mb-2">🌍</div>
+                                <span id="nn_dpd" class="block text-4xl font-black text-rose-600 dark:text-rose-400">0</span>
+                                <span class="block text-xs font-bold text-rose-800 dark:text-rose-200 uppercase mt-2">Đã được phê duyệt đi nước ngoài</span>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-rose-600 p-5 rounded-2xl text-center shadow-md relative overflow-hidden mt-4">
+                            <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/diagonal-stripes.png')] opacity-20"></div>
+                            <div class="relative z-10">
+                                <span id="nn_dxm" class="block text-3xl font-black text-white">0</span>
+                                <span class="block text-xs font-bold text-rose-100 uppercase mt-2 leading-snug">Trường hợp đang được Công an Xã thẩm tra, xác minh</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> 
+    </div>
+
+    <footer class="w-full text-center py-6 text-main-title font-bold text-[10px] uppercase tracking-[0.3em] border-t border-blue-200 dark:border-slate-700 bg-white/50 dark:bg-slate-900/50 backdrop-blur-md mt-auto transition-colors duration-300">
+        &copy; 2026 IOC Xã Bình Hưng - HỆ THỐNG I-DASHBOARD
+    </footer>
+
+    <!-- ĐÃ CẬP NHẬT: Thay thế Firebase bằng Script gọi API từ Viettel Database -->
+    <script>
         function loadDataFromViettelDB() {
-            // ĐIỀN ĐƯỜNG DẪN ĐẾN FILE PHP CỦA BẠN VÀO ĐÂY
-            const apiUrl = "https://tenmiencuaban.com/api_congtacdang.php"; 
+            // LƯU Ý QUAN TRỌNG: Hãy sửa đường dẫn bên dưới thành tên miền Hosting của bạn
+            const apiUrl = "https://xabinhhung.gov.vn/api_congtacdang.php"; 
 
             fetch(apiUrl)
                 .then(response => response.json())
@@ -11,8 +318,10 @@
                         return;
                     }
 
+                    // Hàm định dạng thêm dấu chấm phần ngàn (VD: 1915 -> 1.915)
                     const fmt = (num) => new Intl.NumberFormat('vi-VN').format(num || 0);
                     
+                    // Hàm gán dữ liệu vào ID an toàn
                     const setTxt = (id, val, prefix="") => { 
                         const el = document.getElementById(id); 
                         if(el) el.innerText = prefix + fmt(val); 
@@ -39,6 +348,7 @@
                         setTxt('pt_ht', data.phat_trien.hien_tai);
                         setTxt('pt_ct', data.phat_trien.chi_tieu);
                         
+                        // Tính phần trăm
                         let p_ht = data.phat_trien.hien_tai || 0;
                         let p_ct = data.phat_trien.chi_tieu || 1;
                         let pct = ((p_ht / p_ct) * 100).toFixed(2);
@@ -84,6 +394,7 @@
                 });
         }
 
+        // XỬ LÝ GIAO DIỆN THEME (Mã gốc giữ nguyên)
         window.setTheme = function(themeName) {
             const body = document.getElementById('body-context');
             const btnLight = document.getElementById('btn-theme-light');
@@ -120,8 +431,13 @@
             setTheme('light'); 
         }
 
+        // Chạy ngay khi tải trang
         document.addEventListener('DOMContentLoaded', () => {
             setTheme('light');
+            
+            // Gọi hàm lấy dữ liệu từ Viettel DB
             loadDataFromViettelDB(); 
         });
     </script>
+</body>
+</html>
