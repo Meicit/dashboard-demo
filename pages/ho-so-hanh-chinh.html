@@ -37,6 +37,8 @@
         body.dark-theme .res-box { background: rgba(8, 47, 73, 0.6); border-color: rgba(56, 189, 248, 0.15); }
         body.dark-theme .control-theme-color { display: none !important; }
         body.dark-theme .text-main-title { color: #60a5fa !important; }
+        body.dark-theme .header-branding h1 { color: #60a5fa; }
+        body.dark-theme .header-branding h2 { color: #e0f2fe; }
 
         /* ================= THEME SÁNG (LIGHT MODE) ================= */
         body.light-theme { background-color: #f0f4f8; color: #1e3a8a; }
@@ -46,6 +48,8 @@
         /* --- SÁNG + XANH DƯƠNG ĐẬM (MẶC ĐỊNH) --- */
         body.light-theme.theme-xanh-ios .glass-panel { border-color: rgba(12, 74, 142, 0.2); }
         body.light-theme.theme-xanh-ios .text-main-title { color: #0c4a8e !important; }
+        body.light-theme.theme-xanh-ios .header-branding h1 { color: #0c4a8e; }
+        body.light-theme.theme-xanh-ios .header-branding h2 { color: #1e3a8a; }
         body.light-theme.theme-xanh-ios .teal-wrapper { 
             background-color: rgba(12, 74, 142, 0.85);
             border: 1px solid rgba(255, 255, 255, 0.25); 
@@ -55,6 +59,8 @@
         /* --- SÁNG + ĐỎ CỜ --- */
         body.light-theme.theme-do-hanhchinh .glass-panel { border-color: rgba(252, 165, 165, 0.8); }
         body.light-theme.theme-do-hanhchinh .text-main-title { color: #da251d !important; }
+        body.light-theme.theme-do-hanhchinh .header-branding h1 { color: #da251d; }
+        body.light-theme.theme-do-hanhchinh .header-branding h2 { color: #991b1b; }
         body.light-theme.theme-do-hanhchinh .teal-wrapper { 
             background-color: #da251d; 
             border: 1px solid rgba(255, 255, 255, 0.8);
@@ -120,6 +126,12 @@
 
     <div class="container-wrapper mt-8">
         
+        <!-- Header Top Center -->
+        <div class="header-branding text-center mb-8 px-4 transition-colors">
+            <h1 class="text-sm md:text-lg font-bold tracking-wider uppercase mb-1">CỔNG THÔNG TIN VÀ ĐIỀU HÀNH XÃ BÌNH HƯNG, THÀNH PHỐ HỒ CHÍ MINH</h1>
+            <h2 class="text-2xl md:text-3xl font-black tracking-tight">IOC BINH HUNG</h2>
+        </div>
+
         <div class="teal-wrapper space-y-6">
             
             <div class="flex flex-row justify-between items-center flex-responsive">
@@ -194,7 +206,7 @@
                 <div class="glass-panel p-5 border-t-[8px] border-emerald-600 dark:border-teal-400 flex flex-col justify-between space-y-4 transition-colors">
                     <div class="flex justify-between items-end">
                         <div>
-                            <p class="label-text text-emerald-500">Lũy kế đến ngày <span id="luy_ke_date" class="font-bold">--/--</span></p>
+                            <p class="label-text text-emerald-500">Lũy kế đến ngày <span id="luy_ke_date" class="font-bold text-emerald-700 dark:text-teal-200">--/--</span></p>
                             <h2 id="total_luy_ke" class="value-big mt-1 text-emerald-600">0</h2>
                         </div>
                         <p class="text-[9px] font-bold text-dyn-muted uppercase italic">Tổng lũy kế</p>
@@ -261,6 +273,75 @@
         let barChart = null; let pieChart = null;
         let currentSnapshotData = {}; 
         Chart.defaults.font.family = 'Inter';
+
+        // Dữ liệu JSON tĩnh được tích hợp sẵn 
+        const jsonData = {
+            "ngay_nhap_so_lieu": "2026-07-21",
+            "du_lieu_phat_sinh": {
+                "trong_ngay": {
+                    "truc_tuyen": 15,
+                    "truc_tiep": 20
+                },
+                "trong_thang": {
+                    "tiep_nhan_truc_tuyen": 250,
+                    "tiep_nhan_truc_tiep": 310,
+                    "da_giai_quyet_dung_han": 545,
+                    "da_giai_quyet_tre_han": 15
+                }
+            },
+            "du_lieu_luy_ke": {
+                "trong_danh_muc": {
+                    "tong_tiep_nhan": 14608,
+                    "da_giai_quyet": {
+                        "tong": 14580,
+                        "dung_han": 14543,
+                        "tre_han": 37,
+                        "ty_le_da_giai_quyet": 99.8,
+                        "ty_le_dung_han": 99.74,
+                        "ty_le_tre_han": 0.26
+                    },
+                    "dang_giai_quyet": {
+                        "tong": 28,
+                        "trong_han": 28,
+                        "tre_han": 0,
+                        "ty_le": 0.2
+                    },
+                    "huong_dan_ho_so": 10819,
+                    "chi_tiet_linh_vuc": [
+                        { "ten_linh_vuc": "Chứng thực", "tiep_nhan": 9765, "da_giai_quyet_dung_han": 9765, "da_giai_quyet_tre_han": 0, "dang_giai_quyet": 0 },
+                        { "ten_linh_vuc": "Hộ tịch", "tiep_nhan": 2405, "da_giai_quyet_dung_han": 2405, "da_giai_quyet_tre_han": 0, "dang_giai_quyet": 0 },
+                        { "ten_linh_vuc": "Văn hóa - Xã hội", "tiep_nhan": 441, "da_giai_quyet_dung_han": 441, "da_giai_quyet_tre_han": 0, "dang_giai_quyet": 0 },
+                        { "ten_linh_vuc": "Kinh tế", "tiep_nhan": 1640, "da_giai_quyet_dung_han": 1640, "da_giai_quyet_tre_han": 0, "dang_giai_quyet": 0 },
+                        { "ten_linh_vuc": "Xây dựng", "tiep_nhan": 272, "da_giai_quyet_dung_han": 237, "da_giai_quyet_tre_han": 35, "dang_giai_quyet": 0 },
+                        { "ten_linh_vuc": "Nông nghiệp", "tiep_nhan": 85, "da_giai_quyet_dung_han": 55, "da_giai_quyet_tre_han": 2, "dang_giai_quyet": 28 }
+                    ]
+                },
+                "ngoai_danh_muc": {
+                    "tong_tiep_nhan": 342,
+                    "da_giai_quyet": {
+                        "tong": 334,
+                        "dung_han": 200,
+                        "tre_han": 134,
+                        "ty_le_da_giai_quyet": 97.66,
+                        "ty_le_dung_han": 59.88,
+                        "ty_le_tre_han": 40.12
+                    },
+                    "dang_giai_quyet": {
+                        "tong": 8,
+                        "trong_han": 8,
+                        "tre_han": 0,
+                        "ty_le": 2.34
+                    }
+                }
+            },
+            "chi_so_danh_gia_va_chuyen_doi_so": {
+                "muc_do_hai_long": {
+                    "ty_le_phan_tram": 98.5,
+                    "so_luot_danh_gia": 14200
+                },
+                "ty_le_so_hoa_ho_so": 85.0
+            }
+        };
 
         function updateCharts(d, textColor, isDark) {
             if(barChart) barChart.destroy();
@@ -329,79 +410,73 @@
             });
         }
 
-        // KẾT NỐI API TRUY XUẤT TỪ CSDL VIETTEL
-        function loadDataFromViettelDB() {
-            const apiUrl = "api_thong_ke.php"; // Gọi tệp API kết nối cơ sở dữ liệu đã thiết lập 
+        // Tải và ánh xạ dữ liệu trực tiếp từ hằng số JSON
+        function loadDataFromJSON() {
+            // Lấy khối dữ liệu phát sinh & lũy kế
+            const phatSinh = jsonData.du_lieu_phat_sinh;
+            const luyKe = jsonData.du_lieu_luy_ke;
+            const danhGia = jsonData.chi_so_danh_gia_va_chuyen_doi_so;
 
-            fetch(apiUrl)
-                .then(response => response.json())
-                .then(data => {
-                    if(!data || data.error || !data.tong_hop) {
-                        console.error("Lỗi dữ liệu API hoặc không có kết quả"); return;
-                    }
-                    const th = data.tong_hop;
-                    
-                    // Xử lý và tính toán số liệu để ánh xạ vào cấu trúc UI
-                    const dayOnline = parseInt(th.ho_so_trong_ngay_truc_tuyen) || 0;
-                    const dayOffline = parseInt(th.ho_so_trong_ngay_truc_tiep) || 0;
-                    
-                    const monthOnline = parseInt(th.ho_so_trong_thang_truc_tuyen) || 0;
-                    const monthOffline = parseInt(th.ho_so_trong_thang_truc_tiep) || 0;
-                    
-                    const lkTrong = parseInt(th.luy_ke_trong_dm_tiep_nhan) || 0;
-                    const lkNgoai = parseInt(th.luy_ke_ngoai_dm_tiep_nhan) || 0;
-                    const totalLk = lkTrong + lkNgoai;
-                    
-                    // Do CSDL tổng hợp hiện không lưu tách online/offline lũy kế (chỉ có trong báo cáo phát sinh), tạo tỉ lệ mô phỏng hiển thị
-                    const lkOnline = Math.round(totalLk * 0.45); 
-                    const lkOffline = totalLk - lkOnline;
+            // Xử lý Ngày
+            const dayOnline = phatSinh.trong_ngay.truc_tuyen || 0;
+            const dayOffline = phatSinh.trong_ngay.truc_tiep || 0;
+            
+            // Xử lý Tháng
+            const monthOnline = phatSinh.trong_thang.tiep_nhan_truc_tuyen || 0;
+            const monthOffline = phatSinh.trong_thang.tiep_nhan_truc_tiep || 0;
+            
+            // Xử lý Lũy Kế Tổng (Trong + Ngoài)
+            const lkTrong = luyKe.trong_danh_muc.tong_tiep_nhan || 0;
+            const lkNgoai = luyKe.ngoai_danh_muc.tong_tiep_nhan || 0;
+            const totalLk = lkTrong + lkNgoai;
+            
+            // Lũy kế trực tuyến/trực tiếp hiện không có trong json, mô phỏng hiển thị biểu đồ
+            const lkOnline = Math.round(totalLk * 0.45); 
+            const lkOffline = totalLk - lkOnline;
 
-                    const lkDungHan = (parseInt(th.luy_ke_trong_dm_da_gq_dung_han) || 0) + (parseInt(th.luy_ke_ngoai_dm_da_gq_dung_han) || 0);
-                    const lkTreHan = (parseInt(th.luy_ke_trong_dm_da_gq_tre_han) || 0) + (parseInt(th.luy_ke_ngoai_dm_da_gq_tre_han) || 0);
+            const lkDungHan = (luyKe.trong_danh_muc.da_giai_quyet.dung_han || 0) + (luyKe.ngoai_danh_muc.da_giai_quyet.dung_han || 0);
+            const lkTreHan = (luyKe.trong_danh_muc.da_giai_quyet.tre_han || 0) + (luyKe.ngoai_danh_muc.da_giai_quyet.tre_han || 0);
 
-                    currentSnapshotData = {
-                        day_online: dayOnline, day_offline: dayOffline,
-                        month_online: monthOnline, month_offline: monthOffline,
-                        total_online: lkOnline, total_offline: lkOffline,
-                        lk_res_in_time: lkDungHan, lk_res_late: lkTreHan
-                    }; 
+            // Cập nhật biến dữ liệu để truyền vào Chart
+            currentSnapshotData = {
+                day_online: dayOnline, day_offline: dayOffline,
+                month_online: monthOnline, month_offline: monthOffline,
+                total_online: lkOnline, total_offline: lkOffline,
+                lk_res_in_time: lkDungHan, lk_res_late: lkTreHan
+            }; 
 
-                    // Ánh xạ dữ liệu Ngày
-                    document.getElementById('day_total').innerText = dayOnline + dayOffline;
-                    document.getElementById('day_online').innerText = dayOnline;
-                    document.getElementById('day_offline').innerText = dayOffline;
-                    
-                    // Ánh xạ dữ liệu Tháng
-                    document.getElementById('month_total').innerText = monthOnline + monthOffline;
-                    document.getElementById('month_online').innerText = monthOnline;
-                    document.getElementById('month_offline').innerText = monthOffline;
-                    document.getElementById('res_before').innerText = 0; 
-                    document.getElementById('res_in_time').innerText = th.gq_trong_thang_dung_han || 0;
-                    document.getElementById('res_late').innerText = th.gq_trong_thang_tre_han || 0;
-                    document.getElementById('res_sorry').innerText = 0;
-                    
-                    // Ánh xạ dữ liệu Lũy kế
-                    document.getElementById('total_luy_ke').innerText = totalLk;
-                    document.getElementById('total_online').innerText = lkOnline;
-                    document.getElementById('total_offline').innerText = lkOffline;
-                    
-                    // Định dạng hiển thị ngày lấy số liệu dd/mm
-                    let dateParts = th.ngay_nhap_so_lieu ? th.ngay_nhap_so_lieu.split('-') : [];
-                    document.getElementById('luy_ke_date').innerText = dateParts.length === 3 ? `${dateParts[2]}/${dateParts[1]}` : "--/--";
-                    
-                    document.getElementById('lk_res_before').innerText = 0;
-                    document.getElementById('lk_res_in_time').innerText = lkDungHan;
-                    document.getElementById('lk_res_late').innerText = lkTreHan;
-                    document.getElementById('lk_res_sorry').innerText = 0;
-                    
-                    // Ánh xạ Đánh giá hài lòng & Số hóa
-                    document.getElementById('sat_rate').innerText = parseFloat(th.muc_do_hai_long_ty_le) + "%";
-                    document.getElementById('sat_count').innerText = th.muc_do_hai_long_so_luot || 0;
-                    document.getElementById('total_digital').innerText = parseFloat(th.ty_le_so_hoa_ho_so) + "%";
+            // Đẩy dữ liệu ra giao diện UI 
+            document.getElementById('day_total').innerText = dayOnline + dayOffline;
+            document.getElementById('day_online').innerText = dayOnline;
+            document.getElementById('day_offline').innerText = dayOffline;
+            
+            document.getElementById('month_total').innerText = monthOnline + monthOffline;
+            document.getElementById('month_online').innerText = monthOnline;
+            document.getElementById('month_offline').innerText = monthOffline;
+            document.getElementById('res_before').innerText = 0; 
+            document.getElementById('res_in_time').innerText = phatSinh.trong_thang.da_giai_quyet_dung_han || 0;
+            document.getElementById('res_late').innerText = phatSinh.trong_thang.da_giai_quyet_tre_han || 0;
+            document.getElementById('res_sorry').innerText = 0;
+            
+            document.getElementById('total_luy_ke').innerText = totalLk;
+            document.getElementById('total_online').innerText = lkOnline;
+            document.getElementById('total_offline').innerText = lkOffline;
+            
+            // Tách hiển thị ngày tháng
+            let dateParts = jsonData.ngay_nhap_so_lieu ? jsonData.ngay_nhap_so_lieu.split('-') : [];
+            document.getElementById('luy_ke_date').innerText = dateParts.length === 3 ? `${dateParts[2]}/${dateParts[1]}` : "--/--";
+            
+            document.getElementById('lk_res_before').innerText = 0;
+            document.getElementById('lk_res_in_time').innerText = lkDungHan;
+            document.getElementById('lk_res_late').innerText = lkTreHan;
+            document.getElementById('lk_res_sorry').innerText = 0;
+            
+            // Đánh giá hài lòng & Số hóa
+            document.getElementById('sat_rate').innerText = danhGia.muc_do_hai_long.ty_le_phan_tram + "%";
+            document.getElementById('sat_count').innerText = danhGia.muc_do_hai_long.so_luot_danh_gia || 0;
+            document.getElementById('total_digital').innerText = danhGia.ty_le_so_hoa_ho_so + "%";
 
-                    refreshChartColors();
-                })
-                .catch(error => console.error("Lỗi kết nối cơ sở dữ liệu:", error));
+            refreshChartColors();
         }
 
         function refreshChartColors() {
@@ -449,7 +524,7 @@
 
         document.addEventListener('DOMContentLoaded', () => {
             setTheme('light');
-            loadDataFromViettelDB(); // Khởi chạy kéo dữ liệu API
+            loadDataFromJSON(); // Gọi hàm đổ dữ liệu đã được gán sẵn
         });
     </script>
 </body>
