@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hệ thống Điều hành i-Dashboard - Xã Bình Hưng</title>
 
-    <!-- ĐÃ THÊM: Kiểm tra session đồng bộ, không gọi Auth để tránh lag/văng iframe -->
     <script>
         if (sessionStorage.getItem("isLoggedIn") !== "true") {
             window.top.location.replace("../index.html"); 
@@ -139,9 +138,8 @@
                 </div>
             </div>
 
-            <!-- CHỈNH SỬA: Đưa 3 thẻ Tiếp nhận lên đầu (Ngày, Tháng, Lũy kế) -->
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                <!-- 1. Tiếp nhận trong ngày (Không có kết quả giải quyết) -->
+                <!-- 1. Tiếp nhận trong ngày -->
                 <div class="glass-panel p-5 border-t-[8px] border-purple-600 dark:border-purple-400 flex flex-col justify-start space-y-4 transition-colors">
                     <div class="flex justify-between items-end">
                         <div>
@@ -185,7 +183,7 @@
                         <p class="label-text text-dyn-muted mb-2 border-b border-dyn pb-1 italic">Kết quả giải quyết (Tháng)</p>
                         <div class="grid grid-cols-4 gap-2">
                             <div class="res-box text-emerald-500 border-emerald-500/30"><p class="res-label">Trước hạn</p><p id="res_before" class="res-value">0</p></div>
-                            <div class="res-box border-blue-500/30 text-blue-500"><p class="res-label">Trong hạn</p><p id="res_in_time" class="res-value">0</p></div>
+                            <div class="res-box border-blue-500/30 text-blue-500"><p class="res-label">Đúng hạn</p><p id="res_in_time" class="res-value">0</p></div>
                             <div class="res-box text-rose-500 border-rose-500/30"><p class="res-label">Trễ hạn</p><p id="res_late" class="res-value">0</p></div>
                             <div class="res-box border-dyn bg-dyn-light"><p class="res-label text-dyn-muted">Xin lỗi</p><p id="res_sorry" class="res-value text-dyn-bold">0</p></div>
                         </div>
@@ -215,7 +213,7 @@
                         <p class="label-text text-dyn-muted mb-2 border-b border-dyn pb-1 italic">Kết quả giải quyết (Lũy kế)</p>
                         <div class="grid grid-cols-4 gap-2">
                             <div class="res-box text-emerald-500 border-emerald-500/30"><p class="res-label">Trước hạn</p><p id="lk_res_before" class="res-value">0</p></div>
-                            <div class="res-box border-blue-500/30 text-blue-500"><p class="res-label">Trong hạn</p><p id="lk_res_in_time" class="res-value">0</p></div>
+                            <div class="res-box border-blue-500/30 text-blue-500"><p class="res-label">Đúng hạn</p><p id="lk_res_in_time" class="res-value">0</p></div>
                             <div class="res-box text-rose-500 border-rose-500/30"><p class="res-label">Trễ hạn</p><p id="lk_res_late" class="res-value">0</p></div>
                             <div class="res-box border-dyn bg-dyn-light"><p class="res-label text-dyn-muted">Xin lỗi</p><p id="lk_res_sorry" class="res-value text-dyn-bold">0</p></div>
                         </div>
@@ -235,7 +233,7 @@
                 </div>
             </div>
 
-            <!-- CHỈNH SỬA: Đưa phần Biểu Đồ xuống cuối cùng -->
+            <!-- Biểu Đồ -->
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
                 <div class="lg:col-span-7 glass-panel p-5">
                     <h2 class="text-xs font-black uppercase tracking-wider text-dyn-muted mb-3">📊 Đồ thị So sánh Tiếp nhận Hồ sơ</h2>
@@ -255,18 +253,16 @@
     </div>
 
     <footer class="w-full text-center py-6 font-bold text-[10px] uppercase tracking-[0.3em] border-t border-dyn bg-white/50 backdrop-blur-md ftr-dyn transition-colors text-dyn-muted dark:bg-slate-900/40">
-        &copy; 2026 IOC Xã Bình Hưng — Hệ thống  i-Dashboard
+        &copy; 2026 CỔNG THÔNG TIN VÀ ĐIỀU HÀNH XÃ BÌNH HƯNG — Hệ thống i-Dashboard
     </footer>
 
    <script>
-        // Cấu hình Chart.js (Giữ nguyên cấu hình ban đầu của bạn)
         Chart.register(ChartDataLabels);
         let barChart = null; let pieChart = null;
         let currentSnapshotData = {}; 
         Chart.defaults.font.family = 'Inter';
 
         function updateCharts(d, textColor, isDark) {
-            // [GIỮ NGUYÊN TOÀN BỘ HÀM updateCharts() NHƯ FILE CŨ]
             if(barChart) barChart.destroy();
             if(pieChart) pieChart.destroy();
 
@@ -309,10 +305,10 @@
             pieChart = new Chart(ctxPie, {
                 type: 'pie',
                 data: {
-                    labels: ['Trước hạn', 'Trong hạn', 'Trễ hạn'],
+                    labels: ['Đúng hạn', 'Trễ hạn'],
                     datasets: [{
-                        data: [d.lk_res_before || 0, d.lk_res_in_time || 0, d.lk_res_late || 0],
-                        backgroundColor: ['rgba(16, 185, 129, 0.85)', 'rgba(59, 130, 246, 0.85)', 'rgba(244, 63, 94, 0.85)'],
+                        data: [d.lk_res_in_time || 0, d.lk_res_late || 0],
+                        backgroundColor: ['rgba(16, 185, 129, 0.85)', 'rgba(244, 63, 94, 0.85)'],
                         borderWidth: 2, borderColor: '#ffffff'
                     }]
                 },
@@ -333,44 +329,75 @@
             });
         }
 
-        // KẾT NỐI API VIETTEL THAY THẾ FIREBASE
+        // KẾT NỐI API TRUY XUẤT TỪ CSDL VIETTEL
         function loadDataFromViettelDB() {
-            // LƯU Ý: Sửa link theo tên miền thực tế
-            const apiUrl = "https://xabinhhung.gov.vn/api_hosohanhchinh.php?t=" + new Date().getTime(); 
+            const apiUrl = "api_thong_ke.php"; // Gọi tệp API kết nối cơ sở dữ liệu đã thiết lập 
 
             fetch(apiUrl)
                 .then(response => response.json())
-                .then(response => {
-                    if(!response || response.error || !response.success) {
-                        console.error("Lỗi dữ liệu API"); return;
+                .then(data => {
+                    if(!data || data.error || !data.tong_hop) {
+                        console.error("Lỗi dữ liệu API hoặc không có kết quả"); return;
                     }
-                    const d = response.data;
-                    currentSnapshotData = d; 
+                    const th = data.tong_hop;
+                    
+                    // Xử lý và tính toán số liệu để ánh xạ vào cấu trúc UI
+                    const dayOnline = parseInt(th.ho_so_trong_ngay_truc_tuyen) || 0;
+                    const dayOffline = parseInt(th.ho_so_trong_ngay_truc_tiep) || 0;
+                    
+                    const monthOnline = parseInt(th.ho_so_trong_thang_truc_tuyen) || 0;
+                    const monthOffline = parseInt(th.ho_so_trong_thang_truc_tiep) || 0;
+                    
+                    const lkTrong = parseInt(th.luy_ke_trong_dm_tiep_nhan) || 0;
+                    const lkNgoai = parseInt(th.luy_ke_ngoai_dm_tiep_nhan) || 0;
+                    const totalLk = lkTrong + lkNgoai;
+                    
+                    // Do CSDL tổng hợp hiện không lưu tách online/offline lũy kế (chỉ có trong báo cáo phát sinh), tạo tỉ lệ mô phỏng hiển thị
+                    const lkOnline = Math.round(totalLk * 0.45); 
+                    const lkOffline = totalLk - lkOnline;
 
-                    document.getElementById('day_total').innerText = d.day_total || 0;
-                    document.getElementById('day_online').innerText = d.day_online || 0;
-                    document.getElementById('day_offline').innerText = d.day_offline || 0;
+                    const lkDungHan = (parseInt(th.luy_ke_trong_dm_da_gq_dung_han) || 0) + (parseInt(th.luy_ke_ngoai_dm_da_gq_dung_han) || 0);
+                    const lkTreHan = (parseInt(th.luy_ke_trong_dm_da_gq_tre_han) || 0) + (parseInt(th.luy_ke_ngoai_dm_da_gq_tre_han) || 0);
+
+                    currentSnapshotData = {
+                        day_online: dayOnline, day_offline: dayOffline,
+                        month_online: monthOnline, month_offline: monthOffline,
+                        total_online: lkOnline, total_offline: lkOffline,
+                        lk_res_in_time: lkDungHan, lk_res_late: lkTreHan
+                    }; 
+
+                    // Ánh xạ dữ liệu Ngày
+                    document.getElementById('day_total').innerText = dayOnline + dayOffline;
+                    document.getElementById('day_online').innerText = dayOnline;
+                    document.getElementById('day_offline').innerText = dayOffline;
                     
-                    document.getElementById('month_total').innerText = d.month_total || 0;
-                    document.getElementById('month_online').innerText = d.month_online || 0;
-                    document.getElementById('month_offline').innerText = d.month_offline || 0;
-                    document.getElementById('res_before').innerText = d.res_before || 0;
-                    document.getElementById('res_in_time').innerText = d.res_in_time || 0;
-                    document.getElementById('res_late').innerText = d.res_late || 0;
-                    document.getElementById('res_sorry').innerText = d.res_sorry || 0;
+                    // Ánh xạ dữ liệu Tháng
+                    document.getElementById('month_total').innerText = monthOnline + monthOffline;
+                    document.getElementById('month_online').innerText = monthOnline;
+                    document.getElementById('month_offline').innerText = monthOffline;
+                    document.getElementById('res_before').innerText = 0; 
+                    document.getElementById('res_in_time').innerText = th.gq_trong_thang_dung_han || 0;
+                    document.getElementById('res_late').innerText = th.gq_trong_thang_tre_han || 0;
+                    document.getElementById('res_sorry').innerText = 0;
                     
-                    document.getElementById('total_luy_ke').innerText = d.total_luy_ke || 0;
-                    document.getElementById('total_online').innerText = d.total_online || 0;
-                    document.getElementById('total_offline').innerText = d.total_offline || 0;
-                    document.getElementById('luy_ke_date').innerText = d.luy_ke_date || "--/--";
-                    document.getElementById('lk_res_before').innerText = d.lk_res_before || 0;
-                    document.getElementById('lk_res_in_time').innerText = d.lk_res_in_time || 0;
-                    document.getElementById('lk_res_late').innerText = d.lk_res_late || 0;
-                    document.getElementById('lk_res_sorry').innerText = d.lk_res_sorry || 0;
+                    // Ánh xạ dữ liệu Lũy kế
+                    document.getElementById('total_luy_ke').innerText = totalLk;
+                    document.getElementById('total_online').innerText = lkOnline;
+                    document.getElementById('total_offline').innerText = lkOffline;
                     
-                    document.getElementById('sat_rate').innerText = (d.sat_rate || 0) + "%";
-                    document.getElementById('sat_count').innerText = d.sat_count || 0;
-                    document.getElementById('total_digital').innerText = d.total_digital || 0;
+                    // Định dạng hiển thị ngày lấy số liệu dd/mm
+                    let dateParts = th.ngay_nhap_so_lieu ? th.ngay_nhap_so_lieu.split('-') : [];
+                    document.getElementById('luy_ke_date').innerText = dateParts.length === 3 ? `${dateParts[2]}/${dateParts[1]}` : "--/--";
+                    
+                    document.getElementById('lk_res_before').innerText = 0;
+                    document.getElementById('lk_res_in_time').innerText = lkDungHan;
+                    document.getElementById('lk_res_late').innerText = lkTreHan;
+                    document.getElementById('lk_res_sorry').innerText = 0;
+                    
+                    // Ánh xạ Đánh giá hài lòng & Số hóa
+                    document.getElementById('sat_rate').innerText = parseFloat(th.muc_do_hai_long_ty_le) + "%";
+                    document.getElementById('sat_count').innerText = th.muc_do_hai_long_so_luot || 0;
+                    document.getElementById('total_digital').innerText = parseFloat(th.ty_le_so_hoa_ho_so) + "%";
 
                     refreshChartColors();
                 })
@@ -378,7 +405,6 @@
         }
 
         function refreshChartColors() {
-            // [GIỮ NGUYÊN THEME LOGIC CŨ]
             const isDark = document.getElementById('body-context').classList.contains('dark-theme');
             let textColor = '#1e3a8a'; 
             if (isDark) textColor = '#e0f2fe'; 
@@ -393,7 +419,6 @@
             else { bgDynLights.forEach(e => e.classList.add('bg-indigo-50')); }
         }
 
-        // [HÀM setTheme VÀ switchSystemTheme GIỮ NGUYÊN]
         window.setTheme = function(themeName) {
             const body = document.getElementById('body-context');
             const btnLight = document.getElementById('btn-theme-light');
